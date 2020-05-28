@@ -1,0 +1,46 @@
+{
+  "name": "havarot",
+  "version": "0.0.1",
+  "description": "A Typescript package for syllabic data about Hebrew text",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "clear && jest",
+    "format": "prettier --write 'src/**/*.ts' 'test/**/*.ts'",
+    "lint": "tslint -p tsconfig.json",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/charlesLoder/greek-transliteration.git"
+  },
+  "bugs": {
+    "url": "https://github.com/charlesLoder/greek-transliteration/issues"
+  },
+  "homepage": "https://github.com/charlesLoder/greek-transliteration",
+  "keywords": [
+    "hebrew",
+    "transliteration",
+    "syllabe"
+  ],
+  "author": "Charles Loder",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^25.2.1",
+    "hebrew-transliteration": "^1.2.5",
+    "jest": "^25.4.0",
+    "prettier": "^2.0.5",
+    "ts-jest": "^25.4.0",
+    "tslint": "^6.1.1",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.8.3"
+  }
+}
