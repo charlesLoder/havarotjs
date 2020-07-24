@@ -20,15 +20,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/charlesLoder/greek-transliteration.git"
+    "url": "https://github.com/charlesLoder/havarot.git"
   },
   "bugs": {
-    "url": "https://github.com/charlesLoder/greek-transliteration/issues"
+    "url": "https://github.com/charlesLoder/havarot/issues"
   },
-  "homepage": "https://github.com/charlesLoder/greek-transliteration",
+  "homepage": "https://github.com/charlesLoder/havarot",
   "keywords": [
     "hebrew",
-    "transliteration",
     "syllabe"
   ],
   "author": "Charles Loder",
