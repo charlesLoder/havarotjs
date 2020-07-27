@@ -64,6 +64,18 @@ const nominalSnippets = [
   "תָּם־"
 ];
 
+const verbalSnippets = [
+  "חָנֵּנִי",
+  "וַיָּמָת",
+  "וַיָּנָס",
+  "וַיָּקָם",
+  "וַיָּרָם",
+  "וַיָּשָׁב",
+  "וַתָּמָת",
+  "וַתָּקָם",
+  "וַתָּשָׁב"
+];
+
 const sequenceSnippets = (arr: string[]) => {
   return arr.map((snippet) => {
     const text = snippet.normalize("NFKD");
@@ -73,6 +85,7 @@ const sequenceSnippets = (arr: string[]) => {
 };
 
 const nominalRegx = sequenceSnippets(nominalSnippets);
+const verbalRegx = sequenceSnippets(verbalSnippets);
 
 export const convertsQametsQatan = (word: string) => {
   const qametsReg = /\u{05B8}/u;
@@ -105,6 +118,19 @@ export const convertsQametsQatan = (word: string) => {
     }
   }
 
+  // check if in verbal list (more frequent)
+  for (let index = 0; index < verbalRegx.length; index++) {
+    const regEx = new RegExp(verbalRegx[index]);
+    let match = noTaamei.match(regEx);
+
+    if (!match) {
+      continue;
+    } else {
+      const lastQam = word.lastIndexOf("\u{05B8}");
+      return word.substring(0, lastQam) + "\u{05C7}" + word.substring(lastQam + 1);
+    }
+  }
+  // check if in nominal list
   for (let index = 0; index < nominalRegx.length; index++) {
     const regEx = new RegExp(nominalRegx[index]);
     let match = noTaamei.match(regEx);
