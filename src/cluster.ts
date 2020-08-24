@@ -1,19 +1,6 @@
 import { Char } from "./char";
 
-interface ClusterInterface {
-  original: string;
-  text: string;
-  chars: Char[];
-  hasLongVowel: boolean;
-  hasShortVowel: boolean;
-  hasVowel: boolean;
-  hasHalfVowel: boolean;
-  hasMetheg: boolean;
-  hasShewa: boolean;
-  hasTaamei: boolean;
-}
-
-export class Cluster implements ClusterInterface {
+export class Cluster {
   original: string;
 
   constructor(cluster: string) {

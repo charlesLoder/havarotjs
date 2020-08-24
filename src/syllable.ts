@@ -1,13 +1,6 @@
 import { Cluster } from "./cluster";
 
-interface SyllableInterface {
-  text: string;
-  isClosed: boolean;
-  isAccented: boolean;
-  isFinal: boolean;
-}
-
-export class Syllable implements SyllableInterface {
+export class Syllable {
   text: string;
   isClosed: boolean;
   isAccented: boolean;

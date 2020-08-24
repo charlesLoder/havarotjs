@@ -1,13 +1,7 @@
 import { Syllable } from "./syllable";
 import { Cluster } from "./cluster";
 
-interface WordInterface {
-  original: string;
-  syllables: Syllable[];
-  text: string;
-}
-
-export class Word implements WordInterface {
+export class Word {
   original: string;
 
   constructor(text: string) {

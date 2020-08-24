@@ -3,15 +3,7 @@ import { convertsQametsQatan } from "./qametsQatan";
 import { sequence } from "./sequence";
 import { Syllable } from "./syllable";
 
-interface TextInterface {
-  original: string;
-  normalized: string;
-  sanitized: string;
-  words: Word[];
-  syllables: Syllable[];
-}
-
-export class Text implements TextInterface {
+export class Text {
   original: string;
 
   constructor(text: string) {

@@ -4,12 +4,7 @@ const dagesh = /[\u{05BC},\u{05BF}]/u; // includes rafe
 const niqqud = /[\u{05B0}-\u{05BB},\u{05C7}]/u;
 const taamei = /[\u{0590}-\u{05AF},\u{05BD}-\u{05BE},\u{05C0},\u{05C3}]/u;
 
-interface CharInterface {
-  text: string;
-  position: number;
-}
-
-export class Char implements CharInterface {
+export class Char {
   text: string;
   position: number;
 
