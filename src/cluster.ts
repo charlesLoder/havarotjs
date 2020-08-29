@@ -20,24 +20,29 @@ export class Cluster {
 
   private sequence() {
     const text = this.original;
-    return [...text].map((char) => new Char(char)).sort((a, b) => a.position - b.position);
+    return [...text].map((char) => new Char(char)).sort((a, b) => a.sequencePosition - b.sequencePosition);
   }
 
   get hasLongVowel() {
     return /[\u{05B5}\u{05B8}\u{05B9}\u{05BA}]/u.test(this.text);
   }
+
   get hasShortVowel() {
     return /[\u{05B4}\u{05B6}\u{05B7}\u{05BB}\u{05C7}]/u.test(this.text);
   }
+
   get hasVowel() {
     return this.hasLongVowel || this.hasShortVowel;
   }
+
   get hasHalfVowel() {
     return /[\u{05B1}-\u{05B3}]/u.test(this.text);
   }
+
   get hasMetheg() {
     return /\u{05BD}/u.test(this.text);
   }
+
   get hasShewa() {
     return /\u{05B0}/u.test(this.text);
   }

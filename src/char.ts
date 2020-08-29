@@ -6,11 +6,11 @@ const taamei = /[\u{0590}-\u{05AF},\u{05BD}-\u{05BE},\u{05C0},\u{05C3}]/u;
 
 export class Char {
   text: string;
-  position: number;
+  sequencePosition: number;
 
   constructor(char: string) {
     this.text = char;
-    this.position = this.findPos();
+    this.sequencePosition = this.findPos();
   }
 
   private findPos() {
