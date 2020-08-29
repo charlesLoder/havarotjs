@@ -1,8 +1,7 @@
-import { Cluster } from "./cluster";
+import { Cluster } from "../cluster";
 
 /**
  * @returns a two dimensional array of sequenced Char objects
- * @param text
  */
 export const sequence = (text: string) => {
   const splits = /(?=[\u{05D0}-\u{05F2}])/u;
