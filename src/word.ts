@@ -16,12 +16,12 @@ export class Word {
     return this.syllables.reduce((init, syl) => init + syl.text, "");
   }
 
-  private syllabify() {
-    const text = this.original;
-    const splits = /(?=[\u{05D0}-\u{05F2}])/u;
-    const groups = text.split(splits);
-    const clusters = groups.map((group) => new Cluster(group));
-    let syllables: Syllable[] = [];
+  /**
+   * @returns a one dimensional array of Syllables
+   */
+  get syllables() {
+    return syllabify(this.original);
+  }
 
     function pushSyls() {
       let vowelPresent: boolean = false;
