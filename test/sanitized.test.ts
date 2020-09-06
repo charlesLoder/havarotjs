@@ -8,7 +8,7 @@ describe.each`
   ${"qamets qatan and qamets"}         | ${"בָּשְׁתָּם"}                                         | ${true}   | ${true}
 `("$description", ({ word, hasQamQat, hasQamets }) => {
   let text = new Text(word);
-  let sanitized = text.sanitized;
+  let sanitized = text.text;
   const qQRegx = /\u{05C7}/u;
   const qamRegx = /\u{05B8}/u;
   test(`Has Qamets Qatan should equal ${hasQamQat}`, () => {
