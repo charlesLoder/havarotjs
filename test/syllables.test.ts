@@ -21,11 +21,10 @@ const tests = (original: string, sylArr: string[], closedArr: boolean[], accentA
 };
 
 describe.each`
-  description                                          | original    | sylArr        | closedArr | accentArr
-  ${"1 Syl: lexical form - one vowel (yām)"}           | ${"יָ֥ם"}   | ${["יָ֥ם"]}   | ${[true]} | ${[true]}
-  ${"1 Syl: inflected preposition (lāk)"}              | ${"לֵךְ"}   | ${["לָךְ"]}   | ${[true]} | ${[true]}
-  ${"1 Syl: prefixed prep w/ shewa"}                   | ${"וְיַ֥ד"} | ${["וְיַ֥ד"]} | ${[true]} | ${[true]}
-  ${"1 Syl: lexical form contains hatef vowel (ĕmet)"} | ${"אֱמֶ֔ת"} | ${["אֱמֶ֔ת"]} | ${[true]} | ${[true]}
+  description                                        | original  | sylArr      | closedArr  | accentArr
+  ${"1 Syl: lexical form - one vowel, closed (yām)"} | ${"יָ֥ם"} | ${["יָ֥ם"]} | ${[true]}  | ${[true]}
+  ${"1 Syl: inflected preposition, closed (lāk)"}    | ${"לֵךְ"} | ${["לָךְ"]} | ${[true]}  | ${[true]}
+  ${"1 Syl: inflected preposition, open (lô)"}       | ${"ל֣וֹ"} | ${["ל֣וֹ"]} | ${[false]} | ${[true]}
 `("$description", ({ original, sylArr, closedArr, accentArr }) => {
   tests(original, sylArr, closedArr, accentArr);
 });
