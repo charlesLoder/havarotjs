@@ -32,7 +32,7 @@ export class Cluster {
   }
 
   get hasVowel() {
-    return this.hasLongVowel || this.hasShortVowel;
+    return this.hasLongVowel || this.hasShortVowel || this.hasHalfVowel;
   }
 
   get hasHalfVowel() {
