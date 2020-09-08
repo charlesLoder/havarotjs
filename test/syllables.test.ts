@@ -24,7 +24,7 @@ describe.each`
   description                                        | original   | sylArr       | closedArr  | accentArr
   ${"1 Syl: lexical form - one vowel, closed (yām)"} | ${"יָ֥ם"}  | ${["יָ֥ם"]}  | ${[true]}  | ${[true]}
   ${"1 Syl: final kaph (lāk)"}                       | ${"לָ֛ךְ"} | ${["לָ֛ךְ"]} | ${[true]}  | ${[true]}
-  ${"1 Syl: with a mater (lô)"}                      | ${"ל֣וֹ"}  | ${["ל֣וֹ"]}  | ${[false]} | ${[true]}
+  ${"1 Syl: with a mater (lô)"}                      | ${"ל֣וֹ"}  | ${["לֹ֣ו"]}  | ${[false]} | ${[true]}
 `("$description", ({ original, sylArr, closedArr, accentArr }) => {
   tests(original, sylArr, closedArr, accentArr);
 });
