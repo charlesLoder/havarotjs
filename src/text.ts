@@ -1,6 +1,7 @@
 import { Word } from "./word";
 import { convertsQametsQatan } from "./utils/qametsQatan";
 import { sequence } from "./utils/sequence";
+import { holemWaw } from "./utils/holemWaw";
 
 export class Text {
   original: string;
@@ -14,7 +15,7 @@ export class Text {
   }
 
   /**
-   * @returns a string that has been decomposed, sequenced, and qamets qatan patterns converted to the appropriate unicode character (U+05C7)
+   * @returns a string that has been decomposed, sequenced, qamets qatan patterns converted to the appropriate unicode character (U+05C7), and holem-waw sequences corrected
    */
   get text(): string {
     const text = this.normalized;
@@ -23,7 +24,8 @@ export class Text {
     // split text at spaces and maqqef, spaces are added to the array as separate entries
     const textArr = sequencedText.split(/(\s|\S*\u{05BE})/u);
     const mapQQatan = textArr.map((word) => convertsQametsQatan(word));
-    return mapQQatan.reduce((a, c) => a + c, "");
+    const mapHolemWaw = mapQQatan.map((word) => holemWaw(word));
+    return mapHolemWaw.reduce((a, c) => a + c, "");
   }
 
   /**
