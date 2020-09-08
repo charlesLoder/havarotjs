@@ -1,4 +1,5 @@
 import { sequence } from "./sequence";
+import { removeTaamei } from "./removeTaamei";
 
 const nominalSnippets = [
   "אָבְדַן",
@@ -105,18 +106,7 @@ export const convertsQametsQatan = (word: string) => {
     }
   }
 
-  // https://stackoverflow.com/questions/4590298/how-to-ignore-whitespace-in-a-regular-expression-subject-string
-  const taamei = /[\u{0591}-\u{05AF}\u{05BF}\u{05C0}\u{05C3}-\u{05C6}\u{05F3}\u{05F4}]/gu;
-  let noTaamei = "";
-  let charPos = [];
-
-  // builds a string with no taamei, while keeping track of the index
-  for (const [index, element] of [...word].entries()) {
-    if (!taamei.test(element)) {
-      noTaamei += element;
-      charPos.push(index);
-    }
-  }
+  let [noTaamei, charPos] = removeTaamei(word);
 
   // check if in verbal list (more frequent)
   for (let index = 0; index < verbalRegx.length; index++) {
