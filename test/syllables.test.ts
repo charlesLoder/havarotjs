@@ -46,7 +46,7 @@ describe.each`
   ${"3 Syl: lexical form contains hatef (ĕlohim)"}                          | ${"אֱלֹהִ֑ים"} | ${["אֱ", "לֹ", "הִ֑ים"]} | ${[false, false, true]}  | ${[false, false, true]}
   ${"3 Syl: lexical form (dāwid) prefixed conj w/ shewa"}                   | ${"וְדָוִ֖ד"}  | ${["וְ", "דָ", "וִ֖ד"]}  | ${[false, false, true]}  | ${[false, false, true]}
   ${"3 Syl: lexical form contains hatef (ĕmet) prefixed conj w/ vowel"}     | ${"וֶאֱמֶ֔ת"}  | ${["וֶ", "אֱ", "מֶ֔ת"]}  | ${[false, false, true]}  | ${[false, false, true]}
-  ${"3 Syl: inflected form with medial vocal shewa (bārǝkî)"}               | ${"בָּרְכ֣וּ"} | ${["בָּ", "רְ", "כ֣וּ"]} | ${[false, false, false]} | ${[false, false, true]}
+  ${"3 Syl: inflected form with medial vocal shewa (bārǝkû)"}               | ${"בָּרְכ֣וּ"} | ${["בָּ", "רְ", "כ֣וּ"]} | ${[false, false, false]} | ${[false, false, true]}
   ${"3 Syl: inflected form with medial vocal shewa and doubling (sappǝrû)"} | ${"סַפְּר֤וּ"} | ${["סַ", "פְּ", "ר֤וּ"]} | ${[true, false, false]}  | ${[false, false, true]}
   ${"3 Syl: with qamets gadol (ḥākǝmâ)"}                                    | ${"חָֽכְמָ֖ה"} | ${["חָֽ", "כְ", "מָ֖ה"]} | ${[false, false, false]} | ${[false, false, true]}
   ${"3 Syl: lexical form - two vowels (dābār) + article"}                   | ${"הַדָּבָ֥ר"} | ${["הַ", "דָּ", "בָ֥ר"]} | ${[true, false, true]}   | ${[false, false, true]}
