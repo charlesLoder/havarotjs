@@ -6,15 +6,15 @@ A Typescript package for getting syllabic data about Hebrew text with niqqud.
 
 ```typescript
 import { Text } from "havarot";
-const heb: string = "וְשָׁמַרְתָּ֖";
+const heb: string = "אֱלֹהִים";
 const text: Text = new Text(heb);
 const sylText = text.syllables.map((syl) => syl.text);
 sylText;
 //
 //  [
-//    "וְשָׁ"
-//    "מַרְ"
-//    "תָּ֖"
+//    "אֱ"
+//    "לֹ"
+//    "הִים"
 //  ]
 ```
 
@@ -73,7 +73,8 @@ import { Text } from "havarot";
 const text: Text = new Text("הֲבָרֹות");
 text.syllables;
 // [
-//    Syllable { original: "הֲבָ" },
+//    Syllable { original: "הֲ" },
+//    Syllable { original: "בָ" },
 //    Syllable { original: "רֹות" }
 //  ]
 ```
@@ -200,6 +201,8 @@ This is where things get tricky. The string from `Word.original` is passed into 
 This string is then converted into `Clusters` which are analyzed as being part of a syllable since a syallble can have more than one cluster.
 The `syllabify()` function determines if a what is a syllable and if it is closed, accented, or final.
 
+See the [syllabification](./docs/syllabification.md) doc for how a syllable is determined
+
 #### Syllable.isClosed
 
 Returns a `boolean`.
@@ -283,14 +286,14 @@ text.syllables[2].chars;
 // [
 //    Char { original: "ר" },
 //    Char { original: "ָ" },
-//    Char { original: "" }, i.e. \u{5A8} (does not print well)
+//    Char { original: "" }, i.e. \u{05A8} (does not print well)
 //    Char { original: "א" }
 //  ]
 ```
 
 ## Contributing
 
-See the [TODO](./TODO.md) list for some ideas of what needs to get done.
+See the [TODO](./docs/TODO.md) list for some ideas of what needs to get done.
 Of feel free to open an issue or pull request.
 
-See the [terms list](./terms.md) for a list of naming convention.
+See the [terms list](./docs/terms.md) for a list of naming convention.
