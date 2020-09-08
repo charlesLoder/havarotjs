@@ -19,3 +19,24 @@ describe.each`
     expect(qamRegx.test(sanitized)).toEqual(hasQamets);
   });
 });
+
+describe.each`
+  description                                                     | word          | holemWaw | wawHolem
+  ${"const + holem + waw remains the same"}                       | ${"שָׁלֹום"}  | ${true}  | ${false}
+  ${"const + waw + holem is swapped"}                             | ${"שָׁלוֹם"}  | ${true}  | ${false}
+  ${"const + waw + holem is swapped, accent present"}             | ${"שָׁל֑וֹם"} | ${true}  | ${false}
+  ${"consonatal waw with holem remains the same"}                 | ${"עֲוֹן"}    | ${false} | ${true}
+  ${"consonatal waw with holem remains the same, accent present"} | ${"הֶעָוֹ֖ן"} | ${false} | ${true}
+`("$description", ({ word, holemWaw, wawHolem }) => {
+  let text = new Text(word);
+  let sanitized = text.text;
+  const holemWawX = /\u{05B9}\u{05D5}/u;
+  const wawHolemX = /\u{05D5}\u{05B9}/u;
+  test(`Holem Precedes Waw ${holemWaw}`, () => {
+    expect(holemWawX.test(sanitized)).toEqual(holemWaw);
+  });
+
+  test(`Waw Precedes Holem ${wawHolem}`, () => {
+    expect(wawHolemX.test(sanitized)).toEqual(wawHolem);
+  });
+});
