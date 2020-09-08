@@ -13,7 +13,7 @@ export class Char {
     this.sequencePosition = this.findPos();
   }
 
-  private findPos() {
+  private findPos(): number {
     const char = this.text;
     if (consonants.test(char)) {
       return 0;

@@ -88,7 +88,7 @@ const sequenceSnippets = (arr: string[]) => {
 const nominalRegx = sequenceSnippets(nominalSnippets);
 const verbalRegx = sequenceSnippets(verbalSnippets);
 
-export const convertsQametsQatan = (word: string) => {
+export const convertsQametsQatan = (word: string): string => {
   const qametsReg = /\u{05B8}/u;
   const hatefQamRef = /\u{05B3}/u;
 

@@ -10,44 +10,44 @@ export class Cluster {
   /**
    * @returns an array of sequenced Char objects
    */
-  get chars() {
+  get chars(): Char[] {
     return this.sequence();
   }
 
-  get text() {
+  get text(): string {
     return this.chars.reduce((init, char) => init + char.text, "");
   }
 
-  private sequence() {
+  private sequence(): Char[] {
     const text = this.original;
     return [...text].map((char) => new Char(char)).sort((a, b) => a.sequencePosition - b.sequencePosition);
   }
 
-  get hasLongVowel() {
+  get hasLongVowel(): boolean {
     return /[\u{05B5}\u{05B8}\u{05B9}\u{05BA}]/u.test(this.text);
   }
 
-  get hasShortVowel() {
+  get hasShortVowel(): boolean {
     return /[\u{05B4}\u{05B6}\u{05B7}\u{05BB}\u{05C7}]/u.test(this.text);
   }
 
-  get hasVowel() {
+  get hasVowel(): boolean {
     return this.hasLongVowel || this.hasShortVowel || this.hasHalfVowel;
   }
 
-  get hasHalfVowel() {
+  get hasHalfVowel(): boolean {
     return /[\u{05B1}-\u{05B3}]/u.test(this.text);
   }
 
-  get hasMetheg() {
+  get hasMetheg(): boolean {
     return /\u{05BD}/u.test(this.text);
   }
 
-  get hasShewa() {
+  get hasShewa(): boolean {
     return /\u{05B0}/u.test(this.text);
   }
 
-  get hasTaamei() {
+  get hasTaamei(): boolean {
     return /[\u{0591}-\u{05AF}\u{05BF}\u{05C0}\u{05C3}-\u{05C6}\u{05F3}\u{05F4}]/u.test(this.text);
   }
 }

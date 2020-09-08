@@ -1,4 +1,5 @@
 import { Cluster } from "./cluster";
+import { Char } from "./char";
 
 export class Syllable {
   clusters: Cluster[];
@@ -13,11 +14,11 @@ export class Syllable {
     this.isFinal = isFinal;
   }
 
-  get text() {
+  get text(): string {
     return this.clusters.reduce((init, cluster) => init + cluster.text, "");
   }
 
-  get chars() {
+  get chars(): Char[] {
     return this.clusters.map((cluster) => cluster.chars).reduce((a, c) => a.concat(c), []);
   }
 }

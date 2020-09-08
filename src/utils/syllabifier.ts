@@ -1,7 +1,7 @@
 import { Cluster } from "../cluster";
 import { Syllable } from "../syllable";
 
-export const syllabify = (text: string) => {
+export const syllabify = (text: string): Syllable[] => {
   text = text.trim();
   const splits = /(?=[\u{05D0}-\u{05F2}])/u;
   const groups = text.split(splits);
