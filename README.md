@@ -44,7 +44,7 @@ text.original;
 
 #### Text.text
 
-Returns a string that has been decomposed, sequenced, and qamets qatan patterns converted to the appropriate unicode character (U+05C7).
+Returns a string that has been decomposed, sequenced, qamets qatan patterns converted to the appropriate unicode character (U+05C7), and holem-waw sequences corrected.
 
 ```typescript
 import { Text } from "havarot";
@@ -115,7 +115,7 @@ text.chars;
 
 #### Word.original
 
-Returns the original string passed which has been decomposed, sequenced, and qamets qatan patterns converted to the appropriate unicode character (U+05C7).
+Returns the original string passed which has been decomposed, sequenced, qamets qatan patterns converted to the appropriate unicode character (U+05C7), and holem-waw sequences corrected.
 
 ```typescript
 import { Text } from "havarot";
@@ -182,7 +182,7 @@ Returns a one dimensional array of [Chars](#Char)
 ```typescript
 import { Text } from "havarot";
 const text: Text = new Text("אֵיפֹה־אַתָּה מֹשֶה");
-text.words[0].clusters;
+text.words[0].chars;
 // [
 //    Char { original: "א" },
 //    Char { original: "ֵ" }, (tsere)
@@ -201,7 +201,54 @@ This is where things get tricky. The string from `Word.original` is passed into 
 This string is then converted into `Clusters` which are analyzed as being part of a syllable since a syallble can have more than one cluster.
 The `syllabify()` function determines if a what is a syllable and if it is closed, accented, or final.
 
-See the [syllabification](./docs/syllabification.md) doc for how a syllable is determined
+See the [syllabification](./docs/syllabification.md) doc for how a syllable is determined.
+
+#### Syllable.text
+
+Returns a string that has been built up from the `.text` of its constituent parts.
+
+```typescript
+import { Text } from "havarot";
+const text: Text = new Text("וַיִּקְרָ֨א");
+const sylText = text.syllables.map((syl) => syl.text);
+sylText;
+//
+//  [
+//    "וַ"
+//    "יִּקְ"
+//    "רָ֨א"
+//  ]
+```
+
+#### Syllable.clusters
+
+Returns a one dimensional array of [Clusters](#Cluster)
+
+```typescript
+import { Text } from "havarot";
+const text: Text = new Text("וַיִּקְרָ֨א");
+text.syllables[1].clusters;
+// [
+//    Cluster { original: "יִּ" },
+//    Cluster { original: "קְ" }
+//  ]
+```
+
+#### Syllable.chars
+
+Returns a one dimensional array of [Chars](#Char)
+
+```typescript
+import { Text } from "havarot";
+const text: Text = new Text("וַיִּקְרָ֨א");
+text.syllables[2].chars;
+// [
+//    Char { original: "ר" },
+//    Char { original: "ָ" },
+//    Char { original: "" }, i.e. \u{05A8} (does not print well)
+//    Char { original: "א" }
+//  ]
+```
 
 #### Syllable.isClosed
 
@@ -244,51 +291,197 @@ text.syllables[2].isFinal; // i.e. "רָ֨א"
 // true
 ```
 
-#### Syllable.text
+### Cluster
+
+A cluster is group of Hebrew character constituted by:
+
+- an obligatory Hebrew consonant character
+- an optional ligature mark
+- an optional vowel
+- an optional taamei
+
+A `Syllable` is a linguistic unit, whereas a `Cluster` is an orthgraphic one.
+The word `יֹו֑ם` is only one syllable, but it has three clusters—`יֹ`, `ו֑`, `ם`.
+
+Because Hebrew orthography is both sub and supra linear, clusters can be encoded in various ways.
+For the issues concerning normalization, see the [SBL Hebrew Font Manual](https://www.sbl-site.org/Fonts/SBLHebrewUserManual1.5x.pdf), p.8.
+
+#### Cluster.text
 
 Returns a string that has been built up from the `.text` of its constituent parts.
 
 ```typescript
 import { Text } from "havarot";
-const text: Text = new Text("וַיִּקְרָ֨א");
-const sylText = text.syllables.map((syl) => syl.text);
-sylText;
-//
-//  [
-//    "וַ"
-//    "יִּקְ"
-//    "רָ֨א"
-//  ]
+const text: Text = new Text("הֲבָרֹות");
+const clusters = text.clusters.map((cluster) => cluster.text);
+// [
+//  "הֲ",
+//  "בָ",
+//  "רֹ",
+//  "ו",
+//  "ת"
+// ]
 ```
 
-#### Syllable.clusters
+#### Cluster.chars
 
-Returns a one dimensional array of [Clusters](#Cluster)
+Returns a one dimensional array of [Chars](#Char).
 
 ```typescript
 import { Text } from "havarot";
-const text: Text = new Text("וַיִּקְרָ֨א");
-text.syllables[1].clusters;
+const text: Text = new Text("הֲבָרֹות");
+text.clusters[0].chars;
 // [
-//    Cluster { original: "יִּ" },
-//    Cluster { original: "קְ" }
-//  ]
+//  Char { original: "ה" },
+//  Char { original: "ֲ " },   i.e. \u{05B2} (does not print well)
+// ]
 ```
 
-#### Syllable.chars
+#### Cluster.hasLongVowel
 
-Returns a one dimensional array of [Clusters](#Cluster)
+Returns `true` if the following long vowel character are present:
+
+- \u{05B5} TSERE
+- \u{05B8} QAMATS
+- \u{05B9} HOLAM
+- \u{05BA} HOLAM HASER FOR VAV
 
 ```typescript
 import { Text } from "havarot";
-const text: Text = new Text("וַיִּקְרָ֨א");
-text.syllables[2].chars;
-// [
-//    Char { original: "ר" },
-//    Char { original: "ָ" },
-//    Char { original: "" }, i.e. \u{05A8} (does not print well)
-//    Char { original: "א" }
-//  ]
+const text: Text = new Text("הֲבָרֹות");
+text.clusters[0].hasLongVowel;
+// false
+text.clusters[1].hasLongVowel;
+// true
+```
+
+#### Cluster.hasShortVowel
+
+Returns `true` if the following long vowel character are present:
+
+- \u{05B4} HIRIQ
+- \u{05B6} SEGOL
+- \u{05B7} PATAH
+- \u{05BB} QUBUTS
+- \u{05C7} QAMATS QATAN
+
+```typescript
+import { Text } from "havarot";
+const text: Text = new Text("מַלְכָּה");
+text.clusters[0].hasShortVowel;
+// true
+text.clusters[2].hasShortVowel;
+// false
+```
+
+#### Cluster.hasHalfVowel
+
+Returns `true` if the following long vowel character are present:
+
+- \u{05B1} HATAF SEGOL
+- \u{05B2} HATAF PATAH
+- \u{05B3} HATAF QAMATS
+
+```typescript
+import { Text } from "havarot";
+const text: Text = new Text("הֲבָרֹות");
+text.clusters[0].hasHalfVowel;
+// true
+text.clusters[1].hasHalfVowel;
+// false
+```
+
+#### Cluster.hasVowel
+
+Returns `true` if `Cluster.hasLongVowel`, `Cluster.hasShortVowel`, or `Cluster.hasHalfVowel` is true.
+
+According to [syllbaification](./docs/syllabfication.md), a shewa is a vowel and serves as the nucleus of a syllable. Because `Cluster` is concerned with orthography, a shewa is **not** a vowel character.
+
+```typescript
+import { Text } from "havarot";
+const text: Text = new Text("הֲבָרֹות");
+text.clusters[0].hasVowel;
+// true
+text.clusters[4].hasVowel;
+// false
+```
+
+#### Cluster.hasMetheg
+
+Returns `true` is the following character is present:
+
+- \u{05BD} METEG
+
+```typescript
+import { Text } from "havarot";
+const text: Text = new Text("הֲבָרֹות");
+text.clusters[0].hasMetheg;
+// false
+```
+
+#### Cluster.hasShewa
+
+Returns `true` is the following character is present:
+
+- \u{05B0} SHEWA
+
+```typescript
+import { Text } from "havarot";
+const text: Text = new Text("מַלְכָּה");
+text.clusters[0].hasShewa;
+// false
+text.clusters[1].hasShewa;
+// true
+```
+
+#### Cluster.hasTaamei
+
+Returns `true` is the following characters are present:
+
+- \u{0591}-\u{05AF}\u{05BF}\u{05C0}\u{05C3}-\u{05C6}\u{05F3}\u{05F4}
+
+```typescript
+import { Text } from "havarot";
+const text: Text = new Text("אֱלֹהִ֑ים");
+text.clusters[0].hasTaamei;
+// false
+text.clusters[2].hasTaamei;
+// true
+```
+
+### Char
+
+A Hebrew character and it's positioning number for being sequenced correctly.
+See [`Cluster`](#Cluster) for correct normalization.
+
+#### Char.text
+
+Returns a string of the character that is passed in
+
+```typescript
+import { Text } from "havarot";
+const text: Text = new Text("אֱלֹהִ֑ים");
+text.chars[0].text;
+// "א"
+```
+
+#### Char.sequencePosition
+
+Returns a number used for sequencing
+
+- consonants = 0
+- ligatures = 1
+- dagesh or rafe = 2
+- niqqud (vowels) = 3
+- taamei (accents) = 4
+
+```typescript
+import { Text } from "havarot";
+const text: Text = new Text("אֱלֹהִ֑ים");
+text.chars[0].sequencePosition; // the aleph
+// 0
+text.chars[1].sequencePosition; // the segol
+// 3
 ```
 
 ## Contributing
