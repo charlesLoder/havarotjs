@@ -10,7 +10,15 @@ export class Text {
   original: string;
 
   constructor(text: string) {
-    this.original = text;
+    this.original = this.validateInput(text);
+  }
+
+  private validateInput(text: string): string {
+    const niqqud = /[\u{05B0}-\u{05BB},\u{05C7}]/u;
+    if (!niqqud.test(text)) {
+      throw new Error("Text must contain niqqud");
+    }
+    return text;
   }
 
   private get normalized(): string {
