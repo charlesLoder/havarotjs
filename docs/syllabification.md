@@ -2,7 +2,13 @@
 
 This project follows Geoffrey Khan's, "Remarks on Syllable Structure and Metrical Stucture Structure in Biblical Hebrew," _Journal of Afroasiatic Languages and Linguistics_ 12 (2020), 7–30, as it's basis for syllabification.
 
-In Biblical Hebrew, it is often considered that hatef vowels and vocalic shewas do not consitute syllabes. As Khan says (p.5):
+In Biblical Hebrew, it is often considered that hatef vowels and vocalic shewas do not consitute syllabes.
+
+In GKC §26m:
+
+> Such a consonant with vocal Šewâ never has the value of an independent syllable, but rather attaches itself so closely to the following syllable that it forms practically one syllable with it, e.g. לְחִי (cheek) _lǝḥî_; חֳלִי (sickness) _ḥŏlî_; יִלְמְדוּ _yil-mǝdhû_.
+
+As Khan says (p.5):
 
 > In the Tiberian Masoretic literature a consonant with a vocalic shewa or a ḥaṭef vowel sign was not considered to stand independently, but was said to be bound to the following consonants. Thus the word תִּסְפְּר֖וּ ‘you shall count’ (Lev. 23.16) was considered to have been composed of two prosodic units \[tʰispʰaʀ̟uː\]. The sources refer to these prosodic units by the Arabic term _maqṭaʕ_, which is used in the Arabic grammatical literature to refer to a syllable.
 
