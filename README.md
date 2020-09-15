@@ -20,7 +20,7 @@ sylText;
 
 ## DOCS
 
-The general idea of this package is that a [`Text`](#Text) is composed of [`Words`](#Word) which are composed of [`Syllables`](#Syllable) which are composed of [`Clusters`](#Cluster) which are composed of [`Characters`](#Character).
+The general idea of this package is that a [`Text`](#Text) is composed of [`Words`](#Word) which are composed of [`Syllables`](#Syllable) which are composed of [`Clusters`](#Cluster) which are composed of [`Characters`](#Char).
 
 ### Text
 
@@ -101,7 +101,6 @@ Returns a one dimensional array of [Chars](#Char)
 import { Text } from "havarot";
 const text: Text = new Text("יָד");
 text.chars;
-
 //  [
 //    Char { original: "י" },
 //    Char { original: "ָ" },
@@ -212,7 +211,6 @@ import { Text } from "havarot";
 const text: Text = new Text("וַיִּקְרָ֨א");
 const sylText = text.syllables.map((syl) => syl.text);
 sylText;
-//
 //  [
 //    "וַ"
 //    "יִּקְ"
