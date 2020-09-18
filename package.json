@@ -34,12 +34,12 @@
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^25.2.1",
-    "hebrew-transliteration": "^1.2.5",
+    "hebrew-transliteration": "^1.3.0",
     "jest": "^25.4.0",
-    "prettier": "^2.0.5",
+    "prettier": "^2.1.2",
     "ts-jest": "^25.4.0",
     "tslint": "^6.1.1",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.8.3"
+    "typescript": "^4.0.2"
   }
 }
