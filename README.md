@@ -5,7 +5,7 @@ A Typescript package for getting syllabic data about Hebrew text with niqqud.
 ## example
 
 ```typescript
-import { Text } from "havarot";
+import { Text } from "havarotjs";
 const heb: string = "אֱלֹהִים";
 const text: Text = new Text(heb);
 const sylText = text.syllables.map((syl) => syl.text);
@@ -18,6 +18,28 @@ sylText;
 //  ]
 ```
 
+## install
+
+Using `npm`:
+
+```
+npm install havarotjs
+```
+
+To call using TypeScript:
+
+```typescript
+import { Text } from "havarotjs";
+```
+
+Or Node:
+
+```javascript
+const havarot = require("havarotjs");
+const Text = havarot.Text;
+const heb = new Text("אֱלֹהִים");
+```
+
 ## DOCS
 
 The general idea of this package is that a [`Text`](#Text) is composed of [`Words`](#Word) which are composed of [`Syllables`](#Syllable) which are composed of [`Clusters`](#Cluster) which are composed of [`Characters`](#Char).
@@ -27,7 +49,7 @@ The general idea of this package is that a [`Text`](#Text) is composed of [`Word
 `Text()` requires an input string.
 
 ```typescript
-import { Text } from "havarot";
+import { Text } from "havarotjs";
 const text: Text = new Text("הֲבָרֹות");
 ```
 
@@ -36,7 +58,7 @@ const text: Text = new Text("הֲבָרֹות");
 Returns the original string.
 
 ```typescript
-import { Text } from "havarot";
+import { Text } from "havarotjs";
 const text: Text = new Text("הֲבָרֹות");
 text.original;
 // "הֲבָרֹות"
@@ -47,7 +69,7 @@ text.original;
 Returns a string that has been decomposed, sequenced, qamets qatan patterns converted to the appropriate unicode character (U+05C7), and holem-waw sequences corrected.
 
 ```typescript
-import { Text } from "havarot";
+import { Text } from "havarotjs";
 const text: Text = new Text("וַתָּשָׁב");
 text.text;
 // וַתָּשׇׁב
@@ -58,7 +80,7 @@ text.text;
 Returns a one dimensional array of [Words](#Word)
 
 ```typescript
-import { Text } from "havarot";
+import { Text } from "havarotjs";
 const text: Text = new Text("הֲבָרֹות");
 text.words;
 // [Word { original: "הֲבָרֹות" }]
@@ -69,7 +91,7 @@ text.words;
 Returns a one dimensional array of [Syllables](#Syllable)
 
 ```typescript
-import { Text } from "havarot";
+import { Text } from "havarotjs";
 const text: Text = new Text("הֲבָרֹות");
 text.syllables;
 // [
@@ -84,7 +106,7 @@ text.syllables;
 Returns a one dimensional array of [Clusters](#Cluster)
 
 ```typescript
-import { Text } from "havarot";
+import { Text } from "havarotjs";
 const text: Text = new Text("יָד");
 text.clusters;
 // [
@@ -98,7 +120,7 @@ text.clusters;
 Returns a one dimensional array of [Chars](#Char)
 
 ```typescript
-import { Text } from "havarot";
+import { Text } from "havarotjs";
 const text: Text = new Text("יָד");
 text.chars;
 //  [
@@ -117,7 +139,7 @@ text.chars;
 Returns the original string passed which has been decomposed, sequenced, qamets qatan patterns converted to the appropriate unicode character (U+05C7), and holem-waw sequences corrected.
 
 ```typescript
-import { Text } from "havarot";
+import { Text } from "havarotjs";
 const text: Text = new Text("אֵיפֹה־אַתָּה מֹשֶה");
 const words = text.words.map((word) => word.original);
 words;
@@ -133,7 +155,7 @@ words;
 Returns a string that has been properly trimmed, built up from the `.text` of its constituent parts.
 
 ```typescript
-import { Text } from "havarot";
+import { Text } from "havarotjs";
 const text: Text = new Text("אֵיפֹה־אַתָּה מֹשֶה");
 const words = text.words.map((word) => word.text);
 words;
@@ -149,7 +171,7 @@ words;
 Returns a one dimensional array of [Syllables](#Syllable)
 
 ```typescript
-import { Text } from "havarot";
+import { Text } from "havarotjs";
 const text: Text = new Text("אֵיפֹה־אַתָּה מֹשֶה");
 text.words[0].syllables;
 // [
@@ -163,7 +185,7 @@ text.words[0].syllables;
 Returns a one dimensional array of [Clusters](#Cluster)
 
 ```typescript
-import { Text } from "havarot";
+import { Text } from "havarotjs";
 const text: Text = new Text("אֵיפֹה־אַתָּה מֹשֶה");
 text.words[0].clusters;
 // [
@@ -179,7 +201,7 @@ text.words[0].clusters;
 Returns a one dimensional array of [Chars](#Char)
 
 ```typescript
-import { Text } from "havarot";
+import { Text } from "havarotjs";
 const text: Text = new Text("אֵיפֹה־אַתָּה מֹשֶה");
 text.words[0].chars;
 // [
@@ -207,7 +229,7 @@ See the [syllabification](./docs/syllabification.md) doc for how a syllable is d
 Returns a string that has been built up from the `.text` of its constituent parts.
 
 ```typescript
-import { Text } from "havarot";
+import { Text } from "havarotjs";
 const text: Text = new Text("וַיִּקְרָ֨א");
 const sylText = text.syllables.map((syl) => syl.text);
 sylText;
@@ -223,7 +245,7 @@ sylText;
 Returns a one dimensional array of [Clusters](#Cluster)
 
 ```typescript
-import { Text } from "havarot";
+import { Text } from "havarotjs";
 const text: Text = new Text("וַיִּקְרָ֨א");
 text.syllables[1].clusters;
 // [
@@ -237,7 +259,7 @@ text.syllables[1].clusters;
 Returns a one dimensional array of [Chars](#Char)
 
 ```typescript
-import { Text } from "havarot";
+import { Text } from "havarotjs";
 const text: Text = new Text("וַיִּקְרָ֨א");
 text.syllables[2].chars;
 // [
@@ -253,7 +275,7 @@ text.syllables[2].chars;
 Returns a `boolean`.
 
 ```typescript
-import { Text } from "havarot";
+import { Text } from "havarotjs";
 const text: Text = new Text("וַיִּקְרָ֨א");
 text.syllables[0].isClosed;
 // true
@@ -268,7 +290,7 @@ Returns a `boolean`.
 Though Hebrew words are typically accented on the final syllable, this is not always the case.
 
 ```typescript
-import { Text } from "havarot";
+import { Text } from "havarotjs";
 const text: Text = new Text("וַיִּקְרָ֨א"); // note the taamei over the ר
 text.syllables[0].isAccented; // i.e. "וַ"
 // false
@@ -281,7 +303,7 @@ text.syllables[2].isAccented; // i.e. "רָ֨א"
 Returns a `boolean`.
 
 ```typescript
-import { Text } from "havarot";
+import { Text } from "havarotjs";
 const text: Text = new Text("וַיִּקְרָ֨א"); // note the taamei over the ר
 text.syllables[0].isFinal; // i.e. "וַ"
 // false
@@ -309,7 +331,7 @@ For the issues concerning normalization, see the [SBL Hebrew Font Manual](https:
 Returns a string that has been built up from the `.text` of its constituent parts.
 
 ```typescript
-import { Text } from "havarot";
+import { Text } from "havarotjs";
 const text: Text = new Text("הֲבָרֹות");
 const clusters = text.clusters.map((cluster) => cluster.text);
 // [
@@ -326,7 +348,7 @@ const clusters = text.clusters.map((cluster) => cluster.text);
 Returns a one dimensional array of [Chars](#Char).
 
 ```typescript
-import { Text } from "havarot";
+import { Text } from "havarotjs";
 const text: Text = new Text("הֲבָרֹות");
 text.clusters[0].chars;
 // [
@@ -345,7 +367,7 @@ Returns `true` if the following long vowel character are present:
 - \u{05BA} HOLAM HASER FOR VAV
 
 ```typescript
-import { Text } from "havarot";
+import { Text } from "havarotjs";
 const text: Text = new Text("הֲבָרֹות");
 text.clusters[0].hasLongVowel;
 // false
@@ -364,7 +386,7 @@ Returns `true` if the following long vowel character are present:
 - \u{05C7} QAMATS QATAN
 
 ```typescript
-import { Text } from "havarot";
+import { Text } from "havarotjs";
 const text: Text = new Text("מַלְכָּה");
 text.clusters[0].hasShortVowel;
 // true
@@ -381,7 +403,7 @@ Returns `true` if the following long vowel character are present:
 - \u{05B3} HATAF QAMATS
 
 ```typescript
-import { Text } from "havarot";
+import { Text } from "havarotjs";
 const text: Text = new Text("הֲבָרֹות");
 text.clusters[0].hasHalfVowel;
 // true
@@ -396,7 +418,7 @@ Returns `true` if `Cluster.hasLongVowel`, `Cluster.hasShortVowel`, or `Cluster.h
 According to [syllbaification](./docs/syllabfication.md), a shewa is a vowel and serves as the nucleus of a syllable. Because `Cluster` is concerned with orthography, a shewa is **not** a vowel character.
 
 ```typescript
-import { Text } from "havarot";
+import { Text } from "havarotjs";
 const text: Text = new Text("הֲבָרֹות");
 text.clusters[0].hasVowel;
 // true
@@ -411,7 +433,7 @@ Returns `true` is the following character is present:
 - \u{05BD} METEG
 
 ```typescript
-import { Text } from "havarot";
+import { Text } from "havarotjs";
 const text: Text = new Text("הֲבָרֹות");
 text.clusters[0].hasMetheg;
 // false
@@ -424,7 +446,7 @@ Returns `true` is the following character is present:
 - \u{05B0} SHEWA
 
 ```typescript
-import { Text } from "havarot";
+import { Text } from "havarotjs";
 const text: Text = new Text("מַלְכָּה");
 text.clusters[0].hasShewa;
 // false
@@ -439,7 +461,7 @@ Returns `true` is the following characters are present:
 - \u{0591}-\u{05AF}\u{05BF}\u{05C0}\u{05C3}-\u{05C6}\u{05F3}\u{05F4}
 
 ```typescript
-import { Text } from "havarot";
+import { Text } from "havarotjs";
 const text: Text = new Text("אֱלֹהִ֑ים");
 text.clusters[0].hasTaamei;
 // false
@@ -457,7 +479,7 @@ See [`Cluster`](#Cluster) for correct normalization.
 Returns a string of the character that is passed in
 
 ```typescript
-import { Text } from "havarot";
+import { Text } from "havarotjs";
 const text: Text = new Text("אֱלֹהִ֑ים");
 text.chars[0].text;
 // "א"
@@ -474,7 +496,7 @@ Returns a number used for sequencing
 - taamei (accents) = 4
 
 ```typescript
-import { Text } from "havarot";
+import { Text } from "havarotjs";
 const text: Text = new Text("אֱלֹהִ֑ים");
 text.chars[0].sequencePosition; // the aleph
 // 0
