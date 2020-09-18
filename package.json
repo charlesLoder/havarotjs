@@ -1,5 +1,5 @@
 {
-  "name": "havarot",
+  "name": "havarotjs",
   "version": "0.1.1",
   "description": "A Typescript package for syllabic data about Hebrew text",
   "main": "./dist/index.js",
