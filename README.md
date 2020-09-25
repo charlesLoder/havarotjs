@@ -10,7 +10,6 @@ const heb: string = "אֱלֹהִים";
 const text: Text = new Text(heb);
 const sylText = text.syllables.map((syl) => syl.text);
 sylText;
-//
 //  [
 //    "אֱ"
 //    "לֹ"
@@ -424,6 +423,22 @@ text.clusters[0].hasVowel;
 // true
 text.clusters[4].hasVowel;
 // false
+```
+
+#### Cluster.isShureq
+
+Returns `true` if `Cluster.hasVowel` is `false` and `Cluster.text` is a waw followed by a dagesh (e.g. `וּ`)
+
+A shureq is vowel itself, but contains no vowel characters (hence why `hasVowel` cannot be `true`).
+This allows for easier syllabification
+
+```typescript
+import { Text } from "havarotjs";
+const text: Text = new Text("קוּם");
+text.clusters[0].isShureq;
+// false
+text.clusters[1].isShureq;
+// true
 ```
 
 #### Cluster.hasMetheg
