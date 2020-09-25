@@ -31,12 +31,17 @@ export class Cluster {
     return /[\u{05B4}\u{05B6}\u{05B7}\u{05BB}\u{05C7}]/u.test(this.text);
   }
 
+  get hasHalfVowel(): boolean {
+    return /[\u{05B1}-\u{05B3}]/u.test(this.text);
+  }
+
   get hasVowel(): boolean {
     return this.hasLongVowel || this.hasShortVowel || this.hasHalfVowel;
   }
 
-  get hasHalfVowel(): boolean {
-    return /[\u{05B1}-\u{05B3}]/u.test(this.text);
+  get isShureq(): boolean {
+    const shureq = /\u{05D5}\u{05BC}/u;
+    return !this.hasVowel ? shureq.test(this.text) : false;
   }
 
   get hasMetheg(): boolean {
