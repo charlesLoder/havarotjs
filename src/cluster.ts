@@ -44,6 +44,11 @@ export class Cluster {
     return !this.hasVowel ? shureq.test(this.text) : false;
   }
 
+  get isMater(): boolean {
+    const maters = /[היוא]/u;
+    return !this.hasVowel && !this.isShureq && !this.hasShewa ? maters.test(this.text) : false;
+  }
+
   get hasMetheg(): boolean {
     return /\u{05BD}/u.test(this.text);
   }

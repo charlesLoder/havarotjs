@@ -441,6 +441,21 @@ text.clusters[1].isShureq;
 // true
 ```
 
+#### Cluster.isMater
+
+Returns `true` if `Cluster.hasVowel`, `Cluster.hasShewa`, and, `Cluster.isShureq` are all `false` and `Cluster.text` containts a `ה`, `י`, `ו`, or `א`.
+
+Though a shureq is a mater letter, it is also a vowel itself, and thus separate from `isMater`.
+
+```typescript
+import { Text } from "havarotjs";
+const text: Text = new Text("סוּסָה");
+text.clusters[1].isMater; // the shureq
+// false
+text.clusters[3].isMater; // the heh
+// true
+```
+
 #### Cluster.hasMetheg
 
 Returns `true` is the following character is present:
