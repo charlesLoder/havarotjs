@@ -45,7 +45,7 @@ export class Cluster {
   }
 
   get isMater(): boolean {
-    const maters = /[היוא]/u;
+    const maters = /[היוא](?!\u{05BC})/u;
     return !this.hasVowel && !this.isShureq && !this.hasShewa ? maters.test(this.text) : false;
   }
 
