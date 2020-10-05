@@ -1,48 +1,40 @@
 import { Cluster } from "../cluster";
 import { Syllable } from "../syllable";
 
-// an intermediate step between Cluster and Syllables
-interface Syl {
-  clusters: Cluster[];
-  isClosed: boolean;
-}
-
-const isSyl = (input: Syl | Cluster): input is Syl => {
-  return (input as Syl).clusters !== undefined;
-};
-
 /**
  * @description determines the Cluster[] that will become the final Syllable
  */
-const groupFinal = (arr: Cluster[]): (Syl | Cluster)[] => {
+const groupFinal = (arr: Cluster[]): (Syllable | Cluster)[] => {
   // grouping the final first helps to avoid issues with final kafs/tavs
   const len = arr.length;
   let i = len - 1;
-  let syl: Syl = { clusters: [], isClosed: false };
-  let result: (Syl | Cluster)[] = [];
+  let syl: Cluster[] = [];
+  let result: (Syllable | Cluster)[] = [];
   let vowelPresent = false;
-  // get final cluster ans push to syl
+  let isClosed = false;
+
+  // get final cluster and push to syl
   const finalCluster = arr[i];
-  syl.clusters.unshift(finalCluster);
+  syl.unshift(finalCluster);
 
   if (finalCluster.hasVowel) {
-    // check if finalCluster is Syllable
+    // check if finalCluster is syllable
     vowelPresent = true;
     i--;
   } else if (finalCluster.isShureq) {
     // check if final cluster isShureq and get preceding Cluster
     i--;
-    syl.clusters.unshift(arr[i]);
+    syl.unshift(arr[i]);
     vowelPresent = true;
     i--;
   } else {
-    syl.isClosed = !finalCluster.isMater;
+    isClosed = !finalCluster.isMater;
     i--;
   }
 
   while (!vowelPresent) {
     let curr = arr[i];
-    syl.clusters.unshift(curr);
+    syl.unshift(curr);
     vowelPresent = "hasVowel" in curr ? curr.hasVowel : true;
     i--;
     if (i < 0) {
@@ -50,9 +42,10 @@ const groupFinal = (arr: Cluster[]): (Syl | Cluster)[] => {
     }
   }
 
+  const finalSyllable = new Syllable(syl, { isClosed: isClosed });
   const remainder = arr.slice(0, i + 1);
   result = remainder;
-  result.push(syl);
+  result.push(finalSyllable);
 
   return result;
 };
@@ -60,50 +53,68 @@ const groupFinal = (arr: Cluster[]): (Syl | Cluster)[] => {
 /**
  * @description groups shewas either by themselves or with preceding short vowel
  */
-const groupShewas = (arr: (Syl | Cluster)[]): (Syl | Cluster)[] => {
+const groupShewas = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
   const reversed = arr.reverse();
   let shewaPresent = false;
-  let syl: Syl = { clusters: [], isClosed: false };
-  let result: (Syl | Cluster)[] = [];
+  let syl: Cluster[] = [];
+  let result: (Syllable | Cluster)[] = [];
   const len = arr.length;
+
   for (let index = 0; index < len; index++) {
     const cluster = reversed[index];
-    if (isSyl(cluster)) {
+
+    // skip if already a syllable
+    if (cluster instanceof Syllable) {
       result.unshift(cluster);
       continue;
     }
+
     if (cluster.hasShewa && !shewaPresent) {
       shewaPresent = true;
-      syl.clusters.push(cluster);
+      syl.push(cluster);
       continue;
     }
+
     if (cluster.hasShewa && shewaPresent) {
-      result.unshift(syl);
-      syl.clusters = [];
-      syl.clusters.push(cluster);
+      let syllable = new Syllable(syl);
+      result.unshift(syllable);
+      syl = [];
+      syl.push(cluster);
       continue;
     }
+
     if (cluster.hasShortVowel && shewaPresent) {
-      syl.clusters.push(cluster);
-      syl.isClosed = true;
-      result.unshift(syl);
-      syl.clusters = [];
-      syl.isClosed = false;
+      const dageshRegx = /\u{05BC}/u;
+      const prev = syl[0].text;
+      // check if there is a doubling dagesh
+      if (dageshRegx.test(prev)) {
+        let syllable = new Syllable(syl);
+        result.unshift(syllable);
+        syl = [];
+      }
+      syl.unshift(cluster);
+      let syllable = new Syllable(syl, { isClosed: true });
+      result.unshift(syllable);
+      syl = [];
       shewaPresent = false;
       continue;
     }
+
     if (cluster.hasLongVowel && shewaPresent) {
-      result.unshift(syl);
+      let syllable = new Syllable(syl);
+      result.unshift(syllable);
       result.unshift(cluster);
-      syl.clusters = [];
+      syl = [];
       shewaPresent = false;
       continue;
     }
+
     result.unshift(cluster);
   }
 
-  if (syl.clusters.length) {
-    result.unshift(syl);
+  if (syl.length) {
+    let syllable = new Syllable(syl);
+    result.unshift(syllable);
   }
 
   return result;
@@ -112,59 +123,73 @@ const groupShewas = (arr: (Syl | Cluster)[]): (Syl | Cluster)[] => {
 /**
  * @description groups no-final maters with preceding cluster
  */
-const groupMaters = (arr: (Syl | Cluster)[]): (Syl | Cluster)[] => {
+const groupMaters = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
   const reversed = arr.reverse();
   const len = arr.length;
-  let syl: Syl = { clusters: [], isClosed: false };
-  let result: (Syl | Cluster)[] = [];
+  let syl: Cluster[] = [];
+  let result: (Syllable | Cluster)[] = [];
+
   for (let index = 0; index < len; index++) {
     const cluster = reversed[index];
-    if (isSyl(cluster)) {
+
+    if (cluster instanceof Syllable) {
       result.unshift(cluster);
       continue;
     }
+
     if (cluster.isMater) {
-      syl.clusters.push(cluster);
+      syl.push(cluster);
       const nxt = reversed[index + 1];
-      if (isSyl(nxt)) {
-        result.unshift(nxt);
-        continue;
+
+      if (nxt instanceof Syllable) {
+        throw new Error("A Syllable shouldn't preceded a Cluster with a Mater");
       }
-      syl.clusters.push(nxt);
-      result.unshift(syl);
-      syl.clusters = [];
+
+      syl.push(nxt);
+      let syllable = new Syllable(syl);
+      result.unshift(syllable);
+      syl = [];
       index++;
     } else {
       result.unshift(cluster);
     }
   }
+
   return result;
 };
 
 /**
  * @description groups non-final shureqs with preceding cluster
  */
-const groupShureqs = (arr: (Syl | Cluster)[]): (Syl | Cluster)[] => {
+const groupShureqs = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
   const reversed = arr.reverse();
   const len = arr.length;
-  let syl: Syl = { clusters: [], isClosed: false };
-  let result: (Syl | Cluster)[] = [];
+  let syl: Cluster[] = [];
+  let result: (Syllable | Cluster)[] = [];
+
   for (let index = 0; index < len; index++) {
     const cluster = reversed[index];
-    if (isSyl(cluster)) {
+
+    if (cluster instanceof Syllable) {
       result.unshift(cluster);
       continue;
     }
+
     if (cluster.isShureq) {
-      syl.clusters.push(cluster);
+      syl.push(cluster);
       const nxt = reversed[index + 1];
-      if (isSyl(nxt)) {
-        result.unshift(nxt);
-        continue;
+
+      if (nxt instanceof Syllable) {
+        throw new Error("A Syllable shouldn't preceded a Cluster with a Shureq");
       }
-      syl.clusters.push(nxt);
-      result.unshift(syl);
-      syl.clusters = [];
+
+      if (nxt !== undefined) {
+        syl.push(nxt);
+      }
+
+      let syllable = new Syllable(syl);
+      result.unshift(syllable);
+      syl = [];
       index++;
     } else {
       result.unshift(cluster);
@@ -176,20 +201,12 @@ const groupShureqs = (arr: (Syl | Cluster)[]): (Syl | Cluster)[] => {
 /**
  * @description a preprocessing step that groups clusters into intermediate syllables by vowels or shewas
  */
-const groupClusters = (arr: Cluster[]): Syl[] => {
+const groupClusters = (arr: Cluster[]): (Syllable | Cluster)[] => {
   const finalGrouped = groupFinal(arr);
   const shewasGrouped = groupShewas(finalGrouped);
   const matersGroups = groupMaters(shewasGrouped);
   const shureqGroups = groupShureqs(matersGroups);
-  const notReal = shureqGroups.map((group) => {
-    if (isSyl(group)) {
-      return group;
-    }
-    let syl: Syl = { clusters: [], isClosed: false };
-    syl.clusters = [group];
-    return syl;
-  });
-  return notReal;
+  return shureqGroups;
 };
 
 export const syllabify = (text: string): Syllable[] => {
@@ -198,7 +215,20 @@ export const syllabify = (text: string): Syllable[] => {
   const groups = text.split(splits);
   const clusters = groups.map((group) => new Cluster(group));
   const groupedClusters = groupClusters(clusters);
-  const syllables = groupedClusters.map((syl) => new Syllable(syl.clusters, { isClosed: syl.isClosed }));
+  const syllables = groupedClusters.map((group) => (group instanceof Syllable ? group : new Syllable([group])));
+  // sets isClosed
+  syllables.forEach((syllable, index, arr) => {
+    if (index === arr.length - 1) {
+      return syllable;
+    }
+    if (!syllable.isClosed) {
+      const dageshRegx = /\u{05BC}/u;
+      let hasShortVowel = syllable.clusters.filter((cluster) => cluster.hasShortVowel).length ? true : false;
+      let prev = arr[index + 1];
+      let prevDagesh = dageshRegx.test(prev.text);
+      syllable.isClosed = hasShortVowel && prevDagesh;
+    }
+  });
   // sets accents
   syllables.forEach((syllable) => {
     let isAccented = syllable.clusters.filter((cluster) => cluster.hasTaamei).length ? true : false;
