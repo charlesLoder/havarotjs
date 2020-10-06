@@ -6,6 +6,8 @@ describe.each`
   ${"hiriq-yod, one syllable"}    | ${"פִּי"}    | ${["פִּי"]}            | ${[false, true]}
   ${"hiriq-yod, two syllables"}   | ${"קָטִיל"}  | ${["קָ", "טִיל"]}      | ${[false, false, true, false]}
   ${"hiriq-yod, three syllables"} | ${"מַשִיחַ"} | ${["מַ", "שִי", "חַ"]} | ${[false, false, true, false]}
+  ${"holem-waw, one syllable"}    | ${"בֹּו"}    | ${["בֹּו"]}            | ${[false, true]}
+  ${"holem-waw, three syllable"}  | ${"קֹולְךָ"} | ${["קֹו", "לְ", "ךָ"]} | ${[false, true, false, false]}
 `("$description", ({ original, sylArr, isMaterArr }) => {
   const heb = new Text(original);
   const sylText = heb.syllables.map((syllable) => syllable.text);
