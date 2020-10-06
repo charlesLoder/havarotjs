@@ -109,6 +109,15 @@ const groupShewas = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
       continue;
     }
 
+    if (cluster.isMater && shewaPresent) {
+      let syllable = new Syllable(syl);
+      result.unshift(syllable);
+      result.unshift(cluster);
+      syl = [];
+      shewaPresent = false;
+      continue;
+    }
+
     result.unshift(cluster);
   }
 
