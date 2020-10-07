@@ -5,13 +5,11 @@ import { Char } from "./char";
 
 export class Word {
   original: string;
+  text: string;
 
   constructor(text: string) {
     this.original = text;
-  }
-
-  get text(): string {
-    return this.original.trim();
+    this.text = this.original.trim();
   }
 
   /**
