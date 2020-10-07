@@ -165,6 +165,35 @@ words;
 //  ]
 ```
 
+#### Word.whiteSpaceAfter & Word.whiteSpaceBefore
+
+Returns a string with any whitespace characters (e.g. `/\s/`) from before the word.
+It does **not** capture whitespace at the start of a `Text`.
+
+```typescript
+import { Text } from "havarotjs";
+const heb = `
+עֶבֶד
+אֱלֹהִים
+`;
+const text: Text = new Text(heb);
+text.words;
+// [
+//   Word {
+//     original: 'עֶבֶד\n',
+//     text: 'עֶבֶד',
+//     whiteSpaceBefore: '',
+//     whiteSpaceAfter: '\n'
+//   },
+//   Word {
+//     original: 'אֱלֹהִים',
+//     text: 'אֱלֹהִים',
+//     whiteSpaceBefore: '',
+//     whiteSpaceAfter: ''
+//   }
+// ]
+```
+
 #### Word.syllables
 
 Returns a one dimensional array of [Syllables](#Syllable)
@@ -443,7 +472,7 @@ text.clusters[1].isShureq;
 
 #### Cluster.isMater
 
-Returns `true` if `Cluster.hasVowel`, `Cluster.hasShewa`, and, `Cluster.isShureq` are all `false` and `Cluster.text` containts a `ה`, `י`, `ו`, or `א`.
+Returns `true` if `Cluster.hasVowel`, `Cluster.hasShewa`, and, `Cluster.isShureq` are all `false` and `Cluster.text` contains a `ה`, `י`, `ו`, or `א`.
 
 Though a shureq is a mater letter, it is also a vowel itself, and thus separate from `isMater`.
 
