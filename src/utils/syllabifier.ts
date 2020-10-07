@@ -219,7 +219,6 @@ const groupClusters = (arr: Cluster[]): (Syllable | Cluster)[] => {
 };
 
 export const syllabify = (text: string): Syllable[] => {
-  text = text.trim();
   const splits = /(?=[\u{05D0}-\u{05F2}])/u;
   const groups = text.split(splits);
   const clusters = groups.map((group) => new Cluster(group));

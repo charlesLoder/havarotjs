@@ -18,7 +18,7 @@ export class Word {
    * @returns a one dimensional array of Syllables
    */
   get syllables(): Syllable[] {
-    return syllabify(this.original);
+    return syllabify(this.text);
   }
 
   /**
