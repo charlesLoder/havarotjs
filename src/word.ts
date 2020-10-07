@@ -11,7 +11,7 @@ export class Word {
   }
 
   get text(): string {
-    return this.syllables.reduce((init, syl) => init + syl.text, "");
+    return this.original.trim();
   }
 
   /**
