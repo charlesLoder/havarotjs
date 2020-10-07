@@ -29,7 +29,7 @@ export class Text {
    * @returns a string that has been decomposed, sequenced, qamets qatan patterns converted to the appropriate unicode character (U+05C7), and holem-waw sequences corrected
    */
   get text(): string {
-    const text = this.normalized;
+    const text = this.normalized.trim();
     const sequencedChar = sequence(text).reduce((a, c) => a.concat(c), []);
     const sequencedText = sequencedChar.reduce((a, c) => a + c.text, "");
     // split text at spaces and maqqef, spaces are added to the array as separate entries
