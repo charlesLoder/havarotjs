@@ -109,6 +109,15 @@ const groupShewas = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
       continue;
     }
 
+    if (cluster.isMater && shewaPresent) {
+      let syllable = new Syllable(syl);
+      result.unshift(syllable);
+      result.unshift(cluster);
+      syl = [];
+      shewaPresent = false;
+      continue;
+    }
+
     result.unshift(cluster);
   }
 
@@ -145,7 +154,7 @@ const groupMaters = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
         throw new Error("A Syllable shouldn't preceded a Cluster with a Mater");
       }
 
-      syl.push(nxt);
+      syl.unshift(nxt);
       let syllable = new Syllable(syl);
       result.unshift(syllable);
       syl = [];
