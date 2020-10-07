@@ -131,7 +131,7 @@ text.chars;
 
 ### Word
 
-`Text.text` is split at each space and maqqef (U+05BE) both of which are captured. Thus, the string passed to instantiate each `Word` is already properly decomposed, sequenced, and qamets qatan patterns converted to the appropriate unicode character (U+05C7).
+`Text.text` is split at each space and maqqef (U+05BE) both of which are captured. Thus, the string passed to instantiate each `Word` is already properly decomposed, sequenced, qamets qatan patterns converted to the appropriate unicode character (U+05C7), and holem-waw sequences corrected.
 
 #### Word.original
 
@@ -151,7 +151,7 @@ words;
 
 #### Word.text
 
-Returns a string that has been properly trimmed, built up from the `.text` of its constituent parts.
+Returns a string that has been properly trimmed from `.original`.
 
 ```typescript
 import { Text } from "havarotjs";
