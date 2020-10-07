@@ -5,6 +5,7 @@ import { holemWaw } from "./utils/holemWaw";
 import { Syllable } from "./syllable";
 import { Cluster } from "./cluster";
 import { Char } from "./char";
+import { splitGroup } from "./utils/regularExpressions";
 
 export class Text {
   original: string;
@@ -33,7 +34,7 @@ export class Text {
     const sequencedChar = sequence(text).reduce((a, c) => a.concat(c), []);
     const sequencedText = sequencedChar.reduce((a, c) => a + c.text, "");
     // split text at spaces and maqqef, spaces are added to the array as separate entries
-    const textArr = sequencedText.split(/(\s|\S*\u{05BE})/u);
+    const textArr = sequencedText.split(splitGroup);
     const mapQQatan = textArr.map((word) => convertsQametsQatan(word));
     const mapHolemWaw = mapQQatan.map((word) => holemWaw(word));
     return mapHolemWaw.reduce((a, c) => a + c, "");
@@ -45,8 +46,7 @@ export class Text {
   get words(): Word[] {
     let sanitized = this.text;
     // split text at spaces and maqqef, spaces are NOT added to the array but to the word
-    // this may not be right
-    const split = sanitized.split(/(\S*\s|\S*\u{05BE})/u);
+    const split = sanitized.split(splitGroup);
     const textArr = split.filter((group) => group);
     return textArr.map((word) => new Word(word));
   }
