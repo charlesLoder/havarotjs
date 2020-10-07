@@ -6,10 +6,16 @@ import { Char } from "./char";
 export class Word {
   original: string;
   text: string;
+  whiteSpaceBefore: string | null;
+  whiteSpaceAfter: string | null;
 
   constructor(text: string) {
     this.original = text;
     this.text = this.original.trim();
+    let startMatch = text.match(/^\s*/g);
+    let endMatch = text.match(/\s*$/g);
+    this.whiteSpaceBefore = startMatch ? startMatch[0] : null;
+    this.whiteSpaceAfter = endMatch ? endMatch[0] : null;
   }
 
   /**
