@@ -211,11 +211,6 @@ const groupShureqs = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
  * @description a preprocessing step that groups clusters into intermediate syllables by vowels or shewas
  */
 const groupClusters = (arr: Cluster[]): (Syllable | Cluster)[] => {
-  // check for non-Hebrew chars/digits
-  if (/\w/.test(arr[0].text)) {
-    const syl = new Syllable(arr);
-    return [syl];
-  }
   const finalGrouped = groupFinal(arr);
   const shewasGrouped = groupShewas(finalGrouped);
   const matersGroups = groupMaters(shewasGrouped);
@@ -223,10 +218,7 @@ const groupClusters = (arr: Cluster[]): (Syllable | Cluster)[] => {
   return shureqGroups;
 };
 
-export const syllabify = (text: string): Syllable[] => {
-  const splits = /(?=[\u{05D0}-\u{05F2}])/u;
-  const groups = text.split(splits);
-  const clusters = groups.map((group) => new Cluster(group));
+export const syllabify = (clusters: Cluster[]): Syllable[] => {
   const groupedClusters = groupClusters(clusters);
   const syllables = groupedClusters.map((group) => (group instanceof Syllable ? group : new Syllable([group])));
   // sets isClosed

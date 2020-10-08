@@ -22,14 +22,17 @@ export class Word {
    * @returns a one dimensional array of Syllables
    */
   get syllables(): Syllable[] {
-    return syllabify(this.text);
+    return syllabify(this.clusters);
   }
 
   /**
    * @returns a one dimensional array of Clusters
    */
   get clusters(): Cluster[] {
-    return this.syllables.map((syllable) => syllable.clusters).reduce((a, c) => a.concat(c), []);
+    const consonantSplit = /(?=[\u{05D0}-\u{05F2}])/u;
+    const groups = this.text.split(consonantSplit);
+    const clusters = groups.map((group) => new Cluster(group));
+    return clusters;
   }
 
   /**
