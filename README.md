@@ -165,47 +165,6 @@ words;
 //  ]
 ```
 
-#### Word.whiteSpaceAfter & Word.whiteSpaceBefore
-
-Returns a string with any whitespace characters (e.g. `/\s/`) from before the word.
-It does **not** capture whitespace at the start of a `Text`.
-
-```typescript
-import { Text } from "havarotjs";
-const heb = `
-עֶבֶד
-אֱלֹהִים
-`;
-const text: Text = new Text(heb);
-text.words;
-// [
-//   Word {
-//     original: 'עֶבֶד\n',
-//     text: 'עֶבֶד',
-//     whiteSpaceBefore: '',
-//     whiteSpaceAfter: '\n'
-//   },
-//   Word {
-//     original: 'אֱלֹהִים',
-//     text: 'אֱלֹהִים',
-//     whiteSpaceBefore: '',
-//     whiteSpaceAfter: ''
-//   }
-// ]
-```
-
-#### Word.isDivineName
-
-Returns a `boolean` indicating if the word is a form of the Divine Name.
-Only recognizes forms that have all four letters.
-
-```typescript
-import { Text } from "havarotjs";
-const text: Text = new Text("יְהוָה");
-text.words[0].isDivineName;
-// true
-```
-
 #### Word.syllables
 
 Returns a one dimensional array of [Syllables](#Syllable)
@@ -254,15 +213,53 @@ text.words[0].chars;
 //  ]
 ```
 
+#### Word.whiteSpaceAfter & Word.whiteSpaceBefore
+
+Returns a string with any whitespace characters (e.g. `/\s/`) from before the word.
+It does **not** capture whitespace at the start of a `Text`.
+
+```typescript
+import { Text } from "havarotjs";
+const heb = `
+עֶבֶד
+אֱלֹהִים
+`;
+const text: Text = new Text(heb);
+text.words;
+// [
+//   Word {
+//     original: 'עֶבֶד\n',
+//     text: 'עֶבֶד',
+//     whiteSpaceBefore: '',
+//     whiteSpaceAfter: '\n'
+//   },
+//   Word {
+//     original: 'אֱלֹהִים',
+//     text: 'אֱלֹהִים',
+//     whiteSpaceBefore: '',
+//     whiteSpaceAfter: ''
+//   }
+// ]
+```
+
+#### Word.isDivineName
+
+Returns a `boolean` indicating if the word is a form of the Divine Name.
+Only recognizes forms that have all four letters.
+
+```typescript
+import { Text } from "havarotjs";
+const text: Text = new Text("יְהוָה");
+text.words[0].isDivineName;
+// true
+```
+
 ### Syllable
 
 A `Syllable` is created from an array of `Clusters`.
 
-This is where things get tricky. The string from `Word.original` is passed into `syllabify()` from `"./src/utils/syllabifier"`.
-This string is then converted into `Clusters` which are analyzed as being part of a syllable since a syallble can have more than one cluster.
-The `syllabify()` function determines if a what is a syllable and if it is closed, accented, or final.
-
 See the [syllabification](./docs/syllabification.md) doc for how a syllable is determined.
+Currently, the Divine Name (e.g. יהוה) and non-Hebrew text is treated as a _single syllable_ because these do not follow Hebrew rules of syllabification.
 
 #### Syllable.text
 
