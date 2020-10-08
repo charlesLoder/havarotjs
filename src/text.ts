@@ -19,11 +19,6 @@ export class Text {
     if (!niqqud.test(text)) {
       throw new Error("Text must contain niqqud");
     }
-
-    if (/[\w%\@\-\:]/.test(text)) {
-      throw new Error("Text should not contain non-Hebrew text");
-    }
-
     return text;
   }
 
