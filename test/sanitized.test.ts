@@ -49,10 +49,9 @@ describe.each`
   ${"Form: Yehwih"}  | ${"יֱהוִה֙"}  | ${true}
   ${"Form: Yǝhowih"} | ${"יְהֹוִה֙"} | ${true}
   ${"Form: Yǝhwih"}  | ${"יְהוִֽה"}  | ${true}
-`("$description", ({ name, isDivineName, sanitized }) => {
+`("$description", ({ name, isDivineName }) => {
   let text = new Text(name);
   let word = text.words[0];
-  let wordText = word.text;
   let isDivine = word.isDivineName;
   test(`is it the Divine Name: ${isDivineName}`, () => {
     expect(isDivine).toEqual(isDivineName);
