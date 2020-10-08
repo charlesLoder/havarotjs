@@ -211,6 +211,11 @@ const groupShureqs = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
  * @description a preprocessing step that groups clusters into intermediate syllables by vowels or shewas
  */
 const groupClusters = (arr: Cluster[]): (Syllable | Cluster)[] => {
+  // check for non-Hebrew chars/digits
+  if (/\w/.test(arr[0].text)) {
+    const syl = new Syllable(arr);
+    return [syl];
+  }
   const finalGrouped = groupFinal(arr);
   const shewasGrouped = groupShewas(finalGrouped);
   const matersGroups = groupMaters(shewasGrouped);
