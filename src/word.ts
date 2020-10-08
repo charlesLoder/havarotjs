@@ -46,6 +46,9 @@ export class Word {
     return this.clusters.map((cluster) => cluster.chars).reduce((a, c) => a.concat(c), []);
   }
 
+  /**
+   * @returns a boolean indicating if the text is a form of the Divine Name
+   */
   get isDivineName(): boolean {
     const nonChars = /[\u{0591}-\u{05C7}]/gu;
     const stripped = this.text.replace(nonChars, "");
