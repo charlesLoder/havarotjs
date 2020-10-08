@@ -218,11 +218,7 @@ const groupClusters = (arr: Cluster[]): (Syllable | Cluster)[] => {
   return shureqGroups;
 };
 
-export const syllabify = (text: string): Syllable[] => {
-  text = text.trim();
-  const splits = /(?=[\u{05D0}-\u{05F2}])/u;
-  const groups = text.split(splits);
-  const clusters = groups.map((group) => new Cluster(group));
+export const syllabify = (clusters: Cluster[]): Syllable[] => {
   const groupedClusters = groupClusters(clusters);
   const syllables = groupedClusters.map((group) => (group instanceof Syllable ? group : new Syllable([group])));
   // sets isClosed

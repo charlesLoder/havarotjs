@@ -5,27 +5,38 @@ import { Char } from "./char";
 
 export class Word {
   original: string;
+  text: string;
+  whiteSpaceBefore: string | null;
+  whiteSpaceAfter: string | null;
 
   constructor(text: string) {
     this.original = text;
-  }
-
-  get text(): string {
-    return this.syllables.reduce((init, syl) => init + syl.text, "");
+    this.text = this.original.trim();
+    let startMatch = text.match(/^\s*/g);
+    let endMatch = text.match(/\s*$/g);
+    this.whiteSpaceBefore = startMatch ? startMatch[0] : null;
+    this.whiteSpaceAfter = endMatch ? endMatch[0] : null;
   }
 
   /**
    * @returns a one dimensional array of Syllables
    */
   get syllables(): Syllable[] {
-    return syllabify(this.original);
+    if (/\w/.test(this.text) || this.isDivineName) {
+      const syl = new Syllable(this.clusters);
+      return [syl];
+    }
+    return syllabify(this.clusters);
   }
 
   /**
    * @returns a one dimensional array of Clusters
    */
   get clusters(): Cluster[] {
-    return this.syllables.map((syllable) => syllable.clusters).reduce((a, c) => a.concat(c), []);
+    const consonantSplit = /(?=[\u{05D0}-\u{05F2}])/u;
+    const groups = this.text.split(consonantSplit);
+    const clusters = groups.map((group) => new Cluster(group));
+    return clusters;
   }
 
   /**
@@ -33,5 +44,14 @@ export class Word {
    */
   get chars(): Char[] {
     return this.clusters.map((cluster) => cluster.chars).reduce((a, c) => a.concat(c), []);
+  }
+
+  /**
+   * @returns a boolean indicating if the text is a form of the Divine Name
+   */
+  get isDivineName(): boolean {
+    const nonChars = /[\u{0591}-\u{05C7}]/gu;
+    const stripped = this.text.replace(nonChars, "");
+    return stripped === "יהוה";
   }
 }

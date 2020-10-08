@@ -40,3 +40,20 @@ describe.each`
     expect(wawHolemX.test(sanitized)).toEqual(wawHolem);
   });
 });
+
+describe.each`
+  description        | name          | isDivineName
+  ${"Form: Yehwah"}  | ${"יְהוָה"}   | ${true}
+  ${"Form: Yehowah"} | ${"יְהֹוָ֨ה"} | ${true}
+  ${"Form: Yehowih"} | ${"יֱהֹוִ֡ה"} | ${true}
+  ${"Form: Yehwih"}  | ${"יֱהוִה֙"}  | ${true}
+  ${"Form: Yǝhowih"} | ${"יְהֹוִה֙"} | ${true}
+  ${"Form: Yǝhwih"}  | ${"יְהוִֽה"}  | ${true}
+`("$description", ({ name, isDivineName }) => {
+  let text = new Text(name);
+  let word = text.words[0];
+  let isDivine = word.isDivineName;
+  test(`is it the Divine Name: ${isDivineName}`, () => {
+    expect(isDivine).toEqual(isDivineName);
+  });
+});
