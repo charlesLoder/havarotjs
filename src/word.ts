@@ -41,4 +41,10 @@ export class Word {
   get chars(): Char[] {
     return this.clusters.map((cluster) => cluster.chars).reduce((a, c) => a.concat(c), []);
   }
+
+  get isDivineName(): boolean {
+    const nonChars = /[\u{0591}-\u{05C7}]/gu;
+    const stripped = this.text.replace(nonChars, "");
+    return stripped === "יהוה";
+  }
 }

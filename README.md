@@ -194,6 +194,18 @@ text.words;
 // ]
 ```
 
+#### Word.isDivineName
+
+Returns a `boolean` indicating if the word is a form of the Divine Name.
+Only recognizes forms that have all four letters.
+
+```typescript
+import { Text } from "havarotjs";
+const text: Text = new Text("יְהוָה");
+text.words[0].isDivineName;
+// true
+```
+
 #### Word.syllables
 
 Returns a one dimensional array of [Syllables](#Syllable)
