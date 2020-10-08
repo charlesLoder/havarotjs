@@ -22,6 +22,10 @@ export class Word {
    * @returns a one dimensional array of Syllables
    */
   get syllables(): Syllable[] {
+    if (/\w/.test(this.text) || this.isDivineName) {
+      const syl = new Syllable(this.clusters);
+      return [syl];
+    }
     return syllabify(this.clusters);
   }
 
