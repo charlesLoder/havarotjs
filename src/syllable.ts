@@ -1,21 +1,52 @@
 import { Cluster } from "./cluster";
 import { Char } from "./char";
+import { Node } from "./node";
 
-export class Syllable {
-  clusters: Cluster[];
+// export class Syllable extends Node<Cluster[]> {
+//   clusters: Cluster[];
+//   isClosed: boolean;
+//   isAccented: boolean;
+//   isFinal: boolean;
+
+//   constructor(clusters: Cluster[], { isClosed = false, isAccented = false, isFinal = false } = {}) {
+//     super();
+//     this.clusters = clusters;
+//     this.isClosed = isClosed;
+//     this.isAccented = isAccented;
+//     this.isFinal = isFinal;
+//   }
+
+//   get text(): string {
+//     return this.clusters.reduce((init, cluster) => init + cluster.text, "");
+//   }
+
+//   get chars(): Char[] {
+//     return this.clusters.map((cluster) => cluster.chars).reduce((a, c) => a.concat(c), []);
+//   }
+// }
+export class Syllable extends Node {
+  private _clusters: Cluster[];
   isClosed: boolean;
   isAccented: boolean;
   isFinal: boolean;
 
   constructor(clusters: Cluster[], { isClosed = false, isAccented = false, isFinal = false } = {}) {
-    this.clusters = clusters;
+    super();
+    this._clusters = clusters;
     this.isClosed = isClosed;
     this.isAccented = isAccented;
     this.isFinal = isFinal;
   }
 
   get text(): string {
-    return this.clusters.reduce((init, cluster) => init + cluster.text, "");
+    return this._clusters.reduce((init, cluster) => init + cluster.text, "");
+  }
+
+  get clusters(): Cluster[] {
+    this.children = this._clusters;
+    const first = this.child;
+    const remainder = first?.siblings;
+    return [first, ...remainder];
   }
 
   get chars(): Char[] {
