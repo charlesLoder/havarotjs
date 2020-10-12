@@ -225,8 +225,7 @@ export const makeClusters = (word: string): Cluster[] => {
   return clusters;
 };
 
-export const syllabify = (word: string): Syllable[] => {
-  const clusters = makeClusters(word);
+export const syllabify = (clusters: Cluster[]): Syllable[] => {
   const groupedClusters = groupClusters(clusters);
   const syllables = groupedClusters.map((group) => (group instanceof Syllable ? group : new Syllable([group])));
   // sets isClosed

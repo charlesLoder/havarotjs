@@ -1,14 +1,14 @@
 export class Node {
-  next: Node | null;
-  prev: Node | null;
-  child!: Node;
+  protected next: Node | null;
+  protected prev: Node | null;
+  protected child!: Node;
 
   constructor() {
     this.next = null;
     this.prev = null;
   }
 
-  set children(arr: any[]) {
+  protected set children(arr: any[]) {
     const head = arr[0];
     const remainder = arr.slice(1);
     this.child = head;

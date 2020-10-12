@@ -24,11 +24,10 @@ export class Word extends Node {
   get syllables(): Syllable[] {
     let syllables: Syllable[];
     if (/\w/.test(this.text) || this.isDivineName) {
-      const clusters = makeClusters(this.text);
-      const syl = new Syllable(clusters);
+      const syl = new Syllable(this.clusters);
       syllables = [syl];
     } else {
-      syllables = syllabify(this.text);
+      syllables = syllabify(this.clusters);
     }
     this.children = syllables;
     return syllables;
@@ -38,7 +37,11 @@ export class Word extends Node {
    * @returns a one dimensional array of Clusters
    */
   get clusters(): Cluster[] {
-    return this.syllables.map((syl) => syl.clusters).reduce((a, c) => a.concat(c), []);
+    const clusters = makeClusters(this.text);
+    const firstCluster = clusters[0];
+    const remainder = clusters.slice(1);
+    firstCluster.siblings = remainder;
+    return clusters;
   }
 
   /**

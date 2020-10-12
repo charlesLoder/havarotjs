@@ -50,9 +50,7 @@ export class Text extends Node {
     const groups = split.filter((group) => group);
     const words = groups.map((word) => new Word(word));
     this.children = words;
-    const first = this.child;
-    const remainder = first?.siblings;
-    return [first, ...remainder];
+    return words;
   }
 
   /**

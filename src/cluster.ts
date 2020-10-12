@@ -18,10 +18,9 @@ export class Cluster extends Node {
    * @returns an array of sequenced Char objects
    */
   get chars(): Char[] {
-    this.children = this.sequence();
-    const first = this.child;
-    const remainder = first?.siblings;
-    return [first, ...remainder];
+    const sequenced = this.sequence();
+    this.children = sequenced;
+    return sequenced;
   }
 
   private sequence(): Char[] {
@@ -51,8 +50,25 @@ export class Cluster extends Node {
   }
 
   get isMater(): boolean {
-    const maters = /[היוא](?!\u{05BC})/u;
-    return !this.hasVowel && !this.isShureq && !this.hasShewa ? maters.test(this.text) : false;
+    if (!this.hasVowel && !this.isShureq && !this.hasShewa) {
+      const text = this.text;
+      const prevText = this.prev instanceof Cluster ? this.prev.text : "";
+      const maters = /[היוא](?!\u{05BC})/u;
+      if (!maters.test(text)) {
+        return false;
+      }
+      if (/ה/.test(text) && /\u{05B8}/u.test(prevText)) {
+        return true;
+      }
+      if (/ו/.test(text) && /\u{05B9}/u.test(prevText)) {
+        return true;
+      }
+      if (/י/.test(text) && /\u{05B4}|\u{05B5}/u.test(prevText)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   get hasMetheg(): boolean {
