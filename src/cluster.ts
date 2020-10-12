@@ -53,7 +53,7 @@ export class Cluster extends Node {
     if (!this.hasVowel && !this.isShureq && !this.hasShewa) {
       const text = this.text;
       const prevText = this.prev instanceof Cluster ? this.prev.text : "";
-      const maters = /[היוא](?!\u{05BC})/u;
+      const maters = /[היו](?!\u{05BC})/u;
       if (!maters.test(text)) {
         return false;
       }
