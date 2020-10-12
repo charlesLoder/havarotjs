@@ -1,17 +1,17 @@
-import { syllabify } from "./utils/syllabifier";
+import { syllabify, makeClusters } from "./utils/syllabifier";
 import { Syllable } from "./syllable";
 import { Cluster } from "./cluster";
 import { Char } from "./char";
+import { Node } from "./node";
 
-export class Word {
-  original: string;
+export class Word extends Node {
   text: string;
   whiteSpaceBefore: string | null;
   whiteSpaceAfter: string | null;
 
   constructor(text: string) {
-    this.original = text;
-    this.text = this.original.trim();
+    super();
+    this.text = text.trim();
     let startMatch = text.match(/^\s*/g);
     let endMatch = text.match(/\s*$/g);
     this.whiteSpaceBefore = startMatch ? startMatch[0] : null;
@@ -22,20 +22,25 @@ export class Word {
    * @returns a one dimensional array of Syllables
    */
   get syllables(): Syllable[] {
+    let syllables: Syllable[];
     if (/\w/.test(this.text) || this.isDivineName) {
       const syl = new Syllable(this.clusters);
-      return [syl];
+      syllables = [syl];
+    } else {
+      syllables = syllabify(this.clusters);
     }
-    return syllabify(this.clusters);
+    this.children = syllables;
+    return syllables;
   }
 
   /**
    * @returns a one dimensional array of Clusters
    */
   get clusters(): Cluster[] {
-    const consonantSplit = /(?=[\u{05D0}-\u{05F2}])/u;
-    const groups = this.text.split(consonantSplit);
-    const clusters = groups.map((group) => new Cluster(group));
+    const clusters = makeClusters(this.text);
+    const firstCluster = clusters[0];
+    const remainder = clusters.slice(1);
+    firstCluster.siblings = remainder;
     return clusters;
   }
 

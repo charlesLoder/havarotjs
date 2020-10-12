@@ -481,7 +481,13 @@ text.clusters[1].isShureq;
 
 #### Cluster.isMater
 
-Returns `true` if `Cluster.hasVowel`, `Cluster.hasShewa`, and, `Cluster.isShureq` are all `false` and `Cluster.text` contains a `ה`, `י`, `ו`, or `א`.
+Returns `true` if `Cluster.hasVowel`, `Cluster.hasShewa`, and, `Cluster.isShureq` are all `false` and `Cluster.text` contains a:
+
+- `ה` preceded by a qamets
+- `ו` preceded by a holem
+- `י` preceded by a tsere or hiriq
+
+There are potentially others instances when a consonant may be a _mater_ (e.g. a final aleph, a he preceded by a seghol), but these are the most consistently so.
 
 Though a shureq is a mater letter, it is also a vowel itself, and thus separate from `isMater`.
 

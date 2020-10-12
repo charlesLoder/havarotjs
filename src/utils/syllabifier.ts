@@ -218,6 +218,13 @@ const groupClusters = (arr: Cluster[]): (Syllable | Cluster)[] => {
   return shureqGroups;
 };
 
+export const makeClusters = (word: string): Cluster[] => {
+  const consonantSplit = /(?=[\u{05D0}-\u{05F2}])/u;
+  const groups = word.split(consonantSplit);
+  const clusters = groups.map((group) => new Cluster(group));
+  return clusters;
+};
+
 export const syllabify = (clusters: Cluster[]): Syllable[] => {
   const groupedClusters = groupClusters(clusters);
   const syllables = groupedClusters.map((group) => (group instanceof Syllable ? group : new Syllable([group])));
