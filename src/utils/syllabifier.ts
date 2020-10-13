@@ -193,7 +193,7 @@ const groupShureqs = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
       }
 
       if (nxt !== undefined) {
-        syl.push(nxt);
+        syl.unshift(nxt);
       }
 
       let syllable = new Syllable(syl);
