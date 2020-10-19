@@ -50,6 +50,7 @@ describe.each`
   ${"3 Syl: inflected form with medial vocal shewa and doubling (sappǝrû)"} | ${"סַפְּר֤וּ"} | ${["סַ", "פְּ", "ר֤וּ"]} | ${[true, false, false]}  | ${[false, false, true]}
   ${"3 Syl: with qamets gadol (ḥākǝmâ)"}                                    | ${"חָֽכְמָ֖ה"} | ${["חָֽ", "כְ", "מָ֖ה"]} | ${[false, false, false]} | ${[false, false, true]}
   ${"3 Syl: lexical form - two vowels (dābār) + article"}                   | ${"הַדָּבָ֥ר"} | ${["הַ", "דָּ", "בָ֥ר"]} | ${[true, false, true]}   | ${[false, false, true]}
+  ${"3 Syl: inflected with SQNMLVY letter"}                                 | ${"וַיְהִ֗י"}  | ${["וַ", "יְ", "הִ֗י"]}  | ${[false, false, false]} | ${[false, false, true]}
 `("$description", ({ original, sylArr, closedArr, accentArr }) => {
   tests(original, sylArr, closedArr, accentArr);
 });
