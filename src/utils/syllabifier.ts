@@ -86,10 +86,20 @@ const groupShewas = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
     if (cluster.hasShortVowel && shewaPresent) {
       const dageshRegx = /\u{05BC}/u;
       const prev = syl[0].text;
+      const sqenemlevy = /[שסצקנמלוי]/;
+      const wawConsecutive = /וַ/;
       // check if there is a doubling dagesh
       if (dageshRegx.test(prev)) {
         result.unshift(new Syllable(syl));
         syl = [];
+      }
+      // check for waw-consecutive w/ sqenemlevy letter
+      else if (sqenemlevy.test(prev) && wawConsecutive.test(cluster.text)) {
+        result.unshift(new Syllable(syl));
+        result.unshift(new Syllable([cluster]));
+        syl = [];
+        shewaPresent = false;
+        continue;
       }
       syl.unshift(cluster);
       const syllable = new Syllable(syl, { isClosed: true });
