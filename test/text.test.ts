@@ -7,8 +7,8 @@ describe.each`
   ${"text: qamets follwed by hatef-qamets"}  | ${"\u{5D0}\u{5B8}\u{5D4}\u{5B3}\u{5DC}\u{5B4}\u{5D9}"} | ${true}   | ${false}
   ${"text: qamets qatan and qamets"}         | ${"בָּשְׁתָּם"}                                         | ${true}   | ${true}
 `("$description", ({ word, hasQamQat, hasQamets }) => {
-  let text = new Text(word);
-  let sanitized = text.text;
+  const text = new Text(word);
+  const sanitized = text.text;
   const qQRegx = /\u{05C7}/u;
   const qamRegx = /\u{05B8}/u;
   test(`Has Qamets Qatan should equal ${hasQamQat}`, () => {
@@ -28,8 +28,8 @@ describe.each`
   ${"text: consonatal waw with holem remains the same"}                 | ${"עֲוֹן"}    | ${false} | ${true}
   ${"text: consonatal waw with holem remains the same, accent present"} | ${"הֶעָוֹ֖ן"} | ${false} | ${true}
 `("$description", ({ word, holemWaw, wawHolem }) => {
-  let text = new Text(word);
-  let sanitized = text.text;
+  const text = new Text(word);
+  const sanitized = text.text;
   const holemWawX = /\u{05B9}\u{05D5}/u;
   const wawHolemX = /\u{05D5}\u{05B9}/u;
   test(`Holem Precedes Waw ${holemWaw}`, () => {

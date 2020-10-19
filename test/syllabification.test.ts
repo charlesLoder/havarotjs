@@ -2,11 +2,11 @@ import { Text } from "../src/index";
 import { sequence } from "hebrew-transliteration";
 
 const tests = (original: string, sylArr: string[], closedArr: boolean[], accentArr: boolean[]) => {
-  let heb = new Text(original);
-  let sylText = heb.syllables.map((syllable) => syllable.text);
-  let sylRes = sylArr.map((el: string) => sequence(el));
-  let isClosed = heb.syllables.map((syllable) => syllable.isClosed);
-  let isAccented = heb.syllables.map((syllable) => syllable.isAccented);
+  const heb = new Text(original);
+  const sylText = heb.syllables.map((syllable) => syllable.text);
+  const sylRes = sylArr.map((el: string) => sequence(el));
+  const isClosed = heb.syllables.map((syllable) => syllable.isClosed);
+  const isAccented = heb.syllables.map((syllable) => syllable.isAccented);
   test(`syllable text to equal ${sylRes}`, () => {
     expect(sylText).toEqual(sylRes);
   });
