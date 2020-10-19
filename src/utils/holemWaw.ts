@@ -17,7 +17,7 @@ export const holemWaw = (word: string): string => {
     return word;
   }
 
-  let [noTaamei, charPos] = removeTaamei(word);
+  const [noTaamei, charPos] = removeTaamei(word);
 
   // check for the waw + holem pattern
   if (!wawHolemRegX.test(noTaamei)) {
@@ -25,7 +25,7 @@ export const holemWaw = (word: string): string => {
   }
 
   // check for waw + holem preceded by vowel
-  let match = noTaamei.match(vowelBeforeWawHolem);
+  const match = noTaamei.match(vowelBeforeWawHolem);
   if (!match) {
     return word;
   } else {

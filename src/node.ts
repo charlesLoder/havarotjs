@@ -16,7 +16,7 @@ export class Node {
   }
 
   set siblings(arr: any[]) {
-    let len = arr.length;
+    const len = arr.length;
     for (let index = 0; index < len; index++) {
       const curr = arr[index];
       const nxt = arr[index + 1] || null;
@@ -29,7 +29,7 @@ export class Node {
 
   get siblings(): any[] {
     let curr = this.next;
-    let res = [];
+    const res = [];
     while (curr) {
       res.push(curr);
       curr = curr.next;
