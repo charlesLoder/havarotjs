@@ -69,13 +69,14 @@ const groupShewas = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
       continue;
     }
 
-    if (cluster.hasShewa && !shewaPresent) {
+    const clusterHasShewa = cluster.hasShewa;
+    if (!shewaPresent && clusterHasShewa) {
       shewaPresent = true;
       syl.push(cluster);
       continue;
     }
 
-    if (cluster.hasShewa && shewaPresent) {
+    if (shewaPresent && clusterHasShewa) {
       const syllable = new Syllable(syl);
       result.unshift(syllable);
       syl = [];
@@ -83,7 +84,7 @@ const groupShewas = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
       continue;
     }
 
-    if (cluster.hasShortVowel && shewaPresent) {
+    if (shewaPresent && cluster.hasShortVowel) {
       const dageshRegx = /\u{05BC}/u;
       const prev = syl[0].text;
       const sqenemlevy = /[שסצקנמלוי]/;
@@ -109,7 +110,7 @@ const groupShewas = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
       continue;
     }
 
-    if (cluster.hasLongVowel && shewaPresent) {
+    if (shewaPresent && (cluster.hasLongVowel || cluster.isShureq)) {
       const syllable = new Syllable(syl);
       result.unshift(syllable);
       result.unshift(cluster);
@@ -118,7 +119,7 @@ const groupShewas = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
       continue;
     }
 
-    if (cluster.isMater && shewaPresent) {
+    if (shewaPresent && cluster.isMater) {
       const syllable = new Syllable(syl);
       result.unshift(syllable);
       result.unshift(cluster);
