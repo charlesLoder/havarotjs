@@ -99,19 +99,19 @@ export const convertsQametsQatan = (word: string): string => {
 
   // check for hatef qamets followed by qamets pattern
   if (hatefQamRef.test(word)) {
-    let hatefPos = word.indexOf("\u{05B3}");
-    let qamPos = word.indexOf("\u{05B8}");
-    if (qamPos != -1 && qamPos < hatefPos) {
+    const hatefPos = word.indexOf("\u{05B3}");
+    const qamPos = word.indexOf("\u{05B8}");
+    if (qamPos !== -1 && qamPos < hatefPos) {
       return word.substring(0, qamPos) + "\u{05C7}" + word.substring(qamPos + 1);
     }
   }
 
-  let [noTaamei, charPos] = removeTaamei(word);
+  const [noTaamei, charPos] = removeTaamei(word);
 
   // check if in verbal list (more frequent)
-  for (let index = 0; index < verbalRegx.length; index++) {
-    const regEx = new RegExp(verbalRegx[index]);
-    let match = noTaamei.match(regEx);
+  for (const snippet of verbalRegx) {
+    const regEx = new RegExp(snippet);
+    const match = noTaamei.match(regEx);
 
     if (!match) {
       continue;
@@ -121,9 +121,9 @@ export const convertsQametsQatan = (word: string): string => {
     }
   }
   // check if in nominal list
-  for (let index = 0; index < nominalRegx.length; index++) {
-    const regEx = new RegExp(nominalRegx[index]);
-    let match = noTaamei.match(regEx);
+  for (const snippet of nominalRegx) {
+    const regEx = new RegExp(snippet);
+    const match = noTaamei.match(regEx);
 
     if (!match) {
       continue;

@@ -8,7 +8,7 @@ const groupFinal = (arr: Cluster[]): (Syllable | Cluster)[] => {
   // grouping the final first helps to avoid issues with final kafs/tavs
   const len = arr.length;
   let i = len - 1;
-  let syl: Cluster[] = [];
+  const syl: Cluster[] = [];
   let result: (Syllable | Cluster)[] = [];
   let vowelPresent = false;
   let isClosed = false;
@@ -33,7 +33,7 @@ const groupFinal = (arr: Cluster[]): (Syllable | Cluster)[] => {
   }
 
   while (!vowelPresent) {
-    let curr = arr[i];
+    const curr = arr[i];
     syl.unshift(curr);
     vowelPresent = "hasVowel" in curr ? curr.hasVowel : true;
     i--;
@@ -42,7 +42,7 @@ const groupFinal = (arr: Cluster[]): (Syllable | Cluster)[] => {
     }
   }
 
-  const finalSyllable = new Syllable(syl, { isClosed: isClosed });
+  const finalSyllable = new Syllable(syl, { isClosed });
   const remainder = arr.slice(0, i + 1);
   result = remainder;
   result.push(finalSyllable);
@@ -57,7 +57,7 @@ const groupShewas = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
   const reversed = arr.reverse();
   let shewaPresent = false;
   let syl: Cluster[] = [];
-  let result: (Syllable | Cluster)[] = [];
+  const result: (Syllable | Cluster)[] = [];
   const len = arr.length;
 
   for (let index = 0; index < len; index++) {
@@ -69,39 +69,49 @@ const groupShewas = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
       continue;
     }
 
-    if (cluster.hasShewa && !shewaPresent) {
+    const clusterHasShewa = cluster.hasShewa;
+    if (!shewaPresent && clusterHasShewa) {
       shewaPresent = true;
       syl.push(cluster);
       continue;
     }
 
-    if (cluster.hasShewa && shewaPresent) {
-      let syllable = new Syllable(syl);
+    if (shewaPresent && clusterHasShewa) {
+      const syllable = new Syllable(syl);
       result.unshift(syllable);
       syl = [];
       syl.push(cluster);
       continue;
     }
 
-    if (cluster.hasShortVowel && shewaPresent) {
+    if (shewaPresent && cluster.hasShortVowel) {
       const dageshRegx = /\u{05BC}/u;
       const prev = syl[0].text;
+      const sqenemlevy = /[שסצקנמלוי]/;
+      const wawConsecutive = /וַ/;
       // check if there is a doubling dagesh
       if (dageshRegx.test(prev)) {
-        let syllable = new Syllable(syl);
-        result.unshift(syllable);
+        result.unshift(new Syllable(syl));
         syl = [];
       }
+      // check for waw-consecutive w/ sqenemlevy letter
+      else if (sqenemlevy.test(prev) && wawConsecutive.test(cluster.text)) {
+        result.unshift(new Syllable(syl));
+        result.unshift(new Syllable([cluster]));
+        syl = [];
+        shewaPresent = false;
+        continue;
+      }
       syl.unshift(cluster);
-      let syllable = new Syllable(syl, { isClosed: true });
+      const syllable = new Syllable(syl, { isClosed: true });
       result.unshift(syllable);
       syl = [];
       shewaPresent = false;
       continue;
     }
 
-    if (cluster.hasLongVowel && shewaPresent) {
-      let syllable = new Syllable(syl);
+    if (shewaPresent && (cluster.hasLongVowel || cluster.isShureq)) {
+      const syllable = new Syllable(syl);
       result.unshift(syllable);
       result.unshift(cluster);
       syl = [];
@@ -109,8 +119,8 @@ const groupShewas = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
       continue;
     }
 
-    if (cluster.isMater && shewaPresent) {
-      let syllable = new Syllable(syl);
+    if (shewaPresent && cluster.isMater) {
+      const syllable = new Syllable(syl);
       result.unshift(syllable);
       result.unshift(cluster);
       syl = [];
@@ -122,7 +132,7 @@ const groupShewas = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
   }
 
   if (syl.length) {
-    let syllable = new Syllable(syl);
+    const syllable = new Syllable(syl);
     result.unshift(syllable);
   }
 
@@ -136,7 +146,7 @@ const groupMaters = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
   const reversed = arr.reverse();
   const len = arr.length;
   let syl: Cluster[] = [];
-  let result: (Syllable | Cluster)[] = [];
+  const result: (Syllable | Cluster)[] = [];
 
   for (let index = 0; index < len; index++) {
     const cluster = reversed[index];
@@ -155,7 +165,7 @@ const groupMaters = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
       }
 
       syl.unshift(nxt);
-      let syllable = new Syllable(syl);
+      const syllable = new Syllable(syl);
       result.unshift(syllable);
       syl = [];
       index++;
@@ -174,7 +184,7 @@ const groupShureqs = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
   const reversed = arr.reverse();
   const len = arr.length;
   let syl: Cluster[] = [];
-  let result: (Syllable | Cluster)[] = [];
+  const result: (Syllable | Cluster)[] = [];
 
   for (let index = 0; index < len; index++) {
     const cluster = reversed[index];
@@ -196,7 +206,7 @@ const groupShureqs = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
         syl.unshift(nxt);
       }
 
-      let syllable = new Syllable(syl);
+      const syllable = new Syllable(syl);
       result.unshift(syllable);
       syl = [];
       index++;
@@ -235,15 +245,15 @@ export const syllabify = (clusters: Cluster[]): Syllable[] => {
     }
     if (!syllable.isClosed) {
       const dageshRegx = /\u{05BC}/u;
-      let hasShortVowel = syllable.clusters.filter((cluster) => cluster.hasShortVowel).length ? true : false;
-      let prev = arr[index + 1];
-      let prevDagesh = dageshRegx.test(prev.text);
+      const hasShortVowel = syllable.clusters.filter((cluster) => cluster.hasShortVowel).length ? true : false;
+      const prev = arr[index + 1];
+      const prevDagesh = dageshRegx.test(prev.text);
       syllable.isClosed = hasShortVowel && prevDagesh;
     }
   });
   // sets accents
   syllables.forEach((syllable) => {
-    let isAccented = syllable.clusters.filter((cluster) => cluster.hasTaamei).length ? true : false;
+    const isAccented = syllable.clusters.filter((cluster) => cluster.hasTaamei).length ? true : false;
     syllable.isAccented = isAccented;
   });
   // sets final

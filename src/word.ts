@@ -12,8 +12,8 @@ export class Word extends Node {
   constructor(text: string) {
     super();
     this.text = text.trim();
-    let startMatch = text.match(/^\s*/g);
-    let endMatch = text.match(/\s*$/g);
+    const startMatch = text.match(/^\s*/g);
+    const endMatch = text.match(/\s*$/g);
     this.whiteSpaceBefore = startMatch ? startMatch[0] : null;
     this.whiteSpaceAfter = endMatch ? endMatch[0] : null;
   }

@@ -10,10 +10,10 @@ describe.each`
   ${"whiteSpace: text with two spaces and maqqefs"} | ${"מֶלֶךְ  יִשְׁרָאֵל כָּל־הָעָם"} | ${["", "", "", ""]} | ${["  ", " ", "", ""]}
   ${"whiteSpace: text with maqqefs and two spaces"} | ${"כָּל־הָעָם מֶלֶךְ  יִשְׁרָאֵל"} | ${["", "", "", ""]} | ${["", " ", "  ", ""]}
 `("$description", ({ heb, whiteSpaceBefore, whiteSpaceAfter }) => {
-  let text = new Text(heb);
-  let word = text.words;
-  let before = word.map((word) => word.whiteSpaceBefore);
-  let after = word.map((word) => word.whiteSpaceAfter);
+  const text = new Text(heb);
+  const words = text.words;
+  const before = words.map((word) => word.whiteSpaceBefore);
+  const after = words.map((word) => word.whiteSpaceAfter);
   test("Space Before", () => {
     expect(before).toEqual(whiteSpaceBefore);
   });
@@ -31,9 +31,9 @@ describe.each`
   ${"isDivineName: Yǝhowih"} | ${"יְהֹוִה֙"} | ${true}
   ${"isDivineName: Yǝhwih"}  | ${"יְהוִֽה"}  | ${true}
 `("$description", ({ name, isDivineName }) => {
-  let text = new Text(name);
-  let word = text.words[0];
-  let isDivine = word.isDivineName;
+  const text = new Text(name);
+  const word = text.words[0];
+  const isDivine = word.isDivineName;
   test(`is it the Divine Name: ${isDivineName}`, () => {
     expect(isDivine).toEqual(isDivineName);
   });
