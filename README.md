@@ -485,7 +485,7 @@ Returns `true` if `Cluster.hasVowel`, `Cluster.hasShewa`, and, `Cluster.isShureq
 
 - `ה` preceded by a qamets
 - `ו` preceded by a holem
-- `י` preceded by a tsere or hiriq
+- `י` preceded by a hiriq, tsere, or seghol
 
 There are potentially others instances when a consonant may be a _mater_ (e.g. a final aleph, a he preceded by a seghol), but these are the most consistently so.
 
