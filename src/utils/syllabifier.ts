@@ -161,7 +161,7 @@ const groupMaters = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
       const nxt = reversed[index + 1];
 
       if (nxt instanceof Syllable) {
-        throw new Error("A Syllable shouldn't preceded a Cluster with a Mater");
+        throw new Error("Syllable should not precede a Cluster with a Mater");
       }
 
       syl.unshift(nxt);
@@ -199,7 +199,7 @@ const groupShureqs = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
       const nxt = reversed[index + 1];
 
       if (nxt instanceof Syllable) {
-        throw new Error("A Syllable shouldn't preceded a Cluster with a Shureq");
+        throw new Error("Syllable should not precede a Cluster with a Mater");
       }
 
       if (nxt !== undefined) {
