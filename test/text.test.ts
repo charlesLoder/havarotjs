@@ -60,8 +60,23 @@ describe.each`
   description       | hebrew
   ${"Regular Text"} | ${"בְּרֵאשִׁית בָּרָא אֱלֹהִים"}
   ${"Only Mater"}   | ${"קוּם"}
-`("Niqqud, no error", ({ hebrew }) => {
+`("Niqqud, no error:", ({ hebrew }) => {
   test("Should NOT throw error", () => {
     expect(() => new Text(hebrew)).not.toThrow();
+  });
+});
+
+describe.each`
+  description       | hebrew                          | numOfWords
+  ${"Basic words"}  | ${"יְהוָ֣ה מָלָךְ֮"}            | ${2}
+  ${"With Maqqef"}  | ${"לֹא־יִטֹּ֣שׁ"}               | ${2}
+  ${"With Paseq"}   | ${"כִּ֤י ׀ לֹא־יִטֹּ֣שׁ"}       | ${4}
+  ${"With English"} | ${"כִּ֤י ׀ לֹא־יִטֹּ֣שׁ Psalm"} | ${5}
+`("Split Correctly:", ({ hebrew, numOfWords }) => {
+  const text = new Text(hebrew);
+  const words = text.words;
+  const len = words.length;
+  test("Correct Number of Words", () => {
+    expect(len).toEqual(numOfWords);
   });
 });
