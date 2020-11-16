@@ -58,9 +58,10 @@ describe.each`
 });
 
 describe.each`
-  description                                 | original           | sylArr                           | closedArr                      | accentArr
-  ${"2ms qatal verb consecution (wǝšāmartā́)"} | ${"וְשָׁמַרְתָּ֖"} | ${["וְ", "שָׁ", "מַרְ", "תָּ֖"]} | ${[false, false, true, false]} | ${[false, false, false, true]}
-  ${"initial shureq followed by shewa"}       | ${"וּלְזַמֵּ֖ר"}   | ${["וּ", "לְ", "זַ", "מֵּ֖ר"]}   | ${[false, false, true, true]}  | ${[false, false, false, true]}
+  description                                            | original           | sylArr                           | closedArr                      | accentArr
+  ${"2ms qatal verb consecution (wǝšāmartā́)"}            | ${"וְשָׁמַרְתָּ֖"} | ${["וְ", "שָׁ", "מַרְ", "תָּ֖"]} | ${[false, false, true, false]} | ${[false, false, false, true]}
+  ${"shewa preceded by short vowel, but metheg present"} | ${"הַֽמְכַסֶּ֬ה"}  | ${["הַֽ", "מְ", "כַ", "סֶּ֬ה"]}  | ${[false, false, true, false]} | ${[false, false, false, true]}
+  ${"initial shureq followed by shewa"}                  | ${"וּלְזַמֵּ֖ר"}   | ${["וּ", "לְ", "זַ", "מֵּ֖ר"]}   | ${[false, false, true, true]}  | ${[false, false, false, true]}
 `("4 Syllables:", ({ description, original, sylArr, closedArr, accentArr }) => {
   tests(description, original, sylArr, closedArr, accentArr);
 });
