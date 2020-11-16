@@ -85,6 +85,12 @@ const groupShewas = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
     }
 
     if (shewaPresent && cluster.hasShortVowel) {
+      if (cluster.hasMetheg) {
+        result.unshift(new Syllable(syl));
+        syl = [];
+        syl.unshift(cluster);
+        continue;
+      }
       const dageshRegx = /\u{05BC}/u;
       const prev = syl[0].text;
       const sqenemlevy = /[שסצקנמלוי]/;
