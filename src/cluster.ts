@@ -57,7 +57,7 @@ export class Cluster extends Node {
       if (!maters.test(text)) {
         return false;
       }
-      if (/ה/.test(text) && /\u{05B8}/u.test(prevText)) {
+      if (/ה/.test(text) && /\u{05B8}|\u{05B6}|\u{05B5}/u.test(prevText)) {
         return true;
       }
       if (/ו/.test(text) && /\u{05B9}/u.test(prevText)) {
