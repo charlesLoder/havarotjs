@@ -1,7 +1,7 @@
 import { sequence } from "./sequence";
 import { removeTaamei } from "./removeTaamei";
 
-const nominalSnippets = [
+const snippets = [
   "אָבְדַן",
   "אָבְנ",
   "אָזְנ",
@@ -20,6 +20,7 @@ const nominalSnippets = [
   "גָּדְל",
   "גָרְנ",
   "גָּרְנ",
+  "דָּכְי",
   "דָּרְבָֽן",
   "חָדְשׁ",
   "חָכְמ",
@@ -28,17 +29,12 @@ const nominalSnippets = [
   "חָפְנ",
   "חָפְשִׁי",
   "חָפְשִׁית",
-  "חָק־",
   "חָרְב",
   "חָרְנֶפֶר",
   "חָרְפּ",
   "חָשְׁכּ",
-  "$יָמִים^",
   "יָפְי",
   "יָשְׁר",
-  "כָל־",
-  "כָּל־",
-  "מָר־",
   "מָרְדְּכַי",
   "מָתְנ",
   "סָלְתּ",
@@ -55,17 +51,24 @@ const nominalSnippets = [
   "קָדְשׁ",
   "קָרְבּ",
   "קָרְח",
-  "רָב־",
   "רָגְז",
   "רָחְבּ",
   "שָׁרְשׁ",
   "שָׁרָשׁ",
-  "תָּכְנִית",
-  "תָם־",
-  "תָּם־"
+  "תָּכְנִית"
 ];
 
-const verbalSnippets = [
+const wholeWords = [
+  // nouns
+  "חָק־",
+  "^יָמִים$",
+  "כָּל־",
+  "כָל־",
+  "מָר־",
+  "רָב־",
+  "תָם־",
+  "תָּם־",
+  // verbs
   "חָנֵּנִי",
   "וַיָּמָת",
   "וַיָּנָס",
@@ -85,8 +88,8 @@ const sequenceSnippets = (arr: string[]) => {
   });
 };
 
-const nominalRegx = sequenceSnippets(nominalSnippets);
-const verbalRegx = sequenceSnippets(verbalSnippets);
+const snippetsRegx = sequenceSnippets(snippets);
+const wholeWordsRegx = sequenceSnippets(wholeWords);
 
 export const convertsQametsQatan = (word: string): string => {
   const qametsReg = /\u{05B8}/u;
@@ -109,8 +112,8 @@ export const convertsQametsQatan = (word: string): string => {
   const [noTaamei, charPos] = removeTaamei(word);
 
   // check if in verbal list (more frequent)
-  for (const snippet of verbalRegx) {
-    const regEx = new RegExp(snippet);
+  for (const wholeWord of wholeWordsRegx) {
+    const regEx = new RegExp(wholeWord);
     const match = noTaamei.match(regEx);
 
     if (!match) {
@@ -121,7 +124,7 @@ export const convertsQametsQatan = (word: string): string => {
     }
   }
   // check if in nominal list
-  for (const snippet of nominalRegx) {
+  for (const snippet of snippetsRegx) {
     const regEx = new RegExp(snippet);
     const match = noTaamei.match(regEx);
 

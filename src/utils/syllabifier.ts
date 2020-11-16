@@ -85,6 +85,12 @@ const groupShewas = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
     }
 
     if (shewaPresent && cluster.hasShortVowel) {
+      if (cluster.hasMetheg) {
+        result.unshift(new Syllable(syl));
+        syl = [];
+        syl.unshift(cluster);
+        continue;
+      }
       const dageshRegx = /\u{05BC}/u;
       const prev = syl[0].text;
       const sqenemlevy = /[שסצקנמלוי]/;
@@ -161,7 +167,7 @@ const groupMaters = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
       const nxt = reversed[index + 1];
 
       if (nxt instanceof Syllable) {
-        throw new Error("A Syllable shouldn't preceded a Cluster with a Mater");
+        throw new Error("Syllable should not precede a Cluster with a Mater");
       }
 
       syl.unshift(nxt);
@@ -199,7 +205,7 @@ const groupShureqs = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
       const nxt = reversed[index + 1];
 
       if (nxt instanceof Syllable) {
-        throw new Error("A Syllable shouldn't preceded a Cluster with a Shureq");
+        throw new Error("Syllable should not precede a Cluster with a Mater");
       }
 
       if (nxt !== undefined) {
