@@ -259,7 +259,7 @@ text.words[0].isDivineName;
 A `Syllable` is created from an array of `Clusters`.
 
 See the [syllabification](./docs/syllabification.md) doc for how a syllable is determined.
-Currently, the Divine Name (e.g. יהוה) and non-Hebrew text is treated as a _single syllable_ because these do not follow Hebrew rules of syllabification.
+Currently, the Divine Name (e.g. יהוה) and non-Hebrew text is treated as a _single syllable_ because these do not follow the rules of Hebrew syllabification.
 
 #### Syllable.text
 
@@ -483,11 +483,11 @@ text.clusters[1].isShureq;
 
 Returns `true` if `Cluster.hasVowel`, `Cluster.hasShewa`, and, `Cluster.isShureq` are all `false` and `Cluster.text` contains a:
 
-- `ה` preceded by a qamets
+- `ה` preceded by a qamets, tsere, or seghol
 - `ו` preceded by a holem
 - `י` preceded by a hiriq, tsere, or seghol
 
-There are potentially others instances when a consonant may be a _mater_ (e.g. a final aleph, a he preceded by a seghol), but these are the most consistently so.
+There are potentially other instances when a consonant may be a _mater_ (e.g. a final aleph, ), but these are the most common.
 
 Though a shureq is a mater letter, it is also a vowel itself, and thus separate from `isMater`.
 
