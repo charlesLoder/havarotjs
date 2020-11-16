@@ -72,7 +72,26 @@ export class Cluster extends Node {
   }
 
   get hasMetheg(): boolean {
-    return /\u{05BD}/u.test(this.text);
+    const metheg = /\u{05BD}/u;
+    const text = this.text;
+    if (!metheg.test(text)) {
+      return false;
+    }
+    let next = this.next;
+    while (next) {
+      if (next instanceof Cluster) {
+        const nextText = next.text;
+        const sofPassuq = /\u{05C3}/u;
+        if (metheg.test(nextText)) {
+          return true;
+        }
+        if (sofPassuq.test(nextText)) {
+          return false;
+        }
+        next = next.next;
+      }
+    }
+    return true;
   }
 
   get hasShewa(): boolean {
