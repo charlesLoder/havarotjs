@@ -1,5 +1,6 @@
 import { Cluster } from "../cluster";
 import { Syllable } from "../syllable";
+import { SylOpts } from "../text";
 
 /**
  * @description determines the Cluster[] that will become the final Syllable
@@ -146,7 +147,7 @@ const groupShewas = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
 };
 
 /**
- * @description groups no-final maters with preceding cluster
+ * @description groups non-final maters with preceding cluster
  */
 const groupMaters = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
   const reversed = arr.reverse();
@@ -241,7 +242,7 @@ export const makeClusters = (word: string): Cluster[] => {
   return clusters;
 };
 
-export const syllabify = (clusters: Cluster[]): Syllable[] => {
+export const syllabify = (clusters: Cluster[], options: SylOpts): Syllable[] => {
   const groupedClusters = groupClusters(clusters);
   const syllables = groupedClusters.map((group) => (group instanceof Syllable ? group : new Syllable([group])));
   // sets isClosed

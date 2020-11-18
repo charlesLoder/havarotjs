@@ -8,12 +8,25 @@ import { Char } from "./char";
 import { splitGroup } from "./utils/regularExpressions";
 import { Node } from "./node";
 
+export interface SylOpts {
+  sqnmlvy: boolean;
+  qametsQatan: boolean;
+}
+
+type Schema = "tiberian" | "traditional" | null;
+
 export class Text extends Node {
   original: string;
+  schema: Schema;
+  private sylOpts: SylOpts;
+  private qametsQatan: boolean;
 
-  constructor(text: string) {
+  constructor(text: string, schema: Schema = null, sylOpts: SylOpts = { qametsQatan: true, sqnmlvy: true }) {
     super();
     this.original = this.validateInput(text);
+    this.schema = schema;
+    this.sylOpts = this.setOptions(this.schema, sylOpts);
+    this.qametsQatan = this.sylOpts.qametsQatan;
   }
 
   private validateInput(text: string): string {
@@ -22,6 +35,16 @@ export class Text extends Node {
       throw new Error("Text must contain niqqud");
     }
     return text;
+  }
+
+  private setOptions(schema: Schema, sylOpts: SylOpts): SylOpts {
+    return schema ? this.setSylOptions(schema) : sylOpts;
+  }
+
+  private setSylOptions(schema: Schema): SylOpts {
+    const traitionalOpts = { qametsQatan: true, sqnmlvy: true };
+    const tiberianOpts = { qametsQatan: false, sqnmlvy: true };
+    return schema === "traditional" ? traitionalOpts : tiberianOpts;
   }
 
   private get normalized(): string {
@@ -37,7 +60,7 @@ export class Text extends Node {
     const sequencedText = sequencedChar.reduce((a, c) => a + c.text, "");
     // split text at spaces and maqqef, spaces are added to the array as separate entries
     const textArr = sequencedText.split(splitGroup);
-    const mapQQatan = textArr.map((word) => convertsQametsQatan(word));
+    const mapQQatan = this.qametsQatan ? textArr.map((word) => convertsQametsQatan(word)) : textArr;
     const mapHolemWaw = mapQQatan.map((word) => holemWaw(word));
     return mapHolemWaw.reduce((a, c) => a + c, "");
   }
@@ -48,7 +71,7 @@ export class Text extends Node {
   get words(): Word[] {
     const split = this.text.split(splitGroup);
     const groups = split.filter((group) => group);
-    const words = groups.map((word) => new Word(word));
+    const words = groups.map((word) => new Word(word, this.sylOpts));
     this.children = words;
     return words;
   }
