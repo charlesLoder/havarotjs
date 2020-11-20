@@ -39,6 +39,7 @@ describe.each`
   ${"lexical form contains hatef (ănî)"}                               | ${"אֲנִ֥י"}    | ${["אֲ", "נִ֥י"]}         | ${[false, false]} | ${[false, true]}
   ${"lexical form one shewa and closes syllable (midbar)"}             | ${"מִדְבַּ֣ר"} | ${["מִדְ", "בַּ֣ר"]}      | ${[true, true]}   | ${[false, true]}
   ${"with qamets qatan (ḥokmâ)"}                                       | ${"חָכְמָ֑ה"}  | ${["ח\u{5C7}כְ", "מָ֑ה"]} | ${[true, false]}  | ${[false, true]}
+  ${"infinitive construct with prep (bǝšûb)"}                          | ${"בְּשׁ֣וּב"} | ${["בְּ", "שׁ֣וּב"]}      | ${[false, true]}  | ${[false, true]}
 `("2 Syllables:", ({ description, original, sylArr, closedArr, accentArr }) => {
   tests(description, original, sylArr, closedArr, accentArr);
 });
