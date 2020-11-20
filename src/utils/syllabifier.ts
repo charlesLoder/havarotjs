@@ -36,7 +36,14 @@ const groupFinal = (arr: Cluster[]): (Syllable | Cluster)[] => {
   while (!vowelPresent) {
     const curr = arr[i];
     syl.unshift(curr);
-    vowelPresent = "hasVowel" in curr ? curr.hasVowel : true;
+    if (curr.isShureq) {
+      i--;
+      syl.unshift(arr[i]);
+      vowelPresent = true;
+    } else {
+      const clusterHasVowel = "hasVowel" in curr ? curr.hasVowel : true;
+      vowelPresent = clusterHasVowel || curr.isShureq;
+    }
     i--;
     if (i < 0) {
       break;
