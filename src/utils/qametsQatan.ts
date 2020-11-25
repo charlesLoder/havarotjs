@@ -1,5 +1,5 @@
 import { sequence } from "./sequence";
-import { removeTaamei } from "./removeTaamei";
+import { removeTaamim } from "./removeTaamim";
 
 const snippets = [
   "אָבְדַן",
@@ -109,7 +109,7 @@ export const convertsQametsQatan = (word: string): string => {
     }
   }
 
-  const [noTaamei, charPos] = removeTaamei(word);
+  const [noTaamei, charPos] = removeTaamim(word);
 
   // check if in verbal list (more frequent)
   for (const wholeWord of wholeWordsRegx) {

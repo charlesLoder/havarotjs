@@ -528,7 +528,7 @@ text.clusters[1].hasShewa;
 // true
 ```
 
-#### Cluster.hasTaamei
+#### Cluster.hasTaamim
 
 Returns `true` is the following characters are present:
 
@@ -537,9 +537,9 @@ Returns `true` is the following characters are present:
 ```typescript
 import { Text } from "havarotjs";
 const text: Text = new Text("אֱלֹהִ֑ים");
-text.clusters[0].hasTaamei;
+text.clusters[0].hasTaamim;
 // false
-text.clusters[2].hasTaamei;
+text.clusters[2].hasTaamim;
 // true
 ```
 

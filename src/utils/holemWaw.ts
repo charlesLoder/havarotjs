@@ -1,4 +1,4 @@
-import { removeTaamei } from "./removeTaamei";
+import { removeTaamim } from "./removeTaamim";
 
 export const holemWaw = (word: string): string => {
   const wawRegX = /\u{05D5}/u;
@@ -17,7 +17,7 @@ export const holemWaw = (word: string): string => {
     return word;
   }
 
-  const [noTaamei, charPos] = removeTaamei(word);
+  const [noTaamei, charPos] = removeTaamim(word);
 
   // check for the waw + holem pattern
   if (!wawHolemRegX.test(noTaamei)) {
