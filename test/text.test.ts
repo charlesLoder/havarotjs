@@ -67,11 +67,12 @@ describe.each`
 });
 
 describe.each`
-  description       | hebrew                          | numOfWords
-  ${"Basic words"}  | ${"יְהוָ֣ה מָלָךְ֮"}            | ${2}
-  ${"With Maqqef"}  | ${"לֹא־יִטֹּ֣שׁ"}               | ${2}
-  ${"With Paseq"}   | ${"כִּ֤י ׀ לֹא־יִטֹּ֣שׁ"}       | ${4}
-  ${"With English"} | ${"כִּ֤י ׀ לֹא־יִטֹּ֣שׁ Psalm"} | ${5}
+  description           | hebrew                           | numOfWords
+  ${"Basic words"}      | ${"יְהוָ֣ה מָלָךְ֮"}             | ${2}
+  ${"With Maqqef"}      | ${"לֹא־יִטֹּ֣שׁ"}                | ${2}
+  ${"Multiple Maqqefs"} | ${"עַל־כָּל־הַשָּׂרִים֙ דָּבָר"} | ${4}
+  ${"With Paseq"}       | ${"כִּ֤י ׀ לֹא־יִטֹּ֣שׁ"}        | ${4}
+  ${"With English"}     | ${"כִּ֤י ׀ לֹא־יִטֹּ֣שׁ Psalm"}  | ${5}
 `("Split Correctly:", ({ hebrew, numOfWords }) => {
   const text = new Text(hebrew);
   const words = text.words;
