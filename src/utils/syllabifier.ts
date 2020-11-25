@@ -61,7 +61,7 @@ const groupFinal = (arr: Cluster[]): (Syllable | Cluster)[] => {
 /**
  * @description groups shewas either by themselves or with preceding short vowel
  */
-const groupShewas = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
+const groupShewas = (arr: (Syllable | Cluster)[], options: SylOpts): (Syllable | Cluster)[] => {
   const reversed = arr.reverse();
   let shewaPresent = false;
   let syl: Cluster[] = [];
@@ -109,7 +109,7 @@ const groupShewas = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
         syl = [];
       }
       // check for waw-consecutive w/ sqenemlevy letter
-      else if (sqenemlevy.test(prev) && wawConsecutive.test(cluster.text)) {
+      else if (options.sqnmlvy && sqenemlevy.test(prev) && wawConsecutive.test(cluster.text)) {
         result.unshift(new Syllable(syl));
         result.unshift(new Syllable([cluster]));
         syl = [];
@@ -234,9 +234,9 @@ const groupShureqs = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
 /**
  * @description a preprocessing step that groups clusters into intermediate syllables by vowels or shewas
  */
-const groupClusters = (arr: Cluster[]): (Syllable | Cluster)[] => {
+const groupClusters = (arr: Cluster[], options: SylOpts): (Syllable | Cluster)[] => {
   const finalGrouped = groupFinal(arr);
-  const shewasGrouped = groupShewas(finalGrouped);
+  const shewasGrouped = groupShewas(finalGrouped, options);
   const matersGroups = groupMaters(shewasGrouped);
   const shureqGroups = groupShureqs(matersGroups);
   return shureqGroups;
@@ -250,7 +250,7 @@ export const makeClusters = (word: string): Cluster[] => {
 };
 
 export const syllabify = (clusters: Cluster[], options: SylOpts): Syllable[] => {
-  const groupedClusters = groupClusters(clusters);
+  const groupedClusters = groupClusters(clusters, options);
   const syllables = groupedClusters.map((group) => (group instanceof Syllable ? group : new Syllable([group])));
   // sets isClosed
   syllables.forEach((syllable, index, arr) => {
@@ -267,7 +267,7 @@ export const syllabify = (clusters: Cluster[], options: SylOpts): Syllable[] => 
   });
   // sets accents
   syllables.forEach((syllable) => {
-    const isAccented = syllable.clusters.filter((cluster) => cluster.hasTaamei).length ? true : false;
+    const isAccented = syllable.clusters.filter((cluster) => cluster.hasTaamim).length ? true : false;
     syllable.isAccented = isAccented;
   });
   // sets final
