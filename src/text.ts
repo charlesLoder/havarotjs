@@ -9,24 +9,40 @@ import { splitGroup } from "./utils/regularExpressions";
 import { Node } from "./node";
 
 export interface SylOpts {
-  sqnmlvy: boolean;
-  qametsQatan: boolean;
+  /**
+   * @property determines whether to regard the shewa under the letters שׁשׂסצנמלוי when preceded by a waw-consecutive with a missing dagesh chazaq as vocal
+   */
+  sqnmlvy?: boolean;
+  /**
+   * @property determines whether to regard a shewa after a long vowel as vocal
+   */
+  longVowels?: boolean;
+}
+
+interface TextOpts extends SylOpts {
+  schema?: Schema;
+  /**
+   * @property converts regular qamets characters to qamets qatan characters where appropriate
+   */
+  qametsQatan?: boolean;
 }
 
 type Schema = "tiberian" | "traditional" | null;
 
+const defaultOpts: TextOpts = { schema: null, qametsQatan: true, sqnmlvy: true, longVowels: true };
+
 export class Text extends Node {
   original: string;
-  schema: Schema;
-  private sylOpts: SylOpts;
+  private options: TextOpts;
   private qametsQatan: boolean;
+  private sylOpts: SylOpts;
 
-  constructor(text: string, schema: Schema = null, sylOpts: SylOpts = { qametsQatan: true, sqnmlvy: true }) {
+  constructor(text: string, options: TextOpts = defaultOpts) {
     super();
     this.original = this.validateInput(text);
-    this.schema = schema;
-    this.sylOpts = this.setOptions(this.schema, sylOpts);
-    this.qametsQatan = this.sylOpts.qametsQatan;
+    this.options = this.setOptions(options);
+    this.qametsQatan = this.options.qametsQatan || false;
+    this.sylOpts = this.options;
   }
 
   private validateInput(text: string): string {
@@ -37,13 +53,14 @@ export class Text extends Node {
     return text;
   }
 
-  private setOptions(schema: Schema, sylOpts: SylOpts): SylOpts {
-    return schema ? this.setSylOptions(schema) : sylOpts;
+  private setOptions(options: TextOpts): TextOpts {
+    const schema = options.schema;
+    return schema ? this.setSchemaOptions(schema) : options;
   }
 
-  private setSylOptions(schema: Schema): SylOpts {
-    const traitionalOpts = { qametsQatan: true, sqnmlvy: true };
-    const tiberianOpts = { qametsQatan: false, sqnmlvy: true };
+  private setSchemaOptions(schema: Schema): TextOpts {
+    const traitionalOpts = { qametsQatan: true, sqnmlvy: true, longVowels: true };
+    const tiberianOpts = { qametsQatan: false, sqnmlvy: true, longVowels: false };
     return schema === "traditional" ? traitionalOpts : tiberianOpts;
   }
 
