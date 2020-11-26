@@ -1,6 +1,6 @@
 import { Char } from "./char";
 import { Node } from "./node";
-import { taamei } from "./utils/regularExpressions";
+import { taamim } from "./utils/regularExpressions";
 
 export class Cluster extends Node {
   original: string;
@@ -98,7 +98,7 @@ export class Cluster extends Node {
     return /\u{05B0}/u.test(this.text);
   }
 
-  get hasTaamei(): boolean {
-    return taamei.test(this.text);
+  get hasTaamim(): boolean {
+    return taamim.test(this.text);
   }
 }

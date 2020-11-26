@@ -7,7 +7,7 @@ Preference is to use Hebrew names with simplified spellings for particular varia
 |    hatef     |                hateph, ultra-short                 |
 |    niqqud    |                  points, pointing                  |
 |    shewa     |                    sheva, shva                     |
-|    taamei    | ta'amei, ta'amei ha-miqra, accents\*, cantillation |
+|    taamim    | ta'amei, ta'amei ha-miqra, accents\*, cantillation |
 | qamets qatan |                    qamets hatuf                    |
 
-\*the `Syllable` object has a property `isAccented` which is a linguistic property (i.e. stress), but the `Cluster` object has the property `hasTaamei` since this references the characters.
+\*the `Syllable` object has a property `isAccented` which is a linguistic property (i.e. stress), but the `Cluster` object has the property `hasTaamim` since this references the characters.

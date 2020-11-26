@@ -3,19 +3,22 @@ import { Syllable } from "./syllable";
 import { Cluster } from "./cluster";
 import { Char } from "./char";
 import { Node } from "./node";
+import { SylOpts } from "./text";
 
 export class Word extends Node {
   text: string;
   whiteSpaceBefore: string | null;
   whiteSpaceAfter: string | null;
+  private sylOpts: SylOpts;
 
-  constructor(text: string) {
+  constructor(text: string, sylOpts: SylOpts) {
     super();
     this.text = text.trim();
     const startMatch = text.match(/^\s*/g);
     const endMatch = text.match(/\s*$/g);
     this.whiteSpaceBefore = startMatch ? startMatch[0] : null;
     this.whiteSpaceAfter = endMatch ? endMatch[0] : null;
+    this.sylOpts = sylOpts;
   }
 
   /**
@@ -27,7 +30,7 @@ export class Word extends Node {
       const syl = new Syllable(this.clusters);
       syllables = [syl];
     } else {
-      syllables = syllabify(this.clusters);
+      syllables = syllabify(this.clusters, this.sylOpts);
     }
     this.children = syllables;
     return syllables;
