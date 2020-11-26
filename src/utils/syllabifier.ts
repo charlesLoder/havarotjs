@@ -266,28 +266,29 @@ export const makeClusters = (word: string): Cluster[] => {
   return clusters;
 };
 
+const setIsClosed = (syllable: Syllable, index: number, arr: Syllable[]) => {
+  if (index === arr.length - 1) {
+    return syllable;
+  }
+  if (!syllable.isClosed) {
+    const dageshRegx = /\u{05BC}/u;
+    const hasShortVowel = syllable.clusters.filter((cluster) => cluster.hasShortVowel).length ? true : false;
+    const prev = arr[index + 1];
+    const prevDagesh = dageshRegx.test(prev.text);
+    syllable.isClosed = hasShortVowel && prevDagesh;
+  }
+};
+
+const setIsAccented = (syllable: Syllable) => {
+  const isAccented = syllable.clusters.filter((cluster) => cluster.hasTaamim).length ? true : false;
+  syllable.isAccented = isAccented;
+};
+
 export const syllabify = (clusters: Cluster[], options: SylOpts): Syllable[] => {
   const groupedClusters = groupClusters(clusters, options);
   const syllables = groupedClusters.map((group) => (group instanceof Syllable ? group : new Syllable([group])));
-  // sets isClosed
-  syllables.forEach((syllable, index, arr) => {
-    if (index === arr.length - 1) {
-      return syllable;
-    }
-    if (!syllable.isClosed) {
-      const dageshRegx = /\u{05BC}/u;
-      const hasShortVowel = syllable.clusters.filter((cluster) => cluster.hasShortVowel).length ? true : false;
-      const prev = arr[index + 1];
-      const prevDagesh = dageshRegx.test(prev.text);
-      syllable.isClosed = hasShortVowel && prevDagesh;
-    }
-  });
-  // sets accents
-  syllables.forEach((syllable) => {
-    const isAccented = syllable.clusters.filter((cluster) => cluster.hasTaamim).length ? true : false;
-    syllable.isAccented = isAccented;
-  });
-  // sets final
+  syllables.forEach((syllable, index, arr) => setIsClosed(syllable, index, arr));
+  syllables.forEach((syllable) => setIsAccented(syllable));
   syllables[syllables.length - 1].isFinal = true;
   return syllables;
 };
