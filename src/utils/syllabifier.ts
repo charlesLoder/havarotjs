@@ -124,12 +124,29 @@ const groupShewas = (arr: (Syllable | Cluster)[], options: SylOpts): (Syllable |
       continue;
     }
 
-    if (shewaPresent && (cluster.hasLongVowel || cluster.isShureq)) {
-      const syllable = new Syllable(syl);
-      result.unshift(syllable);
-      result.unshift(cluster);
-      syl = [];
-      shewaPresent = false;
+    if (shewaPresent && cluster.hasLongVowel) {
+      if (options.longVowels) {
+        const syllable = new Syllable(syl);
+        result.unshift(syllable);
+        result.unshift(cluster);
+        syl = [];
+        shewaPresent = false;
+      } else {
+        syl.unshift(cluster);
+      }
+      continue;
+    }
+
+    if (shewaPresent && cluster.isShureq) {
+      if (!options.vavShureq && !cluster.hasMetheg && len - 1 === index) {
+        syl.unshift(cluster);
+      } else {
+        const syllable = new Syllable(syl);
+        result.unshift(syllable);
+        result.unshift(cluster);
+        syl = [];
+        shewaPresent = false;
+      }
       continue;
     }
 

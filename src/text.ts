@@ -14,9 +14,13 @@ export interface SylOpts {
    */
   sqnmlvy?: boolean;
   /**
-   * @property determines whether to regard a shewa after a long vowel as vocal
+   * @property determines whether to regard a shewa after a long vowel (excluding vav-shureq) as vocal
    */
   longVowels?: boolean;
+  /**
+   * @property determines whether to regard a shewa after a vav-shureq as vocal, unless metheg is present
+   */
+  vavShureq?: boolean;
 }
 
 interface TextOpts extends SylOpts {
@@ -29,7 +33,7 @@ interface TextOpts extends SylOpts {
 
 type Schema = "tiberian" | "traditional" | null;
 
-const defaultOpts: TextOpts = { schema: null, qametsQatan: true, sqnmlvy: true, longVowels: true };
+const defaultOpts: TextOpts = { schema: null, qametsQatan: true, sqnmlvy: true, longVowels: true, vavShureq: true };
 
 export class Text extends Node {
   original: string;
@@ -59,8 +63,8 @@ export class Text extends Node {
   }
 
   private setSchemaOptions(schema: Schema): TextOpts {
-    const traitionalOpts = { qametsQatan: true, sqnmlvy: true, longVowels: true };
-    const tiberianOpts = { qametsQatan: false, sqnmlvy: true, longVowels: false };
+    const traitionalOpts = { qametsQatan: true, sqnmlvy: true, longVowels: true, vavShureq: true };
+    const tiberianOpts = { qametsQatan: false, sqnmlvy: true, longVowels: false, vavShureq: false };
     return schema === "traditional" ? traitionalOpts : tiberianOpts;
   }
 
