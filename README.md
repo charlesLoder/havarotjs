@@ -45,7 +45,7 @@ The general idea of this package is that a [`Text`](#Text) is composed of [`Word
 
 ### Text
 
-`Text()` requires an input string.
+`Text()` requires an input string, and has optional arguments for syllabification, which can be read about in the [syllabification doc](./docs/syllabification.md)
 
 ```typescript
 import { Text } from "havarotjs";

@@ -1,9 +1,13 @@
 # Syllabification
 
-There are multiple types of schemas for syllabification:
+⚠️ This section is still a work in progress ⚠️
+
+There are two types of schemas for syllabification:
 
 1. [Traditional](#Traditional)
 2. [Tiberian](#Tiberian)
+
+which set the options for syllabification.
 
 This package follows Geoffrey Khan's _[The Tiberian Pronunciation Tradition of Biblical Hebrew](https://www.openbookpublishers.com/product/1144)_ for developing a schema similar to the Tiberian tradition.
 This schema does not strictly adhere to the Tiberian tradition as laid out in Khan's work.
@@ -33,10 +37,45 @@ Though, as he demonstrates, it is better to understand the Tiberian syllables as
 
 According to this decription, hatef vowels and vocalic shewas **do** constitute syllables.
 
+## Options for Syllabification
+
+These are the options for syllabification.
+
+### longVowles
+
+Takes a `boolean`.
+
+If `true`, regards a shewa after a long vowel (excluding waw-shureq) as vocal.
+
+### sqnmlvy
+
+Takes a `boolean`.
+
+If `true`, regards the shewa under the letters שׁשׂסצנמלוי when preceded by a waw-consecutive with a missing _dagesh chazaq_ as vocal.
+
+### qametsQatan
+
+Takes a `boolean`.
+
+If `true`, when appropriate qamets characters are converted to qamets-qatan characters.
+The former is a "long-vowel" whereas the latter is a "short-vowel."
+
+### wawShureq
+
+Takes a `boolean`.
+
+If `true`, regards a shewa after a waw-shureq as vocal, unless metheg is present
+
 ## Traditional
 
 The traditional schema for syllabification is that most commonly taught in schools and seminaries.
 It is most similar to the Sephardi pronunciation (see especially, S. Morag, "Pronunciation of Hebrew" _EJ_ 16:547–562).
+
+The syllabification options are set as follows:
+
+```typescript
+{ longVowels: true, sqnmlvy: true, qametsQatan: true, vavShureq: true }
+```
 
 ### Vocal & Silent Shewas
 
@@ -68,7 +107,11 @@ This package, however, considers it a vocal shewa.
 
 ## Tiberian
 
-⚠️ Not developed yet ⚠️
+The syllabification options are set as follows:
+
+```typescript
+{ qametsQatan: false, sqnmlvy: true, longVowels: false, vavShureq: false }
+```
 
 #### Long Vowels
 
