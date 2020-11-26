@@ -138,7 +138,7 @@ const groupShewas = (arr: (Syllable | Cluster)[], options: SylOpts): (Syllable |
     }
 
     if (shewaPresent && cluster.isShureq) {
-      if (!options.vavShureq && !cluster.hasMetheg && len - 1 === index) {
+      if (!options.wawShureq && !cluster.hasMetheg && len - 1 === index) {
         syl.unshift(cluster);
       } else {
         const syllable = new Syllable(syl);

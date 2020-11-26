@@ -39,17 +39,17 @@ describe.each`
 });
 
 describe.each`
-  description                | word             | syllables                      | vavShureqOpt
+  description                | word             | syllables                      | wawShureqOpt
   ${"vav-shureq, no metheg"} | ${"וּלְמַזֵּר"}  | ${["וּ", "לְ", "מַ", "זֵּר"]}  | ${true}
   ${"vav-shureq, no metheg"} | ${"וּלְמַזֵּר"}  | ${["וּלְ", "מַ", "זֵּר"]}      | ${false}
   ${"vav-shureq,  metheg"}   | ${"וּֽלְמַזֵּר"} | ${["וּֽ", "לְ", "מַ", "זֵּר"]} | ${true}
   ${"vav-shureq,  metheg"}   | ${"וּֽלְמַזֵּר"} | ${["וּֽ", "לְ", "מַ", "זֵּר"]} | ${false}
   ${"medial shureq"}         | ${"פְּקוּדָה"}   | ${["פְּ", "קוּ", "דָה"]}       | ${false}
-`("vavShureq:", ({ description, word, syllables, vavShureqOpt }) => {
-  const text = new Text(word, { vavShureq: vavShureqOpt });
+`("vavShureq:", ({ description, word, syllables, wawShureqOpt }) => {
+  const text = new Text(word, { wawShureq: wawShureqOpt });
   const sylText = text.syllables.map((syl) => syl.text);
   describe(description, () => {
-    test(`sqnlvy is ${vavShureqOpt}`, () => {
+    test(`sqnlvy is ${wawShureqOpt}`, () => {
       expect(sylText).toEqual(syllables);
     });
   });

@@ -20,7 +20,7 @@ export interface SylOpts {
   /**
    * @property determines whether to regard a shewa after a vav-shureq as vocal, unless metheg is present
    */
-  vavShureq?: boolean;
+  wawShureq?: boolean;
 }
 
 interface TextOpts extends SylOpts {
@@ -33,7 +33,7 @@ interface TextOpts extends SylOpts {
 
 type Schema = "tiberian" | "traditional" | null;
 
-const defaultOpts: TextOpts = { schema: null, qametsQatan: true, sqnmlvy: true, longVowels: true, vavShureq: true };
+const defaultOpts: TextOpts = { schema: null, qametsQatan: true, sqnmlvy: true, longVowels: true, wawShureq: true };
 
 export class Text extends Node {
   original: string;
