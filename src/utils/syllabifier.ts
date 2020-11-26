@@ -133,6 +133,10 @@ const groupShewas = (arr: (Syllable | Cluster)[], options: SylOpts): (Syllable |
         shewaPresent = false;
       } else {
         syl.unshift(cluster);
+        const syllable = new Syllable(syl, { isClosed: true });
+        result.unshift(syllable);
+        syl = [];
+        shewaPresent = false;
       }
       continue;
     }
@@ -140,6 +144,9 @@ const groupShewas = (arr: (Syllable | Cluster)[], options: SylOpts): (Syllable |
     if (shewaPresent && cluster.isShureq) {
       if (!options.wawShureq && !cluster.hasMetheg && len - 1 === index) {
         syl.unshift(cluster);
+        const syllable = new Syllable(syl, { isClosed: true });
+        result.unshift(syllable);
+        syl = [];
       } else {
         const syllable = new Syllable(syl);
         result.unshift(syllable);
