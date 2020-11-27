@@ -26,7 +26,7 @@ export class Word extends Node {
    */
   get syllables(): Syllable[] {
     let syllables: Syllable[];
-    if (/\w/.test(this.text) || /׀/.test(this.text) || this.isDivineName) {
+    if (/\w/.test(this.text) || this.isDivineName) {
       const syl = new Syllable(this.clusters);
       syllables = [syl];
     } else {
