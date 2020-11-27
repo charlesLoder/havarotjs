@@ -33,7 +33,7 @@ interface TextOpts extends SylOpts {
 
 type Schema = "tiberian" | "traditional" | null;
 
-const defaultOpts: TextOpts = { schema: null, qametsQatan: true, sqnmlvy: true, longVowels: true, wawShureq: true };
+// const defaultOpts: TextOpts = { schema: null, qametsQatan: true, sqnmlvy: true, longVowels: true, wawShureq: true };
 
 export class Text extends Node {
   original: string;
@@ -41,7 +41,7 @@ export class Text extends Node {
   private qametsQatan: boolean;
   private sylOpts: SylOpts;
 
-  constructor(text: string, options: TextOpts = defaultOpts) {
+  constructor(text: string, options: TextOpts = {}) {
     super();
     this.original = this.validateInput(text);
     this.options = this.setOptions(options);
@@ -59,13 +59,23 @@ export class Text extends Node {
 
   private setOptions(options: TextOpts): TextOpts {
     const schema = options.schema;
-    return schema ? this.setSchemaOptions(schema) : options;
+    return schema ? this.setSchemaOptions(schema) : this.setDefaultOptions(options);
   }
 
   private setSchemaOptions(schema: Schema): TextOpts {
     const traitionalOpts = { qametsQatan: true, sqnmlvy: true, longVowels: true, vavShureq: true };
     const tiberianOpts = { qametsQatan: false, sqnmlvy: true, longVowels: false, vavShureq: false };
     return schema === "traditional" ? traitionalOpts : tiberianOpts;
+  }
+
+  private setDefaultOptions(options: TextOpts): TextOpts {
+    const defaultOpts: TextOpts = { qametsQatan: true, sqnmlvy: true, longVowels: true, wawShureq: true };
+    // for..in throwing error
+    defaultOpts.longVowels = options.longVowels !== undefined ? options.longVowels : defaultOpts.longVowels;
+    defaultOpts.qametsQatan = options.qametsQatan !== undefined ? options.qametsQatan : defaultOpts.qametsQatan;
+    defaultOpts.sqnmlvy = options.sqnmlvy !== undefined ? options.sqnmlvy : defaultOpts.sqnmlvy;
+    defaultOpts.wawShureq = options.wawShureq !== undefined ? options.wawShureq : defaultOpts.wawShureq;
+    return defaultOpts;
   }
 
   private get normalized(): string {
