@@ -266,9 +266,15 @@ const groupClusters = (arr: Cluster[], options: SylOpts): (Syllable | Cluster)[]
   return shureqGroups;
 };
 
+/**
+ *
+ * @param word the word to be split into Cluster
+ * @description splits a word at each consonant or the punctuation character
+ * Sof Pasuq and Nun Hafukha
+ */
 export const makeClusters = (word: string): Cluster[] => {
-  const consonantSplit = /(?=[\u{05D0}-\u{05F2}])/u;
-  const groups = word.split(consonantSplit);
+  const split = /(?=[\u{05C3}\u{05C6}\u{05D0}-\u{05F2}])/u;
+  const groups = word.split(split);
   const clusters = groups.map((group) => new Cluster(group));
   return clusters;
 };
