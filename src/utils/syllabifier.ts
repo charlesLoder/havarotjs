@@ -8,7 +8,7 @@ import { SylOpts } from "../text";
 const groupFinal = (arr: Cluster[]): (Syllable | Cluster)[] => {
   // grouping the final first helps to avoid issues with final kafs/tavs
   const len = arr.length;
-  let i = len - 1;
+  let i = 0;
   const syl: Cluster[] = [];
   let result: (Syllable | Cluster)[] = [];
   let vowelPresent = false;
@@ -21,18 +21,18 @@ const groupFinal = (arr: Cluster[]): (Syllable | Cluster)[] => {
   if (finalCluster.hasVowel) {
     // check if finalCluster is syllable
     vowelPresent = true;
-    i--;
+    i++;
   } else if (finalCluster.isShureq) {
     // check if final cluster isShureq and get preceding Cluster
-    i--;
-    if (i > 0) {
+    i++;
+    if (i >= len) {
       syl.unshift(arr[i]);
     }
     vowelPresent = true;
-    i--;
+    i++;
   } else {
     isClosed = !finalCluster.isMater;
-    i--;
+    i++;
   }
 
   while (!vowelPresent) {
@@ -43,21 +43,21 @@ const groupFinal = (arr: Cluster[]): (Syllable | Cluster)[] => {
     }
     syl.unshift(curr);
     if (curr.isShureq) {
-      i--;
+      i++;
       syl.unshift(arr[i]);
       vowelPresent = true;
     } else {
       const clusterHasVowel = "hasVowel" in curr ? curr.hasVowel : true;
       vowelPresent = clusterHasVowel || curr.isShureq;
     }
-    i--;
-    if (i < 0) {
+    i++;
+    if (i > len) {
       break;
     }
   }
 
   const finalSyllable = new Syllable(syl, { isClosed });
-  const remainder = arr.slice(0, i + 1);
+  const remainder = arr.slice(i);
   result = remainder.length ? remainder : [];
   result.push(finalSyllable);
 
@@ -68,7 +68,7 @@ const groupFinal = (arr: Cluster[]): (Syllable | Cluster)[] => {
  * @description groups shewas either by themselves or with preceding short vowel
  */
 const groupShewas = (arr: (Syllable | Cluster)[], options: SylOpts): (Syllable | Cluster)[] => {
-  const reversed = arr.reverse();
+  const reversed = arr;
   let shewaPresent = false;
   let syl: Cluster[] = [];
   const result: (Syllable | Cluster)[] = [];
@@ -265,7 +265,8 @@ const groupShureqs = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
  * @description a preprocessing step that groups clusters into intermediate syllables by vowels or shewas
  */
 const groupClusters = (arr: Cluster[], options: SylOpts): (Syllable | Cluster)[] => {
-  const finalGrouped = groupFinal(arr);
+  const rev = arr.reverse();
+  const finalGrouped = groupFinal(rev);
   const shewasGrouped = groupShewas(finalGrouped, options);
   const matersGroups = groupMaters(shewasGrouped);
   const shureqGroups = groupShureqs(matersGroups);
