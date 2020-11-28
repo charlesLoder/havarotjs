@@ -59,7 +59,7 @@ const groupFinal = (arr: Cluster[]): (Syllable | Cluster)[] => {
   const finalSyllable = new Syllable(syl, { isClosed });
   const remainder = arr.slice(i);
   result = remainder.length ? remainder : [];
-  result.push(finalSyllable);
+  result.unshift(finalSyllable);
 
   return result;
 };
@@ -68,14 +68,13 @@ const groupFinal = (arr: Cluster[]): (Syllable | Cluster)[] => {
  * @description groups shewas either by themselves or with preceding short vowel
  */
 const groupShewas = (arr: (Syllable | Cluster)[], options: SylOpts): (Syllable | Cluster)[] => {
-  const reversed = arr;
   let shewaPresent = false;
   let syl: Cluster[] = [];
   const result: (Syllable | Cluster)[] = [];
   const len = arr.length;
 
   for (let index = 0; index < len; index++) {
-    const cluster = reversed[index];
+    const cluster = arr[index];
 
     // skip if already a syllable
     if (cluster instanceof Syllable) {
