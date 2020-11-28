@@ -34,7 +34,11 @@ const groupFinal = (arr: Cluster[]): (Syllable | Cluster)[] => {
   }
 
   while (!vowelPresent) {
-    const curr = arr[i];
+    const nxt = arr[i];
+    const curr = nxt ? nxt : false;
+    if (!curr) {
+      break;
+    }
     syl.unshift(curr);
     if (curr.isShureq) {
       i--;
