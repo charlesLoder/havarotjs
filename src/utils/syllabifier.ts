@@ -25,7 +25,9 @@ const groupFinal = (arr: Cluster[]): (Syllable | Cluster)[] => {
   } else if (finalCluster.isShureq) {
     // check if final cluster isShureq and get preceding Cluster
     i--;
-    syl.unshift(arr[i]);
+    if (i > 0) {
+      syl.unshift(arr[i]);
+    }
     vowelPresent = true;
     i--;
   } else {
@@ -56,7 +58,7 @@ const groupFinal = (arr: Cluster[]): (Syllable | Cluster)[] => {
 
   const finalSyllable = new Syllable(syl, { isClosed });
   const remainder = arr.slice(0, i + 1);
-  result = remainder;
+  result = remainder.length ? remainder : [];
   result.push(finalSyllable);
 
   return result;
