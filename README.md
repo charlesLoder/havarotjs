@@ -259,7 +259,7 @@ text.words[0].isDivineName;
 A `Syllable` is created from an array of `Clusters`.
 
 See the [syllabification](./docs/syllabification.md) doc for how a syllable is determined.
-Currently, the Divine Name (e.g. יהוה) and non-Hebrew text is treated as a _single syllable_ because these do not follow the rules of Hebrew syllabification.
+Currently, the Divine Name (e.g. יהוה), non-Hebrew text, and Hebrew punctuation (e.g. _passeq_, _nun hafucha_) are treated as a _single syllable_ because these do not follow the rules of Hebrew syllabification.
 
 #### Syllable.text
 
@@ -314,9 +314,9 @@ Returns a `boolean`.
 ```typescript
 import { Text } from "havarotjs";
 const text: Text = new Text("וַיִּקְרָ֨א");
-text.syllables[0].isClosed;
+text.syllables[0].isClosed; // i.e. "וַ"
 // true
-text.syllables[2].isClosed;
+text.syllables[2].isClosed; // i.e. "רָ֨א"
 // false
 ```
 
@@ -341,7 +341,7 @@ Returns a `boolean`.
 
 ```typescript
 import { Text } from "havarotjs";
-const text: Text = new Text("וַיִּקְרָ֨א"); // note the taamei over the ר
+const text: Text = new Text("וַיִּקְרָ֨א");
 text.syllables[0].isFinal; // i.e. "וַ"
 // false
 text.syllables[2].isFinal; // i.e. "רָ֨א"
@@ -355,7 +355,7 @@ A cluster is group of Hebrew character constituted by:
 - an obligatory Hebrew consonant character
 - an optional ligature mark
 - an optional vowel
-- an optional taamei
+- an optional taam
 
 A `Syllable` is a linguistic unit, whereas a `Cluster` is an orthgraphic one.
 The word `יֹו֑ם` is only one syllable, but it has three clusters—`יֹ`, `ו֑`, `ם`.
@@ -396,7 +396,7 @@ text.clusters[0].chars;
 
 #### Cluster.hasLongVowel
 
-Returns `true` if the following long vowel character are present:
+Returns `true` if one of the following long vowel characters is present:
 
 - \u{05B5} TSERE
 - \u{05B8} QAMATS
@@ -414,7 +414,7 @@ text.clusters[1].hasLongVowel;
 
 #### Cluster.hasShortVowel
 
-Returns `true` if the following long vowel character are present:
+Returns `true` if one of the following long vowel characters is present:
 
 - \u{05B4} HIRIQ
 - \u{05B6} SEGOL
@@ -433,7 +433,7 @@ text.clusters[2].hasShortVowel;
 
 #### Cluster.hasHalfVowel
 
-Returns `true` if the following long vowel character are present:
+Returns `true` if one of the following long vowel characters is present:
 
 - \u{05B1} HATAF SEGOL
 - \u{05B2} HATAF PATAH
@@ -452,7 +452,7 @@ text.clusters[1].hasHalfVowel;
 
 Returns `true` if `Cluster.hasLongVowel`, `Cluster.hasShortVowel`, or `Cluster.hasHalfVowel` is true.
 
-According to [syllbaification](./docs/syllabfication.md), a shewa is a vowel and serves as the nucleus of a syllable. Because `Cluster` is concerned with orthography, a shewa is **not** a vowel character.
+According to [syllbaification](./docs/syllabification.md), a shewa is a vowel and serves as the nucleus of a syllable. Because `Cluster` is concerned with orthography, a shewa is **not** a vowel character.
 
 ```typescript
 import { Text } from "havarotjs";
@@ -467,7 +467,7 @@ text.clusters[4].hasVowel;
 
 Returns `true` if `Cluster.hasVowel` is `false` and `Cluster.text` is a waw followed by a dagesh (e.g. `וּ`)
 
-A shureq is vowel itself, but contains no vowel characters (hence why `hasVowel` cannot be `true`).
+A shureq is a vowel itself, but contains no vowel characters (hence why `hasVowel` cannot be `true`).
 This allows for easier syllabification
 
 ```typescript
@@ -489,7 +489,7 @@ Returns `true` if `Cluster.hasVowel`, `Cluster.hasShewa`, and, `Cluster.isShureq
 
 There are potentially other instances when a consonant may be a _mater_ (e.g. a final aleph, ), but these are the most common.
 
-Though a shureq is a mater letter, it is also a vowel itself, and thus separate from `isMater`.
+Though a shureq is a _mater_ letter, it is also a vowel itself, and thus separate from `isMater`.
 
 ```typescript
 import { Text } from "havarotjs";
@@ -502,7 +502,7 @@ text.clusters[3].isMater; // the heh
 
 #### Cluster.hasMetheg
 
-Returns `true` is the following character is present:
+Returns `true` if the following character is present and a _sof pasuq_ does not follow it:
 
 - \u{05BD} METEG
 
@@ -515,7 +515,7 @@ text.clusters[0].hasMetheg;
 
 #### Cluster.hasShewa
 
-Returns `true` is the following character is present:
+Returns `true` if the following character is present:
 
 - \u{05B0} SHEWA
 
@@ -530,7 +530,7 @@ text.clusters[1].hasShewa;
 
 #### Cluster.hasTaamim
 
-Returns `true` is the following characters are present:
+Returns `true` if the following characters are present:
 
 - \u{0591}-\u{05AF}\u{05BF}\u{05C0}\u{05C3}-\u{05C6}\u{05F3}\u{05F4}
 
@@ -545,7 +545,7 @@ text.clusters[2].hasTaamim;
 
 ### Char
 
-A Hebrew character and it's positioning number for being sequenced correctly.
+A Hebrew character and its positioning number for being sequenced correctly.
 See [`Cluster`](#Cluster) for correct normalization.
 
 #### Char.text
@@ -566,8 +566,8 @@ Returns a number used for sequencing
 - consonants = 0
 - ligatures = 1
 - dagesh or rafe = 2
-- niqqud (vowels) = 3
-- taamei (accents) = 4
+- niqqud (i.e vowels) = 3
+- taamim (i.e. accents) = 4
 
 ```typescript
 import { Text } from "havarotjs";
@@ -580,7 +580,6 @@ text.chars[1].sequencePosition; // the segol
 
 ## Contributing
 
-See the [TODO](./docs/TODO.md) list for some ideas of what needs to get done.
-Of feel free to open an issue or pull request.
+Free to open an issue or pull request.
 
 See the [terms list](./docs/terms.md) for a list of naming convention.
