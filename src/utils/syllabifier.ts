@@ -85,7 +85,7 @@ const groupShewas = (arr: (Syllable | Cluster)[], options: SylOpts): (Syllable |
     const clusterHasShewa = cluster.hasShewa;
     if (!shewaPresent && clusterHasShewa) {
       shewaPresent = true;
-      syl.push(cluster);
+      syl.unshift(cluster);
       continue;
     }
 
@@ -93,7 +93,7 @@ const groupShewas = (arr: (Syllable | Cluster)[], options: SylOpts): (Syllable |
       const syllable = new Syllable(syl);
       result.push(syllable);
       syl = [];
-      syl.push(cluster);
+      syl.unshift(cluster);
       continue;
     }
 
@@ -199,7 +199,7 @@ const groupMaters = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
     }
 
     if (cluster.isMater) {
-      syl.push(cluster);
+      syl.unshift(cluster);
       const nxt = arr[index + 1];
 
       if (nxt instanceof Syllable) {
@@ -236,7 +236,7 @@ const groupShureqs = (arr: (Syllable | Cluster)[]): (Syllable | Cluster)[] => {
     }
 
     if (cluster.isShureq) {
-      syl.push(cluster);
+      syl.unshift(cluster);
       const nxt = arr[index + 1];
 
       if (nxt instanceof Syllable) {
