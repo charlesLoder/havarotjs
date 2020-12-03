@@ -8,12 +8,11 @@ type Result = (Syllable | Cluster)[];
 /**
  * @description creates a new Syllable, pushes to results[], and resets syl[]
  */
-const createNewSyllable = (syl: Syl, result: Result, isClosed?: boolean): Syl => {
+const createNewSyllable = (result: Result, syl: Syl, isClosed?: boolean): Syl => {
   isClosed = isClosed || false;
   const syllable = new Syllable(syl, { isClosed });
   result.push(syllable);
-  syl = [];
-  return syl;
+  return [];
 };
 
 /**
@@ -86,7 +85,7 @@ const groupShewas = (arr: Result, options: SylOpts): Result => {
   let syl: Syl = [];
   const result: Result = [];
   const len = arr.length;
-  const shewaNewSyllable = createNewSyllable.bind(groupShewas, syl, result);
+  const shewaNewSyllable = createNewSyllable.bind(groupShewas, result);
 
   for (let index = 0; index < len; index++) {
     const cluster = arr[index];
@@ -105,14 +104,14 @@ const groupShewas = (arr: Result, options: SylOpts): Result => {
     }
 
     if (shewaPresent && clusterHasShewa) {
-      syl = shewaNewSyllable();
+      syl = shewaNewSyllable(syl);
       syl.unshift(cluster);
       continue;
     }
 
     if (shewaPresent && cluster.hasShortVowel) {
       if (cluster.hasMetheg) {
-        syl = shewaNewSyllable();
+        syl = shewaNewSyllable(syl);
         syl.unshift(cluster);
         continue;
       }
@@ -122,33 +121,29 @@ const groupShewas = (arr: Result, options: SylOpts): Result => {
       const wawConsecutive = /וַ/;
       // check if there is a doubling dagesh
       if (dageshRegx.test(prev)) {
-        syl = shewaNewSyllable();
+        syl = shewaNewSyllable(syl);
       }
       // check for waw-consecutive w/ sqenemlevy letter
       else if (options.sqnmlvy && sqenemlevy.test(prev) && wawConsecutive.test(cluster.text)) {
-        syl = shewaNewSyllable();
+        syl = shewaNewSyllable(syl);
         result.push(new Syllable([cluster]));
         shewaPresent = false;
         continue;
       }
       syl.unshift(cluster);
-      const syllable = new Syllable(syl, { isClosed: true });
-      result.push(syllable);
-      syl = [];
+      syl = shewaNewSyllable(syl, true);
       shewaPresent = false;
       continue;
     }
 
     if (shewaPresent && cluster.hasLongVowel) {
       if (options.longVowels) {
-        syl = shewaNewSyllable();
+        syl = shewaNewSyllable(syl);
         result.push(cluster);
         shewaPresent = false;
       } else {
         syl.unshift(cluster);
-        const syllable = new Syllable(syl, { isClosed: true });
-        result.push(syllable);
-        syl = [];
+        syl = shewaNewSyllable(syl, true);
         shewaPresent = false;
       }
       continue;
@@ -157,11 +152,9 @@ const groupShewas = (arr: Result, options: SylOpts): Result => {
     if (shewaPresent && cluster.isShureq) {
       if (!options.wawShureq && !cluster.hasMetheg && len - 1 === index) {
         syl.unshift(cluster);
-        const syllable = new Syllable(syl, { isClosed: true });
-        result.push(syllable);
-        syl = [];
+        syl = shewaNewSyllable(syl, true);
       } else {
-        syl = shewaNewSyllable();
+        syl = shewaNewSyllable(syl);
         result.push(cluster);
         shewaPresent = false;
       }
@@ -169,7 +162,7 @@ const groupShewas = (arr: Result, options: SylOpts): Result => {
     }
 
     if (shewaPresent && cluster.isMater) {
-      syl = shewaNewSyllable();
+      syl = shewaNewSyllable(syl);
       result.push(cluster);
       shewaPresent = false;
       continue;
@@ -179,8 +172,7 @@ const groupShewas = (arr: Result, options: SylOpts): Result => {
   }
 
   if (syl.length) {
-    const syllable = new Syllable(syl);
-    result.push(syllable);
+    shewaNewSyllable(syl);
   }
 
   return result;
@@ -193,7 +185,7 @@ const groupMaters = (arr: Result): Result => {
   const len = arr.length;
   let syl: Syl = [];
   const result: Result = [];
-  const materNewSyllable = createNewSyllable.bind(groupMaters, syl, result);
+  const materNewSyllable = createNewSyllable.bind(groupMaters, result);
 
   for (let index = 0; index < len; index++) {
     const cluster = arr[index];
@@ -212,7 +204,7 @@ const groupMaters = (arr: Result): Result => {
       }
 
       syl.unshift(nxt);
-      syl = materNewSyllable();
+      syl = materNewSyllable(syl);
       index++;
     } else {
       result.push(cluster);
@@ -229,7 +221,7 @@ const groupShureqs = (arr: Result): Result => {
   const len = arr.length;
   let syl: Syl = [];
   const result: Result = [];
-  const shureqNewSyllable = createNewSyllable.bind(groupShureqs, syl, result);
+  const shureqNewSyllable = createNewSyllable.bind(groupShureqs, result);
 
   for (let index = 0; index < len; index++) {
     const cluster = arr[index];
@@ -250,7 +242,7 @@ const groupShureqs = (arr: Result): Result => {
       if (nxt !== undefined) {
         syl.unshift(nxt);
       }
-      syl = shureqNewSyllable();
+      syl = shureqNewSyllable(syl);
       index++;
     } else {
       result.push(cluster);
