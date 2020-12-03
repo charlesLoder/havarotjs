@@ -195,6 +195,7 @@ const groupMaters = (arr: Result): Result => {
   const len = arr.length;
   let syl: Syl = [];
   const result: Result = [];
+  const materNewSyllable = createNewSyllable.bind(groupMaters, syl, result);
 
   for (let index = 0; index < len; index++) {
     const cluster = arr[index];
@@ -213,9 +214,7 @@ const groupMaters = (arr: Result): Result => {
       }
 
       syl.unshift(nxt);
-      const syllable = new Syllable(syl);
-      result.push(syllable);
-      syl = [];
+      syl = materNewSyllable();
       index++;
     } else {
       result.push(cluster);
