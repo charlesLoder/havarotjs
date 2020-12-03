@@ -6,9 +6,7 @@ type Syl = Cluster[];
 type Result = (Syllable | Cluster)[];
 
 /**
- *
- * @param this
- * @description pushes a new Syllable to the results[], and resets syl[]
+ * @description creates a new Syllable, pushes to results[], and resets syl[]
  */
 const createNewSyllable = (syl: Syl, result: Result, isClosed?: boolean): Syl => {
   isClosed = isClosed || false;
