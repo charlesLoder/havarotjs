@@ -231,6 +231,7 @@ const groupShureqs = (arr: Result): Result => {
   const len = arr.length;
   let syl: Syl = [];
   const result: Result = [];
+  const shureqNewSyllable = createNewSyllable.bind(groupShureqs, syl, result);
 
   for (let index = 0; index < len; index++) {
     const cluster = arr[index];
@@ -251,10 +252,7 @@ const groupShureqs = (arr: Result): Result => {
       if (nxt !== undefined) {
         syl.unshift(nxt);
       }
-
-      const syllable = new Syllable(syl);
-      result.push(syllable);
-      syl = [];
+      syl = shureqNewSyllable();
       index++;
     } else {
       result.push(cluster);
