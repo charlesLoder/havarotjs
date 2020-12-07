@@ -35,7 +35,7 @@ Though, as he demonstrates, it is better to understand the Tiberian syllables as
 | ------- | ---------- |
 | foot    | foot       |
 
-According to this decription, hatef vowels and vocalic shewas **do** constitute syllables.
+According to this decription, hatef vowels and _shewa na'_ **do** constitute syllables.
 
 ## Options for Syllabification
 
@@ -43,28 +43,69 @@ These are the options for syllabification.
 
 ### longVowles
 
-Takes a `boolean`.
+Takes a `boolean`. Default `true`.
 
-If `true`, regards a shewa after a long vowel (excluding waw-shureq) as vocal.
+If `true`, regards a shewa after a long vowel (excluding waw-shureq) as a _shewa na'_ .
+
+```typescript
+const default = new Text("יָדְךָ");
+default.syllables.map(syl => syl.text);
+// ["יָ", "דְ", "ךָ"]
+
+const optional = new Text("יָדְךָ", {longVowels: false});
+optional.syllables.map(syl => syl.text);
+// ["יָדְ", "ךָ"]
+```
 
 ### sqnmlvy
 
-Takes a `boolean`.
+Takes a `boolean`. Default `true`.
 
-If `true`, regards the shewa under the letters שׁשׂסצנמלוי when preceded by a waw-consecutive with a missing _dagesh chazaq_ as vocal.
+If `true`, regards the shewa under the letters שׁשׂסצנמלוי when preceded by a waw-consecutive with a missing _dagesh chazaq_ as vocal. If a metheg is present, the shewa is always a _shewa na'_.
+
+```typescript
+const default = new Text("וַיְצַחֵק֙");
+default.syllables.map(syl => syl.text);
+// ["וַ", "יְ", "צַ", "חֵק֙"]
+
+const optional = new Text("וַיְצַחֵק֙", {sqnmlvy: false});
+optional.syllables.map(syl => syl.text);
+// ["וַיְ", "צַ", "חֵק֙"]
+```
 
 ### qametsQatan
 
-Takes a `boolean`.
+Takes a `boolean`. Default `true`.
 
 If `true`, when appropriate qamets characters are converted to qamets-qatan characters.
 The former is a "long-vowel" whereas the latter is a "short-vowel."
 
+```typescript
+const qQRegx = /\u{05C7}/u;
+const default = new Text("חָפְנִי֙");
+qQRegx.test(default.text);
+// true
+
+const optional = new Text("חָפְנִי֙", {qametsQatan: false});
+qQRegx.test(optional.text);
+// false
+```
+
 ### wawShureq
 
-Takes a `boolean`.
+Takes a `boolean`. Default is `true`.
 
-If `true`, regards a shewa after a waw-shureq as vocal, unless metheg is present
+If `true`, regards a shewa after a waw-shureq as a _shewa na'_, unless a metheg is present.
+
+```typescript
+const default = new Text("וּלְמַזֵּר");
+default.syllables.map(syl => syl.text);
+// "וּ", "לְ", "מַ", "זֵּר"]
+
+const optional = new Text("וּלְמַזֵּר", {wawShureq: false});
+optional.syllables.map(syl => syl.text);
+// ["וּלְ", "מַ", "זֵּר"]
+```
 
 ## Traditional
 
@@ -74,7 +115,29 @@ It is most similar to the Sephardi pronunciation (see especially, S. Morag, "Pro
 The syllabification options are set as follows:
 
 ```typescript
-{ longVowels: true, sqnmlvy: true, qametsQatan: true, vavShureq: true }
+{ longVowels: true, sqnmlvy: true, qametsQatan: true, wawShureq: true }
+```
+
+The `traditional` schema follows the default options. Explicitly setting a `schema` will override any other options.
+
+```typescript
+// these two produce the same results
+const defaut = new Text("וּלְמַזֵּר");
+default.syllables.map(syl => syl.text);
+// "וּ", "לְ", "מַ", "זֵּר"]
+
+const traditional = new Text("וּלְמַזֵּר", { schema: "traditional" });
+traditional.syllables.map(syl => syl.text);
+// "וּ", "לְ", "מַ", "זֵּר"]
+
+// these two are not the same, by explicitly setting schema, wawShureq will be true
+const optional = new Text("וּלְמַזֵּר", { wawShureq: false });
+optional.syllables.map(syl => syl.text);
+// ["וּלְ", "מַ", "זֵּר"]
+
+const schema = new Text("וּלְמַזֵּר", { schema: "traditional", wawShureq: false });
+schema.syllables.map(syl => syl.text);
+// ["וּ", "לְ", "מַ", "זֵּר"]
 ```
 
 ### Vocal & Silent Shewas
@@ -84,16 +147,16 @@ In regards to the realization of shewas, Khan remarks (I.2.5.1.1):
 > The shewa (שְׁוָּא) sign (אְ) in the Tiberian vocalization system was read either as a vowel or as zero. When shewa was read as vocalic, its quality in the Tiberian tradition was by default the same as that of the pataḥ vowel sign
 
 This package does **not** consider the quality of the realization of the shewa.
-It only determines whether the shewa is vocal or silent.
+It only determines whether the shewa is a _shewa na'_ (vocal) or _shewa nach_ (silent).
 
 #### Vocal Shewas
 
-A shewa is considered vocalic (i.e. _shewa na'_) under the following conditions:
+A shewa is considered a _shewa na'_ under the following conditions:
 
 1. when it is the first vowel in a word
 2. when two shewas occur together in the middle of word, the first is silent and the second is vocal
 3. when it appears under a geminated consonant
-4. when it is preceded by a long vowel except for a word initial shureq (i.e. a conjunctive vav)
+4. when it is preceded by a long vowel
 
 #### Silent Shewas
 
@@ -103,14 +166,14 @@ There is one major exception:
 
 - In the word שְׁתַּיִם _štayim_ (and variants), the first shewa is technially silent.
 
-This package, however, considers it a vocal shewa.
+This package, however, considers it a _shewa na'_.
 
 ## Tiberian
 
 The syllabification options are set as follows:
 
 ```typescript
-{ qametsQatan: false, sqnmlvy: true, longVowels: false, vavShureq: false }
+{ qametsQatan: false, sqnmlvy: true, longVowels: false, wawShureq: false }
 ```
 
 #### Long Vowels

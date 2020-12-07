@@ -1,6 +1,6 @@
 {
   "name": "havarotjs",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "A Typescript package for syllabic data about Hebrew text",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
