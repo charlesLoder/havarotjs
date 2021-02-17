@@ -38,14 +38,12 @@ type Schema = "tiberian" | "traditional" | null;
 export class Text extends Node {
   original: string;
   private options: TextOpts;
-  private qametsQatan: boolean;
   private sylOpts: SylOpts;
 
   constructor(text: string, options: TextOpts = {}) {
     super();
     this.original = this.validateInput(text);
     this.options = this.setOptions(options);
-    this.qametsQatan = this.options.qametsQatan || false;
     this.sylOpts = this.options;
   }
 
@@ -91,7 +89,7 @@ export class Text extends Node {
     const sequencedText = sequencedChar.reduce((a, c) => a + c.text, "");
     // split text at spaces and maqqef, spaces are added to the array as separate entries
     const textArr = sequencedText.split(splitGroup);
-    const mapQQatan = this.qametsQatan ? textArr.map((word) => convertsQametsQatan(word)) : textArr;
+    const mapQQatan = this.options.qametsQatan ? textArr.map((word) => convertsQametsQatan(word)) : textArr;
     const mapHolemWaw = mapQQatan.map((word) => holemWaw(word));
     return mapHolemWaw.reduce((a, c) => a + c, "");
   }
