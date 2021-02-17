@@ -80,10 +80,7 @@ export class Text extends Node {
     return this.original.normalize("NFKD");
   }
 
-  /**
-   * @returns a string that has been decomposed, sequenced, qamets qatan patterns converted to the appropriate unicode character (U+05C7), and holem-waw sequences corrected
-   */
-  get text(): string {
+  private get sanitized(): string {
     const text = this.normalized.trim();
     const sequencedChar = sequence(text).reduce((a, c) => a.concat(c), []);
     const sequencedText = sequencedChar.reduce((a, c) => a + c.text, "");
@@ -95,10 +92,17 @@ export class Text extends Node {
   }
 
   /**
+   * @returns a string that has been decomposed, sequenced, qamets qatan patterns converted to the appropriate unicode character (U+05C7), and holem-waw sequences corrected
+   */
+  get text(): string {
+    return this.words.reduce((a, c) => `${a}${c.text}${c.whiteSpaceAfter}`, "");
+  }
+
+  /**
    * @returns a one dimensional array of Words
    */
   get words(): Word[] {
-    const split = this.text.split(splitGroup);
+    const split = this.sanitized.split(splitGroup);
     const groups = split.filter((group) => group);
     const words = groups.map((word) => new Word(word, this.sylOpts));
     this.children = words;
