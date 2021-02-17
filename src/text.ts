@@ -21,30 +21,23 @@ export interface SylOpts {
    * @property determines whether to regard a shewa after a vav-shureq as vocal, unless metheg is present
    */
   wawShureq?: boolean;
-}
-
-interface TextOpts extends SylOpts {
-  schema?: Schema;
   /**
    * @property converts regular qamets characters to qamets qatan characters where appropriate
    */
   qametsQatan?: boolean;
+  schema?: Schema;
 }
 
 type Schema = "tiberian" | "traditional" | null;
 
-// const defaultOpts: TextOpts = { schema: null, qametsQatan: true, sqnmlvy: true, longVowels: true, wawShureq: true };
-
 export class Text extends Node {
   original: string;
-  private options: TextOpts;
-  private sylOpts: SylOpts;
+  private options: SylOpts;
 
-  constructor(text: string, options: TextOpts = {}) {
+  constructor(text: string, options: SylOpts = {}) {
     super();
     this.original = this.validateInput(text);
     this.options = this.setOptions(options);
-    this.sylOpts = this.options;
   }
 
   private validateInput(text: string): string {
@@ -55,19 +48,19 @@ export class Text extends Node {
     return text;
   }
 
-  private setOptions(options: TextOpts): TextOpts {
+  private setOptions(options: SylOpts): SylOpts {
     const schema = options.schema;
     return schema ? this.setSchemaOptions(schema) : this.setDefaultOptions(options);
   }
 
-  private setSchemaOptions(schema: Schema): TextOpts {
-    const traitionalOpts = { qametsQatan: true, sqnmlvy: true, longVowels: true, vavShureq: true };
+  private setSchemaOptions(schema: Schema): SylOpts {
+    const traditionalOpts = { qametsQatan: true, sqnmlvy: true, longVowels: true, vavShureq: true };
     const tiberianOpts = { qametsQatan: false, sqnmlvy: true, longVowels: false, vavShureq: false };
-    return schema === "traditional" ? traitionalOpts : tiberianOpts;
+    return schema === "traditional" ? traditionalOpts : tiberianOpts;
   }
 
-  private setDefaultOptions(options: TextOpts): TextOpts {
-    const defaultOpts: TextOpts = { qametsQatan: true, sqnmlvy: true, longVowels: true, wawShureq: true };
+  private setDefaultOptions(options: SylOpts): SylOpts {
+    const defaultOpts: SylOpts = { qametsQatan: true, sqnmlvy: true, longVowels: true, wawShureq: true };
     // for..in throwing error
     defaultOpts.longVowels = options.longVowels !== undefined ? options.longVowels : defaultOpts.longVowels;
     defaultOpts.qametsQatan = options.qametsQatan !== undefined ? options.qametsQatan : defaultOpts.qametsQatan;
@@ -104,7 +97,7 @@ export class Text extends Node {
   get words(): Word[] {
     const split = this.sanitized.split(splitGroup);
     const groups = split.filter((group) => group);
-    const words = groups.map((word) => new Word(word, this.sylOpts));
+    const words = groups.map((word) => new Word(word, this.options));
     this.children = words;
     return words;
   }
