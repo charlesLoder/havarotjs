@@ -28,7 +28,7 @@ export interface SylOpts {
   schema?: Schema;
 }
 
-type Schema = "tiberian" | "traditional" | null;
+type Schema = "tiberian" | "traditional";
 
 export class Text extends Node {
   original: string;
