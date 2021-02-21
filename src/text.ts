@@ -48,6 +48,15 @@ export class Text extends Node {
     return text;
   }
 
+  private validateOptions(options: SylOpts): SylOpts {
+    for (const [k, v] of Object.entries(options)) {
+      if (typeof v !== "boolean") {
+        throw new Error(`The value ${v} is not a valid option for ${k}`);
+      }
+    }
+    return options;
+  }
+
   private setOptions(options: SylOpts): SylOpts {
     const schema = options.schema;
     return schema ? this.setSchemaOptions(schema) : this.setDefaultOptions(options);
@@ -64,6 +73,7 @@ export class Text extends Node {
   }
 
   private setDefaultOptions(options: SylOpts): SylOpts {
+    options = this.validateOptions(options);
     const defaultOpts: SylOpts = { qametsQatan: true, sqnmlvy: true, longVowels: true, wawShureq: true };
     // for..in throwing error
     defaultOpts.longVowels = options.longVowels !== undefined ? options.longVowels : defaultOpts.longVowels;
