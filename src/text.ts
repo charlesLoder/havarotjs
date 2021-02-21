@@ -54,9 +54,13 @@ export class Text extends Node {
   }
 
   private setSchemaOptions(schema: Schema): SylOpts {
+    const schemaText = schema.toLowerCase();
+    if (schemaText !== "traditional" && schemaText !== "tiberian") {
+      throw new Error(`${schemaText} is not a valid schema`);
+    }
     const traditionalOpts = { qametsQatan: true, sqnmlvy: true, longVowels: true, vavShureq: true };
     const tiberianOpts = { qametsQatan: false, sqnmlvy: true, longVowels: false, vavShureq: false };
-    return schema === "traditional" ? traditionalOpts : tiberianOpts;
+    return schemaText === "traditional" ? traditionalOpts : tiberianOpts;
   }
 
   private setDefaultOptions(options: SylOpts): SylOpts {
