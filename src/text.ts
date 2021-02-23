@@ -49,7 +49,11 @@ export class Text extends Node {
   }
 
   private validateOptions(options: SylOpts): SylOpts {
+    const validOpts = ["sqnmlvy", "longVowels", "wawShureq", "qametsQatan"];
     for (const [k, v] of Object.entries(options)) {
+      if (!validOpts.includes(k)) {
+        throw new Error(`${k} is not a valid option`);
+      }
       if (typeof v !== "boolean") {
         throw new Error(`The value ${v} is not a valid option for ${k}`);
       }
