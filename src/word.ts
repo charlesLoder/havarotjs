@@ -23,14 +23,11 @@ export class Word {
    * @returns a one dimensional array of Syllables
    */
   get syllables(): Syllable[] {
-    let syllables: Syllable[];
     if (/\w/.test(this.text) || this.isDivineName) {
       const syl = new Syllable(this.clusters);
-      syllables = [syl];
-    } else {
-      syllables = syllabify(this.clusters, this.sylOpts);
+      return [syl];
     }
-    return syllables;
+    return syllabify(this.clusters, this.sylOpts);
   }
 
   /**
