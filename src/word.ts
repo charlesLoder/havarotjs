@@ -2,17 +2,15 @@ import { syllabify, makeClusters } from "./utils/syllabifier";
 import { Syllable } from "./syllable";
 import { Cluster } from "./cluster";
 import { Char } from "./char";
-import { Node } from "./node";
 import { SylOpts } from "./text";
 
-export class Word extends Node {
+export class Word {
   text: string;
   whiteSpaceBefore: string | null;
   whiteSpaceAfter: string | null;
   private sylOpts: SylOpts;
 
   constructor(text: string, sylOpts: SylOpts) {
-    super();
     this.text = text.trim();
     const startMatch = text.match(/^\s*/g);
     const endMatch = text.match(/\s*$/g);
@@ -32,7 +30,6 @@ export class Word extends Node {
     } else {
       syllables = syllabify(this.clusters, this.sylOpts);
     }
-    this.children = syllables;
     return syllables;
   }
 

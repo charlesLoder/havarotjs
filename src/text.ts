@@ -6,7 +6,6 @@ import { Syllable } from "./syllable";
 import { Cluster } from "./cluster";
 import { Char } from "./char";
 import { splitGroup } from "./utils/regularExpressions";
-import { Node } from "./node";
 
 export interface SylOpts {
   /**
@@ -30,12 +29,11 @@ export interface SylOpts {
 
 type Schema = "tiberian" | "traditional";
 
-export class Text extends Node {
+export class Text {
   original: string;
   private options: SylOpts;
 
   constructor(text: string, options: SylOpts = {}) {
-    super();
     this.original = this.validateInput(text);
     this.options = this.setOptions(options);
   }
@@ -116,7 +114,6 @@ export class Text extends Node {
     const split = this.sanitized.split(splitGroup);
     const groups = split.filter((group) => group);
     const words = groups.map((word) => new Word(word, this.options));
-    this.children = words;
     return words;
   }
 
