@@ -1,6 +1,7 @@
+import { Cluster } from "./cluster";
 export class Node {
-  protected next: Node | null;
-  protected prev: Node | null;
+  next: Cluster | null;
+  prev: Cluster | null;
   protected child!: Node;
 
   constructor() {
