@@ -94,7 +94,7 @@ export class Text {
     const sequencedChar = sequence(text).reduce((a, c) => a.concat(c), []);
     const sequencedText = sequencedChar.reduce((a, c) => a + c.text, "");
     // split text at spaces and maqqef, spaces are added to the array as separate entries
-    const textArr = sequencedText.split(splitGroup);
+    const textArr = sequencedText.split(splitGroup).filter((group) => group);
     const mapQQatan = this.options.qametsQatan ? textArr.map((word) => convertsQametsQatan(word)) : textArr;
     const mapHolemWaw = mapQQatan.map((word) => holemWaw(word));
     return mapHolemWaw.reduce((a, c) => a + c, "");
