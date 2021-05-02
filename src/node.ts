@@ -1,4 +1,5 @@
 import { Cluster } from "./cluster";
+
 export class Node {
   next: Cluster | null;
   prev: Cluster | null;
