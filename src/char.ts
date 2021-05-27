@@ -5,12 +5,17 @@ const dagesh = /[\u{05BC},\u{05BF}]/u; // includes rafe
 const niqqud = /[\u{05B0}-\u{05BB},\u{05C7}]/u;
 
 export class Char {
-  text: string;
-  sequencePosition: number;
+  #text: string;
 
   constructor(char: string) {
-    this.text = char;
-    this.sequencePosition = this.findPos();
+    this.#text = char;
+  }
+
+  /**
+   * @returns the text of the Char
+   */
+  get text(): string {
+    return this.#text;
   }
 
   private findPos(): number {
@@ -32,5 +37,12 @@ export class Char {
     }
     // i.e. any non-hebrew char
     return 10;
+  }
+
+  /**
+   * @returns the position within a Cluster a type Char should be
+   */
+  get sequencePosition(): number {
+    return this.findPos();
   }
 }

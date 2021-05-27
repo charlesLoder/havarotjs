@@ -30,11 +30,11 @@ export interface SylOpts {
 type Schema = "tiberian" | "traditional";
 
 export class Text {
-  original: string;
+  #original: string;
   private options: SylOpts;
 
   constructor(text: string, options: SylOpts = {}) {
-    this.original = this.validateInput(text);
+    this.#original = this.validateInput(text);
     this.options = this.setOptions(options);
   }
 
@@ -98,6 +98,13 @@ export class Text {
     const mapQQatan = this.options.qametsQatan ? textArr.map((word) => convertsQametsQatan(word)) : textArr;
     const mapHolemWaw = mapQQatan.map((word) => holemWaw(word));
     return mapHolemWaw.reduce((a, c) => a + c, "");
+  }
+
+  /**
+   * @returns the original string passed
+   */
+  get original(): string {
+    return this.#original;
   }
 
   /**

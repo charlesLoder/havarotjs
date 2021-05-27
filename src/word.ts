@@ -5,18 +5,25 @@ import { Char } from "./char";
 import { SylOpts } from "./text";
 
 export class Word {
-  text: string;
+  #text: string;
   whiteSpaceBefore: string | null;
   whiteSpaceAfter: string | null;
   private sylOpts: SylOpts;
 
   constructor(text: string, sylOpts: SylOpts) {
-    this.text = text.trim();
+    this.#text = text;
     const startMatch = text.match(/^\s*/g);
     const endMatch = text.match(/\s*$/g);
     this.whiteSpaceBefore = startMatch ? startMatch[0] : null;
     this.whiteSpaceAfter = endMatch ? endMatch[0] : null;
     this.sylOpts = sylOpts;
+  }
+
+  /**
+   * @returns the word's text trimmed of any whitespace characters
+   */
+  get text(): string {
+    return this.#text.trim();
   }
 
   /**
