@@ -17,15 +17,15 @@ export const holemWaw = (word: string): string => {
     return word;
   }
 
-  const [noTaamei, charPos] = removeTaamim(word);
+  const [noTaamim, charPos] = removeTaamim(word);
 
   // check for the waw + holem pattern
-  if (!wawHolemRegX.test(noTaamei)) {
+  if (!wawHolemRegX.test(noTaamim)) {
     return word;
   }
 
   // check for waw + holem preceded by vowel
-  const match = noTaamei.match(vowelBeforeWawHolem);
+  const match = noTaamim.match(vowelBeforeWawHolem);
   if (!match) {
     return word;
   } else {

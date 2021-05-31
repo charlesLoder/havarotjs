@@ -328,7 +328,7 @@ Though Hebrew words are typically accented on the final syllable, this is not al
 
 ```typescript
 import { Text } from "havarotjs";
-const text: Text = new Text("וַיִּקְרָ֨א"); // note the taamei over the ר
+const text: Text = new Text("וַיִּקְרָ֨א"); // note the taam over the ר
 text.syllables[0].isAccented; // i.e. "וַ"
 // false
 text.syllables[2].isAccented; // i.e. "רָ֨א"

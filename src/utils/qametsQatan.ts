@@ -109,12 +109,12 @@ export const convertsQametsQatan = (word: string): string => {
     }
   }
 
-  const [noTaamei, charPos] = removeTaamim(word);
+  const [noTaamim, charPos] = removeTaamim(word);
 
   // check if in verbal list (more frequent)
   for (const wholeWord of wholeWordsRegx) {
     const regEx = new RegExp(wholeWord);
-    const match = noTaamei.match(regEx);
+    const match = noTaamim.match(regEx);
 
     if (!match) {
       continue;
@@ -126,7 +126,7 @@ export const convertsQametsQatan = (word: string): string => {
   // check if in nominal list
   for (const snippet of snippetsRegx) {
     const regEx = new RegExp(snippet);
-    const match = noTaamei.match(regEx);
+    const match = noTaamim.match(regEx);
 
     if (!match) {
       continue;

@@ -46,7 +46,7 @@ export class Cluster extends Node {
   }
 
   /**
-   * @returns true if hiriq, seghol, patach, qubuts, or qamats qatan are present
+   * @returns true if hiriq, seghol, patach, qubuts, or qamets qatan are present
    */
   get hasShortVowel(): boolean {
     return /[\u{05B4}\u{05B6}\u{05B7}\u{05BB}\u{05C7}]/u.test(this.text);
