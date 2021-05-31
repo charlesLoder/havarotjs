@@ -1,8 +1,8 @@
 import { Cluster } from "./cluster";
 
 export class Node {
-  next: Cluster | null;
-  prev: Cluster | null;
+  next: Node | null;
+  prev: Node | null;
   protected child!: Node;
 
   constructor() {
@@ -10,14 +10,14 @@ export class Node {
     this.prev = null;
   }
 
-  protected set children(arr: any[]) {
+  protected set children(arr: Node[]) {
     const head = arr[0];
     const remainder = arr.slice(1);
     this.child = head;
     head.siblings = remainder;
   }
 
-  set siblings(arr: any[]) {
+  set siblings(arr: Node[]) {
     const len = arr.length;
     for (let index = 0; index < len; index++) {
       const curr = arr[index];
@@ -29,7 +29,7 @@ export class Node {
     }
   }
 
-  get siblings(): any[] {
+  get siblings(): Node[] {
     let curr = this.next;
     const res = [];
     while (curr) {

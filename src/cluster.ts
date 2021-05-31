@@ -10,7 +10,6 @@ export class Cluster extends Node {
     super();
     this.#original = cluster;
     this.#sequenced = this.sequence();
-    this.children = this.#sequenced;
   }
 
   /**
