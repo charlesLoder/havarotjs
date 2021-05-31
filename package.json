@@ -11,7 +11,8 @@
     "lint": "eslint . --ext .ts",
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
-    "preversion": "npm run lint && npm run format"
+    "preversion": "npm run format && npm run lint && npm test",
+    "postversion": "git push && git push --tags"
   },
   "files": [
     "dist/**/*"
