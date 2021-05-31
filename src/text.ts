@@ -91,7 +91,7 @@ export class Text {
 
   private get sanitized(): string {
     const text = this.normalized.trim();
-    const sequencedChar = sequence(text).reduce((a, c) => a.concat(c), []);
+    const sequencedChar = sequence(text).flat();
     const sequencedText = sequencedChar.reduce((a, c) => a + c.text, "");
     // split text at spaces and maqqef, spaces are added to the array as separate entries
     const textArr = sequencedText.split(splitGroup).filter((group) => group);
@@ -128,20 +128,20 @@ export class Text {
    * @returns a one dimensional array of Syllables
    */
   get syllables(): Syllable[] {
-    return this.words.map((word) => word.syllables).reduce((a, c) => a.concat(c), []);
+    return this.words.map((word) => word.syllables).flat();
   }
 
   /**
    * @returns a one dimensional array of Clusters
    */
   get clusters(): Cluster[] {
-    return this.syllables.map((syllable) => syllable.clusters).reduce((a, c) => a.concat(c), []);
+    return this.syllables.map((syllable) => syllable.clusters).flat();
   }
 
   /**
    * @returns a one dimensional array of Chars
    */
   get chars(): Char[] {
-    return this.clusters.map((cluster) => cluster.chars).reduce((a, c) => a.concat(c), []);
+    return this.clusters.map((cluster) => cluster.chars).flat();
   }
 }

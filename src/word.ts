@@ -52,7 +52,7 @@ export class Word {
    * @returns a one dimensional array of Chars
    */
   get chars(): Char[] {
-    return this.clusters.map((cluster) => cluster.chars).reduce((a, c) => a.concat(c), []);
+    return this.clusters.map((cluster) => cluster.chars).flat();
   }
 
   /**
