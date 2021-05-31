@@ -3,7 +3,7 @@ import { taamim } from "./regularExpressions";
 export const removeTaamim = (word: string): [string, number[]] => {
   // https://stackoverflow.com/questions/4590298/how-to-ignore-whitespace-in-a-regular-expression-subject-string
   const globalTaamim = new RegExp(taamim.source, "gu");
-  let noTaamim: string = "";
+  let noTaamim = "";
   const charPos: number[] = [];
 
   // builds a string with no taamim, while keeping track of the index

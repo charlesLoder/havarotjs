@@ -29,7 +29,7 @@ export const holemWaw = (word: string): string => {
   if (!match) {
     return word;
   } else {
-    const start = charPos[match.index!];
+    const start = charPos[match.index!]; // eslint-disable-line
     const end = charPos[match[0].length] + start;
     const matched = word.substring(start, end);
     const withWawHolem = matched.split(wawHolemRegX).join("\u{05B9}\u{05D5}");

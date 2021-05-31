@@ -53,7 +53,7 @@ export class Text {
         throw new Error(`${k} is not a valid option`);
       }
       if (typeof v !== "boolean") {
-        throw new Error(`The value ${v} is not a valid option for ${k}`);
+        throw new Error(`The value ${String(v)} is not a valid option for ${k}`);
       }
     }
     return options;
@@ -111,7 +111,7 @@ export class Text {
    * @returns a string that has been decomposed, sequenced, qamets qatan patterns converted to the appropriate unicode character (U+05C7), and holem-waw sequences corrected
    */
   get text(): string {
-    return this.words.reduce((a, c) => `${a}${c.text}${c.whiteSpaceAfter}`, "");
+    return this.words.reduce((a, c) => `${a}${c.text}${c.whiteSpaceAfter ?? ""}`, "");
   }
 
   /**
