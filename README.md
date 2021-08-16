@@ -1,3 +1,5 @@
+![havarot](./havarot-2400.png)
+
 # havarot
 
 A Typescript package for getting syllabic data about Hebrew text with niqqud.
