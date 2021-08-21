@@ -48,3 +48,17 @@ describe.each`
     });
   });
 });
+
+describe.each`
+  description        | original      | clusterArr
+  ${"with a comma"}  | ${"יָד, יָד"} | ${["יָ", "ד", ",", "יָ", "ד"]}
+  ${"with a period"} | ${"הָאָרֶץ."} | ${["הָ", "אָ", "רֶ", "ץ", "."]}
+`("With Latin chars:", ({ description, original, clusterArr }) => {
+  const heb = new Text(original);
+  const clusters = heb.clusters.map((el) => el.text);
+  describe(description, () => {
+    test(`clusterArr to equal ${clusterArr}`, () => {
+      expect(clusters).toEqual(clusterArr);
+    });
+  });
+});
