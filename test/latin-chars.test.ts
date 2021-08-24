@@ -1,8 +1,9 @@
 import { Text } from "../src/index";
 
 describe.each`
-  description       | original  | numOfSyls | clusterArr          | firstCluster | finalCluster
-  ${"with a comma"} | ${"עָד,"} | ${1}      | ${["עָ", "ד", ","]} | ${"עָ"}      | ${","}
+  description           | original   | numOfSyls | clusterArr               | firstCluster | finalCluster
+  ${"with a comma"}     | ${"עָד,"}  | ${1}      | ${["עָ", "ד", ","]}      | ${"עָ"}      | ${","}
+  ${"with parentheses"} | ${"(אָב)"} | ${1}      | ${["(", "אָ", "ב", ")"]} | ${"("}       | ${")"}
 `("Full Vowels:", ({ description, original, numOfSyls, clusterArr, firstCluster, finalCluster }) => {
   const heb = new Text(original);
   const clusters = heb.clusters.map((el) => el.text);
