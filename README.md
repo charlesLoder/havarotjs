@@ -45,7 +45,7 @@ sylText;
 
 ## Docd
 
-Read the docs at online [here](https//charlesLoder.github.io/havarot)
+Read the docs at online [here](https://charlesloder.github.io/havarot/)
 
 ## Contributing
 
