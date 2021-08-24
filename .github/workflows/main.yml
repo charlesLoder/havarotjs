@@ -2,33 +2,35 @@
 
 name: CI
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
+  build-and-deploy:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - name: checkout
+        uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
-      - uses: actions/setup-node@v1
+      - name: Install and Build
+        run: |
+          npm install
+          npm run docs
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
-            node-version: '14.x'
-      - run: npm install
-      - run: npm pack
-
+          branch: gh-pages # The branch the action should deploy to.
+          folder: docs # The folder the action should deploy.
