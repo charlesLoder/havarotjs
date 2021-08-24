@@ -29,9 +29,19 @@ export interface SylOpts {
 
 type Schema = "tiberian" | "traditional";
 
+/**
+ * `Text` is the main exported class.
+ *
+ */
 export class Text {
   #original: string;
   private options: SylOpts;
+
+  /**
+   * `Text` requires an input string,
+   * and has optional arguments for syllabification,
+   * which can be read about in the {@page Syllabification} page
+   */
 
   constructor(text: string, options: SylOpts = {}) {
     this.#original = this.validateInput(text);
@@ -102,6 +112,12 @@ export class Text {
 
   /**
    * @returns the original string passed
+   *
+   * ```typescript
+   * const text: Text = new Text("הֲבָרֹות");
+   * text.original;
+   * // "הֲבָרֹות"
+   * ```
    */
   get original(): string {
     return this.#original;
@@ -109,6 +125,13 @@ export class Text {
 
   /**
    * @returns a string that has been decomposed, sequenced, qamets qatan patterns converted to the appropriate unicode character (U+05C7), and holem-waw sequences corrected
+   *
+   * ```typescript
+   * import { Text } from "havarotjs";
+   * const text: Text = new Text("וַתָּשָׁב");
+   * text.text;
+   * // וַתָּשׇׁב
+   * ```
    */
   get text(): string {
     return this.words.reduce((a, c) => `${a}${c.text}${c.whiteSpaceAfter ?? ""}`, "");
@@ -116,6 +139,12 @@ export class Text {
 
   /**
    * @returns a one dimensional array of Words
+   *
+   * ```typescript
+   * const text: Text = new Text("הֲבָרֹות");
+   * text.words;
+   * // [Word { original: "הֲבָרֹות" }]
+   * ```
    */
   get words(): Word[] {
     const split = this.sanitized.split(splitGroup);
@@ -126,6 +155,16 @@ export class Text {
 
   /**
    * @returns a one dimensional array of Syllables
+   *
+   * ```typescript
+   * const text: Text = new Text("הֲבָרֹות");
+   * text.syllables;
+   * // [
+   * //    Syllable { original: "הֲ" },
+   * //    Syllable { original: "בָ" },
+   * //    Syllable { original: "רֹות" }
+   * //  ]
+   * ```
    */
   get syllables(): Syllable[] {
     return this.words.map((word) => word.syllables).flat();
@@ -133,6 +172,15 @@ export class Text {
 
   /**
    * @returns a one dimensional array of Clusters
+   *
+   * ```typescript
+   * const text: Text = new Text("יָד");
+   * text.clusters;
+   * // [
+   * //    Cluster { original: "יָ" },
+   * //    Cluster { original: "ד" }
+   * //  ]
+   * ```
    */
   get clusters(): Cluster[] {
     return this.syllables.map((syllable) => syllable.clusters).flat();
@@ -140,6 +188,16 @@ export class Text {
 
   /**
    * @returns a one dimensional array of Chars
+   *
+   * ```typescript
+   * const text: Text = new Text("יָד");
+   * text.chars;
+   * //  [
+   * //    Char { original: "י" },
+   * //    Char { original: "ָ" },
+   * //    Char { original: "ד" }
+   * //  ]
+   * ```
    */
   get chars(): Char[] {
     return this.clusters.map((cluster) => cluster.chars).flat();

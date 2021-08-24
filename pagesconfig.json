@@ -1,0 +1,26 @@
+{
+  "groups": [
+    {
+      "title": "Linguistic",
+      "pages": [
+        {
+          "title": "Syllabification",
+          "source": "./pages/syllabification.md"
+        },
+        {
+          "title": "List of Terms",
+          "source": "./pages/terms.md"
+        }
+      ]
+    },
+    {
+      "title": "Changelog",
+      "pages": [
+        {
+          "title": "Changelog",
+          "source": "./pages/changelog.md"
+        }
+      ]
+    }
+  ]
+}

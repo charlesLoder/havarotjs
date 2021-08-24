@@ -2,6 +2,18 @@ import { Char } from "./char";
 import { Node } from "./node";
 import { taamim } from "./utils/regularExpressions";
 
+/**
+ * A cluster is group of Hebrew character constituted by:
+ * - an obligatory Hebrew consonant character
+ * - an optional ligature mark
+ * - an optional vowel
+ * - an optional taam
+ *
+ * A [[`Syllable`]] is a linguistic unit, whereas a `Cluster` is an orthgraphic one.
+ * The word `יֹו֑ם` is only one syllable, but it has three clusters—`יֹ`, `ו֑`, `ם`.
+ * Because Hebrew orthography is both sub and supra linear, clusters can be encoded in various ways.
+ * Every [[`Char`]] is sequenced first for normalization, see the [SBL Hebrew Font Manual](https://www.sbl-site.org/Fonts/SBLHebrewUserManual1.5x.pdf), p.8.
+ */
 export class Cluster extends Node {
   #original: string;
   #sequenced: Char[];
@@ -21,6 +33,18 @@ export class Cluster extends Node {
 
   /**
    * @returns a string that has been built up from the text of its consituent Chars
+   *
+   * ```typescript
+   * const text: Text = new Text("הֲבָרֹות");
+   * const clusters = text.clusters.map((cluster) => cluster.text);
+   * // [
+   * //  "הֲ",
+   * //  "בָ",
+   * //  "רֹ",
+   * //  "ו",
+   * //  "ת"
+   * // ]
+   * ```
    */
   get text(): string {
     return this.chars.reduce((init, char) => init + char.text, "");
@@ -28,6 +52,15 @@ export class Cluster extends Node {
 
   /**
    * @returns an array of sequenced Char objects
+   *
+   * ```typescript
+   * const text: Text = new Text("הֲבָרֹות");
+   * text.clusters[0].chars;
+   * // [
+   * //  Char { original: "ה" },
+   * //  Char { original: "ֲ " },   i.e. \u{05B2} (does not print well)
+   * // ]
+   * ```
    */
   get chars(): Char[] {
     return this.#sequenced;
@@ -38,36 +71,94 @@ export class Cluster extends Node {
   }
 
   /**
-   * @returns true if tsere, qamets, holam, or holam haser are present
+   * Returns `true` if one of the following long vowel characters is present:
+   * - \u{05B5} TSERE
+   * - \u{05B8} QAMATS
+   * - \u{05B9} HOLAM
+   * - \u{05BA} HOLAM HASER FOR VAV
+   *
+   * ```typescript
+   * const text: Text = new Text("הֲבָרֹות");
+   * text.clusters[0].hasLongVowel;
+   * // false
+   * text.clusters[1].hasLongVowel;
+   * // true
+   * ```
    */
   get hasLongVowel(): boolean {
     return /[\u{05B5}\u{05B8}\u{05B9}\u{05BA}]/u.test(this.text);
   }
 
   /**
-   * @returns true if hiriq, seghol, patach, qubuts, or qamets qatan are present
+   * Returns `true` if one of the following long vowel characters is present:
+   * - \u{05B4} HIRIQ
+   * - \u{05B6} SEGOL
+   * - \u{05B7} PATAH
+   * - \u{05BB} QUBUTS
+   * - \u{05C7} QAMATS QATAN
+   *
+   * ```typescript
+   * const text: Text = new Text("מַלְכָּה");
+   * text.clusters[0].hasShortVowel;
+   * // true
+   * text.clusters[2].hasShortVowel;
+   * // false
+   * ```
    */
   get hasShortVowel(): boolean {
     return /[\u{05B4}\u{05B6}\u{05B7}\u{05BB}\u{05C7}]/u.test(this.text);
   }
 
   /**
-   * @returns true if hataf seghol, hataf patch, or hataf qamets are present
+   *
+   * Returns `true` if one of the following long vowel characters is present:
+   * - \u{05B1} HATAF SEGOL
+   * - \u{05B2} HATAF PATAH
+   * - \u{05B3} HATAF QAMATS
+   *
+   * ```typescript
+   * const text: Text = new Text("הֲבָרֹות");
+   * text.clusters[0].hasHalfVowel;
+   * // true
+   * text.clusters[1].hasHalfVowel;
+   * // false
+   * ```
    */
   get hasHalfVowel(): boolean {
     return /[\u{05B1}-\u{05B3}]/u.test(this.text);
   }
 
   /**
-   * @returns true if any vowel character is present, but not shewa
+   * Returns `true` if `Cluster.hasLongVowel`, `Cluster.hasShortVowel`, or `Cluster.hasHalfVowel` is true.
+   *
+   * According to {@page Syllabification}, a shewa is a vowel and serves as the nucleus of a syllable.
+   * Because `Cluster` is concerned with orthography, a shewa is **not** a vowel character.
+   *
+   * ```typescript
+   * const text: Text = new Text("הֲבָרֹות");
+   * text.clusters[0].hasVowel;
+   * // true
+   * text.clusters[4].hasVowel;
+   * // false
+   * ```
    */
   get hasVowel(): boolean {
     return this.hasLongVowel || this.hasShortVowel || this.hasHalfVowel;
   }
 
   /**
-   * @returns a boolean if Cluster is a shureq
-   * @description determines if a shureq if Cluster is a vav followed by dagesh with no vowel
+   *
+   * Returns `true` if `Cluster.hasVowel` is `false` and `Cluster.text` is a waw followed by a dagesh (e.g. `וּ`)
+   * A shureq is a vowel itself, but contains no vowel characters (hence why `hasVowel` cannot be `true`).
+   * This allows for easier syllabification.
+   *
+   * ```typescript
+   * const text: Text = new Text("קוּם");
+   * text.clusters[0].isShureq;
+   * // false
+   * text.clusters[1].isShureq;
+   * // true
+   * ```
    */
   get isShureq(): boolean {
     const shureq = /\u{05D5}\u{05BC}/u;
@@ -75,8 +166,21 @@ export class Cluster extends Node {
   }
 
   /**
-   * @returns a boolean if the Cluster is a mater
-   * @description checks if Cluster is (1) a holam vav, (2) part of a hiriq, tsere, or seghol yod, (3) part of a qamets, seghol, or tsere he
+   * Returns `true` if `Cluster.hasVowel`, `Cluster.hasShewa`, and, `Cluster.isShureq` are all `false` and `Cluster.text` contains a:
+   * - `ה` preceded by a qamets, tsere, or seghol
+   * - `ו` preceded by a holem
+   * - `י` preceded by a hiriq, tsere, or seghol
+   *
+   * There are potentially other instances when a consonant may be a _mater_ (e.g. a final aleph, ), but these are the most common.
+   * Though a shureq is a _mater_ letter, it is also a vowel itself, and thus separate from `isMater`.
+   *
+   * ```typescript
+   * const text: Text = new Text("סוּסָה");
+   * text.clusters[1].isMater; // the shureq
+   * // false
+   * text.clusters[3].isMater; // the heh
+   * // true
+   * ```
    */
   get isMater(): boolean {
     if (!this.hasVowel && !this.isShureq && !this.hasShewa) {
@@ -101,8 +205,14 @@ export class Cluster extends Node {
   }
 
   /**
-   * @returns a boolean if a Cluster has a metheg
-   * @description if the next Cluster has a sof pasuq, then metheg is a silluq; returns false
+   * Returns `true` if the following character is present and a _sof pasuq_ does not follow it:
+   * - \u{05BD} METEG
+   *
+   * ```typescript
+   * const text: Text = new Text("הֲבָרֹות");
+   * text.clusters[0].hasMetheg;
+   * // false
+   * ```
    */
   get hasMetheg(): boolean {
     const metheg = /\u{05BD}/u;
@@ -128,14 +238,32 @@ export class Cluster extends Node {
   }
 
   /**
-   * @returns boolean if shewa character is present
+   * Returns `true` if the following character is present:
+   * - \u{05B0} SHEWA
+   *
+   * ```typescript
+   * const text: Text = new Text("מַלְכָּה");
+   * text.clusters[0].hasShewa;
+   * // false
+   * text.clusters[1].hasShewa;
+   * // true
+   * ```
    */
   get hasShewa(): boolean {
     return /\u{05B0}/u.test(this.text);
   }
 
   /**
-   * @returns boolean if any taamim are present
+   * Returns `true` if the following characters are present:
+   * - \u{0591}-\u{05AF}\u{05BF}\u{05C0}\u{05C3}-\u{05C6}\u{05F3}\u{05F4}
+   *
+   * ```typescript
+   * const text: Text = new Text("אֱלֹהִ֑ים");
+   * text.clusters[0].hasTaamim;
+   * // false
+   * text.clusters[2].hasTaamim;
+   * // true
+   * ```
    */
   get hasTaamim(): boolean {
     return taamim.test(this.text);
