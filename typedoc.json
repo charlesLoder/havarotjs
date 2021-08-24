@@ -1,0 +1,11 @@
+{
+  "includeVersion": true,
+  "entryPoints": ["src/"],
+  "exclude": ["src/utils", "src/index.ts", "src/node.ts"],
+  "out": "docs",
+  "theme": "pages-plugin",
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "sort": ["instance-first"],
+  "readme": "./README.md"
+}
