@@ -1,0 +1,181 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>havarotjs - v0.5.0</title>
+	<meta name="description" content="Documentation for havarotjs - v0.5.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+	<link rel="stylesheet" href="assets/css/pages.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">havarotjs - v0.5.0</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="modules.html">Globals</a>
+				</li>
+			</ul>
+			<h1>havarotjs - v0.5.0</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<p><img src="./havarot-2400.png" alt="havarot"></p>
+				<a href="#havarotjs" id="havarotjs" style="color: inherit; text-decoration: none;">
+					<h1>havarotjs</h1>
+				</a>
+				<p>A Typescript package for getting syllabic data about Hebrew text with niqqud.</p>
+				<p>The general idea of this package is that a <a href="./modules/text.html"><code>Text</code></a> is composed of <code>Words</code> which are composed of <code>Syllables</code> which are composed of <code>Clusters</code> which are composed of <code>Characters</code>.</p>
+				<a href="#install" id="install" style="color: inherit; text-decoration: none;">
+					<h2>install</h2>
+				</a>
+				<p>Using <code>npm</code>:</p>
+				<pre><code><span style="color: #001080">npm</span><span style="color: #000000"> </span><span style="color: #001080">install</span><span style="color: #000000"> </span><span style="color: #001080">havarotjs</span>
+</code></pre>
+				<p>To call using TypeScript:</p>
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Text</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;havarotjs&quot;</span><span style="color: #000000">;</span>
+</code></pre>
+				<p>Or Node:</p>
+				<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">havarot</span><span style="color: #000000"> = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;havarotjs&quot;</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">Text</span><span style="color: #000000"> = </span><span style="color: #001080">havarot</span><span style="color: #000000">.</span><span style="color: #001080">Text</span><span style="color: #000000">;</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">heb</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;אֱלֹהִים&quot;</span><span style="color: #000000">);</span>
+</code></pre>
+				<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+					<h2>example</h2>
+				</a>
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Text</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;havarotjs&quot;</span><span style="color: #000000">;</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">heb</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000"> = </span><span style="color: #A31515">&quot;אֱלֹהִים&quot;</span><span style="color: #000000">;</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">text</span><span style="color: #000000">: </span><span style="color: #267F99">Text</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #001080">heb</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">sylText</span><span style="color: #000000"> = </span><span style="color: #001080">text</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">((</span><span style="color: #001080">syl</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">syl</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
+<span style="color: #001080">sylText</span><span style="color: #000000">;</span>
+<span style="color: #008000">//  [</span>
+<span style="color: #008000">//    &quot;אֱ&quot;</span>
+<span style="color: #008000">//    &quot;לֹ&quot;</span>
+<span style="color: #008000">//    &quot;הִים&quot;</span>
+<span style="color: #008000">//  ]</span>
+</code></pre>
+				<a href="#docd" id="docd" style="color: inherit; text-decoration: none;">
+					<h2>Docd</h2>
+				</a>
+				<p>Read the docs at online <a href="https//charlesLoder.github.io/havarot">here</a></p>
+				<a href="#contributing" id="contributing" style="color: inherit; text-decoration: none;">
+					<h2>Contributing</h2>
+				</a>
+				<p>Free to open an issue or pull request.</p>
+				<p>See the <a href="./docs/terms.md">terms list</a> for a list of naming conventions.</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="label pp-nav pp-group">
+						<span>Linguistic</span>
+					</li>
+					<li class=" pp-nav pp-page">
+						<a href="pages/Linguistic/syllabification.html">Syllabification</a>
+					</li>
+					<li class=" pp-nav pp-page">
+						<a href="pages/Linguistic/terms.html">List of <wbr>Terms</a>
+					</li>
+					<li class="label pp-nav pp-group">
+						<span>Changelog</span>
+					</li>
+					<li class=" pp-nav pp-page">
+						<a href="pages/Changelog/changelog.html">Changelog</a>
+					</li>
+					<li class="label pp-nav pp-group">
+						<span>API</span>
+					</li>
+					<li class=" ">
+						<a href="modules.html">Modules</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/char.html">char</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/cluster.html">cluster</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/syllable.html">syllable</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/text.html">text</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/word.html">word</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.json"><' + '/script>');</script>
+</body>
+</html>
