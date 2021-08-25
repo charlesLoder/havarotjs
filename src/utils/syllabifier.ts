@@ -1,6 +1,7 @@
 import { Cluster } from "../cluster";
 import { Syllable } from "../syllable";
 import { SylOpts } from "../text";
+import { hebrewUnicodeClass } from "./regularExpressions";
 
 type Syl = Cluster[];
 type Result = (Syllable | Cluster)[];
@@ -66,6 +67,12 @@ const groupFinal = (arr: Cluster[]): Result => {
     i++;
     if (i > len) {
       break;
+    }
+    // check for any latin chars at beginning of 1 syl words
+    const hasNonHebrew = hebrewUnicodeClass.test(arr[i]?.text);
+    if (hasNonHebrew) {
+      syl.unshift(arr[i]);
+      i++;
     }
   }
 
