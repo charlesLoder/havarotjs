@@ -69,7 +69,7 @@ const groupFinal = (arr: Cluster[]): Result => {
       break;
     }
     // check for any latin chars at beginning of 1 syl words
-    const hasNonHebrew = hebrewUnicodeClass.test(arr[i]?.text);
+    const hasNonHebrew = arr[i]?.text ? !hebrewUnicodeClass.test(arr[i].text) : false;
     if (hasNonHebrew) {
       syl.unshift(arr[i]);
       i++;
