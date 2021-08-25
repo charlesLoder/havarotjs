@@ -259,6 +259,44 @@ const groupShureqs = (arr: Result): Result => {
 };
 
 /**
+ *
+ * @description groups latin chars that appear at the beginning of word
+ */
+const groupLatinChars = (arr: Result): Result => {
+  const len = arr.length;
+  let syl: Syl = [];
+  const result: Result = [];
+  const latinNewSyllable = createNewSyllable.bind(groupLatinChars, result);
+
+  for (let index = 0; index < len; index++) {
+    const cluster = arr[index];
+
+    if (cluster instanceof Syllable) {
+      result.push(cluster);
+      continue;
+    }
+
+    const hasNoHebrew = arr[index]?.text ? !hebrewUnicodeClass.test(arr[index].text) : false;
+    const isFinalCluster = index === len - 1;
+    if (hasNoHebrew && isFinalCluster) {
+      const prev = arr[index - 1];
+      if (prev instanceof Cluster) {
+        if (result.includes(prev)) {
+          result.pop();
+        }
+        syl.unshift(prev);
+      }
+      syl.unshift(cluster);
+      syl = latinNewSyllable(syl);
+    } else {
+      result.push(cluster);
+    }
+  }
+
+  return result;
+};
+
+/**
  * @description a preprocessing step that groups clusters into intermediate syllables by vowels or shewas
  */
 const groupClusters = (arr: Cluster[], options: SylOpts): Result => {
@@ -267,7 +305,8 @@ const groupClusters = (arr: Cluster[], options: SylOpts): Result => {
   const shewasGrouped = groupShewas(finalGrouped, options);
   const matersGroups = groupMaters(shewasGrouped);
   const shureqGroups = groupShureqs(matersGroups);
-  const result = shureqGroups.reverse();
+  const latinGroups = groupLatinChars(shureqGroups);
+  const result = latinGroups.reverse();
   return result;
 };
 
