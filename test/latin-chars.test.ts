@@ -6,13 +6,13 @@ describe.each`
   ${"with parentheses"} | ${"(אָב)"} | ${1}      | ${["(", "אָ", "ב", ")"]} | ${"("}       | ${")"}
 `("Full Vowels:", ({ description, original, numOfSyls, clusterArr, firstCluster, finalCluster }) => {
   const heb = new Text(original);
-  const clusters = heb.clusters.map((el) => el.text);
+  const clusterTexts = heb.clusters.map((el) => el.text);
   describe(description, () => {
     test(`original: ${original}`, () => {
       expect(heb.syllables.length).toEqual(numOfSyls);
-      expect(clusters).toEqual(clusterArr);
-      expect(clusters[0]).toEqual(firstCluster);
-      expect(clusters[clusters.length - 1]).toEqual(finalCluster);
+      expect(clusterTexts).toEqual(clusterArr);
+      expect(clusterTexts[0]).toEqual(firstCluster);
+      expect(clusterTexts[clusterTexts.length - 1]).toEqual(finalCluster);
     });
   });
 });
