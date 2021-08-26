@@ -1,17 +1,21 @@
 import { Text } from "../src/index";
 
 describe.each`
-  description                    | original         | numOfSyls
-  ${"with a comma"}              | ${"עָד,"}        | ${1}
-  ${"with parentheses"}          | ${"(אָב)"}       | ${1}
-  ${"with a comma, 2 words"}     | ${"אָמַר, לֹא"}  | ${3}
-  ${"with parentheses, 2 words"} | ${"(אָמַר לֹא)"} | ${3}
-`("Syllables:", ({ description, original, numOfSyls }) => {
+  description                    | original         | numOfSyls | sylArr                                                                    | isCloserdArr
+  ${"with a comma"}              | ${"עָד,"}        | ${1}      | ${["עָד,"]}                                                               | ${[true]}
+  ${"with parentheses"}          | ${"(אָב)"}       | ${1}      | ${["(אָב)"]}                                                              | ${[true]}
+  ${"with parentheses"}          | ${"(פֶּה)"}      | ${1}      | ${["(פֶּה)"]}                                                             | ${[false]}
+  ${"with a comma, 2 words"}     | ${"אָמַר, לֹא"}  | ${3}      | ${["אָ", "מַר,", "לֹא"]}                                                  | ${[false, true, true]}
+  ${"with parentheses, 2 words"} | ${"(אָמַר לֹא)"} | ${3}      | ${["(\u{5D0}\u{5B8}", "\u{5DE}\u{5B7}\u{5E8}", "\u{5DC}\u{5B9}\u{5D0})"]} | ${[false, true, true]}
+`("Syllables:", ({ description, original, numOfSyls, sylArr, isCloserdArr }) => {
   const heb = new Text(original);
-  const clusterTexts = heb.clusters.map((el) => el.text);
+  const sylTexts = heb.syllables.map((el) => el.text);
+  const isClosed = heb.syllables.map((el) => el.isClosed);
   describe(description, () => {
     test(`original: ${original}`, () => {
       expect(heb.syllables.length).toEqual(numOfSyls);
+      expect(sylTexts).toEqual(sylArr);
+      expect(isClosed).toEqual(isCloserdArr);
     });
   });
 });
