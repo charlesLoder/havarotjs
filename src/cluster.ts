@@ -268,4 +268,17 @@ export class Cluster extends Node {
   get hasTaamim(): boolean {
     return taamim.test(this.text);
   }
+
+  /**
+   * Returns `true` if the Cluster does not have Hebrew chars
+   *
+   * ```typescript
+   * * const text: Text = new Text("(לְעֹלָם)");
+   * text.clusters[0].isNotHebrew;
+   * // true
+   * ```
+   */
+  get isNotHebrew(): boolean {
+    return !/[\u{0590}-\u{05FF}\u{FB1D}-\u{FB4F}]/u.test(this.text);
+  }
 }
