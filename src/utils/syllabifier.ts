@@ -1,7 +1,6 @@
 import { Cluster } from "../cluster";
 import { Syllable } from "../syllable";
 import { SylOpts } from "../text";
-import { hebrewUnicodeClass } from "./regularExpressions";
 
 type Syl = Cluster[];
 type Result = (Syllable | Cluster)[];
@@ -29,7 +28,18 @@ const groupFinal = (arr: Cluster[]): Result => {
   let isClosed = false;
 
   // get final cluster and push to syl
+  // but first check if final cluster is notHebrew
   const finalCluster = arr[i];
+  // if (finalCluster.isNotHebrew) {
+  //   result.unshift(finalCluster);
+  //   i++;
+  //   let nextCluster = arr[i];
+  //   while (nextCluster.isNotHebrew) {
+  //     i++;
+  //     nextCluster = arr[i];
+  //   }
+  //   finalCluster = nextCluster;
+  // }
   syl.unshift(finalCluster);
 
   if (finalCluster.hasVowel) {
@@ -67,12 +77,6 @@ const groupFinal = (arr: Cluster[]): Result => {
     i++;
     if (i > len) {
       break;
-    }
-    // check for any latin chars at beginning of 1 syl words
-    const hasNonHebrew = arr[i]?.text ? !hebrewUnicodeClass.test(arr[i].text) : false;
-    if (hasNonHebrew) {
-      syl.unshift(arr[i]);
-      i++;
     }
   }
 
@@ -259,44 +263,6 @@ const groupShureqs = (arr: Result): Result => {
 };
 
 /**
- *
- * @description groups latin chars that appear at the beginning of word
- */
-const groupLatinChars = (arr: Result): Result => {
-  const len = arr.length;
-  let syl: Syl = [];
-  const result: Result = [];
-  const latinNewSyllable = createNewSyllable.bind(groupLatinChars, result);
-
-  for (let index = 0; index < len; index++) {
-    const cluster = arr[index];
-
-    if (cluster instanceof Syllable) {
-      result.push(cluster);
-      continue;
-    }
-
-    const hasNoHebrew = arr[index]?.text ? !hebrewUnicodeClass.test(arr[index].text) : false;
-    const isFinalCluster = index === len - 1;
-    if (hasNoHebrew && isFinalCluster) {
-      const prev = arr[index - 1];
-      if (prev instanceof Cluster) {
-        if (result.includes(prev)) {
-          result.pop();
-        }
-        syl.unshift(prev);
-      }
-      syl.unshift(cluster);
-      syl = latinNewSyllable(syl);
-    } else {
-      result.push(cluster);
-    }
-  }
-
-  return result;
-};
-
-/**
  * @description a preprocessing step that groups clusters into intermediate syllables by vowels or shewas
  */
 const groupClusters = (arr: Cluster[], options: SylOpts): Result => {
@@ -305,8 +271,7 @@ const groupClusters = (arr: Cluster[], options: SylOpts): Result => {
   const shewasGrouped = groupShewas(finalGrouped, options);
   const matersGroups = groupMaters(shewasGrouped);
   const shureqGroups = groupShureqs(matersGroups);
-  const latinGroups = groupLatinChars(shureqGroups);
-  const result = latinGroups.reverse();
+  const result = shureqGroups.reverse();
   return result;
 };
 
@@ -325,6 +290,7 @@ export const makeClusters = (word: string): Cluster[] => {
 };
 
 const setIsClosed = (syllable: Syllable, index: number, arr: Syllable[]) => {
+  // no need to check, groupFinal takes care of it
   if (index === arr.length - 1) {
     return syllable;
   }
@@ -342,11 +308,55 @@ const setIsAccented = (syllable: Syllable) => {
   syllable.isAccented = isAccented;
 };
 
+/**
+ *
+ * @description a step to get a Cluster's original position before filtering out latin
+ */
+const clusterPos = (cluster: Cluster, i: number): { cluster: Cluster; pos: number } => {
+  return { cluster, pos: i };
+};
+
+const reinsertLatin = (syls: Syllable[], latin: { cluster: Cluster; pos: number }[]): Syllable[] => {
+  const numOfSyls = syls.length;
+  for (let index = 0; index < latin.length; index++) {
+    const group = latin[index];
+    const partial: Cluster[] = [];
+    // if a latin cluster was at the beginning
+    if (group.pos === 0) {
+      partial.push(group.cluster);
+      while (index + 1 < latin.length && latin[index + 1].pos === group.pos + 1) {
+        partial.push(latin[index + 1].cluster);
+        index++;
+      }
+      const firstSyl = syls[0];
+      syls[0] = new Syllable([...partial, ...firstSyl.clusters], {
+        isClosed: firstSyl.isClosed,
+        isAccented: firstSyl.isAccented,
+        isFinal: firstSyl.isFinal
+      });
+    } else {
+      const lastSyl = syls[numOfSyls - 1];
+      while (index < latin.length) {
+        partial.push(latin[index].cluster);
+        index++;
+      }
+      syls[numOfSyls - 1] = new Syllable([...lastSyl.clusters, ...partial], {
+        isClosed: lastSyl.isClosed,
+        isAccented: lastSyl.isAccented,
+        isFinal: lastSyl.isFinal
+      });
+    }
+  }
+  return syls;
+};
+
 export const syllabify = (clusters: Cluster[], options: SylOpts): Syllable[] => {
-  const groupedClusters = groupClusters(clusters, options);
+  const removeLatin = clusters.filter((cluster) => !cluster.isNotHebrew);
+  const latinClusters = clusters.map(clusterPos).filter((c) => c.cluster.isNotHebrew);
+  const groupedClusters = groupClusters(removeLatin, options);
   const syllables = groupedClusters.map((group) => (group instanceof Syllable ? group : new Syllable([group])));
   syllables.forEach((syllable, index, arr) => setIsClosed(syllable, index, arr));
   syllables.forEach((syllable) => setIsAccented(syllable));
   syllables[syllables.length - 1].isFinal = true;
-  return syllables;
+  return latinClusters.length ? reinsertLatin(syllables, latinClusters) : syllables;
 };
