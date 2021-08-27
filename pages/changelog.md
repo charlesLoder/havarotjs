@@ -1,6 +1,14 @@
 # Changelog
 
-## 2021-08-23 5.0.1
+## 2021-08-26 0.5.2
+
+### Change
+
+- latin char in `0.5.1` was not robust enough:
+  - latin chars are there own cluster
+  - and a part of the syllable, without affecting the syls props
+
+## 2021-08-23 0.5.1
 
 ### Add
 
