@@ -1,5 +1,11 @@
 # Changelog
 
+## 2021-08-26 0.5.3
+
+### Change
+
+- wrong regex in Char sequencing caused incorrect syl data
+
 ## 2021-08-26 0.5.2
 
 ### Change
