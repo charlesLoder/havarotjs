@@ -1,5 +1,11 @@
 # Changelog
 
+## 2021-09-04 0.5.3
+
+### Change
+
+- improve qamets qatan checking for כל without a maqqef
+
 ## 2021-08-28 0.5.2
 
 ### Change
