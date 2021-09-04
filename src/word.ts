@@ -3,6 +3,7 @@ import { Syllable } from "./syllable";
 import { Cluster } from "./cluster";
 import { Char } from "./char";
 import { SylOpts } from "./text";
+import { isDivineName } from "./utils/divineName";
 
 /**
  * [[`Text.text`]] is split at each space and maqqef (U+05BE) both of which are captured.
@@ -165,8 +166,6 @@ export class Word {
    * ```
    */
   get isDivineName(): boolean {
-    const nonChars = /[\u{0591}-\u{05C7}]/gu;
-    const stripped = this.text.replace(nonChars, "");
-    return stripped === "יהוה";
+    return isDivineName(this.text);
   }
 }
