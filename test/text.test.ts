@@ -1,16 +1,15 @@
 import { Text } from "../src/index";
 
 describe.each`
-  description                           | word            | hasQamQat | hasQamets
-  ${"simple nominal pattern in array"}  | ${"חָפְנִי֙"}   | ${true}   | ${false}
-  ${"simple verbal pattern in array"}   | ${"וַיָּ֥קָם"}  | ${true}   | ${true}
-  ${"qamets follwed by hatef-qamets"}   | ${"אָהֳלִי"}    | ${true}   | ${false}
-  ${"qamets qatan and qamets"}          | ${"בָּשְׁתָּם"}  | ${true}   | ${true}
-  ${"nominal with boundary assertions"} | ${"יָמִים"}     | ${true}   | ${false}
-  ${"nominal with maqqef"}              | ${"כָּל־הָעָם"} | ${true}   | ${true}
-`("Qamets Qatan:", ({ description, word, hasQamQat, hasQamets }) => {
+  description                           | word           | hasQamQat | hasQamets
+  ${"simple nominal pattern in array"}  | ${"חָפְנִי֙"}  | ${true}   | ${false}
+  ${"simple verbal pattern in array"}   | ${"וַיָּ֥קָם"} | ${true}   | ${true}
+  ${"qamets follwed by hatef-qamets"}   | ${"אָהֳלִי"}   | ${true}   | ${false}
+  ${"qamets qatan and qamets"}          | ${"בָּשְׁתָּם"} | ${true}   | ${true}
+  ${"nominal with boundary assertions"} | ${"יָמִים"}    | ${true}   | ${false}
+`("Qamets Qatan, Single Word:", ({ description, word, hasQamQat, hasQamets }) => {
   const text = new Text(word);
-  const sanitized = text.text;
+  const sanitized = text.words[0].text;
   const qQRegx = /\u{05C7}/u;
   const qamRegx = /\u{05B8}/u;
   describe(description, () => {
@@ -20,6 +19,28 @@ describe.each`
 
     test(`Has Qamets should equal ${hasQamets}`, () => {
       expect(qamRegx.test(sanitized)).toEqual(hasQamets);
+    });
+  });
+});
+
+describe.each`
+  description              | word            | firstHasQamQat | firstHasQamets | secHasQamQat | secHasQamets
+  ${"nominal with maqqef"} | ${"כָּל־הָעָם"} | ${true}        | ${false}       | ${false}     | ${true}
+`("Qamets Qatan, Two Words:", ({ description, word, firstHasQamQat, firstHasQamets, secHasQamQat, secHasQamets }) => {
+  const text = new Text(word);
+  const first = text.words[0].text;
+  const second = text.words[1].text;
+  const qQRegx = /\u{05C7}/u;
+  const qamRegx = /\u{05B8}/u;
+  describe(description, () => {
+    test(`First word`, () => {
+      expect(qQRegx.test(first)).toEqual(firstHasQamQat);
+      expect(qamRegx.test(first)).toEqual(firstHasQamets);
+    });
+
+    test(`Second Word`, () => {
+      expect(qQRegx.test(second)).toEqual(secHasQamQat);
+      expect(qamRegx.test(second)).toEqual(secHasQamets);
     });
   });
 });
