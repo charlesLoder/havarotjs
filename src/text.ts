@@ -49,7 +49,7 @@ export class Text {
   }
 
   private validateInput(text: string): string {
-    const niqqud = /[\u{05B0}-\u{05BC},\u{05C7}]/u;
+    const niqqud = /[\u{05B0}-\u{05BC}\u{05C7}]/u;
     if (!niqqud.test(text)) {
       throw new Error("Text must contain niqqud");
     }
