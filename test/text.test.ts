@@ -24,8 +24,9 @@ describe.each`
 });
 
 describe.each`
-  description              | word            | firstHasQamQat | firstHasQamets | secHasQamQat | secHasQamets
-  ${"nominal with maqqef"} | ${"כָּל־הָעָם"} | ${true}        | ${false}       | ${false}     | ${true}
+  description                 | word            | firstHasQamQat | firstHasQamets | secHasQamQat | secHasQamets
+  ${"nominal with maqqef"}    | ${"כָּל־הָעָם"} | ${true}        | ${false}       | ${false}     | ${true}
+  ${"nominal without maqqef"} | ${"כָּל הָעָם"} | ${true}        | ${false}       | ${false}     | ${true}
 `("Qamets Qatan, Two Words:", ({ description, word, firstHasQamQat, firstHasQamets, secHasQamQat, secHasQamets }) => {
   const text = new Text(word);
   const first = text.words[0].text;
