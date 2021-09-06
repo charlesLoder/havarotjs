@@ -30,16 +30,6 @@ const groupFinal = (arr: Cluster[]): Mixed => {
   // get final cluster and push to syl
   // but first check if final cluster is notHebrew
   const finalCluster = arr[i];
-  // if (finalCluster.isNotHebrew) {
-  //   result.unshift(finalCluster);
-  //   i++;
-  //   let nextCluster = arr[i];
-  //   while (nextCluster.isNotHebrew) {
-  //     i++;
-  //     nextCluster = arr[i];
-  //   }
-  //   finalCluster = nextCluster;
-  // }
   syl.unshift(finalCluster);
 
   if (finalCluster.hasVowel) {
