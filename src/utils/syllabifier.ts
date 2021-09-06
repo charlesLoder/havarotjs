@@ -3,12 +3,12 @@ import { Syllable } from "../syllable";
 import { SylOpts } from "../text";
 
 type Syl = Cluster[];
-type Result = (Syllable | Cluster)[];
+type Mixed = (Syllable | Cluster)[];
 
 /**
  * @description creates a new Syllable, pushes to results[], and resets syl[]
  */
-const createNewSyllable = (result: Result, syl: Syl, isClosed?: boolean): Syl => {
+const createNewSyllable = (result: Mixed, syl: Syl, isClosed?: boolean): Syl => {
   isClosed = isClosed || false;
   const syllable = new Syllable(syl, { isClosed });
   result.push(syllable);
@@ -18,12 +18,12 @@ const createNewSyllable = (result: Result, syl: Syl, isClosed?: boolean): Syl =>
 /**
  * @description determines the Cluster[] that will become the final Syllable
  */
-const groupFinal = (arr: Cluster[]): Result => {
+const groupFinal = (arr: Cluster[]): Mixed => {
   // grouping the final first helps to avoid issues with final kafs/tavs
   const len = arr.length;
   let i = 0;
   const syl: Syl = [];
-  let result: Result = [];
+  let result: Mixed = [];
   let vowelPresent = false;
   let isClosed = false;
 
@@ -91,10 +91,10 @@ const groupFinal = (arr: Cluster[]): Result => {
 /**
  * @description groups shewas either by themselves or with preceding short vowel
  */
-const groupShewas = (arr: Result, options: SylOpts): Result => {
+const groupShewas = (arr: Mixed, options: SylOpts): Mixed => {
   let shewaPresent = false;
   let syl: Syl = [];
-  const result: Result = [];
+  const result: Mixed = [];
   const len = arr.length;
   const shewaNewSyllable = createNewSyllable.bind(groupShewas, result);
 
@@ -192,10 +192,10 @@ const groupShewas = (arr: Result, options: SylOpts): Result => {
 /**
  * @description groups non-final maters with preceding cluster
  */
-const groupMaters = (arr: Result): Result => {
+const groupMaters = (arr: Mixed): Mixed => {
   const len = arr.length;
   let syl: Syl = [];
-  const result: Result = [];
+  const result: Mixed = [];
   const materNewSyllable = createNewSyllable.bind(groupMaters, result);
 
   for (let index = 0; index < len; index++) {
@@ -228,10 +228,10 @@ const groupMaters = (arr: Result): Result => {
 /**
  * @description groups non-final shureqs with preceding cluster
  */
-const groupShureqs = (arr: Result): Result => {
+const groupShureqs = (arr: Mixed): Mixed => {
   const len = arr.length;
   let syl: Syl = [];
-  const result: Result = [];
+  const result: Mixed = [];
   const shureqNewSyllable = createNewSyllable.bind(groupShureqs, result);
 
   for (let index = 0; index < len; index++) {
@@ -265,7 +265,7 @@ const groupShureqs = (arr: Result): Result => {
 /**
  * @description a preprocessing step that groups clusters into intermediate syllables by vowels or shewas
  */
-const groupClusters = (arr: Cluster[], options: SylOpts): Result => {
+const groupClusters = (arr: Cluster[], options: SylOpts): Mixed => {
   const rev = arr.reverse();
   const finalGrouped = groupFinal(rev);
   const shewasGrouped = groupShewas(finalGrouped, options);
