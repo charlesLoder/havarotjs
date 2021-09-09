@@ -43,7 +43,7 @@ sylText;
 //  ]
 ```
 
-## Docd
+## Docs
 
 Read the docs at online [here](https://charlesloder.github.io/havarot/)
 
