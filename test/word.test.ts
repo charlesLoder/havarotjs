@@ -25,20 +25,26 @@ describe.each`
 });
 
 describe.each`
-  description  | name          | isDivineName
-  ${"Yehwah"}  | ${"יְהוָה"}   | ${true}
-  ${"Yehowah"} | ${"יְהֹוָ֨ה"} | ${true}
-  ${"Yehowih"} | ${"יֱהֹוִ֡ה"} | ${true}
-  ${"Yehwih"}  | ${"יֱהוִה֙"}  | ${true}
-  ${"Yǝhowih"} | ${"יְהֹוִה֙"} | ${true}
-  ${"Yǝhwih"}  | ${"יְהוִֽה"}  | ${true}
-`("isDivineName:", ({ description, name, isDivineName }) => {
+  description  | name            | isDivineName | hasDivineName
+  ${"Yehwah"}  | ${"יְהוָה"}     | ${true}      | ${true}
+  ${"Yehowah"} | ${"יְהֹוָ֨ה"}   | ${true}      | ${true}
+  ${"Yehowih"} | ${"יֱהֹוִ֡ה"}   | ${true}      | ${true}
+  ${"Yehwih"}  | ${"יֱהוִה֙"}    | ${true}      | ${true}
+  ${"Yǝhowih"} | ${"יְהֹוִה֙"}   | ${true}      | ${true}
+  ${"Yǝhwih"}  | ${"יְהוִֽה"}    | ${true}      | ${true}
+  ${"Bayhwah"} | ${"בַּֽיהוָ֔ה"} | ${false}     | ${true}
+`("Divine Name:", ({ description, name, isDivineName, hasDivineName }) => {
   const text = new Text(name);
   const word = text.words[0];
   const isDivine = word.isDivineName;
+  const hasDivine = word.hasDivineName;
   describe(`Form: ${description}`, () => {
     test(`is it the Divine Name: ${isDivineName}`, () => {
       expect(isDivine).toEqual(isDivineName);
+    });
+
+    test(`does it have the Divine Name: ${hasDivineName}`, () => {
+      expect(hasDivine).toEqual(hasDivineName);
     });
   });
 });
