@@ -3,7 +3,7 @@ import { Syllable } from "./syllable";
 import { Cluster } from "./cluster";
 import { Char } from "./char";
 import { SylOpts } from "./text";
-import { isDivineName } from "./utils/divineName";
+import { isDivineName, hasDivineName } from "./utils/divineName";
 
 /**
  * [[`Text.text`]] is split at each space and maqqef (U+05BE) both of which are captured.
@@ -112,6 +112,7 @@ export class Word {
       const syl = new Syllable(this.clusters);
       return [syl];
     }
+
     return syllabify(this.clusters, this.sylOpts);
   }
 
@@ -167,5 +168,18 @@ export class Word {
    */
   get isDivineName(): boolean {
     return isDivineName(this.text);
+  }
+
+  /**
+   * @returns a boolean indicating if the word has a form of the Divine Name
+   *
+   * ```typescript
+   * * const text: Text = new Text("בַּֽיהוָ֔ה");
+   * text.words[0].hasDivineName;
+   * // true
+   * ```
+   */
+  get hasDivineName(): boolean {
+    return hasDivineName(this.text);
   }
 }
