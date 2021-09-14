@@ -5,7 +5,7 @@ export const holemWaw = (word: string): string => {
   const holemRegx = /\u{05B9}/u;
   const holemHaser = /\u{05BA}/u;
   const wawHolemRegX = /\u{05D5}\u{05B9}/u;
-  const vowels = /[\u{05B0}-\u{05BB},\u{05C7}]/u;
+  const vowels = /[\u{05B0}-\u{05BB}\u{05C7}]/u;
   const vowelBeforeWawHolem = new RegExp("(?<!" + vowels.source + ")" + wawHolemRegX.source, "u");
 
   // replace holem haser with regular holem
