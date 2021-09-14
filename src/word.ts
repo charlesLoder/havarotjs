@@ -174,7 +174,7 @@ export class Word {
    * @returns a boolean indicating if the word has a form of the Divine Name
    *
    * ```typescript
-   * * const text: Text = new Text("בַּֽיהוָ֔ה");
+   * const text: Text = new Text("בַּֽיהוָ֔ה");
    * text.words[0].hasDivineName;
    * // true
    * ```
