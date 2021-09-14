@@ -1,5 +1,19 @@
 # Changelog
 
+## 2021-09-14 0.6.0
+
+### Add
+
+- `hasDivineName` property to `Word`
+
+### Change
+
+- updated packages
+
+### Removed
+
+- `hebrew-transliteration` package used in testing
+
 ## 2021-09-04 0.5.3
 
 ### Change
