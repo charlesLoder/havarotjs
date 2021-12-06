@@ -31,9 +31,6 @@ export const holemWaw = (word: string): string => {
   } else {
     const start = charPos[match.index!]; // eslint-disable-line
     const end = charPos[match[0].length] + start;
-    const matched = word.substring(start, end);
-    const withWawHolem = matched.split(wawHolemRegX).join("\u{05B9}\u{05D5}");
-    word = word.split(matched).join(withWawHolem);
-    return word;
+    return word.substring(0, start) + "\u{05B9}\u{05D5}" + word.substring(end);
   }
 };
