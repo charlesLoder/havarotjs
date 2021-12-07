@@ -28,9 +28,9 @@ export const holemWaw = (word: string): string => {
   const match = noTaamim.match(vowelBeforeWawHolem);
   if (!match) {
     return word;
-  } else {
-    const start = charPos[match.index!]; // eslint-disable-line
-    const end = charPos[match[0].length] + start;
-    return word.substring(0, start) + "\u{05B9}\u{05D5}" + word.substring(end);
   }
+
+  const start = charPos[match.index!]; // eslint-disable-line
+  const end = charPos[match[0].length] + start;
+  return word.substring(0, start) + "\u{05B9}\u{05D5}" + (word.substring(end) || word.substring(end - 1));
 };
