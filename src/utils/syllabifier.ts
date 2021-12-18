@@ -169,6 +169,11 @@ const groupShewas = (arr: Mixed, options: SylOpts): Mixed => {
       continue;
     }
 
+    if (shewaPresent && !cluster.hasVowel) {
+      syl.unshift(cluster);
+      continue;
+    }
+
     result.push(cluster);
   }
 
