@@ -18,6 +18,7 @@ describe.each`
   ${"seghol-he, two syllables"}          | ${"יָפֶה"}         | ${["יָ", "פֶה"]}                     | ${[false, false, true]}
   ${"3fs suffix, one syllable"}          | ${"בָּהּ"}         | ${["בָּהּ"]}                         | ${[false, false]}
   ${"3ms plural suffix, three syllable"} | ${"תֹּורֹתָיו"}    | ${["תֹּו", "רֹ", "תָיו"]}            | ${[false, true, false, false, false, false]}
+  ${"quiesced aleph, two syllables"}     | ${"רִאשׁ֔וֹן"}     | ${["רִא", "שֹׁ֔ון"]}                 | ${[false, false, false, true, false]}
 `("isMater:", ({ description, original, sylArr, isMaterArr }) => {
   const heb = new Text(original);
   const sylText = heb.syllables.map((syllable) => syllable.text);
