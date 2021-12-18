@@ -196,7 +196,7 @@ const groupMaters = (arr: Mixed): Mixed => {
       continue;
     }
 
-    if (cluster.isMater) {
+    if (cluster.isMater || (!cluster.hasVowel && /א/.test(cluster.text))) {
       syl.unshift(cluster);
       const nxt = arr[index + 1];
 
