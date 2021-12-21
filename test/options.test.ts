@@ -87,3 +87,22 @@ describe.each`
     });
   });
 });
+
+describe.each`
+  description                    | word          | syllables               | isClosedArr             | articleOpt
+  ${"article, with he, default"} | ${"הַיְאֹ֗ר"} | ${["הַ", "יְ", "אֹ֗ר"]} | ${[false, false, true]} | ${true}
+  ${"article, with he, false"}   | ${"הַיְאֹ֗ר"} | ${["הַיְ", "אֹ֗ר"]}     | ${[true, true]}         | ${false}
+`("article:", ({ description, word, syllables, isClosedArr, articleOpt }) => {
+  const text = new Text(word, { article: articleOpt });
+  const sylText = text.syllables.map((syl) => syl.text);
+  const isClosed = text.syllables.map((syl) => syl.isClosed);
+  describe(description, () => {
+    test(`article is ${articleOpt}`, () => {
+      expect(sylText).toEqual(syllables);
+    });
+
+    test(`isClosed`, () => {
+      expect(isClosed).toEqual(isClosedArr);
+    });
+  });
+});
