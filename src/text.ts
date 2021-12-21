@@ -164,14 +164,13 @@ export class Text {
 
   private setDefaultOptions(options: SylOpts): SylOpts {
     options = this.validateOptions(options);
-    const defaultOpts: SylOpts = { qametsQatan: true, sqnmlvy: true, longVowels: true, wawShureq: true, article: true };
-    // for..in throwing error
-    defaultOpts.longVowels = options.longVowels !== undefined ? options.longVowels : defaultOpts.longVowels;
-    defaultOpts.qametsQatan = options.qametsQatan !== undefined ? options.qametsQatan : defaultOpts.qametsQatan;
-    defaultOpts.sqnmlvy = options.sqnmlvy !== undefined ? options.sqnmlvy : defaultOpts.sqnmlvy;
-    defaultOpts.wawShureq = options.wawShureq !== undefined ? options.wawShureq : defaultOpts.wawShureq;
-    defaultOpts.article = options.article !== undefined ? options.article : defaultOpts.article;
-    return defaultOpts;
+    return {
+      sqnmlvy: options.sqnmlvy ?? true,
+      article: options.article ?? true,
+      longVowels: options.longVowels ?? true,
+      wawShureq: options.wawShureq ?? true,
+      qametsQatan: options.qametsQatan ?? true
+    };
   }
 
   private get normalized(): string {
