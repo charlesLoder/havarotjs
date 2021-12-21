@@ -185,7 +185,7 @@ export class Text {
     const textArr = sequencedText.split(splitGroup).filter((group) => group);
     const mapQQatan = this.options.qametsQatan ? textArr.map((word) => convertsQametsQatan(word)) : textArr;
     const mapHolemWaw = mapQQatan.map((word) => holemWaw(word));
-    return mapHolemWaw.reduce((a, c) => a + c, "");
+    return mapHolemWaw.join("");
   }
 
   /**
