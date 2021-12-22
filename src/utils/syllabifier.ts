@@ -28,7 +28,7 @@ const groupFinal = (arr: Cluster[]): Mixed => {
   let isClosed = false;
 
   // get final cluster and push to syl
-  // but first check if final cluster is notHebrew
+  // but first check if final cluster is not Hebrew
   const finalCluster = arr[i];
   syl.unshift(finalCluster);
 
