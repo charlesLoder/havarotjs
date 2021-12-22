@@ -132,7 +132,7 @@ const groupShewas = (arr: Mixed, options: SylOpts): Mixed => {
         continue;
       }
       // check for article preceding yod w/ shewa
-      else if (options.article && /י/.test(prev) && /הַ/.test(cluster.text)) {
+      else if (options.article && /[ילמ]/.test(prev) && /הַ/.test(cluster.text)) {
         syl = shewaNewSyllable(syl);
         result.push(new Syllable([cluster]));
         shewaPresent = false;
