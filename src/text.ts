@@ -28,7 +28,7 @@ export interface SylOpts {
    */
   sqnmlvy?: boolean;
   /**
-   * determines whether to regard the shewa under the letter י when preceded by the article and with a missing dagesh chazaq as as a _shewa na'_. If a metheg is present, the shewa is always a _shewa na'_.
+   * determines whether to regard the shewa under the letters ילמ when preceded by the article and with a missing dagesh chazaq as as a _shewa na'_. If a metheg is present, the shewa is always a _shewa na'_.
    *
    * @defaultValue true
    * @example
@@ -37,9 +37,9 @@ export interface SylOpts {
    * default.syllables.map(syl => syl.text);
    * // ["הַ", "יְ", "אֹ֗ר"]
    *
-   * const optional = new Text("יָדְךָ", { longVowels: false });
+   * const optional = new Text("הַיְאֹ֗ר", { article: false });
    * optional.syllables.map(syl => syl.text);
-   * // ["יָדְ", "ךָ"]
+   * // ["הַיְ", "אֹ֗ר"]
    * ```
    *
    * @remarks
