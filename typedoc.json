@@ -7,5 +7,5 @@
   "excludePrivate": true,
   "excludeProtected": true,
   "sort": ["instance-first"],
-  "readme": "./README.md"
+  "readme": "./pages/introduction.md"
 }

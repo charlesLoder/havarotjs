@@ -1,10 +1,10 @@
-![havarot](./havarot-2400.png)
+![havarot](../havarot-2400.png)
 
 # havarotjs
 
 A Typescript package for getting syllabic data about Hebrew text with niqqud.
 
-The general idea of this package is that a `Text` is composed of `Words` which are composed of `Syllables` which are composed of `Clusters` which are composed of `Characters`.
+The general idea of this package is that a [`Text`](./modules/text.html) is composed of `Words` which are composed of `Syllables` which are composed of `Clusters` which are composed of `Characters`.
 
 ## install
 
@@ -43,12 +43,8 @@ sylText;
 //  ]
 ```
 
-## Docs
-
-Read the docs at online [here](https://charlesloder.github.io/havarot/)
-
 ## Contributing
 
 Free to open an issue or pull request.
 
-See the [terms list](https://charlesloder.github.io/havarot/pages/Linguistic/terms.html) for a list of naming conventions.
+See the [terms list](./pages/Linguistic/terms.html) for a list of naming conventions.
