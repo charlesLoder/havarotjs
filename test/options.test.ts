@@ -89,9 +89,13 @@ describe.each`
 });
 
 describe.each`
-  description                    | word          | syllables               | isClosedArr             | articleOpt
-  ${"article, with he, default"} | ${"הַיְאֹ֗ר"} | ${["הַ", "יְ", "אֹ֗ר"]} | ${[false, false, true]} | ${true}
-  ${"article, with he, false"}   | ${"הַיְאֹ֗ר"} | ${["הַיְ", "אֹ֗ר"]}     | ${[true, true]}         | ${false}
+  description                              | word             | syllables                      | isClosedArr                   | articleOpt
+  ${"article, with he and yod, default"}   | ${"הַיְאֹ֗ר"}    | ${["הַ", "יְ", "אֹ֗ר"]}        | ${[false, false, true]}       | ${true}
+  ${"article, with he and yod, false"}     | ${"הַיְאֹ֗ר"}    | ${["הַיְ", "אֹ֗ר"]}            | ${[true, true]}               | ${false}
+  ${"article, with he and mem, default"}   | ${"הַמְעַ֖ט"}    | ${["הַ", "מְ", "עַ֖ט"]}        | ${[false, false, true]}       | ${true}
+  ${"article, with he and mem, false"}     | ${"הַמְעַ֖ט"}    | ${["הַמְ", "עַ֖ט"]}            | ${[true, true]}               | ${false}
+  ${"article, with he and lamed, default"} | ${"הַלְוִיִּ֞ם"} | ${["הַ", "לְ", "וִ", "יִּ֞ם"]} | ${[false, false, true, true]} | ${true}
+  ${"article, with he and lamed, false"}   | ${"הַלְוִיִּ֞ם"} | ${["הַלְ", "וִ", "יִּ֞ם"]}     | ${[true, true, true]}         | ${false}
 `("article:", ({ description, word, syllables, isClosedArr, articleOpt }) => {
   const text = new Text(word, { article: articleOpt });
   const sylText = text.syllables.map((syl) => syl.text);
