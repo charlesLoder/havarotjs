@@ -171,7 +171,7 @@ export class Cluster extends Node {
    * - `ו` preceded by a holem
    * - `י` preceded by a hiriq, tsere, or seghol
    *
-   * There are potentially other instances when a consonant may be a _mater_ (e.g. a final aleph, ), but these are the most common.
+   * There are potentially other instances when a consonant may be a _mater_ (e.g. a silent aleph), but these are the most common.
    * Though a shureq is a _mater_ letter, it is also a vowel itself, and thus separate from `isMater`.
    *
    * ```typescript

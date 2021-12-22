@@ -7,21 +7,99 @@ import { Cluster } from "./cluster";
 import { Char } from "./char";
 import { splitGroup } from "./utils/regularExpressions";
 
+/**
+ * options for determining syllabification that may differ according to reading traditions
+ */
 export interface SylOpts {
   /**
-   * @property determines whether to regard the shewa under the letters שׁשׂסצנמלוי when preceded by a waw-consecutive with a missing dagesh chazaq as vocal
+   * determines whether to regard the shewa under the letters שׁשׂסצנמלוי when preceded by a waw-consecutive with a missing dagesh chazaq as a _shewa na'_. If a metheg is present, the shewa is always a _shewa na'_.
+   *
+   * @defaultValue true
+   * @example
+   * ```ts
+   * const default = new Text("וַיְצַחֵק֙");
+   * default.syllables.map(syl => syl.text);
+   * // ["וַ", "יְ", "צַ", "חֵק֙"]
+   *
+   * const optional = new Text("וַיְצַחֵק֙", { sqnmlvy: false });
+   * optional.syllables.map(syl => syl.text);
+   * // ["וַיְ", "צַ", "חֵק֙"]
+   * ```
    */
   sqnmlvy?: boolean;
   /**
-   * @property determines whether to regard a shewa after a long vowel (excluding vav-shureq) as vocal
+   * determines whether to regard the shewa under the letters ילמ when preceded by the article and with a missing dagesh chazaq as as a _shewa na'_. If a metheg is present, the shewa is always a _shewa na'_.
+   *
+   * @defaultValue true
+   * @example
+   * ```ts
+   * const default = new Text("הַיְאֹ֗ר");
+   * default.syllables.map(syl => syl.text);
+   * // ["הַ", "יְ", "אֹ֗ר"]
+   *
+   * const optional = new Text("הַיְאֹ֗ר", { article: false });
+   * optional.syllables.map(syl => syl.text);
+   * // ["הַיְ", "אֹ֗ר"]
+   * ```
+   *
+   * @remarks
+   *
+   * results in example displayed in reverse order to mimic Hebrew writing; the rightmost value is the 0 item
+   */
+  article?: boolean;
+  /**
+   * determines whether to regard a shewa after a long vowel (excluding waw-shureq, see {@link wawShureq}) as a _shewa na'_. If a metheg is present, the shewa is always a _shewa na'_.
+   *
+   * @defaultValue true
+   * @example
+   * ```ts
+   * const default = new Text("יָדְךָ");
+   * default.syllables.map(syl => syl.text);
+   * // ["יָ", "דְ", "ךָ"]
+   *
+   * const optional = new Text("יָדְךָ", { longVowels: false });
+   * optional.syllables.map(syl => syl.text);
+   * // ["יָדְ", "ךָ"]
+   * ```
+   *
+   * @remarks
+   *
+   * results in example displayed in reverse order to mimic Hebrew writing; the rightmost value is the 0 item
    */
   longVowels?: boolean;
   /**
-   * @property determines whether to regard a shewa after a vav-shureq as vocal, unless metheg is present
+   * determines whether to regard a shewa after a vav-shureq as vocal. If a metheg is present, the shewa is always a _shewa na'_.
+   *
+   * @defaultValue true
+   * @example
+   * const default = new Text("וּלְמַזֵּר");
+   * default.syllables.map(syl => syl.text);
+   * // "וּ", "לְ", "מַ", "זֵּר"]
+   *
+   * const optional = new Text("וּלְמַזֵּר", { wawShureq: false });
+   * optional.syllables.map(syl => syl.text);
+   * // ["וּלְ", "מַ", "זֵּר"]
+   * ```
+   *
+   * @remarks
+   *
+   * results in example displayed in reverse order to mimic Hebrew writing; the rightmost value is the 0 item
    */
   wawShureq?: boolean;
   /**
-   * @property converts regular qamets characters to qamets qatan characters where appropriate
+   * converts regular qamets characters to qamets qatan characters where appropriate. The former is a "long-vowel" whereas the latter is a "short-vowel."
+   * @defaultValue true
+   * @example
+   * ```ts
+   * const qQRegx = /\u{05C7}/u;
+   * const default = new Text("חָפְנִי֙");
+   * qQRegx.test(default.text);
+   * // true
+   *
+   * const optional = new Text("חָפְנִי֙", { qametsQatan: false });
+   * qQRegx.test(optional.text);
+   * // false
+   * ```
    */
   qametsQatan?: boolean;
   schema?: Schema;
@@ -57,7 +135,7 @@ export class Text {
   }
 
   private validateOptions(options: SylOpts): SylOpts {
-    const validOpts = ["sqnmlvy", "longVowels", "wawShureq", "qametsQatan"];
+    const validOpts = ["sqnmlvy", "longVowels", "wawShureq", "qametsQatan", "article"];
     for (const [k, v] of Object.entries(options)) {
       if (!validOpts.includes(k)) {
         throw new Error(`${k} is not a valid option`);
@@ -86,13 +164,13 @@ export class Text {
 
   private setDefaultOptions(options: SylOpts): SylOpts {
     options = this.validateOptions(options);
-    const defaultOpts: SylOpts = { qametsQatan: true, sqnmlvy: true, longVowels: true, wawShureq: true };
-    // for..in throwing error
-    defaultOpts.longVowels = options.longVowels !== undefined ? options.longVowels : defaultOpts.longVowels;
-    defaultOpts.qametsQatan = options.qametsQatan !== undefined ? options.qametsQatan : defaultOpts.qametsQatan;
-    defaultOpts.sqnmlvy = options.sqnmlvy !== undefined ? options.sqnmlvy : defaultOpts.sqnmlvy;
-    defaultOpts.wawShureq = options.wawShureq !== undefined ? options.wawShureq : defaultOpts.wawShureq;
-    return defaultOpts;
+    return {
+      sqnmlvy: options.sqnmlvy ?? true,
+      article: options.article ?? true,
+      longVowels: options.longVowels ?? true,
+      wawShureq: options.wawShureq ?? true,
+      qametsQatan: options.qametsQatan ?? true
+    };
   }
 
   private get normalized(): string {
@@ -107,7 +185,7 @@ export class Text {
     const textArr = sequencedText.split(splitGroup).filter((group) => group);
     const mapQQatan = this.options.qametsQatan ? textArr.map((word) => convertsQametsQatan(word)) : textArr;
     const mapHolemWaw = mapQQatan.map((word) => holemWaw(word));
-    return mapHolemWaw.reduce((a, c) => a + c, "");
+    return mapHolemWaw.join("");
   }
 
   /**

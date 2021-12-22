@@ -131,6 +131,13 @@ const groupShewas = (arr: Mixed, options: SylOpts): Mixed => {
         shewaPresent = false;
         continue;
       }
+      // check for article preceding yod w/ shewa
+      else if (options.article && /[ילמ]/.test(prev) && /הַ/.test(cluster.text)) {
+        syl = shewaNewSyllable(syl);
+        result.push(new Syllable([cluster]));
+        shewaPresent = false;
+        continue;
+      }
       syl.unshift(cluster);
       syl = shewaNewSyllable(syl, true);
       shewaPresent = false;
@@ -169,6 +176,11 @@ const groupShewas = (arr: Mixed, options: SylOpts): Mixed => {
       continue;
     }
 
+    if (shewaPresent && !cluster.hasVowel) {
+      syl.unshift(cluster);
+      continue;
+    }
+
     result.push(cluster);
   }
 
@@ -196,7 +208,7 @@ const groupMaters = (arr: Mixed): Mixed => {
       continue;
     }
 
-    if (cluster.isMater) {
+    if (cluster.isMater || (!cluster.hasVowel && /א/.test(cluster.text))) {
       syl.unshift(cluster);
       const nxt = arr[index + 1];
 

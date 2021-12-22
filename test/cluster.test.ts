@@ -1,23 +1,25 @@
 import { Text } from "../src/index";
 
 describe.each`
-  description                            | original           | sylArr                               | isMaterArr
-  ${"hiriq-yod, one syllable"}           | ${"פִּי"}          | ${["פִּי"]}                          | ${[false, true]}
-  ${"hiriq-yod, two syllables"}          | ${"קָטִיל"}        | ${["קָ", "טִיל"]}                    | ${[false, false, true, false]}
-  ${"hiriq-yod, three syllables"}        | ${"מַשִיחַ"}       | ${["מַ", "שִי", "חַ"]}               | ${[false, false, true, false]}
-  ${"tsere-yod, one syllable"}           | ${"עֵיץ"}          | ${["עֵיץ"]}                          | ${[false, true, false]}
-  ${"tsere-yod, two syllables"}          | ${"בֵּיצָה"}       | ${["בֵּי", "צָה"]}                   | ${[false, true, false, true]}
-  ${"tsere-yod, two syllables"}          | ${"בֵּיצָה"}       | ${["בֵּי", "צָה"]}                   | ${[false, true, false, true]}
-  ${"seghol yod, four syllables"}        | ${"אֱלֹהֶ֑֔יךָ"}   | ${["אֱ", "לֹ", "הֶ֑֔י", "ךָ"]}       | ${[false, false, false, true, false]}
-  ${"holem-waw, one syllable"}           | ${"בֹּו"}          | ${["בֹּו"]}                          | ${[false, true]}
-  ${"holem-waw, three syllables"}        | ${"קֹולְךָ"}       | ${["קֹו", "לְ", "ךָ"]}               | ${[false, true, false, false]}
-  ${"holem-waw, and waw with holem"}     | ${"עֲוֹנוֹתֵינוּ"} | ${["עֲ", "וֹ", "נֹו", "תֵי", "נוּ"]} | ${[false, false, false, true, false, true, false, false]}
-  ${"holem-waw, and final aleph"}        | ${"ס֣וֹא"}         | ${["סֹ֣וא"]}                         | ${[false, true, false]}
-  ${"qamets-he, one syllable"}           | ${"בָּה"}          | ${["בָּה"]}                          | ${[false, true]}
-  ${"qamets-he, two syllables"}          | ${"יָפָה"}         | ${["יָ", "פָה"]}                     | ${[false, false, true]}
-  ${"seghol-he, two syllables"}          | ${"יָפֶה"}         | ${["יָ", "פֶה"]}                     | ${[false, false, true]}
-  ${"3fs suffix, one syllable"}          | ${"בָּהּ"}         | ${["בָּהּ"]}                         | ${[false, false]}
-  ${"3ms plural suffix, three syllable"} | ${"תֹּורֹתָיו"}    | ${["תֹּו", "רֹ", "תָיו"]}            | ${[false, true, false, false, false, false]}
+  description                                                     | original           | sylArr                               | isMaterArr
+  ${"hiriq-yod, one syllable"}                                    | ${"פִּי"}          | ${["פִּי"]}                          | ${[false, true]}
+  ${"hiriq-yod, two syllables"}                                   | ${"קָטִיל"}        | ${["קָ", "טִיל"]}                    | ${[false, false, true, false]}
+  ${"hiriq-yod, three syllables"}                                 | ${"מַשִיחַ"}       | ${["מַ", "שִי", "חַ"]}               | ${[false, false, true, false]}
+  ${"tsere-yod, one syllable"}                                    | ${"עֵיץ"}          | ${["עֵיץ"]}                          | ${[false, true, false]}
+  ${"tsere-yod, two syllables"}                                   | ${"בֵּיצָה"}       | ${["בֵּי", "צָה"]}                   | ${[false, true, false, true]}
+  ${"tsere-yod, two syllables"}                                   | ${"בֵּיצָה"}       | ${["בֵּי", "צָה"]}                   | ${[false, true, false, true]}
+  ${"seghol yod, four syllables"}                                 | ${"אֱלֹהֶ֑֔יךָ"}   | ${["אֱ", "לֹ", "הֶ֑֔י", "ךָ"]}       | ${[false, false, false, true, false]}
+  ${"holem-waw, one syllable"}                                    | ${"בֹּו"}          | ${["בֹּו"]}                          | ${[false, true]}
+  ${"holem-waw, three syllables"}                                 | ${"קֹולְךָ"}       | ${["קֹו", "לְ", "ךָ"]}               | ${[false, true, false, false]}
+  ${"holem-waw, and waw with holem"}                              | ${"עֲוֹנוֹתֵינוּ"} | ${["עֲ", "וֹ", "נֹו", "תֵי", "נוּ"]} | ${[false, false, false, true, false, true, false, false]}
+  ${"holem-waw, and final aleph"}                                 | ${"ס֣וֹא"}         | ${["סֹ֣וא"]}                         | ${[false, true, false]}
+  ${"qamets-he, one syllable"}                                    | ${"בָּה"}          | ${["בָּה"]}                          | ${[false, true]}
+  ${"qamets-he, two syllables"}                                   | ${"יָפָה"}         | ${["יָ", "פָה"]}                     | ${[false, false, true]}
+  ${"seghol-he, two syllables"}                                   | ${"יָפֶה"}         | ${["יָ", "פֶה"]}                     | ${[false, false, true]}
+  ${"3fs suffix, one syllable"}                                   | ${"בָּהּ"}         | ${["בָּהּ"]}                         | ${[false, false]}
+  ${"3ms plural suffix, three syllable"}                          | ${"תֹּורֹתָיו"}    | ${["תֹּו", "רֹ", "תָיו"]}            | ${[false, true, false, false, false, false]}
+  ${"quiesced aleph, two syllables"}                              | ${"רִאשׁ֔וֹן"}     | ${["רִא", "שֹׁ֔ון"]}                 | ${[false, false, false, true, false]}
+  ${"quiesced aleph, two syllables w/ closed syl (non biblical)"} | ${"זַאנְבִיל"}     | ${["זַאנְ", "בִיל"]}                 | ${[false, false, false, false, true, false]}
 `("isMater:", ({ description, original, sylArr, isMaterArr }) => {
   const heb = new Text(original);
   const sylText = heb.syllables.map((syllable) => syllable.text);
