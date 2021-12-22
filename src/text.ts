@@ -72,6 +72,7 @@ export interface SylOpts {
    *
    * @defaultValue true
    * @example
+   * ```ts
    * const default = new Text("וּלְמַזֵּר");
    * default.syllables.map(syl => syl.text);
    * // "וּ", "לְ", "מַ", "זֵּר"]
@@ -103,6 +104,10 @@ export interface SylOpts {
    * ```
    */
   qametsQatan?: boolean;
+  /**
+   * preset syllabification options; for more, see [syllabification](../pages/Linguistic/syllabification.html#schemas)
+   *
+   */
   schema?: Schema;
 }
 
