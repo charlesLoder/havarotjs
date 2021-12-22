@@ -4,7 +4,7 @@
 
 A Typescript package for getting syllabic data about Hebrew text with niqqud.
 
-The general idea of this package is that a [`Text`](./modules/text.html) is composed of `Words` which are composed of `Syllables` which are composed of `Clusters` which are composed of `Characters`.
+The general idea of this package is that a `Text` is composed of `Words` which are composed of `Syllables` which are composed of `Clusters` which are composed of `Characters`.
 
 ## install
 
@@ -32,8 +32,8 @@ const heb = new Text("אֱלֹהִים");
 
 ```typescript
 import { Text } from "havarotjs";
-const heb: string = "אֱלֹהִים";
-const text: Text = new Text(heb);
+const heb = "אֱלֹהִים";
+const text = new Text(heb);
 const sylText = text.syllables.map((syl) => syl.text);
 sylText;
 //  [
@@ -51,4 +51,4 @@ Read the docs at online [here](https://charlesloder.github.io/havarot/)
 
 Free to open an issue or pull request.
 
-See the [terms list](./docs/terms.md) for a list of naming conventions.
+See the [terms list](https://charlesloder.github.io/havarot/pages/Linguistic/terms.html) for a list of naming conventions.
