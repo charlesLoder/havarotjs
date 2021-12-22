@@ -1,5 +1,17 @@
 # Changelog
 
+## 2021-12-06 0.6.2
+
+### Change
+
+- fixed holem-waw followed by silent aleph not included in 0.6.1
+
+## 2021-12-06 0.6.1
+
+### Change
+
+- fixed syllabification for word holem-waw and and waw with a holem
+
 ## 2021-09-14 0.6.0
 
 ### Add
