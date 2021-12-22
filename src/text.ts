@@ -88,6 +88,7 @@ export interface SylOpts {
   wawShureq?: boolean;
   /**
    * converts regular qamets characters to qamets qatan characters where appropriate. The former is a "long-vowel" whereas the latter is a "short-vowel."
+   *
    * @defaultValue true
    * @example
    * ```ts
