@@ -4,8 +4,8 @@
 
 There are two types of schemas for syllabification:
 
-1. [Traditional](#Traditional)
-2. [Tiberian](#Tiberian)
+1. [Traditional](#traditional)
+2. [Tiberian](#tiberian)
 
 which set the options for syllabification.
 
@@ -107,7 +107,9 @@ optional.syllables.map(syl => syl.text);
 // ["וּלְ", "מַ", "זֵּר"]
 ```
 
-## Traditional
+## Schemas
+
+### Traditional
 
 The traditional schema for syllabification is that most commonly taught in schools and seminaries.
 It is most similar to the Sephardi pronunciation (see especially, S. Morag, "Pronunciation of Hebrew" _EJ_ 16:547–562).
@@ -140,7 +142,7 @@ schema.syllables.map(syl => syl.text);
 // ["וּ", "לְ", "מַ", "זֵּר"]
 ```
 
-### Vocal & Silent Shewas
+#### Vocal & Silent Shewas
 
 In regards to the realization of shewas, Khan remarks (I.2.5.1.1):
 
@@ -149,7 +151,7 @@ In regards to the realization of shewas, Khan remarks (I.2.5.1.1):
 This package does **not** consider the quality of the realization of the shewa.
 It only determines whether the shewa is a _shewa na'_ (vocal) or _shewa nach_ (silent).
 
-#### Vocal Shewas
+##### Vocal Shewas
 
 A shewa is considered a _shewa na'_ under the following conditions:
 
@@ -158,7 +160,7 @@ A shewa is considered a _shewa na'_ under the following conditions:
 3. when it appears under a geminated consonant
 4. when it is preceded by a long vowel
 
-#### Silent Shewas
+##### Silent Shewas
 
 If a shewa does not fall into the criteria above, it is generally silent (i.e. _shewa nach_).
 
@@ -168,7 +170,7 @@ There is one major exception:
 
 This package, however, considers it a _shewa na'_.
 
-## Tiberian
+### Tiberian
 
 The syllabification options are set as follows:
 
