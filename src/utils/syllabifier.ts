@@ -298,10 +298,16 @@ const setIsClosed = (syllable: Syllable, index: number, arr: Syllable[]) => {
   }
   if (!syllable.isClosed) {
     const dageshRegx = /\u{05BC}/u;
-    const hasShortVowel = syllable.clusters.filter((cluster) => cluster.hasShortVowel).length ? true : false;
+    const hasShortVowel = !!syllable.clusters.filter((cluster) => cluster.hasShortVowel).length;
+    /**
+     * if `hasShortVowel` is true, nothing to check;
+     * if a syllable has only one cluster with a shewa, then it is false;
+     * else, it means the preceding cluster has no vowel
+     */
+    const hasNoVowel = hasShortVowel || !!(syllable.clusters.filter((cluster) => !cluster.hasVowel).length - 1);
     const prev = arr[index + 1];
     const prevDagesh = dageshRegx.test(prev.text);
-    syllable.isClosed = hasShortVowel && prevDagesh;
+    syllable.isClosed = (hasShortVowel || hasNoVowel) && prevDagesh;
   }
 };
 
