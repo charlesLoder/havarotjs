@@ -1,5 +1,14 @@
 # Changelog
 
+## 2021-12-23 0.7.0
+
+### Change
+
+- improve syllabification for quiesced aleph
+- improve syllabification for consonants w/o a vowel
+- correct syllabification for omitted _dagesh chazaq_ ([Issue #14](https://github.com/charlesLoder/hebrew-transliteration/issues/14))
+  - added `article` to `SylOpts`
+
 ## 2021-12-06 0.6.2
 
 ### Change
