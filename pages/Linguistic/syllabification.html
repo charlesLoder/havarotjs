@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Syllabification | havarotjs - v0.6.2</title>
-	<meta name="description" content="Documentation for havarotjs - v0.6.2">
+	<title>Syllabification | havarotjs - v0.7.0</title>
+	<meta name="description" content="Documentation for havarotjs - v0.7.0">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../../assets/css/main.css">
 	<link rel="stylesheet" href="../../assets/css/pages.css">
@@ -23,7 +23,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../../index.html" class="title">havarotjs - v0.6.2</a>
+					<a href="../../index.html" class="title">havarotjs - v0.7.0</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -77,8 +77,8 @@
 				<p>⚠️ This section is still a work in progress ⚠️</p>
 				<p>There are two types of schemas for syllabification:</p>
 				<ol>
-					<li><a href="#Traditional">Traditional</a></li>
-					<li><a href="#Tiberian">Tiberian</a></li>
+					<li><a href="#traditional">Traditional</a></li>
+					<li><a href="#tiberian">Tiberian</a></li>
 				</ol>
 				<p>which set the options for syllabification.</p>
 				<p>This package follows Geoffrey Khan&#39;s <em><a href="https://www.openbookpublishers.com/product/1144">The Tiberian Pronunciation Tradition of Biblical Hebrew</a></em> for developing a schema similar to the Tiberian tradition.
@@ -182,8 +182,11 @@
 <span style="color: #001080">optional</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">syl</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">syl</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
 <span style="color: #008000">// [&quot;וּלְ&quot;, &quot;מַ&quot;, &quot;זֵּר&quot;]</span>
 </code></pre>
+				<a href="#schemas" id="schemas" style="color: inherit; text-decoration: none;">
+					<h2>Schemas</h2>
+				</a>
 				<a href="#traditional" id="traditional" style="color: inherit; text-decoration: none;">
-					<h2>Traditional</h2>
+					<h3>Traditional</h3>
 				</a>
 				<p>The traditional schema for syllabification is that most commonly taught in schools and seminaries.
 				It is most similar to the Sephardi pronunciation (see especially, S. Morag, &quot;Pronunciation of Hebrew&quot; <em>EJ</em> 16:547–562).</p>
@@ -210,7 +213,7 @@
 <span style="color: #008000">// [&quot;וּ&quot;, &quot;לְ&quot;, &quot;מַ&quot;, &quot;זֵּר&quot;]</span>
 </code></pre>
 				<a href="#vocal-amp-silent-shewas" id="vocal-amp-silent-shewas" style="color: inherit; text-decoration: none;">
-					<h3>Vocal &amp; Silent Shewas</h3>
+					<h4>Vocal &amp; Silent Shewas</h4>
 				</a>
 				<p>In regards to the realization of shewas, Khan remarks (I.2.5.1.1):</p>
 				<blockquote>
@@ -219,7 +222,7 @@
 				<p>This package does <strong>not</strong> consider the quality of the realization of the shewa.
 				It only determines whether the shewa is a <em>shewa na&#39;</em> (vocal) or <em>shewa nach</em> (silent).</p>
 				<a href="#vocal-shewas" id="vocal-shewas" style="color: inherit; text-decoration: none;">
-					<h4>Vocal Shewas</h4>
+					<h5>Vocal Shewas</h5>
 				</a>
 				<p>A shewa is considered a <em>shewa na&#39;</em> under the following conditions:</p>
 				<ol>
@@ -229,7 +232,7 @@
 					<li>when it is preceded by a long vowel</li>
 				</ol>
 				<a href="#silent-shewas" id="silent-shewas" style="color: inherit; text-decoration: none;">
-					<h4>Silent Shewas</h4>
+					<h5>Silent Shewas</h5>
 				</a>
 				<p>If a shewa does not fall into the criteria above, it is generally silent (i.e. <em>shewa nach</em>).</p>
 				<p>There is one major exception:</p>
@@ -238,7 +241,7 @@
 				</ul>
 				<p>This package, however, considers it a <em>shewa na&#39;</em>.</p>
 				<a href="#tiberian" id="tiberian" style="color: inherit; text-decoration: none;">
-					<h2>Tiberian</h2>
+					<h3>Tiberian</h3>
 				</a>
 				<p>The syllabification options are set as follows:</p>
 				<pre><code class="language-typescript"><span style="color: #000000">{ qametsQatan: </span><span style="color: #0000FF">false</span><span style="color: #000000">, sqnmlvy: </span><span style="color: #0000FF">true</span><span style="color: #000000">, longVowels: </span><span style="color: #0000FF">false</span><span style="color: #000000">, wawShureq: </span><span style="color: #0000FF">false</span><span style="color: #000000"> }</span>

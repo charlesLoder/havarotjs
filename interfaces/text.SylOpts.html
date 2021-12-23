@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>SylOpts | havarotjs - v0.6.2</title>
-	<meta name="description" content="Documentation for havarotjs - v0.6.2">
+	<title>SylOpts | havarotjs - v0.7.0</title>
+	<meta name="description" content="Documentation for havarotjs - v0.7.0">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 	<link rel="stylesheet" href="../assets/css/pages.css">
@@ -23,7 +23,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">havarotjs - v0.6.2</a>
+					<a href="../index.html" class="title">havarotjs - v0.7.0</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -70,6 +70,13 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>options for determining syllabification that may differ according to reading traditions</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -86,6 +93,7 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="text.SylOpts.html#sqnmlvy" class="tsd-kind-icon">sqnmlvy</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="text.SylOpts.html#article" class="tsd-kind-icon">article</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="text.SylOpts.html#longVowels" class="tsd-kind-icon">long<wbr>Vowels</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="text.SylOpts.html#wawShureq" class="tsd-kind-icon">waw<wbr>Shureq</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="text.SylOpts.html#qametsQatan" class="tsd-kind-icon">qamets<wbr>Qatan</a></li>
@@ -103,13 +111,59 @@
 					<div class="tsd-signature tsd-kind-icon">sqnmlvy<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/charlesLoder/havarot/blob/dc3e709/src/text.ts#L14">text.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/charlesLoder/havarot/blob/5f13ee0/src/text.ts#L29">text.ts:29</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>determines whether to regard the shewa under the letters שׁשׂסצנמלוי when preceded by a waw-consecutive with a missing dagesh chazaq as a <em>shewa na&#39;</em>. If a metheg is present, the shewa is always a <em>shewa na&#39;</em>.</p>
+						</div>
 						<dl class="tsd-comment-tags">
-							<dt>property</dt>
-							<dd><p>determines whether to regard the shewa under the letters שׁשׂסצנמלוי when preceded by a waw-consecutive with a missing dagesh chazaq as vocal</p>
+							<dt>defaultvalue</dt>
+							<dd><p>true</p>
+							</dd>
+							<dt>example</dt>
+							<dd><pre><code class="language-ts"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">default</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;וַיְצַחֵק֙&quot;</span><span style="color: #000000">);</span>
+<span style="color: #001080">default</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">syl</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">syl</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
+<span style="color: #008000">// [&quot;וַ&quot;, &quot;יְ&quot;, &quot;צַ&quot;, &quot;חֵק֙&quot;]</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">optional</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;וַיְצַחֵק֙&quot;</span><span style="color: #000000">, { </span><span style="color: #001080">sqnmlvy:</span><span style="color: #000000"> </span><span style="color: #0000FF">false</span><span style="color: #000000"> });</span>
+<span style="color: #001080">optional</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">syl</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">syl</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
+<span style="color: #008000">// [&quot;וַיְ&quot;, &quot;צַ&quot;, &quot;חֵק֙&quot;]</span>
+</code></pre>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="article" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> article</h3>
+					<div class="tsd-signature tsd-kind-icon">article<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/charlesLoder/havarot/blob/5f13ee0/src/text.ts#L49">text.ts:49</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>determines whether to regard the shewa under the letters ילמ when preceded by the article and with a missing dagesh chazaq as as a <em>shewa na&#39;</em>. If a metheg is present, the shewa is always a <em>shewa na&#39;</em>.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>defaultvalue</dt>
+							<dd><p>true</p>
+							</dd>
+							<dt>example</dt>
+							<dd><pre><code class="language-ts"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">default</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;הַיְאֹ֗ר&quot;</span><span style="color: #000000">);</span>
+<span style="color: #001080">default</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">syl</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">syl</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
+<span style="color: #008000">// [&quot;הַ&quot;, &quot;יְ&quot;, &quot;אֹ֗ר&quot;]</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">optional</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;הַיְאֹ֗ר&quot;</span><span style="color: #000000">, { </span><span style="color: #001080">article:</span><span style="color: #000000"> </span><span style="color: #0000FF">false</span><span style="color: #000000"> });</span>
+<span style="color: #001080">optional</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">syl</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">syl</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
+<span style="color: #008000">// [&quot;הַיְ&quot;, &quot;אֹ֗ר&quot;]</span>
+</code></pre>
+							</dd>
+							<dt>remarks</dt>
+							<dd><p>results in example displayed in reverse order to mimic Hebrew writing; the rightmost value is the 0 item</p>
 							</dd>
 						</dl>
 					</div>
@@ -120,13 +174,29 @@
 					<div class="tsd-signature tsd-kind-icon">long<wbr>Vowels<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/charlesLoder/havarot/blob/dc3e709/src/text.ts#L18">text.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/charlesLoder/havarot/blob/5f13ee0/src/text.ts#L69">text.ts:69</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>determines whether to regard a shewa after a long vowel (excluding waw-shureq, see <a href="text.SylOpts.html#wawShureq">wawShureq</a>) as a <em>shewa na&#39;</em>. If a metheg is present, the shewa is always a <em>shewa na&#39;</em>.</p>
+						</div>
 						<dl class="tsd-comment-tags">
-							<dt>property</dt>
-							<dd><p>determines whether to regard a shewa after a long vowel (excluding vav-shureq) as vocal</p>
+							<dt>defaultvalue</dt>
+							<dd><p>true</p>
+							</dd>
+							<dt>example</dt>
+							<dd><pre><code class="language-ts"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">default</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;יָדְךָ&quot;</span><span style="color: #000000">);</span>
+<span style="color: #001080">default</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">syl</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">syl</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
+<span style="color: #008000">// [&quot;יָ&quot;, &quot;דְ&quot;, &quot;ךָ&quot;]</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">optional</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;יָדְךָ&quot;</span><span style="color: #000000">, { </span><span style="color: #001080">longVowels:</span><span style="color: #000000"> </span><span style="color: #0000FF">false</span><span style="color: #000000"> });</span>
+<span style="color: #001080">optional</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">syl</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">syl</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
+<span style="color: #008000">// [&quot;יָדְ&quot;, &quot;ךָ&quot;]</span>
+</code></pre>
+							</dd>
+							<dt>remarks</dt>
+							<dd><p>results in example displayed in reverse order to mimic Hebrew writing; the rightmost value is the 0 item</p>
 							</dd>
 						</dl>
 					</div>
@@ -137,13 +207,29 @@
 					<div class="tsd-signature tsd-kind-icon">waw<wbr>Shureq<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/charlesLoder/havarot/blob/dc3e709/src/text.ts#L22">text.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/charlesLoder/havarot/blob/5f13ee0/src/text.ts#L89">text.ts:89</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>determines whether to regard a shewa after a vav-shureq as vocal. If a metheg is present, the shewa is always a <em>shewa na&#39;</em>.</p>
+						</div>
 						<dl class="tsd-comment-tags">
-							<dt>property</dt>
-							<dd><p>determines whether to regard a shewa after a vav-shureq as vocal, unless metheg is present</p>
+							<dt>defaultvalue</dt>
+							<dd><p>true</p>
+							</dd>
+							<dt>example</dt>
+							<dd><pre><code class="language-ts"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">default</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;וּלְמַזֵּר&quot;</span><span style="color: #000000">);</span>
+<span style="color: #001080">default</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">syl</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">syl</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
+<span style="color: #008000">// &quot;וּ&quot;, &quot;לְ&quot;, &quot;מַ&quot;, &quot;זֵּר&quot;]</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">optional</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;וּלְמַזֵּר&quot;</span><span style="color: #000000">, { </span><span style="color: #001080">wawShureq:</span><span style="color: #000000"> </span><span style="color: #0000FF">false</span><span style="color: #000000"> });</span>
+<span style="color: #001080">optional</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">syl</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">syl</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
+<span style="color: #008000">// [&quot;וּלְ&quot;, &quot;מַ&quot;, &quot;זֵּר&quot;]</span>
+</code></pre>
+							</dd>
+							<dt>remarks</dt>
+							<dd><p>results in example displayed in reverse order to mimic Hebrew writing; the rightmost value is the 0 item</p>
 							</dd>
 						</dl>
 					</div>
@@ -154,13 +240,27 @@
 					<div class="tsd-signature tsd-kind-icon">qamets<wbr>Qatan<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/charlesLoder/havarot/blob/dc3e709/src/text.ts#L26">text.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/charlesLoder/havarot/blob/5f13ee0/src/text.ts#L106">text.ts:106</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>converts regular qamets characters to qamets qatan characters where appropriate. The former is a &quot;long-vowel&quot; whereas the latter is a &quot;short-vowel.&quot;</p>
+						</div>
 						<dl class="tsd-comment-tags">
-							<dt>property</dt>
-							<dd><p>converts regular qamets characters to qamets qatan characters where appropriate</p>
+							<dt>defaultvalue</dt>
+							<dd><p>true</p>
+							</dd>
+							<dt>example</dt>
+							<dd><pre><code class="language-ts"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">qQRegx</span><span style="color: #000000"> =</span><span style="color: #811F3F"> /</span><span style="color: #EE0000">\u</span><span style="color: #811F3F">{05C7}/</span><span style="color: #0000FF">u</span><span style="color: #000000">;</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">default</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;חָפְנִי֙&quot;</span><span style="color: #000000">);</span>
+<span style="color: #001080">qQRegx</span><span style="color: #000000">.</span><span style="color: #795E26">test</span><span style="color: #000000">(</span><span style="color: #001080">default</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
+<span style="color: #008000">// true</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">optional</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;חָפְנִי֙&quot;</span><span style="color: #000000">, { </span><span style="color: #001080">qametsQatan:</span><span style="color: #000000"> </span><span style="color: #0000FF">false</span><span style="color: #000000"> });</span>
+<span style="color: #001080">qQRegx</span><span style="color: #000000">.</span><span style="color: #795E26">test</span><span style="color: #000000">(</span><span style="color: #001080">optional</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
+<span style="color: #008000">// false</span>
+</code></pre>
 							</dd>
 						</dl>
 					</div>
@@ -171,9 +271,14 @@
 					<div class="tsd-signature tsd-kind-icon">schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Schema</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/charlesLoder/havarot/blob/dc3e709/src/text.ts#L27">text.ts:27</a></li>
+							<li>Defined in <a href="https://github.com/charlesLoder/havarot/blob/5f13ee0/src/text.ts#L111">text.ts:111</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>preset syllabification options; for more, see <a href="../pages/Linguistic/syllabification.html#schemas">syllabification</a></p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -227,6 +332,9 @@
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="text.SylOpts.html#sqnmlvy" class="tsd-kind-icon">sqnmlvy</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="text.SylOpts.html#article" class="tsd-kind-icon">article</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="text.SylOpts.html#longVowels" class="tsd-kind-icon">long<wbr>Vowels</a>
