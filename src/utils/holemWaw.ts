@@ -33,7 +33,10 @@ export const holemWaw = (word: string): string => {
   for (const match of matches) {
     const start = charPos[match.index!]; // eslint-disable-line
     const end = charPos[match[0].length] + start;
-    word = word.substring(0, start) + "\u{05B9}\u{05D5}" + (word.substring(end) || word.substring(end - 1));
+    word =
+      word.substring(0, start) +
+      "\u{05B9}\u{05D5}" +
+      (word.substring(end) || word.substring(end - 1)).replace(holemRegx, "");
   }
 
   return word;
