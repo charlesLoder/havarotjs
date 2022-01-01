@@ -6,7 +6,7 @@ export const holemWaw = (word: string): string => {
   const holemHaser = /\u{05BA}/u;
   const wawHolemRegX = /\u{05D5}\u{05B9}/u;
   const vowels = /[\u{05B0}-\u{05BB}\u{05C7}]/u;
-  const vowelBeforeWawHolem = new RegExp("(?<!" + vowels.source + ")" + wawHolemRegX.source, "u");
+  const vowelBeforeWawHolem = new RegExp("(?<!" + vowels.source + ")" + wawHolemRegX.source, "gu");
 
   // replace holem haser with regular holem
   if (holemHaser.test(word)) {
@@ -25,12 +25,19 @@ export const holemWaw = (word: string): string => {
   }
 
   // check for waw + holem preceded by vowel
-  const match = noTaamim.match(vowelBeforeWawHolem);
-  if (!match) {
+  const matches = noTaamim.matchAll(vowelBeforeWawHolem);
+  if (!matches) {
     return word;
   }
 
-  const start = charPos[match.index!]; // eslint-disable-line
-  const end = charPos[match[0].length] + start;
-  return word.substring(0, start) + "\u{05B9}\u{05D5}" + (word.substring(end) || word.substring(end - 1));
+  for (const match of matches) {
+    const start = charPos[match.index!]; // eslint-disable-line
+    const end = charPos[match[0].length] + start;
+    word =
+      word.substring(0, start) +
+      "\u{05B9}\u{05D5}" +
+      (word.substring(end) || word.substring(end - 1)).replace(holemRegx, "");
+  }
+
+  return word;
 };

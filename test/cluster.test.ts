@@ -10,9 +10,11 @@ describe.each`
   ${"tsere-yod, two syllables"}                                   | ${"בֵּיצָה"}       | ${["בֵּי", "צָה"]}                   | ${[false, true, false, true]}
   ${"seghol yod, four syllables"}                                 | ${"אֱלֹהֶ֑֔יךָ"}   | ${["אֱ", "לֹ", "הֶ֑֔י", "ךָ"]}       | ${[false, false, false, true, false]}
   ${"holem-waw, one syllable"}                                    | ${"בֹּו"}          | ${["בֹּו"]}                          | ${[false, true]}
+  ${"holem-waw, two syllables, holem final"}                      | ${"כְּמוֹ"}        | ${["כְּ", "מֹו"]}                    | ${[false, false, true]}
   ${"holem-waw, three syllables"}                                 | ${"קֹולְךָ"}       | ${["קֹו", "לְ", "ךָ"]}               | ${[false, true, false, false]}
   ${"holem-waw, and waw with holem"}                              | ${"עֲוֹנוֹתֵינוּ"} | ${["עֲ", "וֹ", "נֹו", "תֵי", "נוּ"]} | ${[false, false, false, true, false, true, false, false]}
   ${"holem-waw, and final aleph"}                                 | ${"ס֣וֹא"}         | ${["סֹ֣וא"]}                         | ${[false, true, false]}
+  ${"two holem-waws in same word"}                                | ${"אוֹחָיוֹן"}     | ${["אֹו", "חָ", "יֹון"]}             | ${[false, true, false, false, true, false]}
   ${"qamets-he, one syllable"}                                    | ${"בָּה"}          | ${["בָּה"]}                          | ${[false, true]}
   ${"qamets-he, two syllables"}                                   | ${"יָפָה"}         | ${["יָ", "פָה"]}                     | ${[false, false, true]}
   ${"seghol-he, two syllables"}                                   | ${"יָפֶה"}         | ${["יָ", "פֶה"]}                     | ${[false, false, true]}
