@@ -17,6 +17,7 @@ describe.each`
   ${"two holem-waws in same word"}                                | ${"אוֹחָיוֹן"}     | ${["אֹו", "חָ", "יֹון"]}             | ${[false, true, false, false, true, false]}
   ${"qamets-he, one syllable"}                                    | ${"בָּה"}          | ${["בָּה"]}                          | ${[false, true]}
   ${"qamets-he, two syllables"}                                   | ${"יָפָה"}         | ${["יָ", "פָה"]}                     | ${[false, false, true]}
+  ${"qamets-he follwed by shureq (not mater)"}                    | ${"אֵלִיָּ֨הוּ"}   | ${["אֵ", "לִ", "יָּ֨", "הוּ"]}       | ${[false, false, false, false, false]}
   ${"seghol-he, two syllables"}                                   | ${"יָפֶה"}         | ${["יָ", "פֶה"]}                     | ${[false, false, true]}
   ${"3fs suffix, one syllable"}                                   | ${"בָּהּ"}         | ${["בָּהּ"]}                         | ${[false, false]}
   ${"3ms plural suffix, three syllable"}                          | ${"תֹּורֹתָיו"}    | ${["תֹּו", "רֹ", "תָיו"]}            | ${[false, true, false, false, false, false]}
