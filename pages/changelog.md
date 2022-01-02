@@ -1,5 +1,11 @@
 # Changelog
 
+## 2022-01-02 0.7.2
+
+### Change
+
+- fix false `Cluster.isMater` when a he was preceded by qamets, but had a shureq as vowel
+
 ## 2022-01-01 0.7.1
 
 ### Change
