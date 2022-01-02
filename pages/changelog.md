@@ -1,5 +1,13 @@
 # Changelog
 
+## 2022-01-01 0.7.1
+
+### Change
+
+- improve syllabification of words with two holem waws
+
+### Change
+
 ## 2021-12-23 0.7.0
 
 ### Change
