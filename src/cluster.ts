@@ -183,7 +183,8 @@ export class Cluster extends Node {
    * ```
    */
   get isMater(): boolean {
-    if (!this.hasVowel && !this.isShureq && !this.hasShewa) {
+    const nxtIsShureq = this.next instanceof Cluster ? this.next.isShureq : false;
+    if (!this.hasVowel && !this.isShureq && !this.hasShewa && !nxtIsShureq) {
       const text = this.text;
       const prevText = this.prev instanceof Cluster ? this.prev.text : "";
       const maters = /[היו](?!\u{05BC})/u;
