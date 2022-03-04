@@ -1,5 +1,11 @@
 # Changelog
 
+## 2022-03-04 0.7.3
+
+### Change
+
+- fix Issue #20 — when an aleph had a shureq as a vowel and was preceded by a shewa it would throw and error
+
 ## 2022-01-02 0.7.2
 
 ### Change
