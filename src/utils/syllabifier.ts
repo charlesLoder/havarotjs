@@ -208,12 +208,27 @@ const groupMaters = (arr: Mixed): Mixed => {
       continue;
     }
 
-    if (cluster.isMater || (!cluster.hasVowel && /א/.test(cluster.text))) {
+    if (cluster.isMater) {
       syl.unshift(cluster);
       const nxt = arr[index + 1];
 
       if (nxt instanceof Syllable) {
         throw new Error("Syllable should not precede a Cluster with a Mater");
+      }
+
+      syl.unshift(nxt);
+      syl = materNewSyllable(syl);
+      index++;
+    }
+    // check for quiesced alef — not a mater, but similar
+    else if (!cluster.hasVowel && /א/.test(cluster.text)) {
+      syl.unshift(cluster);
+      const nxt = arr[index + 1];
+
+      // at this point, only final syllables and shewas are Syllables
+      if (nxt instanceof Syllable) {
+        result.push(cluster);
+        continue;
       }
 
       syl.unshift(nxt);
