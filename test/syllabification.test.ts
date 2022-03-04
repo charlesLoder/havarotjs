@@ -53,6 +53,7 @@ describe.each`
   ${"with qamets gadol (ḥākǝmâ)"}                                    | ${"חָֽכְמָ֖ה"} | ${["חָֽ", "כְ", "מָ֖ה"]} | ${[false, false, false]} | ${[false, false, true]}
   ${"lexical form - two vowels (dābār) + article"}                   | ${"הַדָּבָ֥ר"} | ${["הַ", "דָּ", "בָ֥ר"]} | ${[true, false, true]}   | ${[false, false, true]}
   ${"inflected with SQNMLVY letter"}                                 | ${"וַיְהִ֗י"}  | ${["וַ", "יְ", "הִ֗י"]}  | ${[false, false, false]} | ${[false, false, true]}
+  ${"aleph with shureq preceded by shewa"}                           | ${"רְאוּבֵ֣ן"} | ${["רְ", "אוּ", "בֵ֣ן"]} | ${[false, false, true]}  | ${[false, false, true]}
   ${"word and passeq"}                                               | ${"דָּבָ֗ר ׀"} | ${["דָּ", "בָ֗ר", "׀"]}  | ${[false, true, true]}   | ${[false, true, true]}
 `("3 Syllables:", ({ description, original, sylArr, closedArr, accentArr }) => {
   tests(description, original, sylArr, closedArr, accentArr);
