@@ -321,7 +321,7 @@ const setIsClosed = (syllable: Syllable, index: number, arr: Syllable[]) => {
      */
     const hasNoVowel = hasShortVowel || !!(syllable.clusters.filter((cluster) => !cluster.hasVowel).length - 1);
     const prev = arr[index + 1];
-    const prevDagesh = dageshRegx.test(prev.text);
+    const prevDagesh = dageshRegx.test(prev.clusters[0].text);
     syllable.isClosed = (hasShortVowel || hasNoVowel) && prevDagesh;
   }
 };

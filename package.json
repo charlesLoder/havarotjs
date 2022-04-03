@@ -33,18 +33,18 @@
   "author": "Charles Loder",
   "license": "MIT",
   "devDependencies": {
-    "@types/jest": "^27.0.1",
-    "@typescript-eslint/eslint-plugin": "^4.31.0",
-    "eslint": "^7.32.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-jsdoc": "^36.1.0",
+    "@types/jest": "^27.4.1",
+    "@typescript-eslint/eslint-plugin": "^5.17.0",
+    "eslint": "^8.12.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-jsdoc": "^38.1.6",
     "eslint-plugin-prefer-arrow": "^1.2.3",
-    "jest": "^27.1.1",
-    "npm-check-updates": "^11.8.5",
-    "prettier": "^2.3.2",
-    "ts-jest": "^27.0.5",
-    "typedoc": "^0.21.9",
+    "jest": "^27.5.1",
+    "npm-check-updates": "^12.5.5",
+    "prettier": "^2.6.2",
+    "ts-jest": "^27.1.4",
+    "typedoc": "^0.22.13",
     "typedoc-plugin-pages-fork": "^0.0.1",
-    "typescript": "^4.4.2"
+    "typescript": "^4.6.3"
   }
 }
