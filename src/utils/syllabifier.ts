@@ -286,9 +286,9 @@ const groupClusters = (arr: Cluster[], options: SylOpts): Mixed => {
   const rev = arr.reverse();
   const finalGrouped = groupFinal(rev);
   const shewasGrouped = groupShewas(finalGrouped, options);
-  const matersGroups = groupMaters(shewasGrouped);
-  const shureqGroups = groupShureqs(matersGroups);
-  const result = shureqGroups.reverse();
+  const shureqGroups = groupShureqs(shewasGrouped);
+  const matersGroups = groupMaters(shureqGroups);
+  const result = matersGroups.reverse();
   return result;
 };
 
