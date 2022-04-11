@@ -1,5 +1,12 @@
 # Changelog
 
+## 2022-04-11 0.7.4
+
+### Change
+
+- fix Issue #26 Jerusalem failing for some texts
+- fix Issue #29 with aleph with a shureq being treated like a mater
+
 ## 2022-03-04 0.7.3
 
 ### Change
