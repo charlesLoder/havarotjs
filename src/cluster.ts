@@ -1,6 +1,6 @@
 import { Char } from "./char";
 import { Node } from "./node";
-import { taamim } from "./utils/regularExpressions";
+import { taamim, hebChars } from "./utils/regularExpressions";
 
 /**
  * A cluster is group of Hebrew character constituted by:
@@ -280,6 +280,6 @@ export class Cluster extends Node {
    * ```
    */
   get isNotHebrew(): boolean {
-    return !/[\u{0590}-\u{05FF}\u{FB1D}-\u{FB4F}]/u.test(this.text);
+    return !hebChars.test(this.text);
   }
 }

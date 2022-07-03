@@ -108,7 +108,7 @@ export class Word {
    * ```
    */
   get syllables(): Syllable[] {
-    if (/\w/.test(this.text) || this.isDivineName) {
+    if (/\w/.test(this.text) || this.isDivineName || this.isNotHebrew) {
       const syl = new Syllable(this.clusters);
       return [syl];
     }
@@ -181,5 +181,12 @@ export class Word {
    */
   get hasDivineName(): boolean {
     return hasDivineName(this.text);
+  }
+
+  /**
+   * Returns `true` if the Cluster does not have Hebrew chars
+   */
+  get isNotHebrew(): boolean {
+    return !this.clusters.map((c) => c.isNotHebrew).includes(false);
   }
 }
