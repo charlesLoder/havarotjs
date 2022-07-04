@@ -1,5 +1,16 @@
 # Changelog
 
+## 2022-07-04 0.8.0
+
+### Change
+
+- fix Issue #31 by adding check for Othniel
+- fix Issue #32 by adding check non-Hebrew chars
+
+### Add
+
+- add `isNotHebrew` property on `Word`
+
 ## 2022-04-11 0.7.4
 
 ### Change
