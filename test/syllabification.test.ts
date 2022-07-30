@@ -25,6 +25,7 @@ describe.each`
   ${"lexical form - one vowel, closed (yām)"} | ${"יָ֥ם"}  | ${["יָ֥ם"]}  | ${[true]}  | ${[true]}
   ${"final kaph (lāk)"}                       | ${"לָ֛ךְ"} | ${["לָ֛ךְ"]} | ${[true]}  | ${[true]}
   ${"with a mater (lô)"}                      | ${"ל֣וֹ"}  | ${["לֹ֣ו"]}  | ${[false]} | ${[true]}
+  ${"single shureq"}                          | ${"וּ"}    | ${["וּ"]}    | ${[false]} | ${[false]}
 `("1 Syllable:", ({ description, original, sylArr, closedArr, accentArr }) => {
   tests(description, original, sylArr, closedArr, accentArr);
 });
