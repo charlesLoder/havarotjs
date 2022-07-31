@@ -10,4 +10,4 @@ export const hebChars = /[\u{0590}-\u{05FF}\u{FB1D}-\u{FB4F}]/u;
  * group2: word w/ maqqef not followed by word w/ maqqef
  * group3: word followed by white space
  */
-export const splitGroup = /(\S*\u{05BE}(?=\S*\u{05BE})|\S*\u{05BE}(?!\S*\u{05BE})|\S*\s*)/u;
+export const splitGroup = /(\S*\u{05BE}(?=\S*\u{05BE})|\S*\u{05BE}(?!\S*\u{05BE})|\S*-(?=\S*-)|\S*-(?!\S*-)|\S*\s*)/u;
