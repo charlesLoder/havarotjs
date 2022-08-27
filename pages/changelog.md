@@ -1,5 +1,13 @@
 # Changelog
 
+## 2022-08-27 0.8.1
+
+### Change
+
+- fix Issue #24 by updating the regex for kol
+- fix Issue #35 by improving how hyphens are handled
+- fix Issue #36 of single shureq failing
+
 ## 2022-07-04 0.8.0
 
 ### Change
