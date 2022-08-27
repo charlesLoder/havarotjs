@@ -1,11 +1,33 @@
 import { Text } from "../src/index";
 
 describe.each`
-  description          | word             | hasQamQat | hasQamets | qamQatOpt
-  ${"simple nominal"}  | ${"חָפְנִי֙"}    | ${false}  | ${true}   | ${false}
-  ${"simple nominal"}  | ${"חָפְנִי֙"}    | ${true}   | ${false}  | ${true}
-  ${"kol with maqqef"} | ${"כָּל־דְּבַר"} | ${true}   | ${false}  | ${true}
-  ${"kol with maqqef"} | ${"כָּל־דְּבַר"} | ${false}  | ${true}   | ${false}
+  description                               | word                       | hasQamQat | hasQamets | qamQatOpt
+  ${"simple nominal"}                       | ${"חָפְנִי֙"}              | ${false}  | ${true}   | ${false}
+  ${"simple nominal"}                       | ${"חָפְנִי֙"}              | ${true}   | ${false}  | ${true}
+  ${"kol with maqqef"}                      | ${"כָּל־דְּבַר"}           | ${true}   | ${false}  | ${true}
+  ${"kol with maqqef"}                      | ${"כָּל־דְּבַר"}           | ${false}  | ${true}   | ${false}
+  ${"kol w/ maqqef + mem prefix"}           | ${"מִכָּל־הַיְּהוּדִֽים׃"} | ${true}   | ${false}  | ${true}
+  ${"kol w/ maqqef + mem prefix"}           | ${"מִכָּל־הַיְּהוּדִֽים׃"} | ${false}  | ${true}   | ${false}
+  ${"kol w/o maqqef + mem prefix"}          | ${"מִכָּל הַלֵּילוֹת"}     | ${true}   | ${false}  | ${true}
+  ${"kol w/o maqqef + mem prefix"}          | ${"מִכָּל הַלֵּילוֹת"}     | ${false}  | ${true}   | ${false}
+  ${"kol w/o maqqef"}                       | ${"כָּל דְּבַר"}           | ${true}   | ${false}  | ${true}
+  ${"kol w/o maqqef"}                       | ${"כָּל דְּבַר"}           | ${false}  | ${true}   | ${false}
+  ${"kol w/ maqqef + waw prefix"}           | ${"וְכָל־יֵ֙צֶר֙"}         | ${true}   | ${false}  | ${true}
+  ${"kol w/ maqqef + waw prefix"}           | ${"וְכָל־יֵ֙צֶר֙"}         | ${false}  | ${true}   | ${false}
+  ${"kol w/ maqqef + shureq & bet prefix"}  | ${"וּבְכָל־נַפְשְׁכֶֽם׃"}  | ${true}   | ${false}  | ${true}
+  ${"kol w/ maqqef + shureq & bet prefix"}  | ${"וּבְכָל־נַפְשְׁכֶֽם׃"}  | ${false}  | ${true}   | ${false}
+  ${"kol w/ maqqef + bet prefix"}           | ${"לְכָל־חֵ֖פֶץ"}          | ${true}   | ${false}  | ${true}
+  ${"kol w/ maqqef + bet prefix"}           | ${"בְּכָל־לְבַבְכֶ֖ם"}     | ${false}  | ${true}   | ${false}
+  ${"kol w/ maqqef + lamed prefix"}         | ${"לְכָל־חֵ֖פֶץ"}          | ${true}   | ${false}  | ${true}
+  ${"kol w/ maqqef + lamed prefix"}         | ${"לְכָל־חֵ֖פֶץ"}          | ${false}  | ${true}   | ${false}
+  ${"kol w/o maqqef + waw prefix"}          | ${"וְכָל יֵ֙צֶר֙"}         | ${true}   | ${false}  | ${true}
+  ${"kol w/o maqqef + waw prefix"}          | ${"וְכָל יֵ֙צֶר֙"}         | ${false}  | ${true}   | ${false}
+  ${"kol w/o maqqef + shureq & bet prefix"} | ${"וּבְכָל נַפְשְׁכֶֽם׃"}  | ${true}   | ${false}  | ${true}
+  ${"kol w/o maqqef + shureq & bet prefix"} | ${"וּבְכָל נַפְשְׁכֶֽם׃"}  | ${false}  | ${true}   | ${false}
+  ${"kol w/o maqqef + bet prefix"}          | ${"בְּכָל לְבַבְכֶ֖ם"}     | ${true}   | ${false}  | ${true}
+  ${"kol w/o maqqef + bet prefix"}          | ${"בְּכָל לְבַבְכֶ֖ם"}     | ${false}  | ${true}   | ${false}
+  ${"kol w/o maqqef + lamed prefix"}        | ${"לְכָל חֵ֖פֶץ"}          | ${true}   | ${false}  | ${true}
+  ${"kol w/o maqqef + lamed prefix"}        | ${"לְכָל חֵ֖פֶץ"}          | ${false}  | ${true}   | ${false}
 `("qametsQatan:", ({ description, word, hasQamQat, hasQamets, qamQatOpt }) => {
   const text = new Text(word, { qametsQatan: qamQatOpt });
   const sanitized = text.text;
