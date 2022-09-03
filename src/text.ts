@@ -109,6 +109,21 @@ export interface SylOpts {
    *
    */
   schema?: Schema;
+  /**
+   * allows text with no niqqud to be passed; words with no niqqud or incomplete pointing will not be syllabified
+   * @defaultValue false
+   * @example
+   * ```ts
+   * const text = new Text("בְּרֵאשִׁ֖ית בָּרָ֣א אֱלֹהִ֑ים", { allowNoNiqqud: true })
+   * text.syllables.map(syl => syl.text);
+   * // [ 'בְּ', 'רֵא', 'שִׁ֖ית', 'בָּרא', 'אלהים' ]
+   * // note 2nd word has incomplete pointing, and 3rd has none
+   * ```
+   * @remarks
+   *
+   * results in example displayed in reverse order to mimic Hebrew writing; the rightmost value is the 0 item
+   */
+  allowNoNiqqud?: boolean;
 }
 
 type Schema = "tiberian" | "traditional";
@@ -128,8 +143,8 @@ export class Text {
    */
 
   constructor(text: string, options: SylOpts = {}) {
-    this.#original = this.validateInput(text);
     this.options = this.setOptions(options);
+    this.#original = this.options.allowNoNiqqud ? text : this.validateInput(text);
   }
 
   private validateInput(text: string): string {
@@ -141,7 +156,7 @@ export class Text {
   }
 
   private validateOptions(options: SylOpts): SylOpts {
-    const validOpts = ["sqnmlvy", "longVowels", "wawShureq", "qametsQatan", "article"];
+    const validOpts = ["sqnmlvy", "longVowels", "wawShureq", "qametsQatan", "article", "allowNoNiqqud"];
     for (const [k, v] of Object.entries(options)) {
       if (!validOpts.includes(k)) {
         throw new Error(`${k} is not a valid option`);
@@ -175,7 +190,8 @@ export class Text {
       article: options.article ?? true,
       longVowels: options.longVowels ?? true,
       wawShureq: options.wawShureq ?? true,
-      qametsQatan: options.qametsQatan ?? true
+      qametsQatan: options.qametsQatan ?? true,
+      allowNoNiqqud: options.allowNoNiqqud ?? false
     };
   }
 
