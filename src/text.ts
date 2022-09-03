@@ -111,6 +111,7 @@ export interface SylOpts {
   schema?: Schema;
   /**
    * allows text with no niqqud to be passed; words with no niqqud or incomplete pointing will not be syllabified
+   *
    * @defaultValue false
    * @example
    * ```ts
