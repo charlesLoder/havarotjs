@@ -1,5 +1,13 @@
 # Changelog
 
+## 2022-09-03 0.8.2
+
+### Change
+
+- fix Issue #38 by allowing Hebrew without niqqud
+  - introduces the `allowNoNiqqud` option for syllabification
+- fix Issue #44 by fixing Divine Name w/ Latin characters
+
 ## 2022-08-27 0.8.1
 
 ### Change
