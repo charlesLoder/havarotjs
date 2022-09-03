@@ -71,21 +71,22 @@ describe.each`
 });
 
 describe.each`
-  description                           | hebrew                | errorMssg
-  ${"Text without niqqud, throw error"} | ${"בראשית ברא אלהים"} | ${"Text must contain niqqud"}
-`("No Niqqud, throw error:", ({ hebrew, errorMssg }) => {
+  description                                   | hebrew                | errorMssg                     | allowNoNiqqud
+  ${"Text without niqqud, allowNoNiqqud false"} | ${"בראשית ברא אלהים"} | ${"Text must contain niqqud"} | ${false}
+`("Throw error:", ({ hebrew, errorMssg, allowNoNiqqud }) => {
   test("Should throw error", () => {
-    expect(() => new Text(hebrew)).toThrow(errorMssg);
+    expect(() => new Text(hebrew, { allowNoNiqqud })).toThrow(errorMssg);
   });
 });
 
 describe.each`
-  description       | hebrew
-  ${"Regular Text"} | ${"בְּרֵאשִׁית בָּרָא אֱלֹהִים"}
-  ${"Only Mater"}   | ${"קוּם"}
-`("Niqqud, no error:", ({ hebrew }) => {
+  description             | hebrew                           | allowNoNiqqud
+  ${"Regular Text"}       | ${"בְּרֵאשִׁית בָּרָא אֱלֹהִים"} | ${false}
+  ${"Only Mater"}         | ${"קוּם"}                        | ${false}
+  ${"allowNoNiqqud true"} | ${"בראשית ברא אלהים"}            | ${true}
+`("No error:", ({ hebrew, allowNoNiqqud }) => {
   test("Should NOT throw error", () => {
-    expect(() => new Text(hebrew)).not.toThrow();
+    expect(() => new Text(hebrew, { allowNoNiqqud })).not.toThrow();
   });
 });
 
