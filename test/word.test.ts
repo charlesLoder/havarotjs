@@ -25,14 +25,16 @@ describe.each`
 });
 
 describe.each`
-  description  | name            | isDivineName | hasDivineName
-  ${"Yehwah"}  | ${"יְהוָה"}     | ${true}      | ${true}
-  ${"Yehowah"} | ${"יְהֹוָ֨ה"}   | ${true}      | ${true}
-  ${"Yehowih"} | ${"יֱהֹוִ֡ה"}   | ${true}      | ${true}
-  ${"Yehwih"}  | ${"יֱהוִה֙"}    | ${true}      | ${true}
-  ${"Yǝhowih"} | ${"יְהֹוִה֙"}   | ${true}      | ${true}
-  ${"Yǝhwih"}  | ${"יְהוִֽה"}    | ${true}      | ${true}
-  ${"Bayhwah"} | ${"בַּֽיהוָ֔ה"} | ${false}     | ${true}
+  description                 | name             | isDivineName | hasDivineName
+  ${"Yehwah"}                 | ${"יְהוָה"}      | ${true}      | ${true}
+  ${"Yehowah"}                | ${"יְהֹוָ֨ה"}    | ${true}      | ${true}
+  ${"Yehowih"}                | ${"יֱהֹוִ֡ה"}    | ${true}      | ${true}
+  ${"Yehwih"}                 | ${"יֱהוִה֙"}     | ${true}      | ${true}
+  ${"Yǝhowih"}                | ${"יְהֹוִה֙"}    | ${true}      | ${true}
+  ${"Yǝhwih"}                 | ${"יְהוִֽה"}     | ${true}      | ${true}
+  ${"Bayhwah"}                | ${"בַּֽיהוָ֔ה"}  | ${false}     | ${true}
+  ${"Followed by Latin char"} | ${"יְהוִֽה,"}    | ${true}      | ${true}
+  ${"Bayhwah w/ Latin char"}  | ${"בַּֽיהוָ֔ה,"} | ${false}     | ${true}
 `("Divine Name:", ({ description, name, isDivineName, hasDivineName }) => {
   const text = new Text(name);
   const word = text.words[0];
