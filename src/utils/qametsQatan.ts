@@ -96,12 +96,13 @@ const wholeWordsRegx = sequenceSnippets(wholeWords);
 
 export const convertsQametsQatan = (word: string): string => {
   const qametsReg = /\u{05B8}/u;
+  const qametsQatReg = /\u{05C7}/u; 
   const hatefQamRef = /\u{05B3}/u;
-
-  // if no qamets, return
-  if (!qametsReg.test(word)) {
-    return word;
-  }
+  
+ // if no qamets or has qamets qatan char, return 
+ if (!qametsReg.test(word) || qametsQatReg.test(word)) { 
+  return word; 
+} 
 
   // check for hatef qamets followed by qamets pattern
   if (hatefQamRef.test(word)) {
