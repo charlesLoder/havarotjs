@@ -83,12 +83,8 @@ const wholeWords = [
   "וַתָּשָׁב"
 ];
 
-const sequenceSnippets = (arr: string[]) => {
-  return arr.map((snippet) => {
-    const text = snippet.normalize("NFKD");
-    const sequencedChar = sequence(text).flat();
-    return sequencedChar.reduce((a, c) => a + c.text, "");
-  });
+const sequenceSnippets = (arr: string[]) => { 
+  return arr.map((snippet) => (sequence(snippet.normalize("NFKD")).flat().join(""));
 };
 
 const snippetsRegx = sequenceSnippets(snippets);
