@@ -6,7 +6,7 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "rm -rf ./dist && tsc",
-    "test": "clear && jest",
+    "test": "jest",
     "format": "prettier --write 'src/**/*.ts' 'test/**/*.ts'",
     "lint": "eslint . --ext .ts",
     "prepare": "npm run build",
