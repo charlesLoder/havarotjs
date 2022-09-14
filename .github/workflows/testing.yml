@@ -14,13 +14,11 @@ jobs:
       - run: echo "Start job"
       - name: Check out code
         uses: actions/checkout@v3
-        run: echo "Check out code"
       - name: Set up node
         uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: "npm"
-        run: echo "Set up node"
       - name: Install dependencies
         run: npm install
       - name: Run tests
