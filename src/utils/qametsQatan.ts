@@ -103,7 +103,6 @@ export const convertsQametsQatan = (word: string): string => {
  if (!qametsReg.test(word) || qametsQatReg.test(word)) { 
   return word; 
 } 
-
   // check for hatef qamets followed by qamets pattern
   if (hatefQamRef.test(word)) {
     const hatefPos = word.indexOf("\u{05B3}");
@@ -112,9 +111,7 @@ export const convertsQametsQatan = (word: string): string => {
       return word.substring(0, qamPos) + "\u{05C7}" + word.substring(qamPos + 1);
     }
   }
-
   const [noTaamim, charPos] = removeTaamim(word);
-
   // check if in verbal list (more frequent)
   for (const wholeWord of wholeWordsRegx) {
     const regEx = new RegExp(wholeWord);
