@@ -24,5 +24,7 @@ jobs:
       - name: Run tests
         run: npm test
       - name: Run formatter
-        run: npm run format
+        run: npm run format-check
+      - name: Run linter
+        run: npm run lint
       - run: echo "This job's status is ${{ job.status }}."
