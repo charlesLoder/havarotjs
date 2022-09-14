@@ -1,24 +1,30 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: tests
+name: Testing and formatting
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
+      - run: echo "Start job"
       - name: Check out code
         uses: actions/checkout@v3
+        run: echo "Check out code"
       - name: Set up node
         uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: "npm"
+        run: echo "Set up node"
       - name: Install dependencies
         run: npm install
       - name: Run tests
         run: npm test
+      - name: Run formatter
+        run: npm format
+      - run: echo "This job's status is ${{ job.status }}."
