@@ -284,7 +284,7 @@ export class Text {
    * ```
    */
   get clusters(): Cluster[] {
-    return this.syllables.map((syllable) => syllable.clusters).flat();
+return this.syllables.map((syllable) => syllable.clusters).flat();
   }
 
   /**
