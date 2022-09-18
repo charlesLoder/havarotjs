@@ -45,10 +45,10 @@ sylText;
 
 ## Docs
 
-Read the docs at online [here](https://charlesloder.github.io/havarot/)
+Read the docs at online [here](https://charlesloder.github.io/havarotjs/)
 
 ## Contributing
 
 Free to open an issue or pull request.
 
-See the [terms list](https://charlesloder.github.io/havarot/pages/Linguistic/terms.html) for a list of naming conventions.
+See the [terms list](https://charlesloder.github.io/havarotjs/pages/Linguistic/terms.html) for a list of naming conventions.
