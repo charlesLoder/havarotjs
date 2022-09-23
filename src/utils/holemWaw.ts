@@ -36,7 +36,7 @@ export const holemWaw = (word: string): string => {
     word =
       word.substring(0, start) +
       "\u{05B9}\u{05D5}" +
-      (word.substring(end) || word.substring(end - 1)).replace(holemRegx, "");
+      (word.substring(end).trim() || word.substring(end - 1)).replace(holemRegx, "");
   }
 
   return word;
