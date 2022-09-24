@@ -1,5 +1,11 @@
 # Changelog
 
+## 2022-09-24 0.9.1
+
+- Add CI testing checks
+- Add a q.q. check (Issue #50)
+- Fix single syllable holem-waw error (Issue #58)
+
 ## 2022-09-03 0.9.0
 
 ### Change
