@@ -99,6 +99,7 @@ describe.each`
   ${"2 Hyphens as Maqqefs"} | ${"לֹא--יִטֹּ֣שׁ"}               | ${2}
   ${"With Paseq"}           | ${"כִּ֤י ׀ לֹא־יִטֹּ֣שׁ"}        | ${4}
   ${"With English"}         | ${"כִּ֤י ׀ לֹא־יִטֹּ֣שׁ Psalm"}  | ${5}
+  ${"Holem Waw and word"}   | ${"וּבְתוֹרָתוֹ יֶהְגֶּה"}       | ${2}
 `("Split Correctly:", ({ hebrew, numOfWords }) => {
   const text = new Text(hebrew);
   const words = text.words;
