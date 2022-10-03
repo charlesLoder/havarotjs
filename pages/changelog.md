@@ -1,5 +1,11 @@
 # Changelog
 
+## 2022-09-24 0.9.2
+
+- Fix Divine Name w/ Latin Chars
+- Fix holem waw and proceding word
+- the above two were inter-related
+
 ## 2022-09-24 0.9.1
 
 - Add CI testing checks
