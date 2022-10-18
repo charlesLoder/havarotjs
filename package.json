@@ -4,6 +4,26 @@
   "description": "A Typescript package for syllabic data about Hebrew text",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "import": "./dist/index.js"
+    },
+    "./package.json": "./package.json",
+    "./schemas": {
+      "types": "./dist/schemas.d.ts",
+      "require": "./dist/schemas.js",
+      "import": "./dist/schemas.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "schemas": [
+        "./dist/schemas.d.ts"
+      ]
+    }
+  },
   "scripts": {
     "build": "rm -rf ./dist && tsc",
     "test": "jest",

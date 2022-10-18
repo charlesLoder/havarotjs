@@ -105,11 +105,6 @@ export interface SylOpts {
    */
   qametsQatan?: boolean;
   /**
-   * preset syllabification options; for more, see [syllabification](../pages/Linguistic/syllabification.html#schemas)
-   *
-   */
-  schema?: Schema;
-  /**
    * allows text with no niqqud to be passed; words with no niqqud or incomplete pointing will not be syllabified
    *
    * @defaultValue false
@@ -126,8 +121,6 @@ export interface SylOpts {
    */
   allowNoNiqqud?: boolean;
 }
-
-type Schema = "tiberian" | "traditional";
 
 /**
  * `Text` is the main exported class.
@@ -170,21 +163,6 @@ export class Text {
   }
 
   private setOptions(options: SylOpts): SylOpts {
-    const schema = options.schema;
-    return schema ? this.setSchemaOptions(schema) : this.setDefaultOptions(options);
-  }
-
-  private setSchemaOptions(schema: Schema): SylOpts {
-    const schemaText = schema.toLowerCase();
-    if (schemaText !== "traditional" && schemaText !== "tiberian") {
-      throw new Error(`${schemaText} is not a valid schema`);
-    }
-    const traditionalOpts = { qametsQatan: true, sqnmlvy: true, longVowels: true, vavShureq: true };
-    const tiberianOpts = { qametsQatan: false, sqnmlvy: true, longVowels: false, vavShureq: false };
-    return schemaText === "traditional" ? traditionalOpts : tiberianOpts;
-  }
-
-  private setDefaultOptions(options: SylOpts): SylOpts {
     options = this.validateOptions(options);
     return {
       sqnmlvy: options.sqnmlvy ?? true,

@@ -52,7 +52,7 @@ const default = new Text("יָדְךָ");
 default.syllables.map(syl => syl.text);
 // ["יָ", "דְ", "ךָ"]
 
-const optional = new Text("יָדְךָ", {longVowels: false});
+const optional = new Text("יָדְךָ", { longVowels: false });
 optional.syllables.map(syl => syl.text);
 // ["יָדְ", "ךָ"]
 ```
@@ -68,7 +68,7 @@ const default = new Text("וַיְצַחֵק֙");
 default.syllables.map(syl => syl.text);
 // ["וַ", "יְ", "צַ", "חֵק֙"]
 
-const optional = new Text("וַיְצַחֵק֙", {sqnmlvy: false});
+const optional = new Text("וַיְצַחֵק֙", { sqnmlvy: false });
 optional.syllables.map(syl => syl.text);
 // ["וַיְ", "צַ", "חֵק֙"]
 ```
@@ -86,7 +86,7 @@ const default = new Text("חָפְנִי֙");
 qQRegx.test(default.text);
 // true
 
-const optional = new Text("חָפְנִי֙", {qametsQatan: false});
+const optional = new Text("חָפְנִי֙", { qametsQatan: false });
 qQRegx.test(optional.text);
 // false
 ```
@@ -102,7 +102,7 @@ const default = new Text("וּלְמַזֵּר");
 default.syllables.map(syl => syl.text);
 // "וּ", "לְ", "מַ", "זֵּר"]
 
-const optional = new Text("וּלְמַזֵּר", {wawShureq: false});
+const optional = new Text("וּלְמַזֵּר", { wawShureq: false });
 optional.syllables.map(syl => syl.text);
 // ["וּלְ", "מַ", "זֵּר"]
 ```
@@ -114,32 +114,19 @@ optional.syllables.map(syl => syl.text);
 The traditional schema for syllabification is that most commonly taught in schools and seminaries.
 It is most similar to the Sephardi pronunciation (see especially, S. Morag, "Pronunciation of Hebrew" _EJ_ 16:547–562).
 
-The syllabification options are set as follows:
+The syllabification options the default that are set as follows:
 
 ```typescript
 { longVowels: true, sqnmlvy: true, qametsQatan: true, wawShureq: true }
 ```
 
-The `traditional` schema follows the default options. Explicitly setting a `schema` will override any other options.
+The `traditional` schema follows the default options.
 
 ```typescript
-// these two produce the same results
 const defaut = new Text("וּלְמַזֵּר");
 default.syllables.map(syl => syl.text);
 // "וּ", "לְ", "מַ", "זֵּר"]
 
-const traditional = new Text("וּלְמַזֵּר", { schema: "traditional" });
-traditional.syllables.map(syl => syl.text);
-// "וּ", "לְ", "מַ", "זֵּר"]
-
-// these two are not the same, by explicitly setting schema, wawShureq will be true
-const optional = new Text("וּלְמַזֵּר", { wawShureq: false });
-optional.syllables.map(syl => syl.text);
-// ["וּלְ", "מַ", "זֵּר"]
-
-const schema = new Text("וּלְמַזֵּר", { schema: "traditional", wawShureq: false });
-schema.syllables.map(syl => syl.text);
-// ["וּ", "לְ", "מַ", "זֵּר"]
 ```
 
 #### Vocal & Silent Shewas
@@ -176,6 +163,17 @@ The syllabification options are set as follows:
 
 ```typescript
 { qametsQatan: false, sqnmlvy: true, longVowels: false, wawShureq: false }
+```
+
+It can be imported from the `/schemas`:
+
+```typescript
+import { tiberian } from "havarotjs/schemas";
+import { Text } from "havarotjs";
+
+const defaut = new Text("וּלְמַזֵּר", tiberian);
+default.syllables.map(syl => syl.text);
+// "וּלְ", "מַ", "זֵּר"]
 ```
 
 #### Long Vowels
