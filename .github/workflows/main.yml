@@ -24,8 +24,9 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install and Build
+        # use force because typedoc doesn't support current version of TS, but it still build
         run: |
-          npm install
+          npm install --force
           npm run docs
 
       - name: Deploy
