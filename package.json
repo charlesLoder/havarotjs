@@ -64,7 +64,7 @@
     "npm-check-updates": "^16.0.6",
     "prettier": "^2.6.2",
     "ts-jest": "^27.1.4",
-    "typedoc": "^0.22.13",
+    "typedoc": "^0.21.9",
     "typedoc-plugin-pages-fork": "^0.0.1",
     "typescript": "^4.6.3"
   }
