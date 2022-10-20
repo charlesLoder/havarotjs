@@ -1,5 +1,10 @@
 # Changelog
 
+## 2022-10-20 0.10.0
+
+- Update how schemas are created (Issue #63)
+- Fix failing doc builds (Issue #47)
+
 ## 2022-09-24 0.9.2
 
 - Fix Divine Name w/ Latin Chars
