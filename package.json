@@ -5,12 +5,42 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
+    "./package.json": "./package.json",
     ".": {
       "types": "./dist/index.d.ts",
       "require": "./dist/index.js",
       "import": "./dist/index.js"
     },
-    "./package.json": "./package.json",
+    "./dist/*": {
+      "types": "./dist/*.d.ts",
+      "require": "./dist/*.js",
+      "import": "./dist/*.js"
+    },
+    "./text": {
+      "types": "./dist/text.d.ts",
+      "require": "./dist/text.js",
+      "import": "./dist/text.js"
+    },
+    "./word": {
+      "types": "./dist/word.d.ts",
+      "require": "./dist/word.js",
+      "import": "./dist/word.js"
+    },
+    "./syllable": {
+      "types": "./dist/syllable.d.ts",
+      "require": "./dist/syllable.js",
+      "import": "./dist/syllable.js"
+    },
+    "./cluster": {
+      "types": "./dist/cluster.d.ts",
+      "require": "./dist/cluster.js",
+      "import": "./dist/cluster.js"
+    },
+    "./char": {
+      "types": "./dist/char.d.ts",
+      "require": "./dist/char.js",
+      "import": "./dist/char.js"
+    },
     "./schemas": {
       "types": "./dist/schemas.d.ts",
       "require": "./dist/schemas.js",
@@ -21,6 +51,21 @@
     "*": {
       "schemas": [
         "./dist/schemas.d.ts"
+      ],
+      "text": [
+        "./dist/text.d.ts"
+      ],
+      "word": [
+        "./dist/word.d.ts"
+      ],
+      "syllable": [
+        "./dist/syllable.d.ts"
+      ],
+      "cluster": [
+        "./dist/cluster.d.ts"
+      ],
+      "char": [
+        "./dist/char.d.ts"
       ]
     }
   },
