@@ -1,5 +1,9 @@
 # Changelog
 
+## 2022-10-20 0.10.1
+
+- Fix broken exports
+
 ## 2022-10-20 0.10.0
 
 - Update how schemas are created (Issue #63)
