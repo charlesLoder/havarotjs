@@ -311,7 +311,7 @@ export const makeClusters = (word: string): Cluster[] => {
 const setIsClosed = (syllable: Syllable, index: number, arr: Syllable[]) => {
   // no need to check, groupFinal takes care of it
   if (index === arr.length - 1) {
-    return syllable;
+    return;
   }
   if (!syllable.isClosed) {
     const dageshRegx = /\u{05BC}/u;
