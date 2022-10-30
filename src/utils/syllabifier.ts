@@ -213,7 +213,8 @@ const groupMaters = (arr: Mixed): Mixed => {
       const nxt = arr[index + 1];
 
       if (nxt instanceof Syllable) {
-        throw new Error("Syllable should not precede a Cluster with a Mater");
+        const word = arr.map((i) => i.text).join("");
+        throw new Error(`Syllable ${nxt.text} should not precede a Cluster with a Mater in ${word}`);
       }
 
       syl.unshift(nxt);
@@ -264,7 +265,8 @@ const groupShureqs = (arr: Mixed): Mixed => {
       const nxt = arr[index + 1];
 
       if (nxt instanceof Syllable) {
-        throw new Error("Syllable should not precede a Cluster with a Mater");
+        const word = arr.map((i) => i.text).join("");
+        throw new Error(`Syllable ${nxt.text} should not precede a Cluster with a Shureq in ${word}`);
       }
 
       if (nxt !== undefined) {
