@@ -58,7 +58,7 @@ const groupFinal = (arr: Cluster[]): Mixed => {
     syl.unshift(curr);
     if (curr.isShureq) {
       i++;
-      syl.unshift(arr[i]);
+      if (arr[i]) syl.unshift(arr[i]);
       vowelPresent = true;
     } else {
       const clusterHasVowel = "hasVowel" in curr ? curr.hasVowel : true;
@@ -217,7 +217,8 @@ const groupMaters = (arr: Mixed): Mixed => {
         throw new Error(`Syllable ${nxt.text} should not precede a Cluster with a Mater in ${word}`);
       }
 
-      syl.unshift(nxt);
+      if (nxt) syl.unshift(nxt);
+
       syl = materNewSyllable(syl);
       index++;
     }
@@ -232,7 +233,8 @@ const groupMaters = (arr: Mixed): Mixed => {
         continue;
       }
 
-      syl.unshift(nxt);
+      if (nxt) syl.unshift(nxt);
+
       syl = materNewSyllable(syl);
       index++;
     } else {
@@ -269,9 +271,8 @@ const groupShureqs = (arr: Mixed): Mixed => {
         throw new Error(`Syllable ${nxt.text} should not precede a Cluster with a Shureq in ${word}`);
       }
 
-      if (nxt !== undefined) {
-        syl.unshift(nxt);
-      }
+      if (nxt) syl.unshift(nxt);
+
       syl = shureqNewSyllable(syl);
       index++;
     } else {
