@@ -132,3 +132,21 @@ describe.each`
     });
   });
 });
+
+describe.each`
+  description                 | word      | strict
+  ${"bad text, strict true"}  | ${"אלִי"} | ${true}
+  ${"bad text, strict false"} | ${"אלִי"} | ${false}
+`("strict:", ({ description, word, strict }) => {
+  describe(description, () => {
+    if (strict) {
+      test(`${word}`, () => {
+        expect(() => new Text(word, { strict: strict }).syllables).toThrowError();
+      });
+    } else {
+      test(`${word}`, () => {
+        expect(() => new Text(word, { strict: strict }).syllables).not.toThrowError();
+      });
+    }
+  });
+});
