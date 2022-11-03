@@ -18,7 +18,7 @@ const createNewSyllable = (result: Mixed, syl: Syl, isClosed?: boolean): Syl => 
 /**
  * @description determines the Cluster[] that will become the final Syllable
  */
-const groupFinal = (arr: Cluster[]): Mixed => {
+const groupFinal = (arr: Cluster[], strict: boolean = true): Mixed => {
   // grouping the final first helps to avoid issues with final kafs/tavs
   const len = arr.length;
   let i = 0;
@@ -58,7 +58,7 @@ const groupFinal = (arr: Cluster[]): Mixed => {
     syl.unshift(curr);
     if (curr.isShureq) {
       i++;
-      if (arr[i]) syl.unshift(arr[i]);
+      if (!strict && arr[i]) syl.unshift(arr[i]);
       vowelPresent = true;
     } else {
       const clusterHasVowel = "hasVowel" in curr ? curr.hasVowel : true;
@@ -194,7 +194,7 @@ const groupShewas = (arr: Mixed, options: SylOpts): Mixed => {
 /**
  * @description groups non-final maters with preceding cluster
  */
-const groupMaters = (arr: Mixed): Mixed => {
+const groupMaters = (arr: Mixed, strict: boolean = true): Mixed => {
   const len = arr.length;
   let syl: Syl = [];
   const result: Mixed = [];
@@ -217,7 +217,7 @@ const groupMaters = (arr: Mixed): Mixed => {
         throw new Error(`Syllable ${nxt.text} should not precede a Cluster with a Mater in ${word}`);
       }
 
-      if (nxt) syl.unshift(nxt);
+      if (strict) syl.unshift(nxt);
 
       syl = materNewSyllable(syl);
       index++;
@@ -233,7 +233,7 @@ const groupMaters = (arr: Mixed): Mixed => {
         continue;
       }
 
-      if (nxt) syl.unshift(nxt);
+      if (strict) syl.unshift(nxt);
 
       syl = materNewSyllable(syl);
       index++;
@@ -287,10 +287,10 @@ const groupShureqs = (arr: Mixed): Mixed => {
  */
 const groupClusters = (arr: Cluster[], options: SylOpts): Mixed => {
   const rev = arr.reverse();
-  const finalGrouped = groupFinal(rev);
+  const finalGrouped = groupFinal(rev, options.strict);
   const shewasGrouped = groupShewas(finalGrouped, options);
   const shureqGroups = groupShureqs(shewasGrouped);
-  const matersGroups = groupMaters(shureqGroups);
+  const matersGroups = groupMaters(shureqGroups, options.strict);
   const result = matersGroups.reverse();
   return result;
 };
