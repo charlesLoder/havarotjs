@@ -1,5 +1,9 @@
 # Changelog
 
+## 2022-11-04 0.11.1
+
+- Add documentation for `strict` 🤦‍♂️
+
 ## 2022-11-03 0.11.0
 
 - Add syllabification option for `strict`
