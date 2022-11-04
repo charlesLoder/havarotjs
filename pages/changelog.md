@@ -1,5 +1,10 @@
 # Changelog
 
+## 2022-11-03 0.11.0
+
+- Add syllabification option for `strict`
+  - if true, then text must be correctly pointed
+
 ## 2022-10-20 0.10.1
 
 - Fix broken exports
