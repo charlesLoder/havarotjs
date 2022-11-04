@@ -18,7 +18,7 @@ const createNewSyllable = (result: Mixed, syl: Syl, isClosed?: boolean): Syl => 
 /**
  * @description determines the Cluster[] that will become the final Syllable
  */
-const groupFinal = (arr: Cluster[]): Mixed => {
+const groupFinal = (arr: Cluster[], strict: boolean = true): Mixed => {
   // grouping the final first helps to avoid issues with final kafs/tavs
   const len = arr.length;
   let i = 0;
@@ -58,7 +58,7 @@ const groupFinal = (arr: Cluster[]): Mixed => {
     syl.unshift(curr);
     if (curr.isShureq) {
       i++;
-      syl.unshift(arr[i]);
+      if (arr[i]) syl.unshift(arr[i]);
       vowelPresent = true;
     } else {
       const clusterHasVowel = "hasVowel" in curr ? curr.hasVowel : true;
@@ -194,7 +194,7 @@ const groupShewas = (arr: Mixed, options: SylOpts): Mixed => {
 /**
  * @description groups non-final maters with preceding cluster
  */
-const groupMaters = (arr: Mixed): Mixed => {
+const groupMaters = (arr: Mixed, strict: boolean = true): Mixed => {
   const len = arr.length;
   let syl: Syl = [];
   const result: Mixed = [];
@@ -213,10 +213,12 @@ const groupMaters = (arr: Mixed): Mixed => {
       const nxt = arr[index + 1];
 
       if (nxt instanceof Syllable) {
-        throw new Error("Syllable should not precede a Cluster with a Mater");
+        const word = arr.map((i) => i.text).join("");
+        throw new Error(`Syllable ${nxt.text} should not precede a Cluster with a Mater in ${word}`);
       }
 
-      syl.unshift(nxt);
+      if (strict) syl.unshift(nxt);
+
       syl = materNewSyllable(syl);
       index++;
     }
@@ -231,7 +233,8 @@ const groupMaters = (arr: Mixed): Mixed => {
         continue;
       }
 
-      syl.unshift(nxt);
+      if (strict) syl.unshift(nxt);
+
       syl = materNewSyllable(syl);
       index++;
     } else {
@@ -245,7 +248,7 @@ const groupMaters = (arr: Mixed): Mixed => {
 /**
  * @description groups non-final shureqs with preceding cluster
  */
-const groupShureqs = (arr: Mixed): Mixed => {
+const groupShureqs = (arr: Mixed, strict: boolean = true): Mixed => {
   const len = arr.length;
   let syl: Syl = [];
   const result: Mixed = [];
@@ -263,13 +266,15 @@ const groupShureqs = (arr: Mixed): Mixed => {
       syl.unshift(cluster);
       const nxt = arr[index + 1];
 
-      if (nxt instanceof Syllable) {
-        throw new Error("Syllable should not precede a Cluster with a Mater");
+      if (strict) {
+        if (nxt instanceof Syllable) {
+          const word = arr.map((i) => i.text).join("");
+          throw new Error(`Syllable ${nxt.text} should not precede a Cluster with a Shureq in ${word}`);
+        }
+
+        if (nxt) syl.unshift(nxt);
       }
 
-      if (nxt !== undefined) {
-        syl.unshift(nxt);
-      }
       syl = shureqNewSyllable(syl);
       index++;
     } else {
@@ -284,10 +289,10 @@ const groupShureqs = (arr: Mixed): Mixed => {
  */
 const groupClusters = (arr: Cluster[], options: SylOpts): Mixed => {
   const rev = arr.reverse();
-  const finalGrouped = groupFinal(rev);
+  const finalGrouped = groupFinal(rev, options.strict);
   const shewasGrouped = groupShewas(finalGrouped, options);
-  const shureqGroups = groupShureqs(shewasGrouped);
-  const matersGroups = groupMaters(shureqGroups);
+  const shureqGroups = groupShureqs(shewasGrouped, options.strict);
+  const matersGroups = groupMaters(shureqGroups, options.strict);
   const result = matersGroups.reverse();
   return result;
 };
@@ -309,7 +314,7 @@ export const makeClusters = (word: string): Cluster[] => {
 const setIsClosed = (syllable: Syllable, index: number, arr: Syllable[]) => {
   // no need to check, groupFinal takes care of it
   if (index === arr.length - 1) {
-    return syllable;
+    return;
   }
   if (!syllable.isClosed) {
     const dageshRegx = /\u{05BC}/u;

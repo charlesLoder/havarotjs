@@ -120,6 +120,7 @@ export interface SylOpts {
    * results in example displayed in reverse order to mimic Hebrew writing; the rightmost value is the 0 item
    */
   allowNoNiqqud?: boolean;
+  strict?: boolean;
 }
 
 /**
@@ -134,8 +135,10 @@ export class Text {
    * `Text` requires an input string,
    * and has optional arguments for syllabification,
    * which can be read about in the {@page Syllabification} page
+   *
+   * @param text input string
+   * @param options syllabification options
    */
-
   constructor(text: string, options: SylOpts = {}) {
     this.options = this.setOptions(options);
     this.#original = this.options.allowNoNiqqud ? text : this.validateInput(text);
@@ -150,7 +153,7 @@ export class Text {
   }
 
   private validateOptions(options: SylOpts): SylOpts {
-    const validOpts = ["sqnmlvy", "longVowels", "wawShureq", "qametsQatan", "article", "allowNoNiqqud"];
+    const validOpts = ["sqnmlvy", "longVowels", "wawShureq", "qametsQatan", "article", "allowNoNiqqud", "strict"];
     for (const [k, v] of Object.entries(options)) {
       if (!validOpts.includes(k)) {
         throw new Error(`${k} is not a valid option`);
@@ -170,7 +173,8 @@ export class Text {
       longVowels: options.longVowels ?? true,
       wawShureq: options.wawShureq ?? true,
       qametsQatan: options.qametsQatan ?? true,
-      allowNoNiqqud: options.allowNoNiqqud ?? false
+      allowNoNiqqud: options.allowNoNiqqud ?? false,
+      strict: options.strict ?? true
     };
   }
 

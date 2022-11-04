@@ -132,3 +132,23 @@ describe.each`
     });
   });
 });
+
+describe.each`
+  description                            | word                | strict
+  ${"threw hasShortVowel error"}         | ${"אלִי"}           | ${true}
+  ${"threw hasShortVowel error"}         | ${"אלִי"}           | ${false}
+  ${"threw Cluster with a Shureq error"} | ${"לְוּדְרְדַּיְל"} | ${true}
+  ${"threw Cluster with a Shureq error"} | ${"לְוּדְרְדַּיְל"} | ${false}
+`("strict:", ({ description, word, strict }) => {
+  describe(description, () => {
+    if (strict) {
+      test(`${word}`, () => {
+        expect(() => new Text(word, { strict: strict }).syllables).toThrowError();
+      });
+    } else {
+      test(`${word}`, () => {
+        expect(() => new Text(word, { strict: strict }).syllables).not.toThrowError();
+      });
+    }
+  });
+});
