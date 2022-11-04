@@ -134,11 +134,11 @@ describe.each`
 });
 
 describe.each`
-  description                                       | word                | strict
-  ${"bad text, threw hasShortVowel error"}          | ${"אלִי"}           | ${true}
-  ${"bad text,  threw hasShortVowel error"}         | ${"אלִי"}           | ${false}
-  ${"bad text,  threw Cluster with a Shureq error"} | ${"לְוּדְרְדַּיְל"} | ${true}
-  ${"bad text,  threw Cluster with a Shureq error"} | ${"לְוּדְרְדַּיְל"} | ${false}
+  description                            | word                | strict
+  ${"threw hasShortVowel error"}         | ${"אלִי"}           | ${true}
+  ${"threw hasShortVowel error"}         | ${"אלִי"}           | ${false}
+  ${"threw Cluster with a Shureq error"} | ${"לְוּדְרְדַּיְל"} | ${true}
+  ${"threw Cluster with a Shureq error"} | ${"לְוּדְרְדַּיְל"} | ${false}
 `("strict:", ({ description, word, strict }) => {
   describe(description, () => {
     if (strict) {
