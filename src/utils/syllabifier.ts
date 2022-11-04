@@ -248,7 +248,7 @@ const groupMaters = (arr: Mixed, strict: boolean = true): Mixed => {
 /**
  * @description groups non-final shureqs with preceding cluster
  */
-const groupShureqs = (arr: Mixed): Mixed => {
+const groupShureqs = (arr: Mixed, strict: boolean = true): Mixed => {
   const len = arr.length;
   let syl: Syl = [];
   const result: Mixed = [];
@@ -266,12 +266,14 @@ const groupShureqs = (arr: Mixed): Mixed => {
       syl.unshift(cluster);
       const nxt = arr[index + 1];
 
-      if (nxt instanceof Syllable) {
-        const word = arr.map((i) => i.text).join("");
-        throw new Error(`Syllable ${nxt.text} should not precede a Cluster with a Shureq in ${word}`);
-      }
+      if (strict) {
+        if (nxt instanceof Syllable) {
+          const word = arr.map((i) => i.text).join("");
+          throw new Error(`Syllable ${nxt.text} should not precede a Cluster with a Shureq in ${word}`);
+        }
 
-      if (nxt) syl.unshift(nxt);
+        if (nxt) syl.unshift(nxt);
+      }
 
       syl = shureqNewSyllable(syl);
       index++;
@@ -289,7 +291,7 @@ const groupClusters = (arr: Cluster[], options: SylOpts): Mixed => {
   const rev = arr.reverse();
   const finalGrouped = groupFinal(rev, options.strict);
   const shewasGrouped = groupShewas(finalGrouped, options);
-  const shureqGroups = groupShureqs(shewasGrouped);
+  const shureqGroups = groupShureqs(shewasGrouped, options.strict);
   const matersGroups = groupMaters(shureqGroups, options.strict);
   const result = matersGroups.reverse();
   return result;
