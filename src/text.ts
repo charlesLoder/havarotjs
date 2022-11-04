@@ -120,6 +120,25 @@ export interface SylOpts {
    * results in example displayed in reverse order to mimic Hebrew writing; the rightmost value is the 0 item
    */
   allowNoNiqqud?: boolean;
+  /**
+   * whether to syllabify incorrectly pointed text
+   *
+   * @defaultValue true
+   * @example
+   * ```ts
+   * const text1 = new Text("לְוּדְרְדַּיְל", { strict: true });
+   * // Error: Syllable לְ should not precede a Cluster with a Shureq in דַּיְלרְדְוּלְ
+   *
+   * const text2 = new Text("לְוּדְרְדַּיְל", { strict: false });
+   * text2.syllables.map(syl => syl.text);
+   * // [ 'וּ', 'דְ', 'רְ', 'דַּיְל' ]
+   *```
+   *
+   * @remarks
+   *
+   * when false results in syllabification can vary
+   *
+   */
   strict?: boolean;
 }
 
