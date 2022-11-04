@@ -58,7 +58,7 @@ const groupFinal = (arr: Cluster[], strict: boolean = true): Mixed => {
     syl.unshift(curr);
     if (curr.isShureq) {
       i++;
-      if (!strict && arr[i]) syl.unshift(arr[i]);
+      if (arr[i]) syl.unshift(arr[i]);
       vowelPresent = true;
     } else {
       const clusterHasVowel = "hasVowel" in curr ? curr.hasVowel : true;
