@@ -79,7 +79,8 @@
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "./changelog.sh && npm run format && npm run lint && npm test",
     "postversion": "git push && git push --tags",
-    "docs": "typedoc"
+    "docs": "typedoc",
+    "update": " npm-check-updates '/^(?!typedoc).*$/' -u"
   },
   "files": [
     "dist/**/*"
