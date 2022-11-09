@@ -212,12 +212,17 @@ const groupMaters = (arr: Mixed, strict: boolean = true): Mixed => {
       syl.unshift(cluster);
       const nxt = arr[index + 1];
 
+      if (!nxt && strict) {
+        const word = arr.map((i) => i.text).join("");
+        throw new Error(`The cluster ${cluster.text} is a mater, but nothing precedes it in ${word}`);
+      }
+
       if (nxt instanceof Syllable) {
         const word = arr.map((i) => i.text).join("");
         throw new Error(`Syllable ${nxt.text} should not precede a Cluster with a Mater in ${word}`);
       }
 
-      if (strict) syl.unshift(nxt);
+      if (nxt) syl.unshift(nxt);
 
       syl = materNewSyllable(syl);
       index++;
@@ -227,13 +232,18 @@ const groupMaters = (arr: Mixed, strict: boolean = true): Mixed => {
       syl.unshift(cluster);
       const nxt = arr[index + 1];
 
+      if (!nxt && strict) {
+        const word = arr.map((i) => i.text).join("");
+        throw new Error(`The cluster ${cluster.text} is a quiesced alef, but nothing precedes it in ${word}`);
+      }
+
       // at this point, only final syllables and shewas are Syllables
       if (nxt instanceof Syllable) {
         result.push(cluster);
         continue;
       }
 
-      if (strict) syl.unshift(nxt);
+      if (nxt) syl.unshift(nxt);
 
       syl = materNewSyllable(syl);
       index++;
