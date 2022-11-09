@@ -139,7 +139,7 @@ describe.each`
   ${"threw hasShortVowel error"}         | ${"אלִי"}           | ${false}
   ${"threw Cluster with a Shureq error"} | ${"לְוּדְרְדַּיְל"} | ${true}
   ${"threw Cluster with a Shureq error"} | ${"לְוּדְרְדַּיְל"} | ${false}
-`("strict:", ({ description, word, strict }) => {
+`("strict, errors:", ({ description, word, strict }) => {
   describe(description, () => {
     if (strict) {
       test(`${word}`, () => {
@@ -150,5 +150,19 @@ describe.each`
         expect(() => new Text(word, { strict: strict }).syllables).not.toThrowError();
       });
     }
+  });
+});
+
+describe.each`
+  description               | word              | strict   | syllables
+  ${"medial matres"}        | ${"רָקִ֖יעַ"}     | ${false} | ${["רָ", "קִ֖י", "עַ"]}
+  ${"medial quiesced alef"} | ${"בְּרֵאשִׁ֖ית"} | ${false} | ${["בְּ", "רֵא", "שִׁ֖ית"]}
+  ${"medial segol yod"}     | ${"אֱלֹהֶ֑יךָ"}   | ${false} | ${["אֱ", "לֹ", "הֶ֑י", "ךָ"]}
+`("strict, correct syls:", ({ description, word, strict, syllables }) => {
+  describe(description, () => {
+    test(`${word}`, () => {
+      const sylsText = new Text(word, { strict: strict }).syllables.map((s) => s.text);
+      expect(sylsText).toEqual(syllables);
+    });
   });
 });
