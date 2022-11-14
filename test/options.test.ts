@@ -158,6 +158,8 @@ describe.each`
   ${"medial matres"}        | ${"רָקִ֖יעַ"}     | ${false} | ${["רָ", "קִ֖י", "עַ"]}
   ${"medial quiesced alef"} | ${"בְּרֵאשִׁ֖ית"} | ${false} | ${["בְּ", "רֵא", "שִׁ֖ית"]}
   ${"medial segol yod"}     | ${"אֱלֹהֶ֑יךָ"}   | ${false} | ${["אֱ", "לֹ", "הֶ֑י", "ךָ"]}
+  ${"medial shureq"}        | ${"רוּחַ"}        | ${false} | ${["רוּ", "חַ"]}
+  ${"medial shureq"}        | ${"רוּחַ"}        | ${true}  | ${["רוּ", "חַ"]}
 `("strict, correct syls:", ({ description, word, strict, syllables }) => {
   describe(description, () => {
     test(`${word}`, () => {
