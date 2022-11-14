@@ -69,8 +69,8 @@ describe.each`
   description                | word             | syllables                      | isClosedArr                   | wawShureqOpt
   ${"vav-shureq, no metheg"} | ${"וּלְמַזֵּר"}  | ${["וּ", "לְ", "מַ", "זֵּר"]}  | ${[false, false, true, true]} | ${true}
   ${"vav-shureq, no metheg"} | ${"וּלְמַזֵּר"}  | ${["וּלְ", "מַ", "זֵּר"]}      | ${[true, true, true]}         | ${false}
-  ${"vav-shureq,  metheg"}   | ${"וּֽלְמַזֵּר"} | ${["וּֽ", "לְ", "מַ", "זֵּר"]} | ${[false, false, true, true]} | ${true}
-  ${"vav-shureq,  metheg"}   | ${"וּֽלְמַזֵּר"} | ${["וּֽ", "לְ", "מַ", "זֵּר"]} | ${[false, false, true, true]} | ${false}
+  ${"vav-shureq, metheg"}    | ${"וּֽלְמַזֵּר"} | ${["וּֽ", "לְ", "מַ", "זֵּר"]} | ${[false, false, true, true]} | ${true}
+  ${"vav-shureq, metheg"}    | ${"וּֽלְמַזֵּר"} | ${["וּֽ", "לְ", "מַ", "זֵּר"]} | ${[false, false, true, true]} | ${false}
   ${"medial shureq"}         | ${"פְּקוּדָה"}   | ${["פְּ", "קוּ", "דָה"]}       | ${[false, false, false]}      | ${false}
 `("wawShureq:", ({ description, word, syllables, isClosedArr, wawShureqOpt }) => {
   const text = new Text(word, { wawShureq: wawShureqOpt });
