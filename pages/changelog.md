@@ -1,8 +1,12 @@
 # Changelog
 
+## 2022-11-14 0.11.3
+
+- Fix medial shureqs incorrect when strict is false (Issue #70)
+
 ## 2022-11-09 0.11.2
 
-- Fix edial maters incorrect when strict is false (Issue #68)
+- Fix medial maters incorrect when strict is false (Issue #68)
 
 ## 2022-11-04 0.11.1
 
