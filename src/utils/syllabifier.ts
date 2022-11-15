@@ -276,14 +276,15 @@ const groupShureqs = (arr: Mixed, strict: boolean = true): Mixed => {
       syl.unshift(cluster);
       const nxt = arr[index + 1];
 
-      if (strict) {
-        if (nxt instanceof Syllable) {
-          const word = arr.map((i) => i.text).join("");
-          throw new Error(`Syllable ${nxt.text} should not precede a Cluster with a Shureq in ${word}`);
-        }
-
-        if (nxt) syl.unshift(nxt);
+      if (strict && nxt instanceof Syllable) {
+        const word = arr.map((i) => i.text).join("");
+        throw new Error(`Syllable ${nxt.text} should not precede a Cluster with a Shureq in ${word}`);
       }
+
+      /**
+       * cast as Cluster to a
+       */
+      if (nxt) syl.unshift(nxt as Cluster);
 
       syl = shureqNewSyllable(syl);
       index++;
