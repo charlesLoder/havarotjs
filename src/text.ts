@@ -140,6 +140,37 @@ export interface SylOpts {
    *
    */
   strict?: boolean;
+  /**
+   * how to handle the code point \u{05BA} HOLAM HASER FOR VAV
+   *
+   * @options
+   * * "update" - converts all holams in a vav + holam sequence where vav is a consonant to HOLAM HASER FOR VAV
+   * * "preserve" - leaves the text as is — does not remove HOLAM HASER FOR VAV, but does not update
+   * * "remove" - converts all HOLAM HASER FOR VAV to regular holam
+   *
+   * @defaultValue preserve
+   *
+   * @example update
+   * ```ts
+   * const holamHaser = /\u{05BA}/u;
+   *
+   * const str = "עָוֹן" // vav + holam
+   * holamHaser.test(str); // false
+   * const newStr = new Text(updated, { holemHaser: "updated" }).text;
+   * holamHaser.test(newStr); // true
+   * ```
+   * @example preserve
+   * ```ts
+   * const holamHaser = /\u{05BA}/u;
+   *
+   * const str2 = "עָוֹן" // vav + holam
+   * holamHaser.test(str2); // false
+   * const newStr = new Text(updated, { holemHaser: "preserve" }).text;
+   * holamHaser.test(newStr); // false
+   * ```
+   *
+   */
+  holamHaser?: "update" | "preserve" | "remove";
 }
 
 /**
@@ -172,12 +203,24 @@ export class Text {
   }
 
   private validateOptions(options: SylOpts): SylOpts {
-    const validOpts = ["sqnmlvy", "longVowels", "wawShureq", "qametsQatan", "article", "allowNoNiqqud", "strict"];
+    const validOpts = [
+      "sqnmlvy",
+      "longVowels",
+      "wawShureq",
+      "qametsQatan",
+      "article",
+      "allowNoNiqqud",
+      "strict",
+      "holamHaser"
+    ];
     for (const [k, v] of Object.entries(options)) {
       if (!validOpts.includes(k)) {
         throw new Error(`${k} is not a valid option`);
       }
-      if (typeof v !== "boolean") {
+      if (k === "holamHaser" && !["update", "preserve", "remove"].includes(v)) {
+        throw new Error(`The value ${String(v)} is not a valid option for ${k}`);
+      }
+      if (typeof v !== "boolean" && k !== "holamHaser") {
         throw new Error(`The value ${String(v)} is not a valid option for ${k}`);
       }
     }
