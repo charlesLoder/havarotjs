@@ -10,7 +10,7 @@ describe("validate options", () => {
   });
 
   describe("throw error when passed incorrect prop value", () => {
-    test.each(["qametsQatan", "sqnmlvy", "wawShureq", "longVowels", "article", "strict"])("%s", (key) => {
+    test.each(["qametsQatan", "sqnmlvy", "wawShureq", "longVowels", "article", "strict", "holamHaser"])("%s", (key) => {
       expect(() => new Text("וּלְמַזֵּר", { [key]: "foo" })).toThrowError();
     });
   });
