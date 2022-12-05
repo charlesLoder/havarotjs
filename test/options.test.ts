@@ -20,6 +20,13 @@ describe("validate options", () => {
       expect(() => new Text("וּלְמַזֵּר", { [key]: true })).not.toThrowError();
     });
   });
+
+  describe("no error when holamHaser passed valid option", () => {
+    test.each(["update", "preserve", "remove"])("%s", (key) => {
+      //@ts-ignore
+      expect(() => new Text("וּלְמַזֵּר", { holamHaser: key })).not.toThrowError();
+    });
+  });
 });
 
 describe.each`
