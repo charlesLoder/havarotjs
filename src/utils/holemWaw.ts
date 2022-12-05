@@ -1,6 +1,7 @@
 import { removeTaamim } from "./removeTaamim";
+import { SylOpts } from "../text";
 
-export const holemWaw = (word: string): string => {
+export const holemWaw = (word: string, options: SylOpts): string => {
   const wawRegX = /\u{05D5}/u;
   const holemRegx = /\u{05B9}/u;
   const holemHaser = /\u{05BA}/u;
@@ -9,7 +10,7 @@ export const holemWaw = (word: string): string => {
   const vowelBeforeWawHolem = new RegExp("(?<!" + vowels.source + ")" + wawHolemRegX.source, "gu");
 
   // replace holem haser with regular holem
-  if (holemHaser.test(word)) {
+  if (options.holamHaser === "remove" && holemHaser.test(word)) {
     word = word.replace(holemHaser, "\u{05B9}");
   }
   // if there is no waw or holem, there is nothing to check

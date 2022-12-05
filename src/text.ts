@@ -252,7 +252,7 @@ export class Text {
     // split text at spaces and maqqef, spaces are added to the array as separate entries
     const textArr = sequencedText.split(splitGroup).filter((group) => group);
     const mapQQatan = this.options.qametsQatan ? textArr.map(convertsQametsQatan) : textArr;
-    const mapHolemWaw = mapQQatan.map(holemWaw);
+    const mapHolemWaw = mapQQatan.map((w) => holemWaw(w, this.options));
     return mapHolemWaw.join("");
   }
 
