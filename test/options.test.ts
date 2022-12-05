@@ -202,6 +202,7 @@ describe.each`
   word       | sequence                | holamHaser    | shouldHaveHolamHaser | resultString
   ${"עָוֺן"} | ${"V + Holam haser"}    | ${"remove"}   | ${false}             | ${"עָוֺן"}
   ${"עָוֺן"} | ${"V + Holam haser"}    | ${"preserve"} | ${true}              | ${"עָוֺן"}
+  ${"עָוֹן"} | ${"V + Holam"}          | ${"update"}   | ${true}              | ${"עָוֺן"}
   ${"עָוֹן"} | ${"V + Holam"}          | ${"preserve"} | ${false}             | ${"עָוֹן"}
   ${"אוֹר"}  | ${"C + Holam male + V"} | ${"remove"}   | ${false}             | ${"אוֹר"}
 `("holamHaser:", ({ word, sequence, holamHaser, shouldHaveHolamHaser }) => {
