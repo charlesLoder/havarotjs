@@ -1,5 +1,27 @@
 import { Text } from "../src/index";
 
+describe("validate options", () => {
+  test("throw error when passed incorrect prop", () => {
+    // TypeScript throws error:
+    // "Object literal may only specify known properties, and 'foo' does not exist in type 'SylOpts'.ts(2345)"
+    // but we ignore in order to test validation
+    // @ts-ignore
+    expect(() => new Text("וּלְמַזֵּר", { foo: true })).toThrowError();
+  });
+
+  describe("throw error when passed incorrect prop value", () => {
+    test.each(["qametsQatan", "sqnmlvy", "wawShureq", "longVowels", "article", "strict"])("%s", (key) => {
+      expect(() => new Text("וּלְמַזֵּר", { [key]: "foo" })).toThrowError();
+    });
+  });
+
+  describe("no throw error when passed bool", () => {
+    test.each(["qametsQatan", "sqnmlvy", "wawShureq", "longVowels", "article", "strict"])("%s", (key) => {
+      expect(() => new Text("וּלְמַזֵּר", { [key]: true })).not.toThrowError();
+    });
+  });
+});
+
 describe.each`
   description                               | word                       | hasQamQat | hasQamets | qamQatOpt
   ${"simple nominal"}                       | ${"חָפְנִי֙"}              | ${false}  | ${true}   | ${false}
