@@ -15,7 +15,7 @@ describe("validate options", () => {
     });
   });
 
-  describe("no throw error when passed bool", () => {
+  describe("no error when passed bool", () => {
     test.each(["qametsQatan", "sqnmlvy", "wawShureq", "longVowels", "article", "strict"])("%s", (key) => {
       expect(() => new Text("וּלְמַזֵּר", { [key]: true })).not.toThrowError();
     });
