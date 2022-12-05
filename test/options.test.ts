@@ -199,9 +199,9 @@ describe.each`
 });
 
 describe.each`
-  word       | sequence             | holamHaser    | shouldHaveHolamHaser
-  ${"עָוֺן"} | ${"V + Holam haser"} | ${"remove"}   | ${false}
-  ${"עָוֺן"} | ${"V + Holam haser"} | ${"preserve"} | ${true}
+  word       | sequence             | holamHaser    | shouldHaveHolamHaser | resultString
+  ${"עָוֺן"} | ${"V + Holam haser"} | ${"remove"}   | ${false}             | ${"עָוֺן"}
+  ${"עָוֺן"} | ${"V + Holam haser"} | ${"preserve"} | ${true}              | ${"עָוֺן"}
 `("holamHaser:", ({ word, sequence, holamHaser, shouldHaveHolamHaser }) => {
   describe(`Sequence "${sequence}" with value "${holamHaser}" should ${
     !shouldHaveHolamHaser ? "not " : ""
