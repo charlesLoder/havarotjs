@@ -228,15 +228,16 @@ export class Text {
   }
 
   private setOptions(options: SylOpts): SylOpts {
-    options = this.validateOptions(options);
+    const validOpts = this.validateOptions(options);
     return {
-      sqnmlvy: options.sqnmlvy ?? true,
-      article: options.article ?? true,
-      longVowels: options.longVowels ?? true,
-      wawShureq: options.wawShureq ?? true,
-      qametsQatan: options.qametsQatan ?? true,
-      allowNoNiqqud: options.allowNoNiqqud ?? false,
-      strict: options.strict ?? true
+      sqnmlvy: validOpts.sqnmlvy ?? true,
+      article: validOpts.article ?? true,
+      longVowels: validOpts.longVowels ?? true,
+      wawShureq: validOpts.wawShureq ?? true,
+      qametsQatan: validOpts.qametsQatan ?? true,
+      allowNoNiqqud: validOpts.allowNoNiqqud ?? false,
+      strict: validOpts.strict ?? true,
+      holamHaser: validOpts.holamHaser ?? "preserve"
     };
   }
 
