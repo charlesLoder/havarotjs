@@ -197,3 +197,18 @@ describe.each`
     });
   });
 });
+
+describe.each`
+  word       | sequence             | holamHaser  | shouldHaveHolamHaser
+  ${"עָוֺן"} | ${"V + Holam haser"} | ${"remove"} | ${false}
+`("holamHaser:", ({ word, sequence, holamHaser, shouldHaveHolamHaser }) => {
+  describe(`Sequence "${sequence}" with value "${holamHaser}" should ${
+    !shouldHaveHolamHaser ? "not " : ""
+  }have a holam haser`, () => {
+    const holamHaserRegx = /\u{05BA}/u;
+    test(`${word}`, () => {
+      const text = new Text(word, { holamHaser }).text;
+      expect(holamHaserRegx.test(text)).toEqual(shouldHaveHolamHaser);
+    });
+  });
+});
