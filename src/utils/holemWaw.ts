@@ -10,7 +10,7 @@ export const holemWaw = (word: string, options: SylOpts): string => {
   const vowelBeforeWawHolem = new RegExp("(?<!" + vowels.source + ")" + wawHolemRegX.source, "gu");
 
   // replace holem haser with regular holem
-  if (options.holamHaser === "remove" && holemHaser.test(word)) {
+  if (options.holemHaser === "remove" && holemHaser.test(word)) {
     word = word.replace(holemHaser, "\u{05B9}");
   }
   // if there is no waw or holem, there is nothing to check
@@ -26,6 +26,8 @@ export const holemWaw = (word: string, options: SylOpts): string => {
   }
 
   // check for waw + holem preceded by vowel
+  // b/c the text is sequenced if there is a taam on the vav
+  // it wouldn't find the pattern
   const matches = noTaamim.matchAll(vowelBeforeWawHolem);
   if (!matches) {
     return word;

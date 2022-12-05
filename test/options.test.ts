@@ -10,7 +10,7 @@ describe("validate options", () => {
   });
 
   describe("throw error when passed incorrect prop value", () => {
-    test.each(["qametsQatan", "sqnmlvy", "wawShureq", "longVowels", "article", "strict", "holamHaser"])("%s", (key) => {
+    test.each(["qametsQatan", "sqnmlvy", "wawShureq", "longVowels", "article", "strict", "holemHaser"])("%s", (key) => {
       expect(() => new Text("וּלְמַזֵּר", { [key]: "foo" })).toThrowError();
     });
   });
@@ -21,10 +21,10 @@ describe("validate options", () => {
     });
   });
 
-  describe("no error when holamHaser passed valid option", () => {
+  describe("no error when holemHaser passed valid option", () => {
     test.each(["update", "preserve", "remove"])("%s", (key) => {
       //@ts-ignore
-      expect(() => new Text("וּלְמַזֵּר", { holamHaser: key })).not.toThrowError();
+      expect(() => new Text("וּלְמַזֵּר", { holemHaser: key })).not.toThrowError();
     });
   });
 });
@@ -199,20 +199,20 @@ describe.each`
 });
 
 describe.each`
-  word       | sequence                | holamHaser    | shouldHaveHolamHaser | resultString
-  ${"עָוֺן"} | ${"V + Holam haser"}    | ${"remove"}   | ${false}             | ${"עָוֺן"}
-  ${"עָוֺן"} | ${"V + Holam haser"}    | ${"preserve"} | ${true}              | ${"עָוֺן"}
-  ${"עָוֹן"} | ${"V + Holam"}          | ${"update"}   | ${true}              | ${"עָוֺן"}
-  ${"עָוֹן"} | ${"V + Holam"}          | ${"preserve"} | ${false}             | ${"עָוֹן"}
-  ${"אוֹר"}  | ${"C + Holam male + V"} | ${"remove"}   | ${false}             | ${"אוֹר"}
-`("holamHaser:", ({ word, sequence, holamHaser, shouldHaveHolamHaser }) => {
-  describe(`Sequence "${sequence}" with value "${holamHaser}" should ${
-    !shouldHaveHolamHaser ? "not " : ""
-  }have a holam haser`, () => {
-    const holamHaserRegx = /\u{05BA}/u;
+  word       | sequence                | holemHaser    | shouldHaveholemHaser | resultString
+  ${"עָוֺן"} | ${"V + holem haser"}    | ${"remove"}   | ${false}             | ${"עָוֺן"}
+  ${"עָוֺן"} | ${"V + holem haser"}    | ${"preserve"} | ${true}              | ${"עָוֺן"}
+  ${"עָוֹן"} | ${"V + holem"}          | ${"update"}   | ${true}              | ${"עָוֺן"}
+  ${"עָוֹן"} | ${"V + holem"}          | ${"preserve"} | ${false}             | ${"עָוֹן"}
+  ${"אוֹר"}  | ${"C + holem male + V"} | ${"remove"}   | ${false}             | ${"אוֹר"}
+`("holemHaser:", ({ word, sequence, holemHaser, shouldHaveholemHaser }) => {
+  describe(`Sequence "${sequence}" with value "${holemHaser}" should ${
+    !shouldHaveholemHaser ? "not " : ""
+  }have a holem haser`, () => {
+    const holemHaserRegx = /\u{05BA}/u;
     test(`${word}`, () => {
-      const text = new Text(word, { holamHaser }).text;
-      expect(holamHaserRegx.test(text)).toEqual(shouldHaveHolamHaser);
+      const text = new Text(word, { holemHaser }).text;
+      expect(holemHaserRegx.test(text)).toEqual(shouldHaveholemHaser);
     });
   });
 });

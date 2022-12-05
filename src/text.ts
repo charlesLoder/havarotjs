@@ -144,33 +144,33 @@ export interface SylOpts {
    * how to handle the code point \u{05BA} HOLAM HASER FOR VAV
    *
    * @options
-   * * "update" - converts all holams in a vav + holam sequence where vav is a consonant to HOLAM HASER FOR VAV
+   * * "update" - converts all holems in a vav + holem sequence where vav is a consonant to HOLAM HASER FOR VAV
    * * "preserve" - leaves the text as is — does not remove HOLAM HASER FOR VAV, but does not update
-   * * "remove" - converts all HOLAM HASER FOR VAV to regular holam
+   * * "remove" - converts all HOLAM HASER FOR VAV to regular holem
    *
    * @defaultValue preserve
    *
    * @example update
    * ```ts
-   * const holamHaser = /\u{05BA}/u;
+   * const holemHaser = /\u{05BA}/u;
    *
-   * const str = "עָוֹן" // vav + holam
-   * holamHaser.test(str); // false
+   * const str = "עָוֹן" // vav + holem
+   * holemHaser.test(str); // false
    * const newStr = new Text(updated, { holemHaser: "updated" }).text;
-   * holamHaser.test(newStr); // true
+   * holemHaser.test(newStr); // true
    * ```
    * @example preserve
    * ```ts
-   * const holamHaser = /\u{05BA}/u;
+   * const holemHaser = /\u{05BA}/u;
    *
-   * const str2 = "עָוֹן" // vav + holam
-   * holamHaser.test(str2); // false
+   * const str2 = "עָוֹן" // vav + holem
+   * holemHaser.test(str2); // false
    * const newStr = new Text(updated, { holemHaser: "preserve" }).text;
-   * holamHaser.test(newStr); // false
+   * holemHaser.test(newStr); // false
    * ```
    *
    */
-  holamHaser?: "update" | "preserve" | "remove";
+  holemHaser?: "update" | "preserve" | "remove";
 }
 
 /**
@@ -211,16 +211,16 @@ export class Text {
       "article",
       "allowNoNiqqud",
       "strict",
-      "holamHaser"
+      "holemHaser"
     ];
     for (const [k, v] of Object.entries(options)) {
       if (!validOpts.includes(k)) {
         throw new Error(`${k} is not a valid option`);
       }
-      if (k === "holamHaser" && !["update", "preserve", "remove"].includes(v)) {
+      if (k === "holemHaser" && !["update", "preserve", "remove"].includes(v)) {
         throw new Error(`The value ${String(v)} is not a valid option for ${k}`);
       }
-      if (typeof v !== "boolean" && k !== "holamHaser") {
+      if (typeof v !== "boolean" && k !== "holemHaser") {
         throw new Error(`The value ${String(v)} is not a valid option for ${k}`);
       }
     }
@@ -237,7 +237,7 @@ export class Text {
       qametsQatan: validOpts.qametsQatan ?? true,
       allowNoNiqqud: validOpts.allowNoNiqqud ?? false,
       strict: validOpts.strict ?? true,
-      holamHaser: validOpts.holamHaser ?? "preserve"
+      holemHaser: validOpts.holemHaser ?? "preserve"
     };
   }
 
