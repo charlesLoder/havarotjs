@@ -199,12 +199,12 @@ describe.each`
 });
 
 describe.each`
-  word       | sequence                | holemHaser    | shouldHaveholemHaser | resultString
-  ${"עָוֺן"} | ${"V + holem haser"}    | ${"remove"}   | ${false}             | ${"עָוֺן"}
-  ${"עָוֺן"} | ${"V + holem haser"}    | ${"preserve"} | ${true}              | ${"עָוֺן"}
-  ${"עָוֹן"} | ${"V + holem"}          | ${"update"}   | ${true}              | ${"עָוֺן"}
-  ${"עָוֹן"} | ${"V + holem"}          | ${"preserve"} | ${false}             | ${"עָוֹן"}
-  ${"אוֹר"}  | ${"C + holem male + V"} | ${"remove"}   | ${false}             | ${"אוֹר"}
+  word        | sequence                           | holemHaser    | shouldHaveholemHaser | resultString
+  ${"עָוֺ֔ן"} | ${"V + zaqef qatan + holem haser"} | ${"remove"}   | ${false}             | ${"עָוֺן"}
+  ${"עָוֺ֔ן"} | ${"V + zaqef qatan + holem haser"} | ${"preserve"} | ${true}              | ${"עָוֺן"}
+  ${"עָוֹ֔ן"} | ${"V + zaqef qatan + holem"}       | ${"update"}   | ${true}              | ${"עָוֺן"}
+  ${"עָוֹ֔ן"} | ${"V + zaqef qatan + holem"}       | ${"preserve"} | ${false}             | ${"עָוֹן"}
+  ${"אוֹר"}   | ${"C + holem male + V"}            | ${"remove"}   | ${false}             | ${"אוֹר"}
 `("holemHaser:", ({ word, sequence, holemHaser, shouldHaveholemHaser }) => {
   describe(`Sequence "${sequence}" with value "${holemHaser}" should ${
     !shouldHaveholemHaser ? "not " : ""
