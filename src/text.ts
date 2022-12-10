@@ -60,19 +60,28 @@ export interface SylOpts {
    * @example update
    * ```ts
    * const holemHaser = /\u{05BA}/u;
-   *
    * const str = "עָוֹן" // vav + holem
    * holemHaser.test(str); // false
    * const newStr = new Text(updated, { holemHaser: "updated" }).text;
    * holemHaser.test(newStr); // true
+   *
    * ```
    * @example preserve
    * ```ts
    * const holemHaser = /\u{05BA}/u;
-   *
-   * const str2 = "עָוֹן" // vav + holem
-   * holemHaser.test(str2); // false
+   * const str = "עָוֹן" // vav + holem
+   * holemHaser.test(str); // false
    * const newStr = new Text(updated, { holemHaser: "preserve" }).text;
+   * holemHaser.test(newStr); // false
+   *
+   * ```
+   *
+   * @example remove
+   * ```ts
+   * const holemHaser = /\u{05BA}/u;
+   * const str = "עָוֺן" // vav + holem haser
+   * holemHaser.test(str); // true
+   * const newStr = new Text(updated, { holemHaser: "remove" }).text;
    * holemHaser.test(newStr); // false
    * ```
    *
