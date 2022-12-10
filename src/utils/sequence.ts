@@ -11,7 +11,8 @@ export const sequence = (text: string): Char[][] => {
   // for Jerusalem, where hiriq precedes patah, replace w/ correct patch-hiriq
   if (hiriqPatach.test(text)) text = text.replace(hiriqPatach, "\u{5B7}\u{5B4}");
   else if (hiriqQamets.test(text)) text = text.replace(hiriqQamets, "\u{5B8}\u{5B4}");
-  const clusters = text.split(splits).map((word) => new Cluster(word));
-  const sequenced = clusters.map((cluster) => cluster.chars);
-  return sequenced;
+  return text
+    .split(splits)
+    .map((word) => new Cluster(word))
+    .map((cluster) => cluster.chars);
 };

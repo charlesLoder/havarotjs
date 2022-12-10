@@ -12,21 +12,21 @@ import { splitGroup } from "./utils/regularExpressions";
  */
 export interface SylOpts {
   /**
-   * determines whether to regard the shewa under the letters שׁשׂסצנמלוי when preceded by a waw-consecutive with a missing dagesh chazaq as a _shewa na'_. If a metheg is present, the shewa is always a _shewa na'_.
+   * allows text with no niqqud to be passed; words with no niqqud or incomplete pointing will not be syllabified
    *
-   * @defaultValue true
+   * @defaultValue false
    * @example
    * ```ts
-   * const default = new Text("וַיְצַחֵק֙");
-   * default.syllables.map(syl => syl.text);
-   * // ["וַ", "יְ", "צַ", "חֵק֙"]
-   *
-   * const optional = new Text("וַיְצַחֵק֙", { sqnmlvy: false });
-   * optional.syllables.map(syl => syl.text);
-   * // ["וַיְ", "צַ", "חֵק֙"]
+   * const text = new Text("בְּרֵאשִׁ֖ית בָּרָ֣א אֱלֹהִ֑ים", { allowNoNiqqud: true })
+   * text.syllables.map(syl => syl.text);
+   * // [ 'בְּ', 'רֵא', 'שִׁ֖ית', 'בָּרא', 'אלהים' ]
+   * // note 2nd word has incomplete pointing, and 3rd has none
    * ```
+   * @remarks
+   *
+   * results in example displayed in reverse order to mimic Hebrew writing; the rightmost value is the 0 item
    */
-  sqnmlvy?: boolean;
+  allowNoNiqqud?: boolean;
   /**
    * determines whether to regard the shewa under the letters ילמ when preceded by the article and with a missing dagesh chazaq as as a _shewa na'_. If a metheg is present, the shewa is always a _shewa na'_.
    *
@@ -48,6 +48,46 @@ export interface SylOpts {
    */
   article?: boolean;
   /**
+   * how to handle the code point \u{05BA} HOLAM HASER FOR VAV
+   *
+   * @options
+   * * "update" - converts all holems in a vav + holem sequence where vav is a consonant to HOLAM HASER FOR VAV
+   * * "preserve" - leaves the text as is — does not remove HOLAM HASER FOR VAV, but does not update
+   * * "remove" - converts all HOLAM HASER FOR VAV to regular holem
+   *
+   * @defaultValue preserve
+   *
+   * @example update
+   * ```ts
+   * const holemHaser = /\u{05BA}/u;
+   * const str = "עָוֹן" // vav + holem
+   * holemHaser.test(str); // false
+   * const newStr = new Text(updated, { holemHaser: "updated" }).text;
+   * holemHaser.test(newStr); // true
+   *
+   * ```
+   * @example preserve
+   * ```ts
+   * const holemHaser = /\u{05BA}/u;
+   * const str = "עָוֹן" // vav + holem
+   * holemHaser.test(str); // false
+   * const newStr = new Text(updated, { holemHaser: "preserve" }).text;
+   * holemHaser.test(newStr); // false
+   *
+   * ```
+   *
+   * @example remove
+   * ```ts
+   * const holemHaser = /\u{05BA}/u;
+   * const str = "עָוֺן" // vav + holem haser
+   * holemHaser.test(str); // true
+   * const newStr = new Text(updated, { holemHaser: "remove" }).text;
+   * holemHaser.test(newStr); // false
+   * ```
+   *
+   */
+  holemHaser?: "update" | "preserve" | "remove";
+  /**
    * determines whether to regard a shewa after a long vowel (excluding waw-shureq, see {@link wawShureq}) as a _shewa na'_. If a metheg is present, the shewa is always a _shewa na'_.
    *
    * @defaultValue true
@@ -68,26 +108,6 @@ export interface SylOpts {
    */
   longVowels?: boolean;
   /**
-   * determines whether to regard a shewa after a vav-shureq as vocal. If a metheg is present, the shewa is always a _shewa na'_.
-   *
-   * @defaultValue true
-   * @example
-   * ```ts
-   * const default = new Text("וּלְמַזֵּר");
-   * default.syllables.map(syl => syl.text);
-   * // "וּ", "לְ", "מַ", "זֵּר"]
-   *
-   * const optional = new Text("וּלְמַזֵּר", { wawShureq: false });
-   * optional.syllables.map(syl => syl.text);
-   * // ["וּלְ", "מַ", "זֵּר"]
-   * ```
-   *
-   * @remarks
-   *
-   * results in example displayed in reverse order to mimic Hebrew writing; the rightmost value is the 0 item
-   */
-  wawShureq?: boolean;
-  /**
    * converts regular qamets characters to qamets qatan characters where appropriate. The former is a "long-vowel" whereas the latter is a "short-vowel."
    *
    * @defaultValue true
@@ -105,21 +125,21 @@ export interface SylOpts {
    */
   qametsQatan?: boolean;
   /**
-   * allows text with no niqqud to be passed; words with no niqqud or incomplete pointing will not be syllabified
+   * determines whether to regard the shewa under the letters שׁשׂסצנמלוי when preceded by a waw-consecutive with a missing dagesh chazaq as a _shewa na'_. If a metheg is present, the shewa is always a _shewa na'_.
    *
-   * @defaultValue false
+   * @defaultValue true
    * @example
    * ```ts
-   * const text = new Text("בְּרֵאשִׁ֖ית בָּרָ֣א אֱלֹהִ֑ים", { allowNoNiqqud: true })
-   * text.syllables.map(syl => syl.text);
-   * // [ 'בְּ', 'רֵא', 'שִׁ֖ית', 'בָּרא', 'אלהים' ]
-   * // note 2nd word has incomplete pointing, and 3rd has none
-   * ```
-   * @remarks
+   * const default = new Text("וַיְצַחֵק֙");
+   * default.syllables.map(syl => syl.text);
+   * // ["וַ", "יְ", "צַ", "חֵק֙"]
    *
-   * results in example displayed in reverse order to mimic Hebrew writing; the rightmost value is the 0 item
+   * const optional = new Text("וַיְצַחֵק֙", { sqnmlvy: false });
+   * optional.syllables.map(syl => syl.text);
+   * // ["וַיְ", "צַ", "חֵק֙"]
+   * ```
    */
-  allowNoNiqqud?: boolean;
+  sqnmlvy?: boolean;
   /**
    * whether to syllabify incorrectly pointed text
    *
@@ -140,6 +160,26 @@ export interface SylOpts {
    *
    */
   strict?: boolean;
+  /**
+   * determines whether to regard a shewa after a vav-shureq as vocal. If a metheg is present, the shewa is always a _shewa na'_.
+   *
+   * @defaultValue true
+   * @example
+   * ```ts
+   * const default = new Text("וּלְמַזֵּר");
+   * default.syllables.map(syl => syl.text);
+   * // "וּ", "לְ", "מַ", "זֵּר"]
+   *
+   * const optional = new Text("וּלְמַזֵּר", { wawShureq: false });
+   * optional.syllables.map(syl => syl.text);
+   * // ["וּלְ", "מַ", "זֵּר"]
+   * ```
+   *
+   * @remarks
+   *
+   * results in example displayed in reverse order to mimic Hebrew writing; the rightmost value is the 0 item
+   */
+  wawShureq?: boolean;
 }
 
 /**
@@ -172,12 +212,24 @@ export class Text {
   }
 
   private validateOptions(options: SylOpts): SylOpts {
-    const validOpts = ["sqnmlvy", "longVowels", "wawShureq", "qametsQatan", "article", "allowNoNiqqud", "strict"];
+    const validOpts = [
+      "allowNoNiqqud",
+      "article",
+      "holemHaser",
+      "longVowels",
+      "qametsQatan",
+      "sqnmlvy",
+      "strict",
+      "wawShureq"
+    ];
     for (const [k, v] of Object.entries(options)) {
       if (!validOpts.includes(k)) {
         throw new Error(`${k} is not a valid option`);
       }
-      if (typeof v !== "boolean") {
+      if (k === "holemHaser" && !["update", "preserve", "remove"].includes(String(v))) {
+        throw new Error(`The value ${String(v)} is not a valid option for ${k}`);
+      }
+      if (typeof v !== "boolean" && k !== "holemHaser") {
         throw new Error(`The value ${String(v)} is not a valid option for ${k}`);
       }
     }
@@ -185,15 +237,16 @@ export class Text {
   }
 
   private setOptions(options: SylOpts): SylOpts {
-    options = this.validateOptions(options);
+    const validOpts = this.validateOptions(options);
     return {
-      sqnmlvy: options.sqnmlvy ?? true,
-      article: options.article ?? true,
-      longVowels: options.longVowels ?? true,
-      wawShureq: options.wawShureq ?? true,
-      qametsQatan: options.qametsQatan ?? true,
-      allowNoNiqqud: options.allowNoNiqqud ?? false,
-      strict: options.strict ?? true
+      allowNoNiqqud: validOpts.allowNoNiqqud ?? false,
+      article: validOpts.article ?? true,
+      holemHaser: validOpts.holemHaser ?? "preserve",
+      longVowels: validOpts.longVowels ?? true,
+      sqnmlvy: validOpts.sqnmlvy ?? true,
+      strict: validOpts.strict ?? true,
+      qametsQatan: validOpts.qametsQatan ?? true,
+      wawShureq: validOpts.wawShureq ?? true
     };
   }
 
@@ -208,7 +261,7 @@ export class Text {
     // split text at spaces and maqqef, spaces are added to the array as separate entries
     const textArr = sequencedText.split(splitGroup).filter((group) => group);
     const mapQQatan = this.options.qametsQatan ? textArr.map(convertsQametsQatan) : textArr;
-    const mapHolemWaw = mapQQatan.map(holemWaw);
+    const mapHolemWaw = mapQQatan.map((w) => holemWaw(w, this.options));
     return mapHolemWaw.join("");
   }
 
