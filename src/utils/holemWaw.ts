@@ -43,21 +43,21 @@ export const holemWaw = (word: string, options: SylOpts): string => {
   }
 
   word = vavHolemMale.test(word)
-    ? findMatches(word, vavHolemMale, (word, start, end) => {
+    ? findMatches(word, vavHolemMale, (w, s, e) => {
         return (
           // converts vav + holem as holem male to holem + vav
-          word.substring(0, start) +
+          w.substring(0, s) +
           "\u{05B9}\u{05D5}" +
-          (word.substring(end).trim() ? word.substring(end) : word.substring(end - 1)).replace(holemRegx, "")
+          (w.substring(e).trim() ? w.substring(e) : w.substring(e - 1)).replace(holemRegx, "")
         );
       })
     : word;
 
   word =
     options.holemHaser === "update" && vavHolemHaser.test(removeTaamim(word)[0])
-      ? findMatches(word, vavHolemHaser, (word) => {
+      ? findMatches(word, vavHolemHaser, (w) => {
           const vavTaamHolem = new RegExp(`${wawRegX.source}(${taamim.source})?${holemRegx.source}`, "gu");
-          return word.replace(vavTaamHolem, "\u{05D5}\u{05BA}$1");
+          return w.replace(vavTaamHolem, "\u{05D5}\u{05BA}$1");
         })
       : word;
 

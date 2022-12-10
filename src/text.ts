@@ -226,7 +226,7 @@ export class Text {
       if (!validOpts.includes(k)) {
         throw new Error(`${k} is not a valid option`);
       }
-      if (k === "holemHaser" && !["update", "preserve", "remove"].includes(v)) {
+      if (k === "holemHaser" && !["update", "preserve", "remove"].includes(String(v))) {
         throw new Error(`The value ${String(v)} is not a valid option for ${k}`);
       }
       if (typeof v !== "boolean" && k !== "holemHaser") {
