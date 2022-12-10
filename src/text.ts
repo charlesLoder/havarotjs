@@ -12,21 +12,21 @@ import { splitGroup } from "./utils/regularExpressions";
  */
 export interface SylOpts {
   /**
-   * determines whether to regard the shewa under the letters שׁשׂסצנמלוי when preceded by a waw-consecutive with a missing dagesh chazaq as a _shewa na'_. If a metheg is present, the shewa is always a _shewa na'_.
+   * allows text with no niqqud to be passed; words with no niqqud or incomplete pointing will not be syllabified
    *
-   * @defaultValue true
+   * @defaultValue false
    * @example
    * ```ts
-   * const default = new Text("וַיְצַחֵק֙");
-   * default.syllables.map(syl => syl.text);
-   * // ["וַ", "יְ", "צַ", "חֵק֙"]
-   *
-   * const optional = new Text("וַיְצַחֵק֙", { sqnmlvy: false });
-   * optional.syllables.map(syl => syl.text);
-   * // ["וַיְ", "צַ", "חֵק֙"]
+   * const text = new Text("בְּרֵאשִׁ֖ית בָּרָ֣א אֱלֹהִ֑ים", { allowNoNiqqud: true })
+   * text.syllables.map(syl => syl.text);
+   * // [ 'בְּ', 'רֵא', 'שִׁ֖ית', 'בָּרא', 'אלהים' ]
+   * // note 2nd word has incomplete pointing, and 3rd has none
    * ```
+   * @remarks
+   *
+   * results in example displayed in reverse order to mimic Hebrew writing; the rightmost value is the 0 item
    */
-  sqnmlvy?: boolean;
+  allowNoNiqqud?: boolean;
   /**
    * determines whether to regard the shewa under the letters ילמ when preceded by the article and with a missing dagesh chazaq as as a _shewa na'_. If a metheg is present, the shewa is always a _shewa na'_.
    *
@@ -47,99 +47,6 @@ export interface SylOpts {
    * results in example displayed in reverse order to mimic Hebrew writing; the rightmost value is the 0 item
    */
   article?: boolean;
-  /**
-   * determines whether to regard a shewa after a long vowel (excluding waw-shureq, see {@link wawShureq}) as a _shewa na'_. If a metheg is present, the shewa is always a _shewa na'_.
-   *
-   * @defaultValue true
-   * @example
-   * ```ts
-   * const default = new Text("יָדְךָ");
-   * default.syllables.map(syl => syl.text);
-   * // ["יָ", "דְ", "ךָ"]
-   *
-   * const optional = new Text("יָדְךָ", { longVowels: false });
-   * optional.syllables.map(syl => syl.text);
-   * // ["יָדְ", "ךָ"]
-   * ```
-   *
-   * @remarks
-   *
-   * results in example displayed in reverse order to mimic Hebrew writing; the rightmost value is the 0 item
-   */
-  longVowels?: boolean;
-  /**
-   * determines whether to regard a shewa after a vav-shureq as vocal. If a metheg is present, the shewa is always a _shewa na'_.
-   *
-   * @defaultValue true
-   * @example
-   * ```ts
-   * const default = new Text("וּלְמַזֵּר");
-   * default.syllables.map(syl => syl.text);
-   * // "וּ", "לְ", "מַ", "זֵּר"]
-   *
-   * const optional = new Text("וּלְמַזֵּר", { wawShureq: false });
-   * optional.syllables.map(syl => syl.text);
-   * // ["וּלְ", "מַ", "זֵּר"]
-   * ```
-   *
-   * @remarks
-   *
-   * results in example displayed in reverse order to mimic Hebrew writing; the rightmost value is the 0 item
-   */
-  wawShureq?: boolean;
-  /**
-   * converts regular qamets characters to qamets qatan characters where appropriate. The former is a "long-vowel" whereas the latter is a "short-vowel."
-   *
-   * @defaultValue true
-   * @example
-   * ```ts
-   * const qQRegx = /\u{05C7}/u;
-   * const default = new Text("חָפְנִי֙");
-   * qQRegx.test(default.text);
-   * // true
-   *
-   * const optional = new Text("חָפְנִי֙", { qametsQatan: false });
-   * qQRegx.test(optional.text);
-   * // false
-   * ```
-   */
-  qametsQatan?: boolean;
-  /**
-   * allows text with no niqqud to be passed; words with no niqqud or incomplete pointing will not be syllabified
-   *
-   * @defaultValue false
-   * @example
-   * ```ts
-   * const text = new Text("בְּרֵאשִׁ֖ית בָּרָ֣א אֱלֹהִ֑ים", { allowNoNiqqud: true })
-   * text.syllables.map(syl => syl.text);
-   * // [ 'בְּ', 'רֵא', 'שִׁ֖ית', 'בָּרא', 'אלהים' ]
-   * // note 2nd word has incomplete pointing, and 3rd has none
-   * ```
-   * @remarks
-   *
-   * results in example displayed in reverse order to mimic Hebrew writing; the rightmost value is the 0 item
-   */
-  allowNoNiqqud?: boolean;
-  /**
-   * whether to syllabify incorrectly pointed text
-   *
-   * @defaultValue true
-   * @example
-   * ```ts
-   * const text1 = new Text("לְוּדְרְדַּיְל", { strict: true });
-   * // Error: Syllable לְ should not precede a Cluster with a Shureq in דַּיְלרְדְוּלְ
-   *
-   * const text2 = new Text("לְוּדְרְדַּיְל", { strict: false });
-   * text2.syllables.map(syl => syl.text);
-   * // [ 'וּ', 'דְ', 'רְ', 'דַּיְל' ]
-   *```
-   *
-   * @remarks
-   *
-   * when false results in syllabification can vary
-   *
-   */
-  strict?: boolean;
   /**
    * how to handle the code point \u{05BA} HOLAM HASER FOR VAV
    *
@@ -171,6 +78,99 @@ export interface SylOpts {
    *
    */
   holemHaser?: "update" | "preserve" | "remove";
+  /**
+   * determines whether to regard a shewa after a long vowel (excluding waw-shureq, see {@link wawShureq}) as a _shewa na'_. If a metheg is present, the shewa is always a _shewa na'_.
+   *
+   * @defaultValue true
+   * @example
+   * ```ts
+   * const default = new Text("יָדְךָ");
+   * default.syllables.map(syl => syl.text);
+   * // ["יָ", "דְ", "ךָ"]
+   *
+   * const optional = new Text("יָדְךָ", { longVowels: false });
+   * optional.syllables.map(syl => syl.text);
+   * // ["יָדְ", "ךָ"]
+   * ```
+   *
+   * @remarks
+   *
+   * results in example displayed in reverse order to mimic Hebrew writing; the rightmost value is the 0 item
+   */
+  longVowels?: boolean;
+  /**
+   * converts regular qamets characters to qamets qatan characters where appropriate. The former is a "long-vowel" whereas the latter is a "short-vowel."
+   *
+   * @defaultValue true
+   * @example
+   * ```ts
+   * const qQRegx = /\u{05C7}/u;
+   * const default = new Text("חָפְנִי֙");
+   * qQRegx.test(default.text);
+   * // true
+   *
+   * const optional = new Text("חָפְנִי֙", { qametsQatan: false });
+   * qQRegx.test(optional.text);
+   * // false
+   * ```
+   */
+  qametsQatan?: boolean;
+  /**
+   * determines whether to regard the shewa under the letters שׁשׂסצנמלוי when preceded by a waw-consecutive with a missing dagesh chazaq as a _shewa na'_. If a metheg is present, the shewa is always a _shewa na'_.
+   *
+   * @defaultValue true
+   * @example
+   * ```ts
+   * const default = new Text("וַיְצַחֵק֙");
+   * default.syllables.map(syl => syl.text);
+   * // ["וַ", "יְ", "צַ", "חֵק֙"]
+   *
+   * const optional = new Text("וַיְצַחֵק֙", { sqnmlvy: false });
+   * optional.syllables.map(syl => syl.text);
+   * // ["וַיְ", "צַ", "חֵק֙"]
+   * ```
+   */
+  sqnmlvy?: boolean;
+  /**
+   * whether to syllabify incorrectly pointed text
+   *
+   * @defaultValue true
+   * @example
+   * ```ts
+   * const text1 = new Text("לְוּדְרְדַּיְל", { strict: true });
+   * // Error: Syllable לְ should not precede a Cluster with a Shureq in דַּיְלרְדְוּלְ
+   *
+   * const text2 = new Text("לְוּדְרְדַּיְל", { strict: false });
+   * text2.syllables.map(syl => syl.text);
+   * // [ 'וּ', 'דְ', 'רְ', 'דַּיְל' ]
+   *```
+   *
+   * @remarks
+   *
+   * when false results in syllabification can vary
+   *
+   */
+  strict?: boolean;
+  /**
+   * determines whether to regard a shewa after a vav-shureq as vocal. If a metheg is present, the shewa is always a _shewa na'_.
+   *
+   * @defaultValue true
+   * @example
+   * ```ts
+   * const default = new Text("וּלְמַזֵּר");
+   * default.syllables.map(syl => syl.text);
+   * // "וּ", "לְ", "מַ", "זֵּר"]
+   *
+   * const optional = new Text("וּלְמַזֵּר", { wawShureq: false });
+   * optional.syllables.map(syl => syl.text);
+   * // ["וּלְ", "מַ", "זֵּר"]
+   * ```
+   *
+   * @remarks
+   *
+   * results in example displayed in reverse order to mimic Hebrew writing; the rightmost value is the 0 item
+   */
+  wawShureq?: boolean;
 }
 
 /**
@@ -204,14 +204,14 @@ export class Text {
 
   private validateOptions(options: SylOpts): SylOpts {
     const validOpts = [
-      "sqnmlvy",
-      "longVowels",
-      "wawShureq",
-      "qametsQatan",
-      "article",
       "allowNoNiqqud",
+      "article",
+      "holemHaser",
+      "longVowels",
+      "qametsQatan",
+      "sqnmlvy",
       "strict",
-      "holemHaser"
+      "wawShureq"
     ];
     for (const [k, v] of Object.entries(options)) {
       if (!validOpts.includes(k)) {
@@ -230,14 +230,14 @@ export class Text {
   private setOptions(options: SylOpts): SylOpts {
     const validOpts = this.validateOptions(options);
     return {
-      sqnmlvy: validOpts.sqnmlvy ?? true,
-      article: validOpts.article ?? true,
-      longVowels: validOpts.longVowels ?? true,
-      wawShureq: validOpts.wawShureq ?? true,
-      qametsQatan: validOpts.qametsQatan ?? true,
       allowNoNiqqud: validOpts.allowNoNiqqud ?? false,
+      article: validOpts.article ?? true,
+      holemHaser: validOpts.holemHaser ?? "preserve",
+      longVowels: validOpts.longVowels ?? true,
+      sqnmlvy: validOpts.sqnmlvy ?? true,
       strict: validOpts.strict ?? true,
-      holemHaser: validOpts.holemHaser ?? "preserve"
+      qametsQatan: validOpts.qametsQatan ?? true,
+      wawShureq: validOpts.wawShureq ?? true
     };
   }
 
