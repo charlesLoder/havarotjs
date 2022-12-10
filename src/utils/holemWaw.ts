@@ -37,7 +37,7 @@ export const holemWaw = (word: string, options: SylOpts): string => {
     word = word.replace(holemHaser, "\u{05B9}");
   }
 
-  // if there is no waw or holem or waw + holem patter, there is nothing to check
+  // if there is no waw or holem or waw + holem pattern, there is nothing to check
   if (!wawRegX.test(word) || !holemRegx.test(word) || !wawHolemRegX.test(word)) {
     return word;
   }
