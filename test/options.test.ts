@@ -200,8 +200,8 @@ describe.each`
 
 describe.each`
   word        | sequence                           | holemHaser    | shouldHaveholemHaser | resultString
-  ${"עָוֺ֔ן"} | ${"V + zaqef qatan + holem haser"} | ${"remove"}   | ${false}             | ${"עָוֹ֔ן"}
   ${"עָוֺ֔ן"} | ${"V + zaqef qatan + holem haser"} | ${"preserve"} | ${true}              | ${"עָוֺ֔ן"}
+  ${"עָוֺ֔ן"} | ${"V + zaqef qatan + holem haser"} | ${"remove"}   | ${false}             | ${"עָוֹ֔ן"}
   ${"עָוֹ֔ן"} | ${"V + zaqef qatan + holem"}       | ${"update"}   | ${true}              | ${"עָוֺ֔ן"}
   ${"עָוֹ֔ן"} | ${"V + zaqef qatan + holem"}       | ${"preserve"} | ${false}             | ${"עָוֹ֔ן"}
   ${"אוֹר"}   | ${"C + holem male + V"}            | ${"remove"}   | ${false}             | ${"אֹור"}
