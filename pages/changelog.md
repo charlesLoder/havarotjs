@@ -1,5 +1,9 @@
 # Changelog
 
+## 2022-12-17 0.12.0
+
+- Add support for holem haser (Issue #72)
+
 ## 2022-11-14 0.11.3
 
 - Fix medial shureqs incorrect when strict is false (Issue #70)
