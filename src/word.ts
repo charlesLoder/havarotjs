@@ -1,9 +1,23 @@
-import { syllabify, makeClusters } from "./utils/syllabifier";
+import { syllabify } from "./utils/syllabifier";
 import { Syllable } from "./syllable";
 import { Cluster } from "./cluster";
 import { Char } from "./char";
 import { SylOpts } from "./text";
 import { isDivineName, hasDivineName } from "./utils/divineName";
+
+/**
+ *
+ * @param word the word to be split into Cluster
+ * @description splits a word at each consonant or the punctuation character
+ * Sof Pasuq and Nun Hafukha
+ */
+export const makeClusters = (word: string): Cluster[] => {
+  const split =
+    /(?=[\u{05C3}\u{05C6}\u{05D0}-\u{05F2}\u{2000}-\u{206F}\u{2E00}-\u{2E7F}'!"#$%&()*+,-.\/:;<=>?@\[\]^_`\{|\}~])/u;
+  const groups = word.split(split);
+  const clusters = groups.map((group) => new Cluster(group));
+  return clusters;
+};
 
 /**
  * [[`Text.text`]] is split at each space and maqqef (U+05BE) both of which are captured.
