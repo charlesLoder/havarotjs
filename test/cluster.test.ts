@@ -12,6 +12,7 @@ describe.each`
   ${"holem-waw, one syllable"}                                    | ${"בֹּו"}          | ${["בֹּו"]}                          | ${[false, true]}
   ${"holem-waw, one syllable, closed"}                            | ${"י֔וֹם"}         | ${["יֹ֔ום"]}                         | ${[false, true, false]}
   ${"holem-waw, two syllables, holem final"}                      | ${"כְּמוֹ"}        | ${["כְּ", "מֹו"]}                    | ${[false, false, true]}
+  ${"holem-waw, two syllables, two holems"}                       | ${"חוֹרֹן"}        | ${["חֹו", "רֹן"]}                    | ${[false, true, false, false]}
   ${"holem-waw, three syllables"}                                 | ${"קֹולְךָ"}       | ${["קֹו", "לְ", "ךָ"]}               | ${[false, true, false, false]}
   ${"holem-waw, and waw with holem"}                              | ${"עֲוֹנוֹתֵינוּ"} | ${["עֲ", "וֹ", "נֹו", "תֵי", "נוּ"]} | ${[false, false, false, true, false, true, false, false]}
   ${"holem-waw, and final aleph"}                                 | ${"ס֣וֹא"}         | ${["סֹ֣וא"]}                         | ${[false, true, false]}
