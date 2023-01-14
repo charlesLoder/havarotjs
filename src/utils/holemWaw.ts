@@ -46,9 +46,9 @@ export const holemWaw = (word: string, options: SylOpts): string => {
     ? findMatches(word, vavHolemMale, (w, s, e) => {
         return (
           // converts vav + holem as holem male to holem + vav
-          w.substring(0, s) +
+          w.substring(0, s).replace(holemRegx, "") +
           "\u{05B9}\u{05D5}" +
-          (w.substring(e).trim() ? w.substring(e) : w.substring(e - 1)).replace(holemRegx, "")
+          (w.substring(e).trim() ? w.substring(e) : w.substring(e - 1))
         );
       })
     : word;
