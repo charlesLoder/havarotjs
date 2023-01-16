@@ -1,6 +1,6 @@
 import { Char } from "./char";
 import { Node } from "./node";
-import { taamim, hebChars } from "./utils/regularExpressions";
+import { taamim, hebChars, vowelsCaptureGroup } from "./utils/regularExpressions";
 
 /**
  * A cluster is group of Hebrew character constituted by:
@@ -144,6 +144,25 @@ export class Cluster extends Node {
    */
   get hasVowel(): boolean {
     return this.hasLongVowel || this.hasShortVowel || this.hasHalfVowel;
+  }
+
+  /**
+   * Returns the vowel character of the cluster
+   *
+   * According to {@page Syllabification}, a shewa is a vowel and serves as the nucleus of a syllable.
+   * Because `Cluster` is concerned with orthography, a shewa is **not** a vowel character
+   *
+   * ```typescript
+   * const text: Text = new Text("הַֽ֭יְחָבְרְךָ");
+   * text.clusters[0].vowel;
+   * // "\u{05B7}"
+   * text.clusters[3].hasLongVowel;
+   * // null
+   * ```
+   */
+  get vowel(): string | null {
+    const match = this.text.match(vowelsCaptureGroup);
+    return match ? match[0] : match;
   }
 
   /**
