@@ -1,4 +1,5 @@
 export interface IvowelMap {
+  /* eslint-disable  @typescript-eslint/naming-convention */
   "\u{05B1}": "HATAF_SEGOL"; // HEBREW POINT HATAF SEGOL (U+05B1)
   "\u{05B2}": "HATAF_PATAH"; // HEBREW POINT HATAF PATAH (U+05B2)
   "\u{05B3}": "HATAF_QAMATS"; // HEBREW POINT HATAF QAMATS (U+05B3)
@@ -18,6 +19,7 @@ export interface IvowelMap {
  * — HEBREW POINT has been removed and spaces replaced wiith underscores (e.g. "HATAF_PATAH")
  */
 export const vowelMap: IvowelMap = {
+  /* eslint-disable  @typescript-eslint/naming-convention */
   "\u{05B1}": "HATAF_SEGOL",
   "\u{05B2}": "HATAF_PATAH",
   "\u{05B3}": "HATAF_QAMATS",
