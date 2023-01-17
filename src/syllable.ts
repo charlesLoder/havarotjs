@@ -1,12 +1,17 @@
 import { Cluster } from "./cluster";
 import { Char } from "./char";
-import { IvowelMap } from "./utils/vowelMap";
+import { IvowelMap, vowelMap } from "./utils/vowelMap";
 import { vowelsCaptureGroupWithShewa } from "./utils/regularExpressions";
 
 interface SyllableVowelMap extends IvowelMap {
   /* eslint-disable  @typescript-eslint/naming-convention */
   "\u{05B0}": "SHEVA"; // HEBREW POINT HATAF SHEVA (U+05B0)
 }
+
+const sylVowelMap: SyllableVowelMap = {
+  ...vowelMap,
+  "\u{05B0}": "SHEVA"
+};
 
 /**
  * A `Syllable` is created from an array of [[`Clusters`]].
@@ -85,22 +90,41 @@ export class Syllable {
   }
 
   /**
-   * Returns the vowel character of the cluster
+   * Returns the vowel character of the syllable
    *
    * According to {@page Syllabification}, a shewa is a vowel and serves as the nucleus of a syllable.
-   * Because `Cluster` is concerned with orthography, a shewa is **not** a vowel character
+   * Unlike `Cluster`, a `Syllable` is concerned with linguistics, so a shewa **is** a vowel character
    *
    * ```typescript
    * const text: Text = new Text("הַֽ֭יְחָבְרְךָ");
    * text.syllables[0].vowel;
    * // "\u{05B7}"
-   * text.clusters[3].hasLongVowel;
-   * // null
+   * text.syllables[1].vowel;
+   * // "\u{05B0}"
    * ```
    */
   get vowel(): keyof SyllableVowelMap | null {
     const match = this.text.match(vowelsCaptureGroupWithShewa);
     return match ? (match[0] as keyof SyllableVowelMap) : match;
+  }
+
+  /**
+   * Returns the vowel character name of the syllable
+   *
+   * According to {@page Syllabification}, a shewa is a vowel and serves as the nucleus of a syllable.
+   * Unlike `Cluster`, a `Syllable` is concerned with linguistics, so a shewa **is** a vowel character
+   *
+   * ```typescript
+   * const text: Text = new Text("הַֽ֭יְחָבְרְךָ");
+   * text.syllables[0].vowelName;
+   * // "PATAH"
+   * text.syllables[1].vowelName;
+   * // "SHEVA"
+   * ```
+   */
+  get vowelName(): SyllableVowelMap[keyof SyllableVowelMap] | null {
+    const vowel = this.vowel;
+    return vowel ? sylVowelMap[vowel] : null;
   }
 
   /**

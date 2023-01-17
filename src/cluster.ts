@@ -157,7 +157,7 @@ export class Cluster extends Node {
    * const text: Text = new Text("הַֽ֭יְחָבְרְךָ");
    * text.clusters[0].vowel;
    * // "\u{05B7}"
-   * text.clusters[3].hasLongVowel;
+   * text.clusters[3].vowel;
    * // null
    * ```
    */
@@ -174,9 +174,9 @@ export class Cluster extends Node {
    *
    * ```typescript
    * const text: Text = new Text("הַֽ֭יְחָבְרְךָ");
-   * text.clusters[0].vowel;
-   * // "\u{05B7}"
-   * text.clusters[3].hasLongVowel;
+   * text.clusters[0].vowelName;
+   * // "PATAH"
+   * text.clusters[3].vowelName;
    * // null
    * ```
    */
