@@ -62,6 +62,7 @@ describe.each`
   description                | hebrew              | clusterNum | vowel
   ${"cluster with patach"}   | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${"\u{05B7}"}
   ${"cluster with shewa"}    | ${"הַֽ֭יְחָבְרְךָ"} | ${3}       | ${null}
+  ${"cluster with no vowel"} | ${"י֔וֹם"}          | ${2}       | ${null}
 `("vowel:", ({ description, hebrew, clusterNum, vowel }) => {
   const heb = new Text(hebrew);
   const cluster = heb.clusters[clusterNum];
