@@ -1,5 +1,12 @@
 import { Cluster } from "./cluster";
 import { Char } from "./char";
+import { IvowelMap } from "./utils/vowelMap";
+import { vowelsCaptureGroupWithShewa } from "./utils/regularExpressions";
+
+interface SyllableVowelMap extends IvowelMap {
+  /* eslint-disable  @typescript-eslint/naming-convention */
+  "\u{05B0}": "SHEVA"; // HEBREW POINT HATAF SHEVA (U+05B0)
+}
 
 /**
  * A `Syllable` is created from an array of [[`Clusters`]].
@@ -75,6 +82,25 @@ export class Syllable {
    */
   get chars(): Char[] {
     return this.clusters.map((cluster) => cluster.chars).flat();
+  }
+
+  /**
+   * Returns the vowel character of the cluster
+   *
+   * According to {@page Syllabification}, a shewa is a vowel and serves as the nucleus of a syllable.
+   * Because `Cluster` is concerned with orthography, a shewa is **not** a vowel character
+   *
+   * ```typescript
+   * const text: Text = new Text("הַֽ֭יְחָבְרְךָ");
+   * text.syllables[0].vowel;
+   * // "\u{05B7}"
+   * text.clusters[3].hasLongVowel;
+   * // null
+   * ```
+   */
+  get vowel(): keyof SyllableVowelMap | null {
+    const match = this.text.match(vowelsCaptureGroupWithShewa);
+    return match ? (match[0] as keyof SyllableVowelMap) : match;
   }
 
   /**
