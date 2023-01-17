@@ -85,17 +85,17 @@ export class Syllable {
   }
 
   /**
-   * Returns the vowel character of the cluster
+   * Returns the vowel character of the syllable
    *
    * According to {@page Syllabification}, a shewa is a vowel and serves as the nucleus of a syllable.
-   * Because `Cluster` is concerned with orthography, a shewa is **not** a vowel character
+   * Unlike `Cluster`, a `Syllable` is concerned with linguistics, so a shewa **is** a vowel character
    *
    * ```typescript
    * const text: Text = new Text("הַֽ֭יְחָבְרְךָ");
    * text.syllables[0].vowel;
    * // "\u{05B7}"
-   * text.clusters[3].hasLongVowel;
-   * // null
+   * text.syllables[1].vowel;
+   * // "\u{05B0}"
    * ```
    */
   get vowel(): keyof SyllableVowelMap | null {
