@@ -35,3 +35,31 @@ describe.each`
     });
   });
 });
+
+describe.each`
+  description                     | hebrew              | syllableNum | vowelName   | result
+  ${"syllable with patach"}       | ${"הַֽ֭יְחָבְרְךָ"} | ${0}        | ${"PATAH"}  | ${true}
+  ${"syllable with shewa"}        | ${"הַֽ֭יְחָבְרְךָ"} | ${1}        | ${"SHEVA"}  | ${true}
+  ${"syllable with silent shewa"} | ${"הַֽ֭יְחָבְרְךָ"} | ${2}        | ${"SHEVA"}  | ${false}
+  ${"syllable with qamats"}       | ${"הַֽ֭יְחָבְרְךָ"} | ${2}        | ${"QAMATS"} | ${true}
+`("hasVowelName:", ({ description, hebrew, syllableNum, vowelName, result }) => {
+  const heb = new Text(hebrew);
+  const syllable = heb.syllables[syllableNum];
+  const syllableVowelName = syllable.hasVowelName(vowelName);
+  describe(description, () => {
+    test(`vowelName to equal ${vowelName}`, () => {
+      expect(syllableVowelName).toEqual(result);
+    });
+  });
+});
+
+describe.each`
+  description          | hebrew              | syllableNum | vowelName
+  ${"Incorrect value"} | ${"הַֽ֭יְחָבְרְךָ"} | ${0}        | ${"TEST"}
+`("hasVowelName, error:", ({ hebrew, syllableNum, vowelName }) => {
+  const heb = new Text(hebrew);
+  const syllable = heb.syllables[syllableNum];
+  test(`vowelName${vowelName} should throw error`, () => {
+    expect(() => syllable.hasVowelName(vowelName)).toThrowError();
+  });
+});
