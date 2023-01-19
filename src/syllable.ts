@@ -3,12 +3,12 @@ import { Char } from "./char";
 import { CharToNameMap, charToNameMap } from "./utils/vowelMap";
 import { vowelsCaptureGroupWithShewa } from "./utils/regularExpressions";
 
-interface SyllableVowelMap extends CharToNameMap {
+interface SyllableCharToNameMap extends CharToNameMap {
   /* eslint-disable  @typescript-eslint/naming-convention */
   "\u{05B0}": "SHEVA"; // HEBREW POINT HATAF SHEVA (U+05B0)
 }
 
-const sylVowelMap: SyllableVowelMap = {
+const sylCharToNameMap: SyllableCharToNameMap = {
   ...charToNameMap,
   "\u{05B0}": "SHEVA"
 };
@@ -103,9 +103,9 @@ export class Syllable {
    * // "\u{05B0}"
    * ```
    */
-  get vowel(): keyof SyllableVowelMap | null {
+  get vowel(): keyof SyllableCharToNameMap | null {
     const match = this.text.match(vowelsCaptureGroupWithShewa);
-    return match ? (match[0] as keyof SyllableVowelMap) : match;
+    return match ? (match[0] as keyof SyllableCharToNameMap) : match;
   }
 
   /**
@@ -122,9 +122,9 @@ export class Syllable {
    * // "SHEVA"
    * ```
    */
-  get vowelName(): SyllableVowelMap[keyof SyllableVowelMap] | null {
+  get vowelName(): SyllableCharToNameMap[keyof SyllableCharToNameMap] | null {
     const vowel = this.vowel;
-    return vowel ? sylVowelMap[vowel] : null;
+    return vowel ? sylCharToNameMap[vowel] : null;
   }
 
   /**
