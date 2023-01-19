@@ -1,6 +1,6 @@
 import { Cluster } from "./cluster";
 import { Char } from "./char";
-import { CharToNameMap, charToNameMap } from "./utils/vowelMap";
+import { CharToNameMap, charToNameMap, NameToCharMap, nameToCharMap } from "./utils/vowelMap";
 import { vowelsCaptureGroupWithShewa } from "./utils/regularExpressions";
 
 interface SyllableCharToNameMap extends CharToNameMap {
@@ -11,6 +11,16 @@ interface SyllableCharToNameMap extends CharToNameMap {
 const sylCharToNameMap: SyllableCharToNameMap = {
   ...charToNameMap,
   "\u{05B0}": "SHEVA"
+};
+
+interface SyllableNameToCharMap extends NameToCharMap {
+  /* eslint-disable  @typescript-eslint/naming-convention */
+  SHEVA: "\u{05B0}"; // HEBREW POINT HATAF SHEVA (U+05B0)
+}
+
+const sylNameToCharMap: SyllableNameToCharMap = {
+  ...nameToCharMap,
+  SHEVA: "\u{05B0}"
 };
 
 /**
@@ -125,6 +135,33 @@ export class Syllable {
   get vowelName(): SyllableCharToNameMap[keyof SyllableCharToNameMap] | null {
     const vowel = this.vowel;
     return vowel ? sylCharToNameMap[vowel] : null;
+  }
+
+  /**
+   * Returns `true` if syllables contains the vowel character of the name passed in
+   *
+   * According to {@page Syllabification}, a shewa is a vowel and serves as the nucleus of a syllable.
+   * Unlike `Cluster`, a `Syllable` is concerned with linguistics, so a shewa **is** a vowel character.
+   * It returns `true` for "SHEVA" only when the shewa is the vowel (i.e. a vocal shewa or shewa na').
+   *
+   * ```typescript
+   * const text: Text = new Text("הַיְחָבְרְךָ");
+   * text.syllables[0].hasVowelName("PATAH");
+   * // true
+   *
+   * // test for vocal shewa
+   * text.syllables[1].hasVowelName("SHEVA");
+   * // true
+   *
+   * // test for silent shewa
+   * text.syllables[2].hasVowelName("SHEVA");
+   * // false
+   * ```
+   */
+  hasVowelName(name: keyof SyllableNameToCharMap): boolean {
+    if (!sylNameToCharMap[name]) throw new Error(`${name} is not a valid value`);
+    const isShevaSilent = name === "SHEVA" && this.clusters.filter((c) => c.hasVowel).length ? true : false;
+    return !isShevaSilent && this.text.indexOf(sylNameToCharMap[name]) !== -1 ? true : false;
   }
 
   /**
