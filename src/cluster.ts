@@ -1,7 +1,7 @@
 import { Char } from "./char";
 import { Node } from "./node";
 import { taamim, hebChars, vowelsCaptureGroup } from "./utils/regularExpressions";
-import { vowelMap, IvowelMap } from "./utils/vowelMap";
+import { charToNameMap, CharToNameMap } from "./utils/vowelMap";
 
 /**
  * A cluster is group of Hebrew character constituted by:
@@ -161,9 +161,9 @@ export class Cluster extends Node {
    * // null
    * ```
    */
-  get vowel(): keyof IvowelMap | null {
+  get vowel(): keyof CharToNameMap | null {
     const match = this.text.match(vowelsCaptureGroup);
-    return match ? (match[0] as keyof IvowelMap) : match;
+    return match ? (match[0] as keyof CharToNameMap) : match;
   }
 
   /**
@@ -180,9 +180,9 @@ export class Cluster extends Node {
    * // null
    * ```
    */
-  get vowelName(): IvowelMap[keyof IvowelMap] | null {
+  get vowelName(): CharToNameMap[keyof CharToNameMap] | null {
     const vowel = this.vowel;
-    return vowel ? vowelMap[vowel] : null;
+    return vowel ? charToNameMap[vowel] : null;
   }
 
   /**

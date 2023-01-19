@@ -1,15 +1,15 @@
 import { Cluster } from "./cluster";
 import { Char } from "./char";
-import { IvowelMap, vowelMap } from "./utils/vowelMap";
+import { CharToNameMap, charToNameMap } from "./utils/vowelMap";
 import { vowelsCaptureGroupWithShewa } from "./utils/regularExpressions";
 
-interface SyllableVowelMap extends IvowelMap {
+interface SyllableVowelMap extends CharToNameMap {
   /* eslint-disable  @typescript-eslint/naming-convention */
   "\u{05B0}": "SHEVA"; // HEBREW POINT HATAF SHEVA (U+05B0)
 }
 
 const sylVowelMap: SyllableVowelMap = {
-  ...vowelMap,
+  ...charToNameMap,
   "\u{05B0}": "SHEVA"
 };
 

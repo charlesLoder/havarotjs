@@ -1,4 +1,4 @@
-export interface IvowelMap {
+export type CharToNameMap = {
   /* eslint-disable  @typescript-eslint/naming-convention */
   "\u{05B1}": "HATAF_SEGOL"; // HEBREW POINT HATAF SEGOL (U+05B1)
   "\u{05B2}": "HATAF_PATAH"; // HEBREW POINT HATAF PATAH (U+05B2)
@@ -18,7 +18,7 @@ export interface IvowelMap {
  * an object where the key is a character and the value is its partial Unicode name
  * — HEBREW POINT has been removed and spaces replaced wiith underscores (e.g. "HATAF_PATAH")
  */
-export const vowelMap: IvowelMap = {
+export const charToNameMap: CharToNameMap = {
   /* eslint-disable  @typescript-eslint/naming-convention */
   "\u{05B1}": "HATAF_SEGOL",
   "\u{05B2}": "HATAF_PATAH",
