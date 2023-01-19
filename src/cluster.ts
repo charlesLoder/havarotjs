@@ -1,7 +1,7 @@
 import { Char } from "./char";
 import { Node } from "./node";
 import { taamim, hebChars, vowelsCaptureGroup } from "./utils/regularExpressions";
-import { charToNameMap, CharToNameMap } from "./utils/vowelMap";
+import { charToNameMap, CharToNameMap, NameToCharMap, nameToCharMap } from "./utils/vowelMap";
 
 /**
  * A cluster is group of Hebrew character constituted by:
@@ -145,6 +145,25 @@ export class Cluster extends Node {
    */
   get hasVowel(): boolean {
     return this.hasLongVowel || this.hasShortVowel || this.hasHalfVowel;
+  }
+
+  /**
+   * Returns `true` if cluster contains the vowel character of the name passed in
+   *
+   * According to {@page Syllabification}, a shewa is a vowel and serves as the nucleus of a syllable.
+   * Because `Cluster` is concerned with orthography, a shewa is **not** a vowel character.
+   *
+   * ```typescript
+   * const text: Text = new Text("הַיְחָבְרְךָ");
+   * text.clusters[0].hasVowelName("PATAH");
+   * // true
+   * text.clusters[0].hasVowelName("HIRIQ");
+   * // false
+   * ```
+   */
+  hasVowelName(name: keyof NameToCharMap): boolean {
+    if (!nameToCharMap[name]) throw new Error(`${name} is not a valid value`);
+    return this.text.indexOf(nameToCharMap[name]) !== -1 ? true : false;
   }
 
   /**
