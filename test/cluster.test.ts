@@ -90,3 +90,19 @@ describe.each`
     });
   });
 });
+
+describe.each`
+  description                | hebrew              | clusterNum | vowelName   | result
+  ${"cluster with patach"}   | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${"PATAH"}  | ${true}
+  ${"cluster with qamets"}   | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${"QAMATS"} | ${false}
+  ${"cluster with no vowel"} | ${"י֔וֹם"}          | ${2}       | ${"HOLAM"}  | ${false}
+`("hasVowelName:", ({ description, hebrew, clusterNum, vowelName, result }) => {
+  const heb = new Text(hebrew);
+  const cluster = heb.clusters[clusterNum];
+  const clusterHasVowelName = cluster.hasVowelName(vowelName);
+  describe(description, () => {
+    test(`Should cluster have ${vowelName}? ${result}`, () => {
+      expect(clusterHasVowelName).toEqual(result);
+    });
+  });
+});
