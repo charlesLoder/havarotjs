@@ -1,7 +1,7 @@
 import { Cluster } from "./cluster";
 import { Char } from "./char";
 import { CharToNameMap, charToNameMap, NameToCharMap, nameToCharMap } from "./utils/vowelMap";
-import { vowelsCaptureGroupWithShewa } from "./utils/regularExpressions";
+import { vowelsCaptureGroupWithSheva } from "./utils/regularExpressions";
 import { Node } from "./node";
 
 interface SyllableCharToNameMap extends CharToNameMap {
@@ -104,8 +104,8 @@ export class Syllable extends Node {
   /**
    * Returns the vowel character of the syllable
    *
-   * According to {@page Syllabification}, a shewa is a vowel and serves as the nucleus of a syllable.
-   * Unlike `Cluster`, a `Syllable` is concerned with linguistics, so a shewa **is** a vowel character
+   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
+   * Unlike `Cluster`, a `Syllable` is concerned with linguistics, so a sheva **is** a vowel character
    *
    * ```typescript
    * const text: Text = new Text("הַֽ֭יְחָבְרְךָ");
@@ -116,15 +116,15 @@ export class Syllable extends Node {
    * ```
    */
   get vowel(): keyof SyllableCharToNameMap | null {
-    const match = this.text.match(vowelsCaptureGroupWithShewa);
+    const match = this.text.match(vowelsCaptureGroupWithSheva);
     return match ? (match[0] as keyof SyllableCharToNameMap) : match;
   }
 
   /**
    * Returns the vowel character name of the syllable
    *
-   * According to {@page Syllabification}, a shewa is a vowel and serves as the nucleus of a syllable.
-   * Unlike `Cluster`, a `Syllable` is concerned with linguistics, so a shewa **is** a vowel character
+   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
+   * Unlike `Cluster`, a `Syllable` is concerned with linguistics, so a sheva **is** a vowel character
    *
    * ```typescript
    * const text: Text = new Text("הַֽ֭יְחָבְרְךָ");
@@ -142,20 +142,20 @@ export class Syllable extends Node {
   /**
    * Returns `true` if syllables contains the vowel character of the name passed in
    *
-   * According to {@page Syllabification}, a shewa is a vowel and serves as the nucleus of a syllable.
-   * Unlike `Cluster`, a `Syllable` is concerned with linguistics, so a shewa **is** a vowel character.
-   * It returns `true` for "SHEVA" only when the shewa is the vowel (i.e. a vocal shewa or shewa na').
+   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
+   * Unlike `Cluster`, a `Syllable` is concerned with linguistics, so a sheva **is** a vowel character.
+   * It returns `true` for "SHEVA" only when the sheva is the vowel (i.e. a vocal sheva or sheva na').
    *
    * ```typescript
    * const text: Text = new Text("הַיְחָבְרְךָ");
    * text.syllables[0].hasVowelName("PATAH");
    * // true
    *
-   * // test for vocal shewa
+   * // test for vocal sheva
    * text.syllables[1].hasVowelName("SHEVA");
    * // true
    *
-   * // test for silent shewa
+   * // test for silent sheva
    * text.syllables[2].hasVowelName("SHEVA");
    * // false
    * ```

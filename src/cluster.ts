@@ -132,8 +132,8 @@ export class Cluster extends Node {
   /**
    * Returns `true` if `Cluster.hasLongVowel`, `Cluster.hasShortVowel`, or `Cluster.hasHalfVowel` is true.
    *
-   * According to {@page Syllabification}, a shewa is a vowel and serves as the nucleus of a syllable.
-   * Because `Cluster` is concerned with orthography, a shewa is **not** a vowel character.
+   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
+   * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character.
    *
    * ```typescript
    * const text: Text = new Text("הֲבָרֹות");
@@ -150,8 +150,8 @@ export class Cluster extends Node {
   /**
    * Returns `true` if cluster contains the vowel character of the name passed in
    *
-   * According to {@page Syllabification}, a shewa is a vowel and serves as the nucleus of a syllable.
-   * Because `Cluster` is concerned with orthography, a shewa is **not** a vowel character.
+   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
+   * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character.
    *
    * ```typescript
    * const text: Text = new Text("הַיְחָבְרְךָ");
@@ -169,8 +169,8 @@ export class Cluster extends Node {
   /**
    * Returns the vowel character of the cluster
    *
-   * According to {@page Syllabification}, a shewa is a vowel and serves as the nucleus of a syllable.
-   * Because `Cluster` is concerned with orthography, a shewa is **not** a vowel character
+   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
+   * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character
    *
    * ```typescript
    * const text: Text = new Text("הַֽ֭יְחָבְרְךָ");
@@ -188,8 +188,8 @@ export class Cluster extends Node {
   /**
    * Returns the vowel character name of the cluster
    *
-   * According to {@page Syllabification}, a shewa is a vowel and serves as the nucleus of a syllable.
-   * Because `Cluster` is concerned with orthography, a shewa is **not** a vowel character
+   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
+   * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character
    *
    * ```typescript
    * const text: Text = new Text("הַֽ֭יְחָבְרְךָ");
@@ -224,10 +224,10 @@ export class Cluster extends Node {
   }
 
   /**
-   * Returns `true` if `Cluster.hasVowel`, `Cluster.hasShewa`, and, `Cluster.isShureq` are all `false` and `Cluster.text` contains a:
-   * - `ה` preceded by a qamets, tsere, or seghol
+   * Returns `true` if `Cluster.hasVowel`, `Cluster.hasSheva`, and, `Cluster.isShureq` are all `false` and `Cluster.text` contains a:
+   * - `ה` preceded by a qamets, tsere, or segol
    * - `ו` preceded by a holem
-   * - `י` preceded by a hiriq, tsere, or seghol
+   * - `י` preceded by a hiriq, tsere, or segol
    *
    * There are potentially other instances when a consonant may be a _mater_ (e.g. a silent aleph), but these are the most common.
    * Though a shureq is a _mater_ letter, it is also a vowel itself, and thus separate from `isMater`.
@@ -242,7 +242,7 @@ export class Cluster extends Node {
    */
   get isMater(): boolean {
     const nxtIsShureq = this.next instanceof Cluster ? this.next.isShureq : false;
-    if (!this.hasVowel && !this.isShureq && !this.hasShewa && !nxtIsShureq) {
+    if (!this.hasVowel && !this.isShureq && !this.hasSheva && !nxtIsShureq) {
       const text = this.text;
       const prevText = this.prev instanceof Cluster ? this.prev.text : "";
       const maters = /[היו](?!\u{05BC})/u;
@@ -267,6 +267,8 @@ export class Cluster extends Node {
    * Returns `true` if the following character is present and a _sof pasuq_ does not follow it:
    * - \u{05BD} METEG
    *
+   * @deprecated use `hasMeteg`
+   *
    * ```typescript
    * const text: Text = new Text("הֲבָרֹות");
    * text.clusters[0].hasMetheg;
@@ -274,9 +276,23 @@ export class Cluster extends Node {
    * ```
    */
   get hasMetheg(): boolean {
-    const metheg = /\u{05BD}/u;
+    return this.hasMeteg;
+  }
+
+  /**
+   * Returns `true` if the following character is present and a _sof pasuq_ does not follow it:
+   * - \u{05BD} METEG
+   *
+   * ```typescript
+   * const text: Text = new Text("הֲבָרֹות");
+   * text.clusters[0].hasMeteg;
+   * // false
+   * ```
+   */
+  get hasMeteg(): boolean {
+    const meteg = /\u{05BD}/u;
     const text = this.text;
-    if (!metheg.test(text)) {
+    if (!meteg.test(text)) {
       return false;
     }
     let next = this.next;
@@ -284,7 +300,7 @@ export class Cluster extends Node {
       if (next instanceof Cluster) {
         const nextText = next.text;
         const sofPassuq = /\u{05C3}/u;
-        if (metheg.test(nextText)) {
+        if (meteg.test(nextText)) {
           return true;
         }
         if (sofPassuq.test(nextText)) {
@@ -298,17 +314,35 @@ export class Cluster extends Node {
 
   /**
    * Returns `true` if the following character is present:
-   * - \u{05B0} SHEWA
+   * - \u{05B0} SHEVA
+   *
+   * @deprecated now use `hasSheva`
    *
    * ```typescript
    * const text: Text = new Text("מַלְכָּה");
-   * text.clusters[0].hasShewa;
+   * text.clusters[0].hasSheva;
    * // false
-   * text.clusters[1].hasShewa;
+   * text.clusters[1].hasSheva;
    * // true
    * ```
    */
   get hasShewa(): boolean {
+    return this.hasSheva;
+  }
+
+  /**
+   * Returns `true` if the following character is present:
+   * - \u{05B0} SHEVA
+   *
+   * ```typescript
+   * const text: Text = new Text("מַלְכָּה");
+   * text.clusters[0].hasSheva;
+   * // false
+   * text.clusters[1].hasSheva;
+   * // true
+   * ```
+   */
+  get hasSheva(): boolean {
     return /\u{05B0}/u.test(this.text);
   }
 

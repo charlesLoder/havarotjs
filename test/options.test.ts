@@ -142,11 +142,11 @@ describe.each`
 });
 
 describe.each`
-  description               | word            | syllables                     | isClosedArr                    | sqnmlvyOpt
-  ${"wayyiqtol, no metheg"} | ${"וַיְצַחֵק֙"} | ${["וַיְ", "צַ", "חֵק֙"]}     | ${[true, false, true]}         | ${false}
-  ${"wayyiqtol, no metheg"} | ${"וַיְצַחֵק֙"} | ${["וַ", "יְ", "צַ", "חֵק֙"]} | ${[false, false, false, true]} | ${true}
-  ${"wayyiqtol,  metheg"}   | ${"וַֽיְהִי֙"}  | ${["וַֽ", "יְ", "הִי֙"]}      | ${[false, false, false]}       | ${false}
-  ${"wayyiqtol,  metheg"}   | ${"וַֽיְהִי֙"}  | ${["וַֽ", "יְ", "הִי֙"]}      | ${[false, false, false]}       | ${true}
+  description              | word            | syllables                     | isClosedArr                    | sqnmlvyOpt
+  ${"wayyiqtol, no meteg"} | ${"וַיְצַחֵק֙"} | ${["וַיְ", "צַ", "חֵק֙"]}     | ${[true, false, true]}         | ${false}
+  ${"wayyiqtol, no meteg"} | ${"וַיְצַחֵק֙"} | ${["וַ", "יְ", "צַ", "חֵק֙"]} | ${[false, false, false, true]} | ${true}
+  ${"wayyiqtol,  meteg"}   | ${"וַֽיְהִי֙"}  | ${["וַֽ", "יְ", "הִי֙"]}      | ${[false, false, false]}       | ${false}
+  ${"wayyiqtol,  meteg"}   | ${"וַֽיְהִי֙"}  | ${["וַֽ", "יְ", "הִי֙"]}      | ${[false, false, false]}       | ${true}
 `("sqnmlvy:", ({ description, word, syllables, isClosedArr, sqnmlvyOpt }) => {
   const text = new Text(word, { sqnmlvy: sqnmlvyOpt });
   const sylText = text.syllables.map((syl) => syl.text);
@@ -199,12 +199,12 @@ describe.each`
 });
 
 describe.each`
-  description                | word             | syllables                      | isClosedArr                   | wawShureqOpt
-  ${"vav-shureq, no metheg"} | ${"וּלְמַזֵּר"}  | ${["וּ", "לְ", "מַ", "זֵּר"]}  | ${[false, false, true, true]} | ${true}
-  ${"vav-shureq, no metheg"} | ${"וּלְמַזֵּר"}  | ${["וּלְ", "מַ", "זֵּר"]}      | ${[true, true, true]}         | ${false}
-  ${"vav-shureq, metheg"}    | ${"וּֽלְמַזֵּר"} | ${["וּֽ", "לְ", "מַ", "זֵּר"]} | ${[false, false, true, true]} | ${true}
-  ${"vav-shureq, metheg"}    | ${"וּֽלְמַזֵּר"} | ${["וּֽ", "לְ", "מַ", "זֵּר"]} | ${[false, false, true, true]} | ${false}
-  ${"medial shureq"}         | ${"פְּקוּדָה"}   | ${["פְּ", "קוּ", "דָה"]}       | ${[false, false, false]}      | ${false}
+  description               | word             | syllables                      | isClosedArr                   | wawShureqOpt
+  ${"vav-shureq, no meteg"} | ${"וּלְמַזֵּר"}  | ${["וּ", "לְ", "מַ", "זֵּר"]}  | ${[false, false, true, true]} | ${true}
+  ${"vav-shureq, no meteg"} | ${"וּלְמַזֵּר"}  | ${["וּלְ", "מַ", "זֵּר"]}      | ${[true, true, true]}         | ${false}
+  ${"vav-shureq, meteg"}    | ${"וּֽלְמַזֵּר"} | ${["וּֽ", "לְ", "מַ", "זֵּר"]} | ${[false, false, true, true]} | ${true}
+  ${"vav-shureq, meteg"}    | ${"וּֽלְמַזֵּר"} | ${["וּֽ", "לְ", "מַ", "זֵּר"]} | ${[false, false, true, true]} | ${false}
+  ${"medial shureq"}        | ${"פְּקוּדָה"}   | ${["פְּ", "קוּ", "דָה"]}       | ${[false, false, false]}      | ${false}
 `("wawShureq:", ({ description, word, syllables, isClosedArr, wawShureqOpt }) => {
   const text = new Text(word, { wawShureq: wawShureqOpt });
   const sylText = text.syllables.map((syl) => syl.text);

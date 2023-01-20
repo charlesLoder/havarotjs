@@ -6,10 +6,10 @@ import { Char } from "../char";
  */
 export const sequence = (text: string): Char[][] => {
   const splits = /(?=[\u{05C0}\u{05D0}-\u{05F2}])/u;
-  const hiriqPatach = /\u{5B4}\u{5B7}/u;
+  const hiriqPatah = /\u{5B4}\u{5B7}/u;
   const hiriqQamets = /\u{5B4}\u{5B8}/u;
   // for Jerusalem, where hiriq precedes patah, replace w/ correct patch-hiriq
-  if (hiriqPatach.test(text)) text = text.replace(hiriqPatach, "\u{5B7}\u{5B4}");
+  if (hiriqPatah.test(text)) text = text.replace(hiriqPatah, "\u{5B7}\u{5B4}");
   else if (hiriqQamets.test(text)) text = text.replace(hiriqQamets, "\u{5B8}\u{5B4}");
   return text
     .split(splits)

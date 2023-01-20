@@ -8,7 +8,7 @@ describe.each`
   ${"tsere-yod, one syllable"}                                    | ${"עֵיץ"}          | ${["עֵיץ"]}                          | ${[false, true, false]}
   ${"tsere-yod, two syllables"}                                   | ${"בֵּיצָה"}       | ${["בֵּי", "צָה"]}                   | ${[false, true, false, true]}
   ${"tsere-yod, two syllables"}                                   | ${"בֵּיצָה"}       | ${["בֵּי", "צָה"]}                   | ${[false, true, false, true]}
-  ${"seghol yod, four syllables"}                                 | ${"אֱלֹהֶ֑֔יךָ"}   | ${["אֱ", "לֹ", "הֶ֑֔י", "ךָ"]}       | ${[false, false, false, true, false]}
+  ${"segol yod, four syllables"}                                  | ${"אֱלֹהֶ֑֔יךָ"}   | ${["אֱ", "לֹ", "הֶ֑֔י", "ךָ"]}       | ${[false, false, false, true, false]}
   ${"holem-waw, one syllable"}                                    | ${"בֹּו"}          | ${["בֹּו"]}                          | ${[false, true]}
   ${"holem-waw, one syllable, closed"}                            | ${"י֔וֹם"}         | ${["יֹ֔ום"]}                         | ${[false, true, false]}
   ${"holem-waw, two syllables, holem final"}                      | ${"כְּמוֹ"}        | ${["כְּ", "מֹו"]}                    | ${[false, false, true]}
@@ -20,7 +20,7 @@ describe.each`
   ${"qamets-he, one syllable"}                                    | ${"בָּה"}          | ${["בָּה"]}                          | ${[false, true]}
   ${"qamets-he, two syllables"}                                   | ${"יָפָה"}         | ${["יָ", "פָה"]}                     | ${[false, false, true]}
   ${"qamets-he follwed by shureq (not mater)"}                    | ${"אֵלִיָּ֨הוּ"}   | ${["אֵ", "לִ", "יָּ֨", "הוּ"]}       | ${[false, false, false, false, false]}
-  ${"seghol-he, two syllables"}                                   | ${"יָפֶה"}         | ${["יָ", "פֶה"]}                     | ${[false, false, true]}
+  ${"segol-he, two syllables"}                                    | ${"יָפֶה"}         | ${["יָ", "פֶה"]}                     | ${[false, false, true]}
   ${"3fs suffix, one syllable"}                                   | ${"בָּהּ"}         | ${["בָּהּ"]}                         | ${[false, false]}
   ${"3ms plural suffix, three syllable"}                          | ${"תֹּורֹתָיו"}    | ${["תֹּו", "רֹ", "תָיו"]}            | ${[false, true, false, false, false, false]}
   ${"quiesced aleph, two syllables"}                              | ${"רִאשׁ֔וֹן"}     | ${["רִא", "שֹׁ֔ון"]}                 | ${[false, false, false, true, false]}
@@ -40,28 +40,28 @@ describe.each`
 });
 
 describe.each`
-  description                                         | hebrew              | clusterNum | hasMetheg
-  ${"word with single metheg"}                        | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${true}
-  ${"word with single silluq"}                        | ${"נַפְשִֽׁי׃"}     | ${2}       | ${false}
-  ${"word with metheg & silluq"}                      | ${"הָֽאֲדָמָֽה׃"}   | ${0}       | ${true}
-  ${"word with metheg & silluq"}                      | ${"הָֽאֲדָמָֽה׃"}   | ${3}       | ${false}
-  ${"words with metheg & silluq, joined with maqqef"} | ${"וַֽיְהִי־כֵֽן׃"} | ${0}       | ${true}
-  ${"words with metheg & silluq, joined with maqqef"} | ${"וַֽיְהִי־כֵֽן׃"} | ${4}       | ${false}
-`("hasMetheg:", ({ description, hebrew, clusterNum, hasMetheg }) => {
+  description                                        | hebrew              | clusterNum | hasMeteg
+  ${"word with single meteg"}                        | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${true}
+  ${"word with single silluq"}                       | ${"נַפְשִֽׁי׃"}     | ${2}       | ${false}
+  ${"word with meteg & silluq"}                      | ${"הָֽאֲדָמָֽה׃"}   | ${0}       | ${true}
+  ${"word with meteg & silluq"}                      | ${"הָֽאֲדָמָֽה׃"}   | ${3}       | ${false}
+  ${"words with meteg & silluq, joined with maqqef"} | ${"וַֽיְהִי־כֵֽן׃"} | ${0}       | ${true}
+  ${"words with meteg & silluq, joined with maqqef"} | ${"וַֽיְהִי־כֵֽן׃"} | ${4}       | ${false}
+`("hasMeteg:", ({ description, hebrew, clusterNum, hasMeteg }) => {
   const heb = new Text(hebrew);
   const cluster = heb.clusters[clusterNum];
-  const metheg = cluster.hasMetheg;
+  const meteg = cluster.hasMeteg;
   describe(description, () => {
-    test(`hasMetheg to equal ${hasMetheg}`, () => {
-      expect(metheg).toEqual(hasMetheg);
+    test(`hasMeteg to equal ${hasMeteg}`, () => {
+      expect(meteg).toEqual(hasMeteg);
     });
   });
 });
 
 describe.each`
   description                | hebrew              | clusterNum | vowel
-  ${"cluster with patach"}   | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${"\u{05B7}"}
-  ${"cluster with shewa"}    | ${"הַֽ֭יְחָבְרְךָ"} | ${3}       | ${null}
+  ${"cluster with patah"}    | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${"\u{05B7}"}
+  ${"cluster with sheva"}    | ${"הַֽ֭יְחָבְרְךָ"} | ${3}       | ${null}
   ${"cluster with no vowel"} | ${"י֔וֹם"}          | ${2}       | ${null}
 `("vowel:", ({ description, hebrew, clusterNum, vowel }) => {
   const heb = new Text(hebrew);
@@ -76,9 +76,9 @@ describe.each`
 
 describe.each`
   description                | hebrew              | clusterNum | vowelName
-  ${"cluster with patach"}   | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${"PATAH"}
+  ${"cluster with patah"}    | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${"PATAH"}
   ${"cluster with qamets"}   | ${"הַֽ֭יְחָבְרְךָ"} | ${2}       | ${"QAMATS"}
-  ${"cluster with shewa"}    | ${"הַֽ֭יְחָבְרְךָ"} | ${3}       | ${null}
+  ${"cluster with sheva"}    | ${"הַֽ֭יְחָבְרְךָ"} | ${3}       | ${null}
   ${"cluster with no vowel"} | ${"י֔וֹם"}          | ${2}       | ${null}
 `("vowelName:", ({ description, hebrew, clusterNum, vowelName }) => {
   const heb = new Text(hebrew);
@@ -93,7 +93,7 @@ describe.each`
 
 describe.each`
   description                | hebrew              | clusterNum | vowelName   | result
-  ${"cluster with patach"}   | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${"PATAH"}  | ${true}
+  ${"cluster with patah"}    | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${"PATAH"}  | ${true}
   ${"cluster with qamets"}   | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${"QAMATS"} | ${false}
   ${"cluster with no vowel"} | ${"י֔וֹם"}          | ${2}       | ${"HOLAM"}  | ${false}
 `("hasVowelName:", ({ description, hebrew, clusterNum, vowelName, result }) => {
