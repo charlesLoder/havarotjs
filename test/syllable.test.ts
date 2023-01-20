@@ -1,4 +1,5 @@
 import { Text } from "../src/index";
+import { Syllable } from "../src/syllable";
 
 describe.each`
   description                     | hebrew              | syllableNum | vowel         | allowNoNiqqud
@@ -61,5 +62,24 @@ describe.each`
   const syllable = heb.syllables[syllableNum];
   test(`vowelName${vowelName} should throw error`, () => {
     expect(() => syllable.hasVowelName(vowelName)).toThrowError();
+  });
+});
+
+describe.each`
+  description               | hebrew                 | syllableNum | nextExists | nextText
+  ${"has next"}             | ${"הַֽ֭יְחָבְרְךָ"}    | ${0}        | ${true}    | ${"יְ"}
+  ${"does not have next"}   | ${"כִּסֵּ֣א"}          | ${1}        | ${false}   | ${null}
+  ${"does not cross words"} | ${"כִּסֵּ֣א הַוּ֑וֹת"} | ${1}        | ${false}   | ${null}
+`("implements Node:", ({ description, hebrew, syllableNum, nextExists, nextText }) => {
+  const heb = new Text(hebrew);
+  const syllable = heb.syllables[syllableNum];
+  const nextSyllable = syllable.next;
+  describe(description, () => {
+    test(`${description}`, () => {
+      expect(nextSyllable).toBeDefined();
+      if (nextExists && nextSyllable && nextSyllable instanceof Syllable) {
+        expect(nextSyllable.text).toEqual(nextText);
+      }
+    });
   });
 });

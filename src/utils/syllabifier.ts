@@ -397,5 +397,7 @@ export const syllabify = (clusters: Cluster[], options: SylOpts): Syllable[] => 
   syllables.forEach((syllable, index, arr) => setIsClosed(syllable, index, arr));
   syllables.forEach((syllable) => setIsAccented(syllable));
   syllables[syllables.length - 1].isFinal = true;
+  const [first, ...rest] = syllables;
+  first.siblings = rest;
   return latinClusters.length ? reinsertLatin(syllables, latinClusters) : syllables;
 };

@@ -1,5 +1,3 @@
-import { Cluster } from "./cluster";
-
 export class Node {
   next: Node | null;
   prev: Node | null;

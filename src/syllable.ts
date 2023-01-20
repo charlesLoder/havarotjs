@@ -2,6 +2,7 @@ import { Cluster } from "./cluster";
 import { Char } from "./char";
 import { CharToNameMap, charToNameMap, NameToCharMap, nameToCharMap } from "./utils/vowelMap";
 import { vowelsCaptureGroupWithShewa } from "./utils/regularExpressions";
+import { Node } from "./node";
 
 interface SyllableCharToNameMap extends CharToNameMap {
   /* eslint-disable  @typescript-eslint/naming-convention */
@@ -26,7 +27,7 @@ const sylNameToCharMap: SyllableNameToCharMap = {
 /**
  * A `Syllable` is created from an array of [[`Clusters`]].
  */
-export class Syllable {
+export class Syllable extends Node {
   #clusters: Cluster[];
   #isClosed: boolean;
   #isAccented: boolean;
@@ -41,6 +42,7 @@ export class Syllable {
    * Currently, the Divine Name (e.g. יהוה), non-Hebrew text, and Hebrew punctuation (e.g. _passeq_, _nun hafucha_) are treated as a _single syllable_ because these do not follow the rules of Hebrew syllabification.
    */
   constructor(clusters: Cluster[], { isClosed = false, isAccented = false, isFinal = false } = {}) {
+    super();
     this.#clusters = clusters;
     this.#isClosed = isClosed;
     this.#isAccented = isAccented;
