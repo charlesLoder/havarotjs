@@ -61,7 +61,7 @@ optional.syllables.map(syl => syl.text);
 
 Takes a `boolean`. Default `true`.
 
-If `true`, regards the sheva under the letters שׁשׂסצנמלוי when preceded by a waw-consecutive with a missing _dagesh chazaq_ as vocal. If a metheg is present, the sheva is always a _sheva na'_.
+If `true`, regards the sheva under the letters שׁשׂסצנמלוי when preceded by a waw-consecutive with a missing _dagesh chazaq_ as vocal. If a meteg is present, the sheva is always a _sheva na'_.
 
 ```typescript
 const default = new Text("וַיְצַחֵק֙");
@@ -95,7 +95,7 @@ qQRegx.test(optional.text);
 
 Takes a `boolean`. Default is `true`.
 
-If `true`, regards a sheva after a waw-shureq as a _sheva na'_, unless a metheg is present.
+If `true`, regards a sheva after a waw-shureq as a _sheva na'_, unless a meteg is present.
 
 ```typescript
 const default = new Text("וּלְמַזֵּר");

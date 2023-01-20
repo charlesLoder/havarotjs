@@ -40,20 +40,20 @@ describe.each`
 });
 
 describe.each`
-  description                                         | hebrew              | clusterNum | hasMetheg
-  ${"word with single metheg"}                        | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${true}
-  ${"word with single silluq"}                        | ${"נַפְשִֽׁי׃"}     | ${2}       | ${false}
-  ${"word with metheg & silluq"}                      | ${"הָֽאֲדָמָֽה׃"}   | ${0}       | ${true}
-  ${"word with metheg & silluq"}                      | ${"הָֽאֲדָמָֽה׃"}   | ${3}       | ${false}
-  ${"words with metheg & silluq, joined with maqqef"} | ${"וַֽיְהִי־כֵֽן׃"} | ${0}       | ${true}
-  ${"words with metheg & silluq, joined with maqqef"} | ${"וַֽיְהִי־כֵֽן׃"} | ${4}       | ${false}
-`("hasMetheg:", ({ description, hebrew, clusterNum, hasMetheg }) => {
+  description                                        | hebrew              | clusterNum | hasMeteg
+  ${"word with single meteg"}                        | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${true}
+  ${"word with single silluq"}                       | ${"נַפְשִֽׁי׃"}     | ${2}       | ${false}
+  ${"word with meteg & silluq"}                      | ${"הָֽאֲדָמָֽה׃"}   | ${0}       | ${true}
+  ${"word with meteg & silluq"}                      | ${"הָֽאֲדָמָֽה׃"}   | ${3}       | ${false}
+  ${"words with meteg & silluq, joined with maqqef"} | ${"וַֽיְהִי־כֵֽן׃"} | ${0}       | ${true}
+  ${"words with meteg & silluq, joined with maqqef"} | ${"וַֽיְהִי־כֵֽן׃"} | ${4}       | ${false}
+`("hasMeteg:", ({ description, hebrew, clusterNum, hasMeteg }) => {
   const heb = new Text(hebrew);
   const cluster = heb.clusters[clusterNum];
-  const metheg = cluster.hasMetheg;
+  const meteg = cluster.hasMeteg;
   describe(description, () => {
-    test(`hasMetheg to equal ${hasMetheg}`, () => {
-      expect(metheg).toEqual(hasMetheg);
+    test(`hasMeteg to equal ${hasMeteg}`, () => {
+      expect(meteg).toEqual(hasMeteg);
     });
   });
 });
