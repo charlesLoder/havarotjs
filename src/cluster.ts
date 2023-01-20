@@ -267,6 +267,8 @@ export class Cluster extends Node {
    * Returns `true` if the following character is present and a _sof pasuq_ does not follow it:
    * - \u{05BD} METEG
    *
+   * @deprecated use `hasMeteg`
+   *
    * ```typescript
    * const text: Text = new Text("הֲבָרֹות");
    * text.clusters[0].hasMetheg;
@@ -274,6 +276,20 @@ export class Cluster extends Node {
    * ```
    */
   get hasMetheg(): boolean {
+    return this.hasMeteg;
+  }
+
+  /**
+   * Returns `true` if the following character is present and a _sof pasuq_ does not follow it:
+   * - \u{05BD} METEG
+   *
+   * ```typescript
+   * const text: Text = new Text("הֲבָרֹות");
+   * text.clusters[0].hasMetheg;
+   * // false
+   * ```
+   */
+  get hasMeteg(): boolean {
     const metheg = /\u{05BD}/u;
     const text = this.text;
     if (!metheg.test(text)) {
