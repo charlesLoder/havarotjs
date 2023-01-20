@@ -225,9 +225,9 @@ export class Cluster extends Node {
 
   /**
    * Returns `true` if `Cluster.hasVowel`, `Cluster.hasSheva`, and, `Cluster.isShureq` are all `false` and `Cluster.text` contains a:
-   * - `ה` preceded by a qamets, tsere, or seghol
+   * - `ה` preceded by a qamets, tsere, or segol
    * - `ו` preceded by a holem
-   * - `י` preceded by a hiriq, tsere, or seghol
+   * - `י` preceded by a hiriq, tsere, or segol
    *
    * There are potentially other instances when a consonant may be a _mater_ (e.g. a silent aleph), but these are the most common.
    * Though a shureq is a _mater_ letter, it is also a vowel itself, and thus separate from `isMater`.

@@ -8,7 +8,7 @@ describe.each`
   ${"tsere-yod, one syllable"}                                    | ${"עֵיץ"}          | ${["עֵיץ"]}                          | ${[false, true, false]}
   ${"tsere-yod, two syllables"}                                   | ${"בֵּיצָה"}       | ${["בֵּי", "צָה"]}                   | ${[false, true, false, true]}
   ${"tsere-yod, two syllables"}                                   | ${"בֵּיצָה"}       | ${["בֵּי", "צָה"]}                   | ${[false, true, false, true]}
-  ${"seghol yod, four syllables"}                                 | ${"אֱלֹהֶ֑֔יךָ"}   | ${["אֱ", "לֹ", "הֶ֑֔י", "ךָ"]}       | ${[false, false, false, true, false]}
+  ${"segol yod, four syllables"}                                  | ${"אֱלֹהֶ֑֔יךָ"}   | ${["אֱ", "לֹ", "הֶ֑֔י", "ךָ"]}       | ${[false, false, false, true, false]}
   ${"holem-waw, one syllable"}                                    | ${"בֹּו"}          | ${["בֹּו"]}                          | ${[false, true]}
   ${"holem-waw, one syllable, closed"}                            | ${"י֔וֹם"}         | ${["יֹ֔ום"]}                         | ${[false, true, false]}
   ${"holem-waw, two syllables, holem final"}                      | ${"כְּמוֹ"}        | ${["כְּ", "מֹו"]}                    | ${[false, false, true]}
@@ -20,7 +20,7 @@ describe.each`
   ${"qamets-he, one syllable"}                                    | ${"בָּה"}          | ${["בָּה"]}                          | ${[false, true]}
   ${"qamets-he, two syllables"}                                   | ${"יָפָה"}         | ${["יָ", "פָה"]}                     | ${[false, false, true]}
   ${"qamets-he follwed by shureq (not mater)"}                    | ${"אֵלִיָּ֨הוּ"}   | ${["אֵ", "לִ", "יָּ֨", "הוּ"]}       | ${[false, false, false, false, false]}
-  ${"seghol-he, two syllables"}                                   | ${"יָפֶה"}         | ${["יָ", "פֶה"]}                     | ${[false, false, true]}
+  ${"segol-he, two syllables"}                                    | ${"יָפֶה"}         | ${["יָ", "פֶה"]}                     | ${[false, false, true]}
   ${"3fs suffix, one syllable"}                                   | ${"בָּהּ"}         | ${["בָּהּ"]}                         | ${[false, false]}
   ${"3ms plural suffix, three syllable"}                          | ${"תֹּורֹתָיו"}    | ${["תֹּו", "רֹ", "תָיו"]}            | ${[false, true, false, false, false, false]}
   ${"quiesced aleph, two syllables"}                              | ${"רִאשׁ֔וֹן"}     | ${["רִא", "שֹׁ֔ון"]}                 | ${[false, false, false, true, false]}
