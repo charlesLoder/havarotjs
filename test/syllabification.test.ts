@@ -65,7 +65,7 @@ describe.each`
   ${"2ms qatal verb consecution (wǝšāmartā́)"}            | ${"וְשָׁמַרְתָּ֖"}    | ${["וְ", "שָׁ", "מַרְ", "תָּ֖"]}    | ${[false, false, true, false]}  | ${[false, false, false, true]}
   ${"sheva preceded by short vowel, but metheg present"} | ${"הַֽמְכַסֶּ֬ה"}     | ${["הַֽ", "מְ", "כַ", "סֶּ֬ה"]}     | ${[false, false, true, false]}  | ${[false, false, false, true]}
   ${"initial shureq followed by sheva"}                  | ${"וּלְזַמֵּ֖ר"}      | ${["וּ", "לְ", "זַ", "מֵּ֖ר"]}      | ${[false, false, true, true]}   | ${[false, false, false, true]}
-  ${"Jerusalem w/ patach"}                               | ${"יְרוּשָׁלִַ֗ם"}    | ${["יְ", "רוּ", "שָׁ", "לִַ֗ם"]}    | ${[false, false, false, true]}  | ${[false, false, false, true]}
+  ${"Jerusalem w/ patah"}                                | ${"יְרוּשָׁלִַ֗ם"}    | ${["יְ", "רוּ", "שָׁ", "לִַ֗ם"]}    | ${[false, false, false, true]}  | ${[false, false, false, true]}
   ${"Jerusalem w/ qamets"}                               | ${"בִּירוּשָׁלִָֽם׃"} | ${["בִּי", "רוּ", "שָׁ", "לִָֽם׃"]} | ${[false, false, false, true]}  | ${[false, false, false, true]}
   ${"aleph w/ shureq"}                                   | ${"יִירָא֥וּךָ"}      | ${["יִי", "רָ", "א֥וּ", "ךָ"]}      | ${[false, false, false, false]} | ${[false, false, true, false]}
 `("4 Syllables:", ({ description, original, sylArr, closedArr, accentArr }) => {

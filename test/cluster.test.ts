@@ -60,7 +60,7 @@ describe.each`
 
 describe.each`
   description                | hebrew              | clusterNum | vowel
-  ${"cluster with patach"}   | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${"\u{05B7}"}
+  ${"cluster with patah"}    | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${"\u{05B7}"}
   ${"cluster with sheva"}    | ${"הַֽ֭יְחָבְרְךָ"} | ${3}       | ${null}
   ${"cluster with no vowel"} | ${"י֔וֹם"}          | ${2}       | ${null}
 `("vowel:", ({ description, hebrew, clusterNum, vowel }) => {
@@ -76,7 +76,7 @@ describe.each`
 
 describe.each`
   description                | hebrew              | clusterNum | vowelName
-  ${"cluster with patach"}   | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${"PATAH"}
+  ${"cluster with patah"}    | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${"PATAH"}
   ${"cluster with qamets"}   | ${"הַֽ֭יְחָבְרְךָ"} | ${2}       | ${"QAMATS"}
   ${"cluster with sheva"}    | ${"הַֽ֭יְחָבְרְךָ"} | ${3}       | ${null}
   ${"cluster with no vowel"} | ${"י֔וֹם"}          | ${2}       | ${null}
@@ -93,7 +93,7 @@ describe.each`
 
 describe.each`
   description                | hebrew              | clusterNum | vowelName   | result
-  ${"cluster with patach"}   | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${"PATAH"}  | ${true}
+  ${"cluster with patah"}    | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${"PATAH"}  | ${true}
   ${"cluster with qamets"}   | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${"QAMATS"} | ${false}
   ${"cluster with no vowel"} | ${"י֔וֹם"}          | ${2}       | ${"HOLAM"}  | ${false}
 `("hasVowelName:", ({ description, hebrew, clusterNum, vowelName, result }) => {

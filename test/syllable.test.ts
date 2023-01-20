@@ -3,7 +3,7 @@ import { Syllable } from "../src/syllable";
 
 describe.each`
   description                     | hebrew              | syllableNum | vowel         | allowNoNiqqud
-  ${"syllable with patach"}       | ${"הַֽ֭יְחָבְרְךָ"} | ${0}        | ${"\u{05B7}"} | ${false}
+  ${"syllable with patah"}        | ${"הַֽ֭יְחָבְרְךָ"} | ${0}        | ${"\u{05B7}"} | ${false}
   ${"syllable with sheva"}        | ${"הַֽ֭יְחָבְרְךָ"} | ${1}        | ${"\u{05B0}"} | ${false}
   ${"syllable with silent sheva"} | ${"הַֽ֭יְחָבְרְךָ"} | ${2}        | ${"\u{05B8}"} | ${false}
   ${"syllable with none"}         | ${"test"}           | ${0}        | ${null}       | ${true}
@@ -21,7 +21,7 @@ describe.each`
 
 describe.each`
   description                     | hebrew              | syllableNum | vowelName   | allowNoNiqqud
-  ${"syllable with patach"}       | ${"הַֽ֭יְחָבְרְךָ"} | ${0}        | ${"PATAH"}  | ${false}
+  ${"syllable with patah"}        | ${"הַֽ֭יְחָבְרְךָ"} | ${0}        | ${"PATAH"}  | ${false}
   ${"syllable with sheva"}        | ${"הַֽ֭יְחָבְרְךָ"} | ${1}        | ${"SHEVA"}  | ${false}
   ${"syllable with silent sheva"} | ${"הַֽ֭יְחָבְרְךָ"} | ${2}        | ${"QAMATS"} | ${false}
   ${"syllable with none"}         | ${"test"}           | ${0}        | ${null}     | ${true}
@@ -39,7 +39,7 @@ describe.each`
 
 describe.each`
   description                     | hebrew              | syllableNum | vowelName   | result
-  ${"syllable with patach"}       | ${"הַֽ֭יְחָבְרְךָ"} | ${0}        | ${"PATAH"}  | ${true}
+  ${"syllable with patah"}        | ${"הַֽ֭יְחָבְרְךָ"} | ${0}        | ${"PATAH"}  | ${true}
   ${"syllable with sheva"}        | ${"הַֽ֭יְחָבְרְךָ"} | ${1}        | ${"SHEVA"}  | ${true}
   ${"syllable with silent sheva"} | ${"הַֽ֭יְחָבְרְךָ"} | ${2}        | ${"SHEVA"}  | ${false}
   ${"syllable with qamats"}       | ${"הַֽ֭יְחָבְרְךָ"} | ${2}        | ${"QAMATS"} | ${true}
