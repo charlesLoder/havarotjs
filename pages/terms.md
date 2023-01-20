@@ -10,6 +10,8 @@ Preference is to use Hebrew names with simplified spellings for particular varia
 |        niqqud        |                  points, pointing                  |
 |        sheva         |                    shewa, shva                     |
 | taam, taamim, taamei | ta'amei, ta'amei ha-miqra, accents\*, cantillation |
-|     qamets qatan     |                    qamets hatuf                    |
+|   qamets qatan\*\*   |                    qamets hatuf                    |
 
 \*the `Syllable` object has a property `isAccented` which is a linguistic property (i.e. stress), but the `Cluster` object has the property `hasTaamim` since this references the characters.
+
+\*\*non-critical spellings are "qamats" for "qamets" and "qamets qata" to align with the Unicode names.
