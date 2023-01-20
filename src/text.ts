@@ -28,7 +28,7 @@ export interface SylOpts {
    */
   allowNoNiqqud?: boolean;
   /**
-   * determines whether to regard the shewa under the letters ילמ when preceded by the article and with a missing dagesh chazaq as as a _shewa na'_. If a metheg is present, the shewa is always a _shewa na'_.
+   * determines whether to regard the sheva under the letters ילמ when preceded by the article and with a missing dagesh chazaq as as a _sheva na'_. If a metheg is present, the sheva is always a _sheva na'_.
    *
    * @defaultValue true
    * @example
@@ -88,7 +88,7 @@ export interface SylOpts {
    */
   holemHaser?: "update" | "preserve" | "remove";
   /**
-   * determines whether to regard a shewa after a long vowel (excluding waw-shureq, see {@link wawShureq}) as a _shewa na'_. If a metheg is present, the shewa is always a _shewa na'_.
+   * determines whether to regard a sheva after a long vowel (excluding waw-shureq, see {@link wawShureq}) as a _sheva na'_. If a metheg is present, the sheva is always a _sheva na'_.
    *
    * @defaultValue true
    * @example
@@ -125,7 +125,7 @@ export interface SylOpts {
    */
   qametsQatan?: boolean;
   /**
-   * determines whether to regard the shewa under the letters שׁשׂסצנמלוי when preceded by a waw-consecutive with a missing dagesh chazaq as a _shewa na'_. If a metheg is present, the shewa is always a _shewa na'_.
+   * determines whether to regard the sheva under the letters שׁשׂסצנמלוי when preceded by a waw-consecutive with a missing dagesh chazaq as a _sheva na'_. If a metheg is present, the sheva is always a _sheva na'_.
    *
    * @defaultValue true
    * @example
@@ -161,7 +161,7 @@ export interface SylOpts {
    */
   strict?: boolean;
   /**
-   * determines whether to regard a shewa after a vav-shureq as vocal. If a metheg is present, the shewa is always a _shewa na'_.
+   * determines whether to regard a sheva after a vav-shureq as vocal. If a metheg is present, the sheva is always a _sheva na'_.
    *
    * @defaultValue true
    * @example

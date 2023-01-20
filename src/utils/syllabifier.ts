@@ -79,14 +79,14 @@ const groupFinal = (arr: Cluster[], strict: boolean = true): Mixed => {
 };
 
 /**
- * @description groups shewas either by themselves or with preceding short vowel
+ * @description groups shevas either by themselves or with preceding short vowel
  */
-const groupShewas = (arr: Mixed, options: SylOpts): Mixed => {
-  let shewaPresent = false;
+const groupShevas = (arr: Mixed, options: SylOpts): Mixed => {
+  let shevaPresent = false;
   let syl: Syl = [];
   const result: Mixed = [];
   const len = arr.length;
-  const shewaNewSyllable = createNewSyllable.bind(groupShewas, result);
+  const shevaNewSyllable = createNewSyllable.bind(groupShevas, result);
 
   for (let index = 0; index < len; index++) {
     const cluster = arr[index];
@@ -97,22 +97,22 @@ const groupShewas = (arr: Mixed, options: SylOpts): Mixed => {
       continue;
     }
 
-    const clusterHasShewa = cluster.hasShewa;
-    if (!shewaPresent && clusterHasShewa) {
-      shewaPresent = true;
+    const clusterHasSheva = cluster.hasSheva;
+    if (!shevaPresent && clusterHasSheva) {
+      shevaPresent = true;
       syl.unshift(cluster);
       continue;
     }
 
-    if (shewaPresent && clusterHasShewa) {
-      syl = shewaNewSyllable(syl);
+    if (shevaPresent && clusterHasSheva) {
+      syl = shevaNewSyllable(syl);
       syl.unshift(cluster);
       continue;
     }
 
-    if (shewaPresent && cluster.hasShortVowel) {
+    if (shevaPresent && cluster.hasShortVowel) {
       if (cluster.hasMetheg) {
-        syl = shewaNewSyllable(syl);
+        syl = shevaNewSyllable(syl);
         syl.unshift(cluster);
         continue;
       }
@@ -122,61 +122,61 @@ const groupShewas = (arr: Mixed, options: SylOpts): Mixed => {
       const wawConsecutive = /וַ/;
       // check if there is a doubling dagesh
       if (dageshRegx.test(prev)) {
-        syl = shewaNewSyllable(syl);
+        syl = shevaNewSyllable(syl);
       }
       // check for waw-consecutive w/ sqenemlevy letter
       else if (options.sqnmlvy && sqenemlevy.test(prev) && wawConsecutive.test(cluster.text)) {
-        syl = shewaNewSyllable(syl);
+        syl = shevaNewSyllable(syl);
         result.push(new Syllable([cluster]));
-        shewaPresent = false;
+        shevaPresent = false;
         continue;
       }
-      // check for article preceding yod w/ shewa
+      // check for article preceding yod w/ sheva
       else if (options.article && /[ילמ]/.test(prev) && /הַ/.test(cluster.text)) {
-        syl = shewaNewSyllable(syl);
+        syl = shevaNewSyllable(syl);
         result.push(new Syllable([cluster]));
-        shewaPresent = false;
+        shevaPresent = false;
         continue;
       }
       syl.unshift(cluster);
-      syl = shewaNewSyllable(syl, true);
-      shewaPresent = false;
+      syl = shevaNewSyllable(syl, true);
+      shevaPresent = false;
       continue;
     }
 
-    if (shewaPresent && cluster.hasLongVowel) {
+    if (shevaPresent && cluster.hasLongVowel) {
       if (options.longVowels) {
-        syl = shewaNewSyllable(syl);
+        syl = shevaNewSyllable(syl);
         result.push(cluster);
-        shewaPresent = false;
+        shevaPresent = false;
       } else {
         syl.unshift(cluster);
-        syl = shewaNewSyllable(syl, true);
-        shewaPresent = false;
+        syl = shevaNewSyllable(syl, true);
+        shevaPresent = false;
       }
       continue;
     }
 
-    if (shewaPresent && cluster.isShureq) {
+    if (shevaPresent && cluster.isShureq) {
       if (!options.wawShureq && !cluster.hasMetheg && len - 1 === index) {
         syl.unshift(cluster);
-        syl = shewaNewSyllable(syl, true);
+        syl = shevaNewSyllable(syl, true);
       } else {
-        syl = shewaNewSyllable(syl);
+        syl = shevaNewSyllable(syl);
         result.push(cluster);
-        shewaPresent = false;
+        shevaPresent = false;
       }
       continue;
     }
 
-    if (shewaPresent && cluster.isMater) {
-      syl = shewaNewSyllable(syl);
+    if (shevaPresent && cluster.isMater) {
+      syl = shevaNewSyllable(syl);
       result.push(cluster);
-      shewaPresent = false;
+      shevaPresent = false;
       continue;
     }
 
-    if (shewaPresent && !cluster.hasVowel) {
+    if (shevaPresent && !cluster.hasVowel) {
       syl.unshift(cluster);
       continue;
     }
@@ -185,7 +185,7 @@ const groupShewas = (arr: Mixed, options: SylOpts): Mixed => {
   }
 
   if (syl.length) {
-    shewaNewSyllable(syl);
+    shevaNewSyllable(syl);
   }
 
   return result;
@@ -237,7 +237,7 @@ const groupMaters = (arr: Mixed, strict: boolean = true): Mixed => {
         throw new Error(`The cluster ${cluster.text} is a quiesced alef, but nothing precedes it in ${word}`);
       }
 
-      // at this point, only final syllables and shewas are Syllables
+      // at this point, only final syllables and shevas are Syllables
       if (nxt instanceof Syllable) {
         result.push(cluster);
         continue;
@@ -296,13 +296,13 @@ const groupShureqs = (arr: Mixed, strict: boolean = true): Mixed => {
 };
 
 /**
- * @description a preprocessing step that groups clusters into intermediate syllables by vowels or shewas
+ * @description a preprocessing step that groups clusters into intermediate syllables by vowels or shevas
  */
 const groupClusters = (arr: Cluster[], options: SylOpts): Mixed => {
   const rev = arr.reverse();
   const finalGrouped = groupFinal(rev, options.strict);
-  const shewasGrouped = groupShewas(finalGrouped, options);
-  const shureqGroups = groupShureqs(shewasGrouped, options.strict);
+  const shevasGrouped = groupShevas(finalGrouped, options);
+  const shureqGroups = groupShureqs(shevasGrouped, options.strict);
   const matersGroups = groupMaters(shureqGroups, options.strict);
   const result = matersGroups.reverse();
   return result;
@@ -332,7 +332,7 @@ const setIsClosed = (syllable: Syllable, index: number, arr: Syllable[]) => {
     const hasShortVowel = !!syllable.clusters.filter((cluster) => cluster.hasShortVowel).length;
     /**
      * if `hasShortVowel` is true, nothing to check;
-     * if a syllable has only one cluster with a shewa, then it is false;
+     * if a syllable has only one cluster with a sheva, then it is false;
      * else, it means the preceding cluster has no vowel
      */
     const hasNoVowel = hasShortVowel || !!(syllable.clusters.filter((cluster) => !cluster.hasVowel).length - 1);

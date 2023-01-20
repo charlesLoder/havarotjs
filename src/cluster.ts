@@ -132,8 +132,8 @@ export class Cluster extends Node {
   /**
    * Returns `true` if `Cluster.hasLongVowel`, `Cluster.hasShortVowel`, or `Cluster.hasHalfVowel` is true.
    *
-   * According to {@page Syllabification}, a shewa is a vowel and serves as the nucleus of a syllable.
-   * Because `Cluster` is concerned with orthography, a shewa is **not** a vowel character.
+   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
+   * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character.
    *
    * ```typescript
    * const text: Text = new Text("הֲבָרֹות");
@@ -150,8 +150,8 @@ export class Cluster extends Node {
   /**
    * Returns `true` if cluster contains the vowel character of the name passed in
    *
-   * According to {@page Syllabification}, a shewa is a vowel and serves as the nucleus of a syllable.
-   * Because `Cluster` is concerned with orthography, a shewa is **not** a vowel character.
+   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
+   * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character.
    *
    * ```typescript
    * const text: Text = new Text("הַיְחָבְרְךָ");
@@ -169,8 +169,8 @@ export class Cluster extends Node {
   /**
    * Returns the vowel character of the cluster
    *
-   * According to {@page Syllabification}, a shewa is a vowel and serves as the nucleus of a syllable.
-   * Because `Cluster` is concerned with orthography, a shewa is **not** a vowel character
+   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
+   * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character
    *
    * ```typescript
    * const text: Text = new Text("הַֽ֭יְחָבְרְךָ");
@@ -188,8 +188,8 @@ export class Cluster extends Node {
   /**
    * Returns the vowel character name of the cluster
    *
-   * According to {@page Syllabification}, a shewa is a vowel and serves as the nucleus of a syllable.
-   * Because `Cluster` is concerned with orthography, a shewa is **not** a vowel character
+   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
+   * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character
    *
    * ```typescript
    * const text: Text = new Text("הַֽ֭יְחָבְרְךָ");
@@ -224,7 +224,7 @@ export class Cluster extends Node {
   }
 
   /**
-   * Returns `true` if `Cluster.hasVowel`, `Cluster.hasShewa`, and, `Cluster.isShureq` are all `false` and `Cluster.text` contains a:
+   * Returns `true` if `Cluster.hasVowel`, `Cluster.hasSheva`, and, `Cluster.isShureq` are all `false` and `Cluster.text` contains a:
    * - `ה` preceded by a qamets, tsere, or seghol
    * - `ו` preceded by a holem
    * - `י` preceded by a hiriq, tsere, or seghol
@@ -242,7 +242,7 @@ export class Cluster extends Node {
    */
   get isMater(): boolean {
     const nxtIsShureq = this.next instanceof Cluster ? this.next.isShureq : false;
-    if (!this.hasVowel && !this.isShureq && !this.hasShewa && !nxtIsShureq) {
+    if (!this.hasVowel && !this.isShureq && !this.hasSheva && !nxtIsShureq) {
       const text = this.text;
       const prevText = this.prev instanceof Cluster ? this.prev.text : "";
       const maters = /[היו](?!\u{05BC})/u;
@@ -298,13 +298,15 @@ export class Cluster extends Node {
 
   /**
    * Returns `true` if the following character is present:
-   * - \u{05B0} SHEWA
+   * - \u{05B0} SHEVA
+   *
+   * @deprecated now use `hasSheva`
    *
    * ```typescript
    * const text: Text = new Text("מַלְכָּה");
-   * text.clusters[0].hasShewa;
+   * text.clusters[0].hasSheva;
    * // false
-   * text.clusters[1].hasShewa;
+   * text.clusters[1].hasSheva;
    * // true
    * ```
    */

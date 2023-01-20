@@ -8,7 +8,7 @@ Preference is to use Hebrew names with simplified spellings for particular varia
 |        dagesh        |                        dot                         |
 |        hatef         |                hateph, ultra-short                 |
 |        niqqud        |                  points, pointing                  |
-|        shewa         |                    sheva, shva                     |
+|        sheva         |                    shewa, shva                     |
 | taam, taamim, taamei | ta'amei, ta'amei ha-miqra, accents\*, cantillation |
 |     qamets qatan     |                    qamets hatuf                    |
 

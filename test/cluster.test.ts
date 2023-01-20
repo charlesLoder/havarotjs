@@ -61,7 +61,7 @@ describe.each`
 describe.each`
   description                | hebrew              | clusterNum | vowel
   ${"cluster with patach"}   | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${"\u{05B7}"}
-  ${"cluster with shewa"}    | ${"הַֽ֭יְחָבְרְךָ"} | ${3}       | ${null}
+  ${"cluster with sheva"}    | ${"הַֽ֭יְחָבְרְךָ"} | ${3}       | ${null}
   ${"cluster with no vowel"} | ${"י֔וֹם"}          | ${2}       | ${null}
 `("vowel:", ({ description, hebrew, clusterNum, vowel }) => {
   const heb = new Text(hebrew);
@@ -78,7 +78,7 @@ describe.each`
   description                | hebrew              | clusterNum | vowelName
   ${"cluster with patach"}   | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${"PATAH"}
   ${"cluster with qamets"}   | ${"הַֽ֭יְחָבְרְךָ"} | ${2}       | ${"QAMATS"}
-  ${"cluster with shewa"}    | ${"הַֽ֭יְחָבְרְךָ"} | ${3}       | ${null}
+  ${"cluster with sheva"}    | ${"הַֽ֭יְחָבְרְךָ"} | ${3}       | ${null}
   ${"cluster with no vowel"} | ${"י֔וֹם"}          | ${2}       | ${null}
 `("vowelName:", ({ description, hebrew, clusterNum, vowelName }) => {
   const heb = new Text(hebrew);

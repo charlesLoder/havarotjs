@@ -15,7 +15,7 @@ All references are to this work, unless otherwise noted.
 
 ## What Conistitutes a Syllable
 
-In Biblical Hebrew, it is often considered that hatef vowels and vocalic shewas do not consitute syllabes.
+In Biblical Hebrew, it is often considered that hatef vowels and vocalic shevas do not consitute syllabes.
 
 In [GKC](https://en.wikisource.org/wiki/Gesenius%27_Hebrew_Grammar/26._Syllable-formation_and_its_Influence_on_the_Quantity_of_Vowels) §26m:
 
@@ -23,7 +23,7 @@ In [GKC](https://en.wikisource.org/wiki/Gesenius%27_Hebrew_Grammar/26._Syllable-
 
 As Khan says (I.2.5.2):
 
-> In the Tiberian Masoretic literature a consonant with a vocalic shewa or a ḥaṭef vowel sign was not considered to stand independently, but was said to be bound to the following consonants. Thus the word תִּסְפְּר֖וּ ‘you shall count’ (Lev. 23.16) was considered to have been composed of two prosodic units [tis–paʀ̟uː]. The sources refer to these prosodic units by the Arabic term _maqṭaʿ_, which is used in the Arabic grammatical literature to refer to a syllable.
+> In the Tiberian Masoretic literature a consonant with a vocalic sheva or a ḥaṭef vowel sign was not considered to stand independently, but was said to be bound to the following consonants. Thus the word תִּסְפְּר֖וּ ‘you shall count’ (Lev. 23.16) was considered to have been composed of two prosodic units [tis–paʀ̟uː]. The sources refer to these prosodic units by the Arabic term _maqṭaʿ_, which is used in the Arabic grammatical literature to refer to a syllable.
 
 Though, as he demonstrates, it is better to understand the Tiberian syllables as feet. Thus, the word תִּסְפְּר֖וּ is really 3 syllables, but two metrical feet:
 
@@ -35,7 +35,7 @@ Though, as he demonstrates, it is better to understand the Tiberian syllables as
 | ------- | ---------- |
 | foot    | foot       |
 
-According to this decription, hatef vowels and _shewa na'_ **do** constitute syllables.
+According to this decription, hatef vowels and _sheva na'_ **do** constitute syllables.
 
 ## Options for Syllabification
 
@@ -45,7 +45,7 @@ These are the options for syllabification.
 
 Takes a `boolean`. Default `true`.
 
-If `true`, regards a shewa after a long vowel (excluding waw-shureq) as a _shewa na'_ .
+If `true`, regards a sheva after a long vowel (excluding waw-shureq) as a _sheva na'_ .
 
 ```typescript
 const default = new Text("יָדְךָ");
@@ -61,7 +61,7 @@ optional.syllables.map(syl => syl.text);
 
 Takes a `boolean`. Default `true`.
 
-If `true`, regards the shewa under the letters שׁשׂסצנמלוי when preceded by a waw-consecutive with a missing _dagesh chazaq_ as vocal. If a metheg is present, the shewa is always a _shewa na'_.
+If `true`, regards the sheva under the letters שׁשׂסצנמלוי when preceded by a waw-consecutive with a missing _dagesh chazaq_ as vocal. If a metheg is present, the sheva is always a _sheva na'_.
 
 ```typescript
 const default = new Text("וַיְצַחֵק֙");
@@ -95,7 +95,7 @@ qQRegx.test(optional.text);
 
 Takes a `boolean`. Default is `true`.
 
-If `true`, regards a shewa after a waw-shureq as a _shewa na'_, unless a metheg is present.
+If `true`, regards a sheva after a waw-shureq as a _sheva na'_, unless a metheg is present.
 
 ```typescript
 const default = new Text("וּלְמַזֵּר");
@@ -129,33 +129,33 @@ default.syllables.map(syl => syl.text);
 
 ```
 
-#### Vocal & Silent Shewas
+#### Vocal & Silent Shevas
 
-In regards to the realization of shewas, Khan remarks (I.2.5.1.1):
+In regards to the realization of shevas, Khan remarks (I.2.5.1.1):
 
 > The shewa (שְׁוָּא) sign (אְ) in the Tiberian vocalization system was read either as a vowel or as zero. When shewa was read as vocalic, its quality in the Tiberian tradition was by default the same as that of the pataḥ vowel sign
 
-This package does **not** consider the quality of the realization of the shewa.
-It only determines whether the shewa is a _shewa na'_ (vocal) or _shewa nach_ (silent).
+This package does **not** consider the quality of the realization of the sheva.
+It only determines whether the sheva is a _sheva na'_ (vocal) or _sheva nach_ (silent).
 
-##### Vocal Shewas
+##### Vocal Shevas
 
-A shewa is considered a _shewa na'_ under the following conditions:
+A sheva is considered a _sheva na'_ under the following conditions:
 
 1. when it is the first vowel in a word
-2. when two shewas occur together in the middle of word, the first is silent and the second is vocal
+2. when two shevas occur together in the middle of word, the first is silent and the second is vocal
 3. when it appears under a geminated consonant
 4. when it is preceded by a long vowel
 
-##### Silent Shewas
+##### Silent Shevas
 
-If a shewa does not fall into the criteria above, it is generally silent (i.e. _shewa nach_).
+If a sheva does not fall into the criteria above, it is generally silent (i.e. _sheva nach_).
 
 There is one major exception:
 
-- In the word שְׁתַּיִם _štayim_ (and variants), the first shewa is technially silent.
+- In the word שְׁתַּיִם _štayim_ (and variants), the first sheva is technially silent.
 
-This package, however, considers it a _shewa na'_.
+This package, however, considers it a _sheva na'_.
 
 ### Tiberian
 
