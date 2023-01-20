@@ -285,14 +285,14 @@ export class Cluster extends Node {
    *
    * ```typescript
    * const text: Text = new Text("הֲבָרֹות");
-   * text.clusters[0].hasMetheg;
+   * text.clusters[0].hasMeteg;
    * // false
    * ```
    */
   get hasMeteg(): boolean {
-    const metheg = /\u{05BD}/u;
+    const meteg = /\u{05BD}/u;
     const text = this.text;
-    if (!metheg.test(text)) {
+    if (!meteg.test(text)) {
       return false;
     }
     let next = this.next;
@@ -300,7 +300,7 @@ export class Cluster extends Node {
       if (next instanceof Cluster) {
         const nextText = next.text;
         const sofPassuq = /\u{05C3}/u;
-        if (metheg.test(nextText)) {
+        if (meteg.test(nextText)) {
           return true;
         }
         if (sofPassuq.test(nextText)) {
