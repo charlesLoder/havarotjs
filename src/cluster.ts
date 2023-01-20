@@ -309,6 +309,22 @@ export class Cluster extends Node {
    * ```
    */
   get hasShewa(): boolean {
+    return this.hasSheva;
+  }
+
+  /**
+   * Returns `true` if the following character is present:
+   * - \u{05B0} SHEVA
+   *
+   * ```typescript
+   * const text: Text = new Text("מַלְכָּה");
+   * text.clusters[0].hasSheva;
+   * // false
+   * text.clusters[1].hasSheva;
+   * // true
+   * ```
+   */
+  get hasSheva(): boolean {
     return /\u{05B0}/u.test(this.text);
   }
 
