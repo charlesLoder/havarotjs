@@ -19,10 +19,10 @@ export class Cluster extends Node {
   #original: string;
   #sequenced: Char[];
 
-  constructor(cluster: string) {
+  constructor(cluster: string, noSequence: boolean = false) {
     super();
     this.#original = cluster;
-    this.#sequenced = this.sequence();
+    this.#sequenced = this.sequence(noSequence);
   }
 
   /**
@@ -67,8 +67,9 @@ export class Cluster extends Node {
     return this.#sequenced;
   }
 
-  private sequence(): Char[] {
-    return [...this.original].map((char) => new Char(char)).sort((a, b) => a.sequencePosition - b.sequencePosition);
+  private sequence(noSequence: boolean = false): Char[] {
+    const chars = [...this.original].map((char) => new Char(char));
+    return noSequence ? chars : chars.sort((a, b) => a.sequencePosition - b.sequencePosition);
   }
 
   /**

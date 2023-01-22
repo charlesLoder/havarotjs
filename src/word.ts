@@ -1,9 +1,43 @@
-import { syllabify, makeClusters } from "./utils/syllabifier";
+import { syllabify } from "./utils/syllabifier";
+import { taamim } from "./utils/regularExpressions";
 import { Syllable } from "./syllable";
 import { Cluster } from "./cluster";
 import { Char } from "./char";
 import { SylOpts } from "./text";
 import { isDivineName, hasDivineName } from "./utils/divineName";
+
+/**
+ *
+ * @param word the word to be split into Cluster
+ * @description splits a word at each consonant or the punctuation character
+ * Sof Pasuq and Nun Hafukha
+ */
+export const makeClusters = (word: string): Cluster[] => {
+  const split =
+    /(?=[\u{05C3}\u{05C6}\u{05D0}-\u{05F2}\u{2000}-\u{206F}\u{2E00}-\u{2E7F}'!"#$%&()*+,-.\/:;<=>?@\[\]^_`\{|\}~])/u;
+  const jerusalemTest = new RegExp(
+    `(?<vowel>[\u{5B8}\u{5B7}])(?<hiriq>\u{5B4})(?<taamimMatch>${taamim.source}|\u{05BD})(?<mem>\u{05DD}.*)$`,
+    "u"
+  );
+  const match = word.match(jerusalemTest);
+  /**
+   * The Masoretic spelling of Jerusalem contains some idiosyncrasies,
+   * namely the final syllable.
+   * Due to the normalization process, this word requires special treatment
+   */
+  if (match?.groups) {
+    const captured = match[0];
+    const { hiriq, vowel, taamimMatch, mem } = match.groups;
+    const partial = word.replace(captured, `${vowel}${taamimMatch}`);
+    return [...partial.split(split), `${hiriq}${mem}`].map((group) => {
+      if (group === `${hiriq}${mem}`) {
+        return new Cluster(group, true);
+      }
+      return new Cluster(group);
+    });
+  }
+  return word.split(split).map((group) => new Cluster(group));
+};
 
 /**
  * [[`Text.text`]] is split at each space and maqqef (U+05BE) both of which are captured.
