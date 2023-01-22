@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Syllable | havarotjs - v0.12.0</title>
-	<meta name="description" content="Documentation for havarotjs - v0.12.0">
+	<title>Syllable | havarotjs - v0.13.0</title>
+	<meta name="description" content="Documentation for havarotjs - v0.13.0">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 	<link rel="stylesheet" href="../assets/css/pages.css">
@@ -23,7 +23,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">havarotjs - v0.12.0</a>
+					<a href="../index.html" class="title">havarotjs - v0.13.0</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -81,7 +81,12 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Syllable</span>
+						<span class="tsd-signature-type">Node</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">Syllable</span>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</section>
@@ -92,7 +97,7 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="syllable.Syllable.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="syllable.Syllable.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -101,9 +106,17 @@
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="syllable.Syllable.html#text" class="tsd-kind-icon">text</a></li>
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="syllable.Syllable.html#clusters" class="tsd-kind-icon">clusters</a></li>
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="syllable.Syllable.html#chars" class="tsd-kind-icon">chars</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="syllable.Syllable.html#vowel" class="tsd-kind-icon">vowel</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="syllable.Syllable.html#vowelName" class="tsd-kind-icon">vowel<wbr>Name</a></li>
 								<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="syllable.Syllable.html#isClosed" class="tsd-kind-icon">is<wbr>Closed</a></li>
 								<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="syllable.Syllable.html#isAccented" class="tsd-kind-icon">is<wbr>Accented</a></li>
 								<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="syllable.Syllable.html#isFinal" class="tsd-kind-icon">is<wbr>Final</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="syllable.Syllable.html#hasVowelName" class="tsd-kind-icon">has<wbr>Vowel<wbr>Name</a></li>
 							</ul>
 						</section>
 					</div>
@@ -111,17 +124,18 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">new <wbr>Syllable<span class="tsd-signature-symbol">(</span>clusters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Cluster</span><span class="tsd-signature-symbol">[]</span>, __namedParameters<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">{ </span>isClosed<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>isAccented<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>isFinal<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="syllable.Syllable.html" class="tsd-signature-type">Syllable</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Overrides Node.constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/ad0580d/src/syllable.ts#L21">syllable.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/aed443c/src/syllable.ts#L44">syllable.ts:44</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -161,7 +175,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/ad0580d/src/syllable.ts#L42">syllable.ts:42</a></li>
+									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/aed443c/src/syllable.ts#L66">syllable.ts:66</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -188,7 +202,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/ad0580d/src/syllable.ts#L58">syllable.ts:58</a></li>
+									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/aed443c/src/syllable.ts#L82">syllable.ts:82</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Cluster</span><span class="tsd-signature-symbol">[]</span></h4>
@@ -213,7 +227,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/ad0580d/src/syllable.ts#L76">syllable.ts:76</a></li>
+									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/aed443c/src/syllable.ts#L100">syllable.ts:100</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Char</span><span class="tsd-signature-symbol">[]</span></h4>
@@ -230,6 +244,66 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="vowel" class="tsd-anchor"></a>
+					<h3>vowel</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> vowel<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">SyllableCharToNameMap</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/aed443c/src/syllable.ts#L118">syllable.ts:118</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns the vowel character of the syllable</p>
+								</div>
+								<p>According to <a href="../pages/Linguistic/syllabification.html">Syllabification</a>, a sheva is a vowel and serves as the nucleus of a syllable.
+								Unlike <code>Cluster</code>, a <code>Syllable</code> is concerned with linguistics, so a sheva <strong>is</strong> a vowel character</p>
+								<pre><code class="language-typescript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">text</span><span style="color: #000000">: </span><span style="color: #267F99">Text</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;הַֽ֭יְחָבְרְךָ&quot;</span><span style="color: #000000">);</span>
+<span style="color: #001080">text</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">[</span><span style="color: #098658">0</span><span style="color: #000000">].</span><span style="color: #001080">vowel</span><span style="color: #000000">;</span>
+<span style="color: #008000">// &quot;\u{05B7}&quot;</span>
+<span style="color: #001080">text</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">[</span><span style="color: #098658">1</span><span style="color: #000000">].</span><span style="color: #001080">vowel</span><span style="color: #000000">;</span>
+<span style="color: #008000">// &quot;\u{05B0}&quot;</span>
+</code></pre>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">SyllableCharToNameMap</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="vowelName" class="tsd-anchor"></a>
+					<h3>vowel<wbr>Name</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> vowelName<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HATAF_SEGOL&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HATAF_PATAH&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HATAF_QAMATS&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HIRIQ&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;TSERE&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;SEGOL&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;PATAH&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;QAMATS&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HOLAM&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HOLAM_HASER&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;QUBUTS&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;QAMATS_QATAN&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;SHEVA&quot;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/aed443c/src/syllable.ts#L137">syllable.ts:137</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns the vowel character name of the syllable</p>
+								</div>
+								<p>According to <a href="../pages/Linguistic/syllabification.html">Syllabification</a>, a sheva is a vowel and serves as the nucleus of a syllable.
+								Unlike <code>Cluster</code>, a <code>Syllable</code> is concerned with linguistics, so a sheva <strong>is</strong> a vowel character</p>
+								<pre><code class="language-typescript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">text</span><span style="color: #000000">: </span><span style="color: #267F99">Text</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;הַֽ֭יְחָבְרְךָ&quot;</span><span style="color: #000000">);</span>
+<span style="color: #001080">text</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">[</span><span style="color: #098658">0</span><span style="color: #000000">].</span><span style="color: #001080">vowelName</span><span style="color: #000000">;</span>
+<span style="color: #008000">// &quot;PATAH&quot;</span>
+<span style="color: #001080">text</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">[</span><span style="color: #098658">1</span><span style="color: #000000">].</span><span style="color: #001080">vowelName</span><span style="color: #000000">;</span>
+<span style="color: #008000">// &quot;SHEVA&quot;</span>
+</code></pre>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HATAF_SEGOL&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HATAF_PATAH&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HATAF_QAMATS&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HIRIQ&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;TSERE&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;SEGOL&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;PATAH&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;QAMATS&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HOLAM&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HOLAM_HASER&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;QUBUTS&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;QAMATS_QATAN&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;SHEVA&quot;</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class">
 					<a name="isClosed" class="tsd-anchor"></a>
 					<h3>is<wbr>Closed</h3>
@@ -241,7 +315,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/ad0580d/src/syllable.ts#L93">syllable.ts:93</a></li>
+									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/aed443c/src/syllable.ts#L182">syllable.ts:182</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -257,7 +331,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/ad0580d/src/syllable.ts#L102">syllable.ts:102</a></li>
+									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/aed443c/src/syllable.ts#L191">syllable.ts:191</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -293,7 +367,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/ad0580d/src/syllable.ts#L119">syllable.ts:119</a></li>
+									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/aed443c/src/syllable.ts#L208">syllable.ts:208</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -309,7 +383,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/ad0580d/src/syllable.ts#L128">syllable.ts:128</a></li>
+									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/aed443c/src/syllable.ts#L217">syllable.ts:217</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -345,7 +419,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/ad0580d/src/syllable.ts#L143">syllable.ts:143</a></li>
+									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/aed443c/src/syllable.ts#L232">syllable.ts:232</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -360,7 +434,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/ad0580d/src/syllable.ts#L150">syllable.ts:150</a></li>
+									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/aed443c/src/syllable.ts#L239">syllable.ts:239</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -380,6 +454,52 @@
 <span style="color: #001080">text</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">[</span><span style="color: #098658">2</span><span style="color: #000000">].</span><span style="color: #001080">isFinal</span><span style="color: #000000">; </span><span style="color: #008000">// i.e. &quot;רָ֨א&quot;</span>
 <span style="color: #008000">// true</span>
 </code></pre>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="hasVowelName" class="tsd-anchor"></a>
+					<h3>has<wbr>Vowel<wbr>Name</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">has<wbr>Vowel<wbr>Name<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">SyllableNameToCharMap</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/aed443c/src/syllable.ts#L163">syllable.ts:163</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns <code>true</code> if syllables contains the vowel character of the name passed in</p>
+								</div>
+								<p>According to <a href="../pages/Linguistic/syllabification.html">Syllabification</a>, a sheva is a vowel and serves as the nucleus of a syllable.
+									Unlike <code>Cluster</code>, a <code>Syllable</code> is concerned with linguistics, so a sheva <strong>is</strong> a vowel character.
+								It returns <code>true</code> for &quot;SHEVA&quot; only when the sheva is the vowel (i.e. a vocal sheva or sheva na&#39;).</p>
+								<pre><code class="language-typescript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">text</span><span style="color: #000000">: </span><span style="color: #267F99">Text</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;הַיְחָבְרְךָ&quot;</span><span style="color: #000000">);</span>
+<span style="color: #001080">text</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">[</span><span style="color: #098658">0</span><span style="color: #000000">].</span><span style="color: #795E26">hasVowelName</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;PATAH&quot;</span><span style="color: #000000">);</span>
+<span style="color: #008000">// true</span>
+
+<span style="color: #008000">// test for vocal sheva</span>
+<span style="color: #001080">text</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">[</span><span style="color: #098658">1</span><span style="color: #000000">].</span><span style="color: #795E26">hasVowelName</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;SHEVA&quot;</span><span style="color: #000000">);</span>
+<span style="color: #008000">// true</span>
+
+<span style="color: #008000">// test for silent sheva</span>
+<span style="color: #001080">text</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">[</span><span style="color: #098658">2</span><span style="color: #000000">].</span><span style="color: #795E26">hasVowelName</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;SHEVA&quot;</span><span style="color: #000000">);</span>
+<span style="color: #008000">// false</span>
+</code></pre>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>name: <span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">SyllableNameToCharMap</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -436,7 +556,7 @@
 					<li class="current tsd-kind-class tsd-parent-kind-module">
 						<a href="syllable.Syllable.html" class="tsd-kind-icon">Syllable</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
 								<a href="syllable.Syllable.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
@@ -447,6 +567,15 @@
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="syllable.Syllable.html#chars" class="tsd-kind-icon">chars</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="syllable.Syllable.html#vowel" class="tsd-kind-icon">vowel</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="syllable.Syllable.html#vowelName" class="tsd-kind-icon">vowel<wbr>Name</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="syllable.Syllable.html#hasVowelName" class="tsd-kind-icon">has<wbr>Vowel<wbr>Name</a>
 							</li>
 							<li class=" tsd-kind-accessor tsd-parent-kind-class">
 								<a href="syllable.Syllable.html#isClosed" class="tsd-kind-icon">is<wbr>Closed</a>
@@ -473,10 +602,12 @@
 			<ul class="tsd-legend">
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
 				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>

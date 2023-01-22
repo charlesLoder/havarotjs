@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Syllabification | havarotjs - v0.12.0</title>
-	<meta name="description" content="Documentation for havarotjs - v0.12.0">
+	<title>Syllabification | havarotjs - v0.13.0</title>
+	<meta name="description" content="Documentation for havarotjs - v0.13.0">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../../assets/css/main.css">
 	<link rel="stylesheet" href="../../assets/css/pages.css">
@@ -23,7 +23,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../../index.html" class="title">havarotjs - v0.12.0</a>
+					<a href="../../index.html" class="title">havarotjs - v0.13.0</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -87,14 +87,14 @@
 				<a href="#what-conistitutes-a-syllable" id="what-conistitutes-a-syllable" style="color: inherit; text-decoration: none;">
 					<h2>What Conistitutes a Syllable</h2>
 				</a>
-				<p>In Biblical Hebrew, it is often considered that hatef vowels and vocalic shewas do not consitute syllabes.</p>
+				<p>In Biblical Hebrew, it is often considered that hatef vowels and vocalic shevas do not consitute syllabes.</p>
 				<p>In <a href="https://en.wikisource.org/wiki/Gesenius%27_Hebrew_Grammar/26._Syllable-formation_and_its_Influence_on_the_Quantity_of_Vowels">GKC</a> §26m:</p>
 				<blockquote>
 					<p>Such a consonant with vocal Šewâ never has the value of an independent syllable, but rather attaches itself so closely to the following syllable that it forms practically one syllable with it, e.g. לְחִי (cheek) <em>lǝḥî</em>; חֳלִי (sickness) <em>ḥŏlî</em>; יִלְמְדוּ <em>yil-mǝdhû</em>.</p>
 				</blockquote>
 				<p>As Khan says (I.2.5.2):</p>
 				<blockquote>
-					<p>In the Tiberian Masoretic literature a consonant with a vocalic shewa or a ḥaṭef vowel sign was not considered to stand independently, but was said to be bound to the following consonants. Thus the word תִּסְפְּר֖וּ ‘you shall count’ (Lev. 23.16) was considered to have been composed of two prosodic units [tis–paʀ̟uː]. The sources refer to these prosodic units by the Arabic term <em>maqṭaʿ</em>, which is used in the Arabic grammatical literature to refer to a syllable.</p>
+					<p>In the Tiberian Masoretic literature a consonant with a vocalic sheva or a ḥaṭef vowel sign was not considered to stand independently, but was said to be bound to the following consonants. Thus the word תִּסְפְּר֖וּ ‘you shall count’ (Lev. 23.16) was considered to have been composed of two prosodic units [tis–paʀ̟uː]. The sources refer to these prosodic units by the Arabic term <em>maqṭaʿ</em>, which is used in the Arabic grammatical literature to refer to a syllable.</p>
 				</blockquote>
 				<p>Though, as he demonstrates, it is better to understand the Tiberian syllables as feet. Thus, the word תִּסְפְּר֖וּ is really 3 syllables, but two metrical feet:</p>
 				<table>
@@ -123,7 +123,7 @@
 							<td>foot</td>
 						</tr>
 				</tbody></table>
-				<p>According to this decription, hatef vowels and <em>shewa na&#39;</em> <strong>do</strong> constitute syllables.</p>
+				<p>According to this decription, hatef vowels and <em>sheva na&#39;</em> <strong>do</strong> constitute syllables.</p>
 				<a href="#options-for-syllabification" id="options-for-syllabification" style="color: inherit; text-decoration: none;">
 					<h2>Options for Syllabification</h2>
 				</a>
@@ -132,7 +132,7 @@
 					<h3>longVowles</h3>
 				</a>
 				<p>Takes a <code>boolean</code>. Default <code>true</code>.</p>
-				<p>If <code>true</code>, regards a shewa after a long vowel (excluding waw-shureq) as a <em>shewa na&#39;</em> .</p>
+				<p>If <code>true</code>, regards a sheva after a long vowel (excluding waw-shureq) as a <em>sheva na&#39;</em> .</p>
 				<pre><code class="language-typescript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">default</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;יָדְךָ&quot;</span><span style="color: #000000">);</span>
 <span style="color: #001080">default</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">syl</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">syl</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
 <span style="color: #008000">// [&quot;יָ&quot;, &quot;דְ&quot;, &quot;ךָ&quot;]</span>
@@ -145,7 +145,7 @@
 					<h3>sqnmlvy</h3>
 				</a>
 				<p>Takes a <code>boolean</code>. Default <code>true</code>.</p>
-				<p>If <code>true</code>, regards the shewa under the letters שׁשׂסצנמלוי when preceded by a waw-consecutive with a missing <em>dagesh chazaq</em> as vocal. If a metheg is present, the shewa is always a <em>shewa na&#39;</em>.</p>
+				<p>If <code>true</code>, regards the sheva under the letters שׁשׂסצנמלוי when preceded by a waw-consecutive with a missing <em>dagesh chazaq</em> as vocal. If a meteg is present, the sheva is always a <em>sheva na&#39;</em>.</p>
 				<pre><code class="language-typescript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">default</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;וַיְצַחֵק֙&quot;</span><span style="color: #000000">);</span>
 <span style="color: #001080">default</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">syl</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">syl</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
 <span style="color: #008000">// [&quot;וַ&quot;, &quot;יְ&quot;, &quot;צַ&quot;, &quot;חֵק֙&quot;]</span>
@@ -173,7 +173,7 @@
 					<h3>wawShureq</h3>
 				</a>
 				<p>Takes a <code>boolean</code>. Default is <code>true</code>.</p>
-				<p>If <code>true</code>, regards a shewa after a waw-shureq as a <em>shewa na&#39;</em>, unless a metheg is present.</p>
+				<p>If <code>true</code>, regards a sheva after a waw-shureq as a <em>sheva na&#39;</em>, unless a meteg is present.</p>
 				<pre><code class="language-typescript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">default</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;וּלְמַזֵּר&quot;</span><span style="color: #000000">);</span>
 <span style="color: #001080">default</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">syl</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">syl</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
 <span style="color: #008000">// &quot;וּ&quot;, &quot;לְ&quot;, &quot;מַ&quot;, &quot;זֵּר&quot;]</span>
@@ -199,34 +199,34 @@
 <span style="color: #008000">// &quot;וּ&quot;, &quot;לְ&quot;, &quot;מַ&quot;, &quot;זֵּר&quot;]</span>
 
 </code></pre>
-				<a href="#vocal-amp-silent-shewas" id="vocal-amp-silent-shewas" style="color: inherit; text-decoration: none;">
-					<h4>Vocal &amp; Silent Shewas</h4>
+				<a href="#vocal-amp-silent-shevas" id="vocal-amp-silent-shevas" style="color: inherit; text-decoration: none;">
+					<h4>Vocal &amp; Silent Shevas</h4>
 				</a>
-				<p>In regards to the realization of shewas, Khan remarks (I.2.5.1.1):</p>
+				<p>In regards to the realization of shevas, Khan remarks (I.2.5.1.1):</p>
 				<blockquote>
 					<p>The shewa (שְׁוָּא) sign (אְ) in the Tiberian vocalization system was read either as a vowel or as zero. When shewa was read as vocalic, its quality in the Tiberian tradition was by default the same as that of the pataḥ vowel sign</p>
 				</blockquote>
-				<p>This package does <strong>not</strong> consider the quality of the realization of the shewa.
-				It only determines whether the shewa is a <em>shewa na&#39;</em> (vocal) or <em>shewa nach</em> (silent).</p>
-				<a href="#vocal-shewas" id="vocal-shewas" style="color: inherit; text-decoration: none;">
-					<h5>Vocal Shewas</h5>
+				<p>This package does <strong>not</strong> consider the quality of the realization of the sheva.
+				It only determines whether the sheva is a <em>sheva na&#39;</em> (vocal) or <em>sheva nach</em> (silent).</p>
+				<a href="#vocal-shevas" id="vocal-shevas" style="color: inherit; text-decoration: none;">
+					<h5>Vocal Shevas</h5>
 				</a>
-				<p>A shewa is considered a <em>shewa na&#39;</em> under the following conditions:</p>
+				<p>A sheva is considered a <em>sheva na&#39;</em> under the following conditions:</p>
 				<ol>
 					<li>when it is the first vowel in a word</li>
-					<li>when two shewas occur together in the middle of word, the first is silent and the second is vocal</li>
+					<li>when two shevas occur together in the middle of word, the first is silent and the second is vocal</li>
 					<li>when it appears under a geminated consonant</li>
 					<li>when it is preceded by a long vowel</li>
 				</ol>
-				<a href="#silent-shewas" id="silent-shewas" style="color: inherit; text-decoration: none;">
-					<h5>Silent Shewas</h5>
+				<a href="#silent-shevas" id="silent-shevas" style="color: inherit; text-decoration: none;">
+					<h5>Silent Shevas</h5>
 				</a>
-				<p>If a shewa does not fall into the criteria above, it is generally silent (i.e. <em>shewa nach</em>).</p>
+				<p>If a sheva does not fall into the criteria above, it is generally silent (i.e. <em>sheva nach</em>).</p>
 				<p>There is one major exception:</p>
 				<ul>
-					<li>In the word שְׁתַּיִם <em>štayim</em> (and variants), the first shewa is technially silent.</li>
+					<li>In the word שְׁתַּיִם <em>štayim</em> (and variants), the first sheva is technially silent.</li>
 				</ul>
-				<p>This package, however, considers it a <em>shewa na&#39;</em>.</p>
+				<p>This package, however, considers it a <em>sheva na&#39;</em>.</p>
 				<a href="#tiberian" id="tiberian" style="color: inherit; text-decoration: none;">
 					<h3>Tiberian</h3>
 				</a>
@@ -304,6 +304,7 @@
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
 				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
