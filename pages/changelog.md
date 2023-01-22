@@ -1,5 +1,18 @@
 # Changelog
 
+## 2023-01-22 0.13.0
+
+- fix syllabification w/ the spelling of Jerusalem (Issue #83)
+- standardize Hebrew character name (Issue #76)
+- `Syllable` extends `Node`
+- Add `hasVowelName` to `Syllable` (Issue #80)
+- Add `vowelName` property to `Syllable` (Issue #81)
+- Add `vowel` property to `Syllable` (Issue #82)
+- Add `hasVowelName` property to `Cluster` (Issue #77)
+- Add `vowelName` property to `Cluster` (Issue #75)
+- Add `vowel` property to `Cluster` (Issue #74)
+- Fix two holems dropping one (Issue #74)
+
 ## 2022-12-17 0.12.0
 
 - Add support for holem haser (Issue #72)
