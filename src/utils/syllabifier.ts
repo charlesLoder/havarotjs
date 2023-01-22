@@ -1,6 +1,7 @@
 import { Cluster } from "../cluster";
 import { Syllable } from "../syllable";
 import { SylOpts } from "../text";
+import { vowels } from "./regularExpressions";
 
 type Syl = Cluster[];
 type Mixed = (Syllable | Cluster)[];
@@ -17,15 +18,18 @@ const createNewSyllable = (result: Mixed, syl: Syl, isClosed?: boolean): Syl => 
 
 /**
  * @description determines the Cluster[] that will become the final Syllable
+ *
+ * @param arr an array of Clusters to be grouped
+ * @param strict where to implement strict mode
+ * @param vowelsRgx a regex for the set of Hebrew vowels excluding sheva
  */
-const groupFinal = (arr: Cluster[], strict: boolean = true): Mixed => {
+const groupFinal = (arr: Cluster[], strict: boolean = true, vowelsRgx: RegExp = vowels): Mixed => {
   // grouping the final first helps to avoid issues with final kafs/tavs
   const len = arr.length;
   let i = 0;
   const syl: Syl = [];
   let result: Mixed = [];
   let vowelPresent = false;
-  let isClosed = false;
 
   // get final cluster and push to syl
   // but first check if final cluster is not Hebrew
@@ -45,7 +49,6 @@ const groupFinal = (arr: Cluster[], strict: boolean = true): Mixed => {
     vowelPresent = true;
     i++;
   } else {
-    isClosed = !finalCluster.isMater;
     i++;
   }
 
@@ -70,6 +73,9 @@ const groupFinal = (arr: Cluster[], strict: boolean = true): Mixed => {
     }
   }
 
+  const finalChar = finalCluster.chars.filter((c) => c.sequencePosition !== 4).at(-1)?.text || "";
+  const hasFinalVowel = vowelsRgx.test(finalChar);
+  const isClosed = !finalCluster.isShureq && !finalCluster.isMater && !hasFinalVowel;
   const finalSyllable = new Syllable(syl, { isClosed });
   const remainder = arr.slice(i);
   result = remainder.length ? remainder : [];
@@ -329,6 +335,14 @@ const setIsClosed = (syllable: Syllable, index: number, arr: Syllable[]) => {
 };
 
 const setIsAccented = (syllable: Syllable) => {
+  // TODO: this is pretty hacky, but it works; find a more elegant solution
+  const jerusalemFinal = /\u{5B4}\u{05DD}/u;
+  const jerusalemPrev = /ל[\u{5B8}\u{5B7}]/u;
+  const prev = syllable.prev as Syllable;
+  if (jerusalemFinal.test(syllable.text) && prev && jerusalemPrev.test(prev.text)) {
+    prev.isAccented = true;
+    return;
+  }
   const isAccented = syllable.clusters.filter((cluster) => cluster.hasTaamim).length ? true : false;
   syllable.isAccented = isAccented;
 };
