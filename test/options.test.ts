@@ -53,14 +53,17 @@ describe.each`
 });
 
 describe.each`
-  word        | sequence                           | holemHaser    | shouldHaveholemHaser | resultString
-  ${"עָוֺ֔ן"} | ${"V + zaqef qatan + holem haser"} | ${"update"}   | ${true}              | ${"עָוֺ֔ן"}
-  ${"עָוֺ֔ן"} | ${"V + zaqef qatan + holem haser"} | ${"preserve"} | ${true}              | ${"עָוֺ֔ן"}
-  ${"עָוֺ֔ן"} | ${"V + zaqef qatan + holem haser"} | ${"remove"}   | ${false}             | ${"עָוֹ֔ן"}
-  ${"עָוֹ֔ן"} | ${"V + zaqef qatan + holem"}       | ${"update"}   | ${true}              | ${"עָוֺ֔ן"}
-  ${"עָוֹ֔ן"} | ${"V + zaqef qatan + holem"}       | ${"preserve"} | ${false}             | ${"עָוֹ֔ן"}
-  ${"עָוֹ֔ן"} | ${"V + zaqef qatan + holem"}       | ${"remove"}   | ${false}             | ${"עָוֹ֔ן"}
-  ${"אוֹר"}   | ${"C + holem male + V"}            | ${"remove"}   | ${false}             | ${"אֹור"}
+  word           | sequence                           | holemHaser    | shouldHaveholemHaser | resultString
+  ${"עָוֺ֔ן"}    | ${"V + zaqef qatan + holem haser"} | ${"update"}   | ${true}              | ${"עָוֺ֔ן"}
+  ${"עָוֺ֔ן"}    | ${"V + zaqef qatan + holem haser"} | ${"preserve"} | ${true}              | ${"עָוֺ֔ן"}
+  ${"עָוֺ֔ן"}    | ${"V + zaqef qatan + holem haser"} | ${"remove"}   | ${false}             | ${"עָוֹ֔ן"}
+  ${"עָוֹ֔ן"}    | ${"V + zaqef qatan + holem"}       | ${"update"}   | ${true}              | ${"עָוֺ֔ן"}
+  ${"עָוֹ֔ן"}    | ${"V + zaqef qatan + holem"}       | ${"preserve"} | ${false}             | ${"עָוֹ֔ן"}
+  ${"עָוֹ֔ן"}    | ${"V + zaqef qatan + holem"}       | ${"remove"}   | ${false}             | ${"עָוֹ֔ן"}
+  ${"אוֹר"}      | ${"C + holem male + V"}            | ${"remove"}   | ${false}             | ${"אֹור"}
+  ${"כּ֫וֹרֶשׁ"} | ${"holem male with taam"}          | ${"update"}   | ${false}             | ${"כֹּ֫ורֶשׁ"}
+  ${"כּ֫וֹרֶשׁ"} | ${"holem male with taam"}          | ${"preserve"} | ${false}             | ${"כֹּ֫ורֶשׁ"}
+  ${"כּ֫וֹרֶשׁ"} | ${"holem male with taam"}          | ${"remove"}   | ${false}             | ${"כֹּ֫ורֶשׁ"}
 `("holemHaser:", ({ word, sequence, holemHaser, shouldHaveholemHaser, resultString }) => {
   describe(`Sequence "${sequence}" with value "${holemHaser}" should ${
     !shouldHaveholemHaser ? "not " : ""
