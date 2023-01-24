@@ -64,6 +64,9 @@ describe.each`
   ${"כּ֫וֹרֶשׁ"} | ${"holem male with taam"}          | ${"update"}   | ${false}             | ${"כֹּ֫ורֶשׁ"}
   ${"כּ֫וֹרֶשׁ"} | ${"holem male with taam"}          | ${"preserve"} | ${false}             | ${"כֹּ֫ורֶשׁ"}
   ${"כּ֫וֹרֶשׁ"} | ${"holem male with taam"}          | ${"remove"}   | ${false}             | ${"כֹּ֫ורֶשׁ"}
+  ${"כּוֹרֶשׁ"}  | ${"holem male w/o taam"}           | ${"update"}   | ${false}             | ${"כֹּורֶשׁ"}
+  ${"כּוֹרֶשׁ"}  | ${"holem male w/o taam"}           | ${"update"}   | ${false}             | ${"כֹּורֶשׁ"}
+  ${"כּוֹרֶשׁ"}  | ${"holem male w/o taam"}           | ${"update"}   | ${false}             | ${"כֹּורֶשׁ"}
 `("holemHaser:", ({ word, sequence, holemHaser, shouldHaveholemHaser, resultString }) => {
   describe(`Sequence "${sequence}" with value "${holemHaser}" should ${
     !shouldHaveholemHaser ? "not " : ""
