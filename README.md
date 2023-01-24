@@ -20,7 +20,7 @@ To call using TypeScript:
 import { Text } from "havarotjs";
 ```
 
-Or Node:
+Or Node (v15.0.0 is newer):
 
 ```javascript
 const havarot = require("havarotjs");
