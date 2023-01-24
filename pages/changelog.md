@@ -1,5 +1,9 @@
 # Changelog
 
+## 2023-01-24 0.13.1
+
+- Fix issue w/ taamim giving incorrect `holemHaser` output (Issue #96)
+
 ## 2023-01-22 0.13.0
 
 - fix syllabification w/ the spelling of Jerusalem (Issue #83)
