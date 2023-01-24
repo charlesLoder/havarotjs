@@ -4,6 +4,9 @@
   "description": "A Typescript package for syllabic data about Hebrew text",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "engines": {
+    "node": ">=15.0.0"
+  },
   "exports": {
     "./package.json": "./package.json",
     ".": {
