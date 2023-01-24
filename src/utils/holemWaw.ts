@@ -44,17 +44,7 @@ export const holemWaw = (word: string, options: SylOpts): string => {
 
   word = vavHolemMale.test(word)
     ? findMatches(word, vavHolemMale, (w, s, e) => {
-        const sub = w.substring(0, s);
-        const holemAndVav = "\u{05B9}\u{05D5}";
-        /**
-         * When a vavHolemMale is the final cluster,
-         * the end index is set to one before `e`
-         * to prevent to holems.
-         * */
-        const endIndex = w.substring(e).trim() ? e : e - 1;
-        const endString = w.substring(endIndex);
-        const finalString = endIndex < e ? endString.replace(holemRegx, "") : endString;
-        return sub + holemAndVav + finalString;
+        return word.replaceAll(vavHolemMale, "\u{05B9}\u{05D5}");
       })
     : word;
 
