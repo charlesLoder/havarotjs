@@ -62,7 +62,7 @@ export interface SylOpts {
    * const holemHaser = /\u{05BA}/u;
    * const str = "עָוֹן" // vav + holem
    * holemHaser.test(str); // false
-   * const newStr = new Text(updated, { holemHaser: "updated" }).text;
+   * const newStr = new Text(updated, { holemHaser: "update" }).text;
    * holemHaser.test(newStr); // true
    *
    * ```
