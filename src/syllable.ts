@@ -27,7 +27,7 @@ const sylNameToCharMap: SyllableNameToCharMap = {
 /**
  * A `Syllable` is created from an array of [[`Clusters`]].
  */
-export class Syllable extends Node {
+export class Syllable extends Node<Syllable> {
   #clusters: Cluster[];
   #isClosed: boolean;
   #isAccented: boolean;
