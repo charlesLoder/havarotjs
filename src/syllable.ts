@@ -27,7 +27,7 @@ const sylNameToCharMap: SyllableNameToCharMap = {
 /**
  * A `Syllable` is created from an array of [[`Clusters`]].
  */
-export class Syllable extends Node {
+export class Syllable extends Node<Syllable> {
   #clusters: Cluster[];
   #isClosed: boolean;
   #isAccented: boolean;
@@ -43,6 +43,7 @@ export class Syllable extends Node {
    */
   constructor(clusters: Cluster[], { isClosed = false, isAccented = false, isFinal = false } = {}) {
     super();
+    this.value = this;
     this.#clusters = clusters;
     this.#isClosed = isClosed;
     this.#isAccented = isAccented;

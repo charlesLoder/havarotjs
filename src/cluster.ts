@@ -15,12 +15,13 @@ import { charToNameMap, CharToNameMap, NameToCharMap, nameToCharMap } from "./ut
  * Because Hebrew orthography is both sub and supra linear, clusters can be encoded in various ways.
  * Every [[`Char`]] is sequenced first for normalization, see the [SBL Hebrew Font Manual](https://www.sbl-site.org/Fonts/SBLHebrewUserManual1.5x.pdf), p.8.
  */
-export class Cluster extends Node {
+export class Cluster extends Node<Cluster> {
   #original: string;
   #sequenced: Char[];
 
   constructor(cluster: string, noSequence: boolean = false) {
     super();
+    this.value = this;
     this.#original = cluster;
     this.#sequenced = this.sequence(noSequence);
   }
