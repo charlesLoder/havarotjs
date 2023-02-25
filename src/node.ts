@@ -1,9 +1,11 @@
 export class Node<T> {
   next: Node<T> | null;
   prev: Node<T> | null;
+  value: T | null;
   protected child!: Node<T>;
 
   constructor() {
+    this.value = null;
     this.next = null;
     this.prev = null;
   }

@@ -43,6 +43,7 @@ export class Syllable extends Node<Syllable> {
    */
   constructor(clusters: Cluster[], { isClosed = false, isAccented = false, isFinal = false } = {}) {
     super();
+    this.value = this;
     this.#clusters = clusters;
     this.#isClosed = isClosed;
     this.#isAccented = isAccented;

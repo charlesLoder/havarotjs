@@ -21,6 +21,7 @@ export class Cluster extends Node<Cluster> {
 
   constructor(cluster: string, noSequence: boolean = false) {
     super();
+    this.value = this;
     this.#original = cluster;
     this.#sequenced = this.sequence(noSequence);
   }
