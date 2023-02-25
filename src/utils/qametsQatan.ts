@@ -65,8 +65,8 @@ const wholeWords = [
   "^יָמִים$",
   "(מִ)?כָּל־", // kol w/ maqqef optionally preceded by mem
   "(וּבְ|וְ|בְּ|לְ)?כָל־", // kol w/ maqqef optionally preceded by shureq + bet, waw, bet, or lamed
-  "^(מִ)?כָּל $", // kol w/o maqqef optionally preceded by mem
-  "^(וּבְ|וְ|בְּ|לְ)?כָל $", // kol w/o maqqef optionally preceded by shureq + bet, waw, bet, or lamed
+  "^(מִ)?כָּל ?$", // kol w/o maqqef optionally preceded by mem
+  "^(וּבְ|וְ|בְּ|לְ)?כָל ?$", // kol w/o maqqef optionally preceded by shureq + bet, waw, bet, or lamed
   "מָר־",
   "עָתְנִיאֵל",
   "רָב־",
