@@ -6,7 +6,7 @@ describe.each`
   ${"simple verbal pattern in array"}   | ${"וַיָּ֥קָם"} | ${true}   | ${true}
   ${"qamets follwed by hatef-qamets"}   | ${"אָהֳלִי"}   | ${true}   | ${false}
   ${"qamets qatan and qamets"}          | ${"בָּשְׁתָּם"} | ${true}   | ${true}
-  ${"nominal with boundary assertions"} | ${"יָמִים"}    | ${true}   | ${false}
+  ${"nominal with boundary assertions"} | ${"מִכָּל"}    | ${true}   | ${false}
 `("Qamets Qatan, Single Word:", ({ description, word, hasQamQat, hasQamets }) => {
   const text = new Text(word);
   const sanitized = text.words[0].text;
