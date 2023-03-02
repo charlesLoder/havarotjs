@@ -1,5 +1,10 @@
 # Changelog
 
+## 2023-03-02 0.14.0
+
+- Removes יָמִים from qamets qatan list (Issue #103)
+- Adds `value` property to `Node` object for better type safety for `Syllable` and `Cluster` (Issue #101)
+
 ## 2023-01-24 0.13.1
 
 - Fix issue w/ taamim giving incorrect `holemHaser` output (Issue #96)
