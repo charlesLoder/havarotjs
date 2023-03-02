@@ -131,6 +131,18 @@ describe.each`
   ${"kol w/o maqqef + bet prefix"}          | ${"בְּכָל לְבַבְכֶ֖ם"}     | ${false}  | ${true}   | ${false}
   ${"kol w/o maqqef + lamed prefix"}        | ${"לְכָל חֵ֖פֶץ"}          | ${true}   | ${false}  | ${true}
   ${"kol w/o maqqef + lamed prefix"}        | ${"לְכָל חֵ֖פֶץ"}          | ${false}  | ${true}   | ${false}
+  ${"kol alone"}                            | ${"כָּל"}           | ${true}   | ${false}  | ${true}
+  ${"kol alone"}                            | ${"כָּל"}           | ${false}  | ${true}   | ${false}
+  ${"kol alone + mem prefix"}               | ${"מִכָּל"}     | ${true}   | ${false}  | ${true}
+  ${"kol alone + mem prefix"}               | ${"מִכָּל"}     | ${false}  | ${true}   | ${false}
+  ${"kol alone + waw prefix"}               | ${"וְכָל"}         | ${true}   | ${false}  | ${true}
+  ${"kol alone + waw prefix"}               | ${"וְכָל"}         | ${false}  | ${true}   | ${false}
+  ${"kol alone + shureq & bet prefix"}      | ${"וּבְכָל"}  | ${true}   | ${false}  | ${true}
+  ${"kol alone + shureq & bet prefix"}      | ${"וּבְכָל"}  | ${false}  | ${true}   | ${false}
+  ${"kol alone + bet prefix"}               | ${"בְּכָל"}     | ${true}   | ${false}  | ${true}
+  ${"kol alone + bet prefix"}               | ${"בְּכָל"}     | ${false}  | ${true}   | ${false}
+  ${"kol alone + lamed prefix"}             | ${"לְכָל"}          | ${true}   | ${false}  | ${true}
+  ${"kol alone + lamed prefix"}             | ${"לְכָל"}          | ${false}  | ${true}   | ${false}
 `("qametsQatan:", ({ description, word, hasQamQat, hasQamets, qamQatOpt }) => {
   const text = new Text(word, { qametsQatan: qamQatOpt });
   const sanitized = text.text;
