@@ -34,7 +34,7 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
-   * @returns a string that has been built up from the text of its consituent Chars
+   * @returns a string that has been built up from the text of its constituent Chars
    *
    * ```typescript
    * const text: Text = new Text("הֲבָרֹות");

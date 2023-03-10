@@ -51,7 +51,7 @@ export class Syllable extends Node<Syllable> {
   }
 
   /**
-   * @returns a string that has been built up from the .text of its consituent Clusters
+   * @returns a string that has been built up from the .text of its constituent Clusters
    *
    * ```typescript
    * const text: Text = new Text("וַיִּקְרָ֨א");
