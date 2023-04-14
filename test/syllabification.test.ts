@@ -40,6 +40,7 @@ describe.each`
   ${"with qamets qatan (ḥokmâ)"}                                       | ${"חָכְמָ֑ה"}   | ${["ח\u{5C7}כְ", "מָ֑ה"]} | ${[true, false]}  | ${[false, true]}
   ${"infinitive construct with prep (bǝšûb)"}                          | ${"בְּשׁ֣וּב"}  | ${["בְּ", "שׁ֣וּב"]}      | ${[false, true]}  | ${[false, true]}
   ${"consonant w/o niqqud"}                                            | ${"אלְבֶּערְט"} | ${["אלְ", "בֶּערְט"]}     | ${[true, true]}   | ${[false, false]}
+  ${"final aleph"}                                                     | ${"בָּרָ֣א"}    | ${["בָּ", "רָ֣א"]}        | ${[false, false]} | ${[false, true]}
 `("2 Syllables:", ({ description, original, sylArr, closedArr, accentArr }) => {
   tests(description, original, sylArr, closedArr, accentArr);
 });

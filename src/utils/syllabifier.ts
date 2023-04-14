@@ -75,7 +75,7 @@ const groupFinal = (arr: Cluster[], strict: boolean = true, vowelsRgx: RegExp = 
 
   const finalChar = finalCluster.chars.filter((c) => c.sequencePosition !== 4).at(-1)?.text || "";
   const hasFinalVowel = vowelsRgx.test(finalChar);
-  const isClosed = !finalCluster.isShureq && !finalCluster.isMater && !hasFinalVowel;
+  const isClosed = !finalCluster.isShureq && !finalCluster.isMater && !/א/.test(finalCluster.text) && !hasFinalVowel;
   const finalSyllable = new Syllable(syl, { isClosed });
   const remainder = arr.slice(i);
   result = remainder.length ? remainder : [];
