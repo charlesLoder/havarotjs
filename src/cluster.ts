@@ -1,6 +1,6 @@
 import { Char } from "./char";
 import { Node } from "./node";
-import { taamim, hebChars, vowelsCaptureGroup } from "./utils/regularExpressions";
+import { taamim, hebChars, vowelsCaptureGroup, punctuation } from "./utils/regularExpressions";
 import { charToNameMap, CharToNameMap, NameToCharMap, nameToCharMap } from "./utils/vowelMap";
 
 /**
@@ -139,6 +139,26 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
+   * Returns `true` is the Cluster is any of the following characters:
+   * - \u{05BE} HEBREW PUNCTUATION MAQAF ־
+   * - \u{05C0} HEBREW PUNCTUATION PASEQ ׀
+   * - \u{05C3} HEBREW PUNCTUATION SOF PASUQ ׃
+   * - \u{05C6} HEBREW PUNCTUATION NUN HAFUKHA ׆
+   *
+   * ```typescript
+   * const text: Text = new Text("הָאָֽרֶץ׃");
+   * text.clusters[3].isPunctuation;
+   * // true
+   * ```
+   *
+   * @description
+   * These are all the Hebrew characters of the category PUNCTUATION
+   */
+  get isPunctuation(): boolean {
+    return punctuation.test(this.text);
+  }
+
+  /**
    *
    * Returns `true` if `Cluster.hasVowel` is `false` and `Cluster.text` is a waw followed by a dagesh (e.g. `וּ`)
    * A shureq is a vowel itself, but contains no vowel characters (hence why `hasVowel` cannot be `true`).
@@ -155,6 +175,27 @@ export class Cluster extends Node<Cluster> {
   get isShureq(): boolean {
     const shureq = /\u{05D5}\u{05BC}/u;
     return !this.hasVowel ? shureq.test(this.text) : false;
+  }
+
+  /**
+   * An alias of `isPunctuation`.
+   * Returns `true` is the Cluster is any of the following characters:
+   * - \u{05BE} HEBREW PUNCTUATION MAQAF ־
+   * - \u{05C0} HEBREW PUNCTUATION PASEQ ׀
+   * - \u{05C3} HEBREW PUNCTUATION SOF PASUQ ׃
+   * - \u{05C6} HEBREW PUNCTUATION NUN HAFUKHA ׆
+   *
+   * ```typescript
+   * const text: Text = new Text("הָאָֽרֶץ׃");
+   * text.clusters[3].isPunctuation;
+   * // true
+   * ```
+   *
+   * @description
+   * These are all the Hebrew characters of the category PUNCTUATION
+   */
+  get isTaam(): boolean {
+    return this.isPunctuation;
   }
 
   /**
