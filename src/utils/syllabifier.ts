@@ -343,17 +343,8 @@ const setIsAccented = (syllable: Syllable) => {
     prev.isAccented = true;
     return;
   }
-  const isAccented = syllable.clusters.filter((cluster) => {
-    if (cluster.hasTaamim) {
-      return true;
-    }
-    if (/\u{05BD}/u.test(cluster.text) && !cluster.hasMeteg) {
-      // if cluster has a meteg character (\u{05BD}) but does not have meteg,
-      // then it is a silluq
-      return true;
-    }
-    return false;
-  }).length
+  const isAccented = syllable.clusters.filter((cluster) => (cluster.hasTaamim || cluster.hasSilluq ? true : false))
+    .length
     ? true
     : false;
   syllable.isAccented = isAccented;
