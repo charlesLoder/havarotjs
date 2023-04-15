@@ -59,6 +59,25 @@ describe.each`
 });
 
 describe.each`
+  description                                        | hebrew              | clusterNum | hasSilluq
+  ${"word with single meteg"}                        | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${false}
+  ${"word with single silluq"}                       | ${"נַפְשִֽׁי׃"}     | ${2}       | ${true}
+  ${"word with meteg & silluq"}                      | ${"הָֽאֲדָמָֽה׃"}   | ${0}       | ${false}
+  ${"word with meteg & silluq"}                      | ${"הָֽאֲדָמָֽה׃"}   | ${3}       | ${true}
+  ${"words with meteg & silluq, joined with maqqef"} | ${"וַֽיְהִי־כֵֽן׃"} | ${0}       | ${false}
+  ${"words with meteg & silluq, joined with maqqef"} | ${"וַֽיְהִי־כֵֽן׃"} | ${4}       | ${true}
+`("hasSilluq:", ({ description, hebrew, clusterNum, hasSilluq }) => {
+  const heb = new Text(hebrew);
+  const cluster = heb.clusters[clusterNum];
+  const silluq = cluster.hasSilluq;
+  describe(description, () => {
+    test(`hasSilluq to equal ${hasSilluq}`, () => {
+      expect(silluq).toEqual(hasSilluq);
+    });
+  });
+});
+
+describe.each`
   description                | hebrew              | clusterNum | vowel
   ${"cluster with patah"}    | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${"\u{05B7}"}
   ${"cluster with sheva"}    | ${"הַֽ֭יְחָבְרְךָ"} | ${3}       | ${null}
