@@ -294,13 +294,13 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
-   * Returns `true` if the following character is present and a _sof pasuq_ does not follow it:
+   * Returns `true` if the following character is present and a _sof pasuq_ does **not** follow it:
    * - \u{05BD} METEG
    *
    * ```typescript
-   * const text: Text = new Text("הֲבָרֹות");
+   * const text: Text = new Text("וַֽיִּמְצְא֗וּ");
    * text.clusters[0].hasMeteg;
-   * // false
+   * // true
    * ```
    */
   get hasMeteg(): boolean {
@@ -324,6 +324,16 @@ export class Cluster extends Node<Cluster> {
     return true;
   }
 
+  /**
+   * Returns `true` if the following character is present and a _sof pasuq_ follows it:
+   * - \u{05BD} METEG
+   *
+   * ```typescript
+   * const text: Text = new Text("הָאָֽרֶץ׃");
+   * text.clusters[1].hasSilluq;
+   * // true
+   * ```
+   */
   get hasSilluq(): boolean {
     if (this.hasMetegCharacter && !this.hasMeteg) {
       // if it has a meteg character, but the character is not a meteg
