@@ -40,6 +40,36 @@ describe.each`
 });
 
 describe.each`
+  description    | hebrew         | clusterNum | isPunctuation
+  ${"meteg"}     | ${"הָאָֽרֶץ׃"} | ${1}       | ${false}
+  ${"sof pasuq"} | ${"הָאָֽרֶץ׃"} | ${3}       | ${true}
+`("isPunctuation:", ({ description, hebrew, clusterNum, isPunctuation }) => {
+  const heb = new Text(hebrew);
+  const cluster = heb.clusters[clusterNum];
+  const punc = cluster.isPunctuation;
+  describe(description, () => {
+    test(`isPunctuation to equal ${isPunctuation}`, () => {
+      expect(punc).toEqual(punc);
+    });
+  });
+});
+
+describe.each`
+  description    | hebrew         | clusterNum | isTaam
+  ${"meteg"}     | ${"הָאָֽרֶץ׃"} | ${1}       | ${false}
+  ${"sof pasuq"} | ${"הָאָֽרֶץ׃"} | ${3}       | ${true}
+`("isTaam:", ({ description, hebrew, clusterNum, isTaam }) => {
+  const heb = new Text(hebrew);
+  const cluster = heb.clusters[clusterNum];
+  const punc = cluster.isTaam;
+  describe(description, () => {
+    test(`isTaam to equal ${isTaam}`, () => {
+      expect(punc).toEqual(punc);
+    });
+  });
+});
+
+describe.each`
   description                                        | hebrew              | clusterNum | hasMeteg
   ${"word with single meteg"}                        | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${true}
   ${"word with single silluq"}                       | ${"נַפְשִֽׁי׃"}     | ${2}       | ${false}
