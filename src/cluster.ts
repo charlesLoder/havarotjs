@@ -68,21 +68,21 @@ export class Cluster extends Node<Cluster> {
     return this.#sequenced;
   }
 
-  private sequence(noSequence: boolean = false): Char[] {
-    const chars = [...this.original].map((char) => new Char(char));
-    return noSequence ? chars : chars.sort((a, b) => a.sequencePosition - b.sequencePosition);
-  }
-
-  private get metegCharacter(): RegExp {
-    return /\u{05BD}/u;
-  }
-
   private get hasMetegCharacter(): boolean {
     const text = this.text;
     if (this.metegCharacter.test(text)) {
       return true;
     }
     return false;
+  }
+
+  private get metegCharacter(): RegExp {
+    return /\u{05BD}/u;
+  }
+
+  private sequence(noSequence: boolean = false): Char[] {
+    const chars = [...this.original].map((char) => new Char(char));
+    return noSequence ? chars : chars.sort((a, b) => a.sequencePosition - b.sequencePosition);
   }
 
   /**
