@@ -1,6 +1,28 @@
 export const taamim = /[\u{0591}-\u{05AF}\u{05BF}\u{05C0}\u{05C4}-\u{05C6}\u{05F3}\u{05F4}]/u;
 
 /**
+ * a regular expression containing all the Hebrew characters of the category PUNCTUATION:
+ *
+ * - \u{05BE} HEBREW PUNCTUATION MAQAF ־
+ * - \u{05C0} HEBREW PUNCTUATION PASEQ ׀
+ * - \u{05C3} HEBREW PUNCTUATION SOF PASUQ ׃
+ * - \u{05C6} HEBREW PUNCTUATION NUN HAFUKHA ׆
+ *
+ */
+export const punctuation = /[\u{05BE}\u{05C0}\u{05C3}\u{05C6}]/u;
+
+/**
+ * a regular expression containing all the Hebrew characters of the category PUNCTUATION in a capture group:
+ *
+ * - \u{05BE} HEBREW PUNCTUATION MAQAF ־
+ * - \u{05C0} HEBREW PUNCTUATION PASEQ ׀
+ * - \u{05C3} HEBREW PUNCTUATION SOF PASUQ ׃
+ * - \u{05C6} HEBREW PUNCTUATION NUN HAFUKHA ׆
+ *
+ */
+export const punctuationCaptureGroup = /([\u{05BE}\u{05C0}\u{05C3}\u{05C6}])/u;
+
+/**
  * a regular expression containing all the Hebrew point characters (excluding sheva and rafe)
  *
  * ```js
