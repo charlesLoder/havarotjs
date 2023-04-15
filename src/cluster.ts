@@ -86,6 +86,97 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
+   * Returns `true` if `Cluster.hasVowel`, `Cluster.hasSheva`, and, `Cluster.isShureq` are all `false` and `Cluster.text` contains a:
+   * - `ה` preceded by a qamets, tsere, or segol
+   * - `ו` preceded by a holem
+   * - `י` preceded by a hiriq, tsere, or segol
+   *
+   * There are potentially other instances when a consonant may be a _mater_ (e.g. a silent aleph), but these are the most common.
+   * Though a shureq is a _mater_ letter, it is also a vowel itself, and thus separate from `isMater`.
+   *
+   * ```typescript
+   * const text: Text = new Text("סוּסָה");
+   * text.clusters[1].isMater; // the shureq
+   * // false
+   * text.clusters[3].isMater; // the heh
+   * // true
+   * ```
+   */
+  get isMater(): boolean {
+    const nxtIsShureq = this.next instanceof Cluster ? this.next.isShureq : false;
+    if (!this.hasVowel && !this.isShureq && !this.hasSheva && !nxtIsShureq) {
+      const text = this.text;
+      const prevText = this.prev instanceof Cluster ? this.prev.text : "";
+      const maters = /[היו](?!\u{05BC})/u;
+      if (!maters.test(text)) {
+        return false;
+      }
+      if (/ה/.test(text) && /\u{05B8}|\u{05B6}|\u{05B5}/u.test(prevText)) {
+        return true;
+      }
+      if (/ו/.test(text) && /\u{05B9}/u.test(prevText)) {
+        return true;
+      }
+      if (/י/.test(text) && /\u{05B4}|\u{05B5}|\u{05B6}/u.test(prevText)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Returns `true` if the Cluster does not have Hebrew chars
+   *
+   * ```typescript
+   * * const text: Text = new Text("(לְעֹלָם)");
+   * text.clusters[0].isNotHebrew;
+   * // true
+   * ```
+   */
+  get isNotHebrew(): boolean {
+    return !hebChars.test(this.text);
+  }
+
+  /**
+   *
+   * Returns `true` if `Cluster.hasVowel` is `false` and `Cluster.text` is a waw followed by a dagesh (e.g. `וּ`)
+   * A shureq is a vowel itself, but contains no vowel characters (hence why `hasVowel` cannot be `true`).
+   * This allows for easier syllabification.
+   *
+   * ```typescript
+   * const text: Text = new Text("קוּם");
+   * text.clusters[0].isShureq;
+   * // false
+   * text.clusters[1].isShureq;
+   * // true
+   * ```
+   */
+  get isShureq(): boolean {
+    const shureq = /\u{05D5}\u{05BC}/u;
+    return !this.hasVowel ? shureq.test(this.text) : false;
+  }
+
+  /**
+   *
+   * Returns `true` if one of the following long vowel characters is present:
+   * - \u{05B1} HATAF SEGOL
+   * - \u{05B2} HATAF PATAH
+   * - \u{05B3} HATAF QAMATS
+   *
+   * ```typescript
+   * const text: Text = new Text("הֲבָרֹות");
+   * text.clusters[0].hasHalfVowel;
+   * // true
+   * text.clusters[1].hasHalfVowel;
+   * // false
+   * ```
+   */
+  get hasHalfVowel(): boolean {
+    return /[\u{05B1}-\u{05B3}]/u.test(this.text);
+  }
+
+  /**
    * Returns `true` if one of the following long vowel characters is present:
    * - \u{05B5} TSERE
    * - \u{05B8} QAMATS
@@ -102,6 +193,87 @@ export class Cluster extends Node<Cluster> {
    */
   get hasLongVowel(): boolean {
     return /[\u{05B5}\u{05B8}\u{05B9}\u{05BA}]/u.test(this.text);
+  }
+
+  /**
+   * Returns `true` if the following character is present and a _sof pasuq_ does not follow it:
+   * - \u{05BD} METEG
+   *
+   * @deprecated use `hasMeteg`
+   *
+   * ```typescript
+   * const text: Text = new Text("הֲבָרֹות");
+   * text.clusters[0].hasMetheg;
+   * // false
+   * ```
+   */
+  get hasMetheg(): boolean {
+    return this.hasMeteg;
+  }
+
+  /**
+   * Returns `true` if the following character is present and a _sof pasuq_ does **not** follow it:
+   * - \u{05BD} METEG
+   *
+   * ```typescript
+   * const text: Text = new Text("וַֽיִּמְצְא֗וּ");
+   * text.clusters[0].hasMeteg;
+   * // true
+   * ```
+   */
+  get hasMeteg(): boolean {
+    if (!this.hasMetegCharacter) {
+      return false;
+    }
+    let next = this.next;
+    while (next) {
+      if (next instanceof Cluster) {
+        const nextText = next.text;
+        const sofPassuq = /\u{05C3}/u;
+        if (this.metegCharacter.test(nextText)) {
+          return true;
+        }
+        if (sofPassuq.test(nextText)) {
+          return false;
+        }
+        next = next.next;
+      }
+    }
+    return true;
+  }
+
+  /**
+   * Returns `true` if the following character is present:
+   * - \u{05B0} SHEVA
+   *
+   * ```typescript
+   * const text: Text = new Text("מַלְכָּה");
+   * text.clusters[0].hasSheva;
+   * // false
+   * text.clusters[1].hasSheva;
+   * // true
+   * ```
+   */
+  get hasSheva(): boolean {
+    return /\u{05B0}/u.test(this.text);
+  }
+
+  /**
+   * Returns `true` if the following character is present:
+   * - \u{05B0} SHEVA
+   *
+   * @deprecated now use `hasSheva`
+   *
+   * ```typescript
+   * const text: Text = new Text("מַלְכָּה");
+   * text.clusters[0].hasSheva;
+   * // false
+   * text.clusters[1].hasSheva;
+   * // true
+   * ```
+   */
+  get hasShewa(): boolean {
+    return this.hasSheva;
   }
 
   /**
@@ -125,22 +297,38 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
-   *
-   * Returns `true` if one of the following long vowel characters is present:
-   * - \u{05B1} HATAF SEGOL
-   * - \u{05B2} HATAF PATAH
-   * - \u{05B3} HATAF QAMATS
+   * Returns `true` if the following character is present and a _sof pasuq_ follows it:
+   * - \u{05BD} METEG
    *
    * ```typescript
-   * const text: Text = new Text("הֲבָרֹות");
-   * text.clusters[0].hasHalfVowel;
+   * const text: Text = new Text("הָאָֽרֶץ׃");
+   * text.clusters[1].hasSilluq;
    * // true
-   * text.clusters[1].hasHalfVowel;
-   * // false
    * ```
    */
-  get hasHalfVowel(): boolean {
-    return /[\u{05B1}-\u{05B3}]/u.test(this.text);
+  get hasSilluq(): boolean {
+    if (this.hasMetegCharacter && !this.hasMeteg) {
+      // if it has a meteg character, but the character is not a meteg
+      // then infer it is silluq
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Returns `true` if the following characters are present:
+   * - \u{0591}-\u{05AF}\u{05BF}\u{05C0}\u{05C3}-\u{05C6}\u{05F3}\u{05F4}
+   *
+   * ```typescript
+   * const text: Text = new Text("אֱלֹהִ֑ים");
+   * text.clusters[0].hasTaamim;
+   * // false
+   * text.clusters[2].hasTaamim;
+   * // true
+   * ```
+   */
+  get hasTaamim(): boolean {
+    return taamim.test(this.text);
   }
 
   /**
@@ -216,193 +404,5 @@ export class Cluster extends Node<Cluster> {
   get vowelName(): CharToNameMap[keyof CharToNameMap] | null {
     const vowel = this.vowel;
     return vowel ? charToNameMap[vowel] : null;
-  }
-
-  /**
-   *
-   * Returns `true` if `Cluster.hasVowel` is `false` and `Cluster.text` is a waw followed by a dagesh (e.g. `וּ`)
-   * A shureq is a vowel itself, but contains no vowel characters (hence why `hasVowel` cannot be `true`).
-   * This allows for easier syllabification.
-   *
-   * ```typescript
-   * const text: Text = new Text("קוּם");
-   * text.clusters[0].isShureq;
-   * // false
-   * text.clusters[1].isShureq;
-   * // true
-   * ```
-   */
-  get isShureq(): boolean {
-    const shureq = /\u{05D5}\u{05BC}/u;
-    return !this.hasVowel ? shureq.test(this.text) : false;
-  }
-
-  /**
-   * Returns `true` if `Cluster.hasVowel`, `Cluster.hasSheva`, and, `Cluster.isShureq` are all `false` and `Cluster.text` contains a:
-   * - `ה` preceded by a qamets, tsere, or segol
-   * - `ו` preceded by a holem
-   * - `י` preceded by a hiriq, tsere, or segol
-   *
-   * There are potentially other instances when a consonant may be a _mater_ (e.g. a silent aleph), but these are the most common.
-   * Though a shureq is a _mater_ letter, it is also a vowel itself, and thus separate from `isMater`.
-   *
-   * ```typescript
-   * const text: Text = new Text("סוּסָה");
-   * text.clusters[1].isMater; // the shureq
-   * // false
-   * text.clusters[3].isMater; // the heh
-   * // true
-   * ```
-   */
-  get isMater(): boolean {
-    const nxtIsShureq = this.next instanceof Cluster ? this.next.isShureq : false;
-    if (!this.hasVowel && !this.isShureq && !this.hasSheva && !nxtIsShureq) {
-      const text = this.text;
-      const prevText = this.prev instanceof Cluster ? this.prev.text : "";
-      const maters = /[היו](?!\u{05BC})/u;
-      if (!maters.test(text)) {
-        return false;
-      }
-      if (/ה/.test(text) && /\u{05B8}|\u{05B6}|\u{05B5}/u.test(prevText)) {
-        return true;
-      }
-      if (/ו/.test(text) && /\u{05B9}/u.test(prevText)) {
-        return true;
-      }
-      if (/י/.test(text) && /\u{05B4}|\u{05B5}|\u{05B6}/u.test(prevText)) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  /**
-   * Returns `true` if the following character is present and a _sof pasuq_ does not follow it:
-   * - \u{05BD} METEG
-   *
-   * @deprecated use `hasMeteg`
-   *
-   * ```typescript
-   * const text: Text = new Text("הֲבָרֹות");
-   * text.clusters[0].hasMetheg;
-   * // false
-   * ```
-   */
-  get hasMetheg(): boolean {
-    return this.hasMeteg;
-  }
-
-  /**
-   * Returns `true` if the following character is present and a _sof pasuq_ does **not** follow it:
-   * - \u{05BD} METEG
-   *
-   * ```typescript
-   * const text: Text = new Text("וַֽיִּמְצְא֗וּ");
-   * text.clusters[0].hasMeteg;
-   * // true
-   * ```
-   */
-  get hasMeteg(): boolean {
-    if (!this.hasMetegCharacter) {
-      return false;
-    }
-    let next = this.next;
-    while (next) {
-      if (next instanceof Cluster) {
-        const nextText = next.text;
-        const sofPassuq = /\u{05C3}/u;
-        if (this.metegCharacter.test(nextText)) {
-          return true;
-        }
-        if (sofPassuq.test(nextText)) {
-          return false;
-        }
-        next = next.next;
-      }
-    }
-    return true;
-  }
-
-  /**
-   * Returns `true` if the following character is present and a _sof pasuq_ follows it:
-   * - \u{05BD} METEG
-   *
-   * ```typescript
-   * const text: Text = new Text("הָאָֽרֶץ׃");
-   * text.clusters[1].hasSilluq;
-   * // true
-   * ```
-   */
-  get hasSilluq(): boolean {
-    if (this.hasMetegCharacter && !this.hasMeteg) {
-      // if it has a meteg character, but the character is not a meteg
-      // then infer it is silluq
-      return true;
-    }
-    return false;
-  }
-
-  /**
-   * Returns `true` if the following character is present:
-   * - \u{05B0} SHEVA
-   *
-   * @deprecated now use `hasSheva`
-   *
-   * ```typescript
-   * const text: Text = new Text("מַלְכָּה");
-   * text.clusters[0].hasSheva;
-   * // false
-   * text.clusters[1].hasSheva;
-   * // true
-   * ```
-   */
-  get hasShewa(): boolean {
-    return this.hasSheva;
-  }
-
-  /**
-   * Returns `true` if the following character is present:
-   * - \u{05B0} SHEVA
-   *
-   * ```typescript
-   * const text: Text = new Text("מַלְכָּה");
-   * text.clusters[0].hasSheva;
-   * // false
-   * text.clusters[1].hasSheva;
-   * // true
-   * ```
-   */
-  get hasSheva(): boolean {
-    return /\u{05B0}/u.test(this.text);
-  }
-
-  /**
-   * Returns `true` if the following characters are present:
-   * - \u{0591}-\u{05AF}\u{05BF}\u{05C0}\u{05C3}-\u{05C6}\u{05F3}\u{05F4}
-   *
-   * ```typescript
-   * const text: Text = new Text("אֱלֹהִ֑ים");
-   * text.clusters[0].hasTaamim;
-   * // false
-   * text.clusters[2].hasTaamim;
-   * // true
-   * ```
-   */
-  get hasTaamim(): boolean {
-    return taamim.test(this.text);
-  }
-
-  /**
-   * Returns `true` if the Cluster does not have Hebrew chars
-   *
-   * ```typescript
-   * * const text: Text = new Text("(לְעֹלָם)");
-   * text.clusters[0].isNotHebrew;
-   * // true
-   * ```
-   */
-  get isNotHebrew(): boolean {
-    return !hebChars.test(this.text);
   }
 }
