@@ -1,4 +1,4 @@
-export const taamim = /[\u{0591}-\u{05AF}\u{05BF}\u{05C0}\u{05C3}-\u{05C6}\u{05F3}\u{05F4}]/u;
+export const taamim = /[\u{0591}-\u{05AF}\u{05BF}\u{05C0}\u{05C4}-\u{05C6}\u{05F3}\u{05F4}]/u;
 
 /**
  * a regular expression containing all the Hebrew point characters (excluding sheva and rafe)

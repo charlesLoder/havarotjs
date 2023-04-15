@@ -343,7 +343,10 @@ const setIsAccented = (syllable: Syllable) => {
     prev.isAccented = true;
     return;
   }
-  const isAccented = syllable.clusters.filter((cluster) => cluster.hasTaamim).length ? true : false;
+  const isAccented = syllable.clusters.filter((cluster) => (cluster.hasTaamim || cluster.hasSilluq ? true : false))
+    .length
+    ? true
+    : false;
   syllable.isAccented = isAccented;
 };
 

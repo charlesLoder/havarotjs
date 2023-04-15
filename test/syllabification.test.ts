@@ -57,6 +57,7 @@ describe.each`
   ${"inflected with SQNMLVY letter"}                                 | ${"וַיְהִ֗י"}  | ${["וַ", "יְ", "הִ֗י"]}  | ${[false, false, false]} | ${[false, false, true]}
   ${"aleph with shureq preceded by sheva"}                           | ${"רְאוּבֵ֣ן"} | ${["רְ", "אוּ", "בֵ֣ן"]} | ${[false, false, true]}  | ${[false, false, true]}
   ${"word and passeq"}                                               | ${"דָּבָ֗ר ׀"} | ${["דָּ", "בָ֗ר", "׀"]}  | ${[false, true, true]}   | ${[false, true, true]}
+  ${"segolate noun"}                                                 | ${"הָאָֽרֶץ׃"} | ${["הָ", "אָֽ", "רֶץ׃"]} | ${[false, false, true]}  | ${[false, true, false]}
 `("3 Syllables:", ({ description, original, sylArr, closedArr, accentArr }) => {
   tests(description, original, sylArr, closedArr, accentArr);
 });
@@ -67,7 +68,7 @@ describe.each`
   ${"sheva preceded by short vowel, but meteg present"} | ${"הַֽמְכַסֶּ֬ה"}     | ${["הַֽ", "מְ", "כַ", "סֶּ֬ה"]}         | ${[false, false, true, false]}        | ${[false, false, false, true]}
   ${"initial shureq followed by sheva"}                 | ${"וּלְזַמֵּ֖ר"}      | ${["וּ", "לְ", "זַ", "מֵּ֖ר"]}          | ${[false, false, true, true]}         | ${[false, false, false, true]}
   ${"Jerusalem w/ patah"}                               | ${"יְרוּשָׁלִַ֗ם"}    | ${["יְ", "רוּ", "שָׁ", "לַ֗", "ִם"]}    | ${[false, false, false, false, true]} | ${[false, false, false, true, false]}
-  ${"Jerusalem w/ qamets"}                              | ${"בִּירוּשָׁלִָֽם׃"} | ${["בִּי", "רוּ", "שָׁ", "לָֽ", "ִם׃"]} | ${[false, false, false, false, true]} | ${[false, false, false, false, true]}
+  ${"Jerusalem w/ qamets"}                              | ${"בִּירוּשָׁלִָֽם׃"} | ${["בִּי", "רוּ", "שָׁ", "לָֽ", "ִם׃"]} | ${[false, false, false, false, true]} | ${[false, false, false, true, false]}
   ${"aleph w/ shureq"}                                  | ${"יִירָא֥וּךָ"}      | ${["יִי", "רָ", "א֥וּ", "ךָ"]}          | ${[false, false, false, false]}       | ${[false, false, true, false]}
 `("4 Syllables:", ({ description, original, sylArr, closedArr, accentArr }) => {
   tests(description, original, sylArr, closedArr, accentArr);

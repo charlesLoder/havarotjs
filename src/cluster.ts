@@ -73,6 +73,18 @@ export class Cluster extends Node<Cluster> {
     return noSequence ? chars : chars.sort((a, b) => a.sequencePosition - b.sequencePosition);
   }
 
+  private get metegCharacter(): RegExp {
+    return /\u{05BD}/u;
+  }
+
+  private get hasMetegCharacter(): boolean {
+    const text = this.text;
+    if (this.metegCharacter.test(text)) {
+      return true;
+    }
+    return false;
+  }
+
   /**
    * Returns `true` if one of the following long vowel characters is present:
    * - \u{05B5} TSERE
@@ -282,19 +294,17 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
-   * Returns `true` if the following character is present and a _sof pasuq_ does not follow it:
+   * Returns `true` if the following character is present and a _sof pasuq_ does **not** follow it:
    * - \u{05BD} METEG
    *
    * ```typescript
-   * const text: Text = new Text("הֲבָרֹות");
+   * const text: Text = new Text("וַֽיִּמְצְא֗וּ");
    * text.clusters[0].hasMeteg;
-   * // false
+   * // true
    * ```
    */
   get hasMeteg(): boolean {
-    const meteg = /\u{05BD}/u;
-    const text = this.text;
-    if (!meteg.test(text)) {
+    if (!this.hasMetegCharacter) {
       return false;
     }
     let next = this.next;
@@ -302,7 +312,7 @@ export class Cluster extends Node<Cluster> {
       if (next instanceof Cluster) {
         const nextText = next.text;
         const sofPassuq = /\u{05C3}/u;
-        if (meteg.test(nextText)) {
+        if (this.metegCharacter.test(nextText)) {
           return true;
         }
         if (sofPassuq.test(nextText)) {
@@ -312,6 +322,25 @@ export class Cluster extends Node<Cluster> {
       }
     }
     return true;
+  }
+
+  /**
+   * Returns `true` if the following character is present and a _sof pasuq_ follows it:
+   * - \u{05BD} METEG
+   *
+   * ```typescript
+   * const text: Text = new Text("הָאָֽרֶץ׃");
+   * text.clusters[1].hasSilluq;
+   * // true
+   * ```
+   */
+  get hasSilluq(): boolean {
+    if (this.hasMetegCharacter && !this.hasMeteg) {
+      // if it has a meteg character, but the character is not a meteg
+      // then infer it is silluq
+      return true;
+    }
+    return false;
   }
 
   /**
