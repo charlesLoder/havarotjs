@@ -1,5 +1,12 @@
 # Changelog
 
+## 2023-04-20 0.15.0
+
+- Fix final aleph closing syllable (Issue #107)
+- Fix how segolate nouns are accented (Issue #108)
+- Add `Cluster.hasSilluq` prop (PR #110)
+- Add `Cluster.isTaam` and alias `Cluster.isPunctuation` which returns `true` for maqqaf, sof passuq, and paseq.
+
 ## 2023-03-02 0.14.0
 
 - Removes יָמִים from qamets qatan list (Issue #103)
