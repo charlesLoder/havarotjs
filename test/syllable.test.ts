@@ -93,10 +93,11 @@ describe.each`
 });
 
 describe.each`
-  description                                  | hebrew        | syllableNum | codaWithGemination
-  ${"open syllable followed by gemination"}    | ${"מַדּוּעַ"} | ${0}        | ${"דּ"}
-  ${"open syllable followed by no gemination"} | ${"מֶלֶךְ"}   | ${0}        | ${""}
-  ${"closed syllable followed by dagesh qal"}  | ${"מַסְגֵּר"} | ${0}        | ${"סְ"}
+  description                                          | hebrew         | syllableNum | codaWithGemination
+  ${"open syllable followed by gemination"}            | ${"מַדּוּעַ"}  | ${0}        | ${"דּ"}
+  ${"open syllable followed by no gemination"}         | ${"מֶלֶךְ"}    | ${0}        | ${""}
+  ${"closed syllable followed by dagesh qal"}          | ${"מַסְגֵּר"}  | ${0}        | ${"סְ"}
+  ${"open syllable with sheva followed by dagesh qal"} | ${"שְׁתַּיִם"} | ${0}        | ${""}
 `("codaWithGemination:", ({ description, hebrew, syllableNum, codaWithGemination }) => {
   const heb = new Text(hebrew);
   const syllable = heb.syllables[syllableNum];

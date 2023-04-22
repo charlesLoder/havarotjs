@@ -324,7 +324,7 @@ export class Syllable extends Node<Syllable> {
       .map((c) => c.text)
       .join("");
     // (handle gemination)
-    if (withGemination && coda.length === 0 && !/\u{05B0}/.test(nucleus)) {
+    if (withGemination && coda.length === 0 && !/\u{05B0}/u.test(nucleus)) {
       if (this.next instanceof Syllable) {
         const nextOnset = this.next.onset;
         if (/\u{05BC}/u.test(nextOnset)) {
