@@ -66,6 +66,49 @@ describe.each`
 });
 
 describe.each`
+  description                                  | hebrew             | syllableNum | onset   | nucleus               | coda
+  ${"closed syllable"}                         | ${"יָ֥ם"}          | ${0}        | ${"י"}  | ${"\u{05B8}\u{05A5}"} | ${"ם"}
+  ${"open syllable"}                           | ${"מַדּוּעַ"}      | ${0}        | ${"מ"}  | ${"\u{05B7}"}         | ${""}
+  ${"syllable with shureq"}                    | ${"מַדּוּעַ"}      | ${1}        | ${"דּ"} | ${"וּ"}               | ${""}
+  ${"syllable with furtive patah"}             | ${"מַדּוּעַ"}      | ${2}        | ${""}   | ${"\u{05B7}"}         | ${"ע"}
+  ${"word-initial shureq"}                     | ${"וּמֶלֶךְ"}      | ${0}        | ${""}   | ${"וּ"}               | ${""}
+  ${"onset cluster (not supported)"}           | ${"שְׁתַּיִם"}     | ${0}        | ${"שׁ"} | ${"\u{05B0}"}         | ${""}
+  ${"Jerusalem w/ patah penultimate syllable"} | ${"יְרוּשָׁלִַ֗ם"} | ${3}        | ${"ל"}  | ${"\u{05B7}\u{0597}"} | ${""}
+  ${"Jerusalem w/ patah final syllable"}       | ${"יְרוּשָׁלִַ֗ם"} | ${4}        | ${""}   | ${"\u{05B4}"}         | ${"ם"}
+`("structure:", ({ description, hebrew, syllableNum, onset, nucleus, coda }) => {
+  const heb = new Text(hebrew);
+  const syllable = heb.syllables[syllableNum];
+  const [syllableOnset, syllableNucleus, syllableCoda] = syllable.structure();
+  describe(description, () => {
+    test(`onset to equal ${onset}`, () => {
+      expect(syllableOnset).toEqual(onset);
+    });
+    test(`nucleus to equal ${nucleus}`, () => {
+      expect(syllableNucleus).toEqual(nucleus);
+    });
+    test(`coda to equal ${coda}`, () => {
+      expect(syllableCoda).toEqual(coda);
+    });
+  });
+});
+
+describe.each`
+  description                                  | hebrew        | syllableNum | codaWithGemination
+  ${"open syllable followed by gemination"}    | ${"מַדּוּעַ"} | ${0}        | ${"דּ"}
+  ${"open syllable followed by no gemination"} | ${"מֶלֶךְ"}   | ${0}        | ${""}
+  ${"closed syllable followed by dagesh qal"}  | ${"מַסְגֵּר"} | ${0}        | ${"סְ"}
+`("codaWithGemination:", ({ description, hebrew, syllableNum, codaWithGemination }) => {
+  const heb = new Text(hebrew);
+  const syllable = heb.syllables[syllableNum];
+  const syllableCodaWithGemination = syllable.codaWithGemination;
+  describe(description, () => {
+    test(`codaWithGemination to equal ${codaWithGemination}`, () => {
+      expect(syllableCodaWithGemination).toEqual(codaWithGemination);
+    });
+  });
+});
+
+describe.each`
   description               | hebrew                 | syllableNum | nextExists | nextText
   ${"has next"}             | ${"הַֽ֭יְחָבְרְךָ"}    | ${0}        | ${true}    | ${"יְ"}
   ${"does not have next"}   | ${"כִּסֵּ֣א"}          | ${1}        | ${false}   | ${null}

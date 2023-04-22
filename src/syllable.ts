@@ -240,4 +240,126 @@ export class Syllable extends Node<Syllable> {
   set isFinal(final: boolean) {
     this.#isFinal = final;
   }
+
+  /**
+   * @returns the structure of the Syllable, i.e. the syllable's onset, nucleus, and coda.
+   * - The onset is any initial consonant of the syllable - present in every syllable except those containing a except word-initial shureq or a furtive patah.
+   * - The nucleus is the vowel of the syllable - present in every syllable and containing its {@link vowel} (with any materes lecticonis) or a shureq.
+   * - The coda is all final consonants of the syllable - not including any matres lecticonis, and including the onset of the subsequent syllable if the subsequent syllable is geminated and the `withGemination` argument is `true`.
+   *
+   * @param withGemination If this argument is `true`, include gemination of the next syllable's onset in this syllable's coda.
+   *
+   * ```typescript
+   * const text: Text = new Text("מַדּוּעַ");
+   * text.syllables.map(s => s.structure(true));
+   * // [["מ",
+   * //   "ַ",
+   * //   "דּ"],
+   * //  ["דּ",
+   * //   "וּ",
+   * //   ""],
+   * //  ["",
+   * //   "ַ",
+   * //   "ע"]]
+   * ```
+   */
+  structure(withGemination: boolean = false): [string, string, string] {
+    const heClusters = this.clusters.filter((c) => !c.isNotHebrew);
+    if (heClusters.length === 0) {
+      return ["", "", ""];
+    }
+    // Initial shureq: If the syllable starts with a shureq, then it has no
+    // onset, its nucleus is the shureq, and its coda is any remaining clusters
+    if (heClusters[0].isShureq) {
+      const nucleus = heClusters[0].text;
+      const coda = heClusters
+        .slice(1)
+        .map((c) => c.text)
+        .join("");
+      return ["", nucleus, coda];
+    }
+    // Furtive patah: If the syllable is final and is either a het, ayin, or he
+    // (with dagesh) followed by a patah, then it has no onset, its nucleus is
+    // the patah and its coda is the consonant
+    if (this.isFinal && !this.isClosed) {
+      const matchFurtive = this.text.match(/(\u{05D7}|\u{05E2}|\u{05D4}\u{05BC})(\u{05B7})$/mu);
+      if (matchFurtive) {
+        return ["", matchFurtive[2], matchFurtive[1]];
+      }
+    }
+    // Otherwise:
+    // 1. The onset is any initial consonant, ligature, dagesh, and/or rafe
+    //    (as defined in char.ts) of the first cluster
+    // 2. The nucleus is any niqqud and/or taamim of the initial cluster plus
+    //    the second cluster if the latter is a shureq or a mater
+    // 3. The coda is all remaining clusters – or if there are none, the
+    //    current syllable has a non-sheva vowel, the first cluster
+    //    of the next syllable has a dagesh, and `withGemination` is `true`,
+    //    then the coda is any initial consonant, ligature, dagesh, and/or
+    //    rafe of the first cluster of the next syllable (i.e. the next
+    //    syllable's dagesh is a dagesh chazaq)
+    let [onset, nucleus, coda] = ["", "", ""];
+    let i = 0;
+    // (add to the onset the sequencePositions: consonants = 0, ligatures = 1, dagesh or rafe = 2)
+    for (; i < heClusters[0].chars.length && heClusters[0].chars[i].sequencePosition < 3; i++) {
+      onset += heClusters[0].chars[i].text;
+    }
+    // (add to the nucleus the sequencePositions: niqqud (i.e vowels) = 3, taamim (i.e. accents) = 4)
+    for (; i < heClusters[0].chars.length && [3, 4].includes(heClusters[0].chars[i].sequencePosition); i++) {
+      nucleus += heClusters[0].chars[i].text;
+    }
+    // (add to the coda everything else from the first cluster - e.g. out of order characters)
+    for (; i < heClusters[0].chars.length; i++) {
+      coda += heClusters[0].chars[i].text;
+    }
+    // (add to the nucleus add any shureq or mater - if we haven't already added anything to the coda)
+    let clusters_processed = 1;
+    if (coda.length === 0 && heClusters.length > 1 && (heClusters[1].isShureq || heClusters[1].isMater)) {
+      nucleus += heClusters[1].text;
+      clusters_processed++;
+    }
+    // (add to the coda all the remaining clusters)
+    coda += heClusters
+      .slice(clusters_processed)
+      .map((c) => c.text)
+      .join("");
+    // (handle gemination)
+    if (withGemination && coda.length === 0 && !/\u{05B0}/.test(nucleus)) {
+      if (this.next instanceof Syllable) {
+        const nextOnset = this.next.onset;
+        if (/\u{05BC}/u.test(nextOnset)) {
+          coda = nextOnset;
+        }
+      }
+    }
+    return [onset, nucleus, coda];
+  }
+
+  /**
+   * Returns the onset of the syllable - see {@link structure}
+   */
+  get onset(): string {
+    return this.structure()[0];
+  }
+
+  /**
+   * @returns the nucleus of the syllable - see {@link structure}
+   */
+  get nucleus(): string {
+    return this.structure()[1];
+  }
+
+  /**
+   * @returns the coda of the syllable, ignoring gemination of the following syllable - see {@link structure}
+   */
+  get coda(): string {
+    return this.structure()[2];
+  }
+
+  /**
+   * @returns the coda of the syllable, including gemination of the following syllable - see {@link structure}
+   */
+  get codaWithGemination(): string {
+    return this.structure(true)[2];
+  }
 }
