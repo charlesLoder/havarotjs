@@ -86,7 +86,7 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
-   * Returns `true` if `Cluster.hasVowel`, `Cluster.hasSheva`, and, `Cluster.isShureq` are all `false` and `Cluster.text` contains a:
+   * Returns `true` if `Cluster.hasVowel`, `Cluster.hasSheva`, `Cluster.isShureq`, and `Cluster.next.isShureq` are all `false` and `Cluster.text` contains a:
    * - `ה` preceded by a qamets, tsere, or segol
    * - `ו` preceded by a holem
    * - `י` preceded by a hiriq, tsere, or segol
@@ -160,7 +160,7 @@ export class Cluster extends Node<Cluster> {
 
   /**
    *
-   * Returns `true` if `Cluster.hasVowel` is `false` and `Cluster.text` is a waw followed by a dagesh (e.g. `וּ`)
+   * Returns `true` if `Cluster.hasVowel`, `Cluster.hasSheva`, and `Cluster.prev.hasVowel` are all `false` and `Cluster.text` is a waw followed by a dagesh (e.g. `וּ`)
    * A shureq is a vowel itself, but contains no vowel characters (hence why `hasVowel` cannot be `true`).
    * This allows for easier syllabification.
    *
@@ -174,7 +174,8 @@ export class Cluster extends Node<Cluster> {
    */
   get isShureq(): boolean {
     const shureq = /\u{05D5}\u{05BC}/u;
-    return !this.hasVowel ? shureq.test(this.text) : false;
+    const prvHasVowel = this.prev instanceof Cluster && this.prev.hasVowel;
+    return !this.hasVowel && !this.hasSheva && !prvHasVowel ? shureq.test(this.text) : false;
   }
 
   /**
