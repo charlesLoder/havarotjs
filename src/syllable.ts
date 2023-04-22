@@ -271,12 +271,14 @@ export class Syllable extends Node<Syllable> {
     // Initial shureq: If the syllable starts with a shureq, then it has no
     // onset, its nucleus is the shureq, and its coda is any remaining clusters
     if (heClusters[0].isShureq) {
-      const nucleus = heClusters[0].text;
-      const coda = heClusters
-        .slice(1)
-        .map((c) => c.text)
-        .join("");
-      return ["", nucleus, coda];
+      return [
+        "",
+        heClusters[0].text,
+        heClusters
+          .slice(1)
+          .map((c) => c.text)
+          .join("")
+      ];
     }
     // Furtive patah: If the syllable is final and is either a het, ayin, or he
     // (with dagesh) followed by a patah, then it has no onset, its nucleus is
