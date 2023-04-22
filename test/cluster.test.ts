@@ -155,3 +155,22 @@ describe.each`
     });
   });
 });
+
+describe.each`
+  description                                 | hebrew         | clusterNum | isShureq
+  ${"mid-word shureq"}                        | ${"קוּם"}      | ${1}       | ${true}
+  ${"mid-word vav dagesh with vowel"}         | ${"שִׁוֵּק"}   | ${1}       | ${false}
+  ${"mid-word vav dagesh with vowel before"}  | ${"שִׁוּוּק"}  | ${1}       | ${false}
+  ${"mid-word shureq with vav dagesh before"} | ${"שִׁוּוּק"}  | ${2}       | ${true}
+  ${"mid-word vav dagesh with sheva"}         | ${"מְצַוְּךָ"} | ${2}       | ${false}
+  ${"final vav dagesh with vowel before"}     | ${"גֵּוּ"}     | ${1}       | ${false}
+`("isShureq:", ({ description, hebrew, clusterNum, isShureq }) => {
+  const heb = new Text(hebrew);
+  const cluster = heb.clusters[clusterNum];
+  const meteg = cluster.isShureq;
+  describe(description, () => {
+    test(`isShureq to equal ${isShureq}`, () => {
+      expect(meteg).toEqual(isShureq);
+    });
+  });
+});
