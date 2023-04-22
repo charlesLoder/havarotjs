@@ -174,7 +174,7 @@ export class Cluster extends Node<Cluster> {
    */
   get isShureq(): boolean {
     const shureq = /\u{05D5}\u{05BC}/u;
-    const prvHasVowel = this.prev instanceof Cluster && this.prev.hasVowel;
+    const prvHasVowel = this.prev?.value?.hasVowel ?? false;
     return !this.hasVowel && !this.hasSheva && !prvHasVowel ? shureq.test(this.text) : false;
   }
 
