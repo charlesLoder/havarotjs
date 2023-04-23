@@ -1,5 +1,11 @@
 # Changelog
 
+## 2023-04-23 0.13.0
+
+- Add linguistic properties on Syllable (Issue #2) — `Syllable.onset`, `Syllable.nucleus`, and `Syllable.coda` (PR #114)
+- Update `Cluster.isShureq` property (PR #113)
+- Much thanks to @m-yac for these addditions
+
 ## 2023-04-20 0.15.0
 
 - Fix final aleph closing syllable (Issue #107)
