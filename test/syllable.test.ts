@@ -66,15 +66,16 @@ describe.each`
 });
 
 describe.each`
-  description                                  | hebrew             | syllableNum | onset   | nucleus               | coda
-  ${"closed syllable"}                         | ${"יָ֥ם"}          | ${0}        | ${"י"}  | ${"\u{05B8}\u{05A5}"} | ${"ם"}
-  ${"open syllable"}                           | ${"מַדּוּעַ"}      | ${0}        | ${"מ"}  | ${"\u{05B7}"}         | ${""}
-  ${"syllable with shureq"}                    | ${"מַדּוּעַ"}      | ${1}        | ${"דּ"} | ${"וּ"}               | ${""}
-  ${"syllable with furtive patah"}             | ${"מַדּוּעַ"}      | ${2}        | ${""}   | ${"\u{05B7}"}         | ${"ע"}
-  ${"word-initial shureq"}                     | ${"וּמֶלֶךְ"}      | ${0}        | ${""}   | ${"וּ"}               | ${""}
-  ${"onset cluster (not supported)"}           | ${"שְׁתַּיִם"}     | ${0}        | ${"שׁ"} | ${"\u{05B0}"}         | ${""}
-  ${"Jerusalem w/ patah penultimate syllable"} | ${"יְרוּשָׁלִַ֗ם"} | ${3}        | ${"ל"}  | ${"\u{05B7}\u{0597}"} | ${""}
-  ${"Jerusalem w/ patah final syllable"}       | ${"יְרוּשָׁלִַ֗ם"} | ${4}        | ${""}   | ${"\u{05B4}"}         | ${"ם"}
+  description                                    | hebrew             | syllableNum | onset   | nucleus               | coda
+  ${"closed syllable"}                           | ${"יָ֥ם"}          | ${0}        | ${"י"}  | ${"\u{05B8}\u{05A5}"} | ${"ם"}
+  ${"open syllable"}                             | ${"מַדּוּעַ"}      | ${0}        | ${"מ"}  | ${"\u{05B7}"}         | ${""}
+  ${"syllable with shureq"}                      | ${"מַדּוּעַ"}      | ${1}        | ${"דּ"} | ${"וּ"}               | ${""}
+  ${"syllable with furtive patah"}               | ${"מַדּוּעַ"}      | ${2}        | ${""}   | ${"\u{05B7}"}         | ${"ע"}
+  ${"syllable with furtive patah and sof pasuq"} | ${"מַדּוּעַ׃"}     | ${2}        | ${""}   | ${"\u{05B7}"}         | ${"ע׃"}
+  ${"word-initial shureq"}                       | ${"וּמֶלֶךְ"}      | ${0}        | ${""}   | ${"וּ"}               | ${""}
+  ${"onset cluster (not supported)"}             | ${"שְׁתַּיִם"}     | ${0}        | ${"שׁ"} | ${"\u{05B0}"}         | ${""}
+  ${"Jerusalem w/ patah penultimate syllable"}   | ${"יְרוּשָׁלִַ֗ם"} | ${3}        | ${"ל"}  | ${"\u{05B7}\u{0597}"} | ${""}
+  ${"Jerusalem w/ patah final syllable"}         | ${"יְרוּשָׁלִַ֗ם"} | ${4}        | ${""}   | ${"\u{05B4}"}         | ${"ם"}
 `("structure:", ({ description, hebrew, syllableNum, onset, nucleus, coda }) => {
   const heb = new Text(hebrew);
   const syllable = heb.syllables[syllableNum];
