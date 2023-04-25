@@ -155,7 +155,8 @@ export class Cluster extends Node<Cluster> {
    * These are all the Hebrew characters of the category PUNCTUATION
    */
   get isPunctuation(): boolean {
-    return punctuation.test(this.text);
+    const punctuationOnly = new RegExp(`^${punctuation.source}+$`, "u");
+    return punctuationOnly.test(this.text);
   }
 
   /**
