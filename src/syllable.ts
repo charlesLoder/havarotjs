@@ -284,9 +284,9 @@ export class Syllable extends Node<Syllable> {
     // (with dagesh) followed by a patah, then it has no onset, its nucleus is
     // the patah and its coda is the consonant
     if (this.isFinal && !this.isClosed) {
-      const matchFurtive = this.text.match(/(\u{05D7}|\u{05E2}|\u{05D4}\u{05BC})(\u{05B7})$/mu);
+      const matchFurtive = this.text.match(/(\u{05D7}|\u{05E2}|\u{05D4}\u{05BC})(\u{05B7})(\u{05C3})?$/mu);
       if (matchFurtive) {
-        return ["", matchFurtive[2], matchFurtive[1]];
+        return ["", matchFurtive[2], matchFurtive[1] + (matchFurtive[3] || "")];
       }
     }
     // Otherwise:
