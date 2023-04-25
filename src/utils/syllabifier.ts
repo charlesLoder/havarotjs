@@ -32,9 +32,16 @@ const groupFinal = (arr: Cluster[], strict: boolean = true, vowelsRgx: RegExp = 
   let vowelPresent = false;
 
   // get final cluster and push to syl
-  // but first check if final cluster is not Hebrew
-  const finalCluster = arr[i];
+  let finalCluster = arr[i];
   syl.unshift(finalCluster);
+
+  // if the final cluster is punctuation and there is a next cluster
+  // then push the next cluster to syl.
+  if (finalCluster.isPunctuation && arr[i + 1]) {
+    i++;
+    finalCluster = arr[i];
+    syl.unshift(finalCluster);
+  }
 
   if (finalCluster.hasVowel) {
     // check if finalCluster is syllable
