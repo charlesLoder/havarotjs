@@ -303,7 +303,12 @@ export class Syllable extends Node<Syllable> {
     let [onset, nucleus, coda] = ["", "", ""];
     let i = 0;
     // (add to the onset the sequencePositions: consonants = 0, ligatures = 1, dagesh or rafe = 2)
-    for (; i < heClusters[0].chars.length && heClusters[0].chars[i].sequencePosition < 3; i++) {
+    for (
+      ;
+      i < heClusters[0].chars.length &&
+      (heClusters[0].chars[i].sequencePosition < 3 || heClusters[0].chars[i].text === "\u{05BD}");
+      i++
+    ) {
       onset += heClusters[0].chars[i].text;
     }
     // (add to the nucleus the sequencePositions: niqqud (i.e vowels) = 3, taamim (i.e. accents) = 4)
