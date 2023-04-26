@@ -1,6 +1,12 @@
 # Changelog
 
-## 2023-04-23 0.13.0
+## 2023-04-24 0.16.1
+
+- Fix `Syllable.structure()` incorrect with a furtive patach followed by a sof pasuq 
+(Issue #115)
+- Fix `Syllable.structure()` incorrect when a meteg precedes a shureq (Issue #118)
+
+## 2023-04-23 0.16.0
 
 - Add linguistic properties on Syllable (Issue #2) — `Syllable.onset`, `Syllable.nucleus`, and `Syllable.coda` (PR #114)
 - Update `Cluster.isShureq` property (PR #113)
