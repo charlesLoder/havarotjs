@@ -270,10 +270,11 @@ export class Syllable extends Node<Syllable> {
     }
     // Initial shureq: If the syllable starts with a shureq, then it has no
     // onset, its nucleus is the shureq, and its coda is any remaining clusters
-    if (heClusters[0].isShureq) {
+    const first = heClusters[0];
+    if (first.isShureq) {
       return [
         "",
-        heClusters[0].text,
+        first.text,
         heClusters
           .slice(1)
           .map((c) => c.text)
@@ -302,17 +303,18 @@ export class Syllable extends Node<Syllable> {
     //    syllable's dagesh is a dagesh chazaq)
     let [onset, nucleus, coda] = ["", "", ""];
     let i = 0;
-    // (add to the onset the sequencePositions: consonants = 0, ligatures = 1, dagesh or rafe = 2)
-    for (; i < heClusters[0].chars.length && heClusters[0].chars[i].sequencePosition < 3; i++) {
-      onset += heClusters[0].chars[i].text;
+    // (add to the onset the sequencePositions: consonants = 0, ligatures = 1, dagesh or rafe = 2, or meteg = \u{05BD})
+    // though meteg is an accent, it is treated as part of the onset
+    for (; i < first.chars.length && (first.chars[i].sequencePosition < 3 || first.chars[i].text === "\u{05BD}"); i++) {
+      onset += first.chars[i].text;
     }
     // (add to the nucleus the sequencePositions: niqqud (i.e vowels) = 3, taamim (i.e. accents) = 4)
-    for (; i < heClusters[0].chars.length && [3, 4].includes(heClusters[0].chars[i].sequencePosition); i++) {
-      nucleus += heClusters[0].chars[i].text;
+    for (; i < first.chars.length && [3, 4].includes(first.chars[i].sequencePosition); i++) {
+      nucleus += first.chars[i].text;
     }
     // (add to the coda everything else from the first cluster - e.g. out of order characters)
-    for (; i < heClusters[0].chars.length; i++) {
-      coda += heClusters[0].chars[i].text;
+    for (; i < first.chars.length; i++) {
+      coda += first.chars[i].text;
     }
     // (add to the nucleus add any shureq or mater - if we haven't already added anything to the coda)
     let clusters_processed = 1;
