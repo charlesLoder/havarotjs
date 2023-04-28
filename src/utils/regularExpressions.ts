@@ -64,3 +64,14 @@ export const hebChars = /[\u{0590}-\u{05FF}\u{FB1D}-\u{FB4F}]/u;
  * - group 5: word followed by white space
  */
 export const splitGroup = /(\S*\u{05BE}(?=\S*\u{05BE})|\S*\u{05BE}(?!\S*\u{05BE})|\S*-(?!\S*-)|\S*-(?=\S*-)|\S*\s*)/u;
+
+/**
+ * A positive lookahead expression to split a word into clusters
+ */
+export const clusterSlitGroup =
+  /(?=[\u{05BE}\u{05C3}\u{05C6}\u{05D0}-\u{05F2}\u{2000}-\u{206F}\u{2E00}-\u{2E7F}'!"#$%&()*+,-.\/:;<=>?@\[\]^_`\{|\}~])/u;
+
+export const jerusalemTest = new RegExp(
+  `(?<vowel>[\u{5B8}\u{5B7}])(?<hiriq>\u{5B4})(?<taamimMatch>${taamim.source}|\u{05BD})(?<mem>\u{05DD}.*)$`,
+  "u"
+);
