@@ -76,7 +76,7 @@ describe.each`
   ${"word with meteg & silluq"}                      | ${"הָֽאֲדָמָֽה׃"}   | ${0}       | ${true}
   ${"word with meteg & silluq"}                      | ${"הָֽאֲדָמָֽה׃"}   | ${3}       | ${false}
   ${"words with meteg & silluq, joined with maqqef"} | ${"וַֽיְהִי־כֵֽן׃"} | ${0}       | ${true}
-  ${"words with meteg & silluq, joined with maqqef"} | ${"וַֽיְהִי־כֵֽן׃"} | ${4}       | ${false}
+  ${"words with meteg & silluq, joined with maqqef"} | ${"וַֽיְהִי־כֵֽן׃"} | ${5}       | ${false}
 `("hasMeteg:", ({ description, hebrew, clusterNum, hasMeteg }) => {
   const heb = new Text(hebrew);
   const cluster = heb.clusters[clusterNum];
@@ -95,7 +95,7 @@ describe.each`
   ${"word with meteg & silluq"}                      | ${"הָֽאֲדָמָֽה׃"}   | ${0}       | ${false}
   ${"word with meteg & silluq"}                      | ${"הָֽאֲדָמָֽה׃"}   | ${3}       | ${true}
   ${"words with meteg & silluq, joined with maqqef"} | ${"וַֽיְהִי־כֵֽן׃"} | ${0}       | ${false}
-  ${"words with meteg & silluq, joined with maqqef"} | ${"וַֽיְהִי־כֵֽן׃"} | ${4}       | ${true}
+  ${"words with meteg & silluq, joined with maqqef"} | ${"וַֽיְהִי־כֵֽן׃"} | ${5}       | ${true}
 `("hasSilluq:", ({ description, hebrew, clusterNum, hasSilluq }) => {
   const heb = new Text(hebrew);
   const cluster = heb.clusters[clusterNum];
