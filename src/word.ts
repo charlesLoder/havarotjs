@@ -7,33 +7,6 @@ import { SylOpts } from "./text";
 import { isDivineName, hasDivineName } from "./utils/divineName";
 
 /**
- *
- * @param word the word to be split into Cluster
- * @description splits a word at each consonant or the punctuation character
- * Sof Pasuq and Nun Hafukha
- */
-export const makeClusters = (word: string): Cluster[] => {
-  const match = word.match(jerusalemTest);
-  /**
-   * The Masoretic spelling of Jerusalem contains some idiosyncrasies,
-   * namely the final syllable.
-   * Due to the normalization process, this word requires special treatment
-   */
-  if (match?.groups) {
-    const captured = match[0];
-    const { hiriq, vowel, taamimMatch, mem } = match.groups;
-    const partial = word.replace(captured, `${vowel}${taamimMatch}`);
-    return [...partial.split(clusterSlitGroup), `${hiriq}${mem}`].map((group) => {
-      if (group === `${hiriq}${mem}`) {
-        return new Cluster(group, true);
-      }
-      return new Cluster(group);
-    });
-  }
-  return word.split(clusterSlitGroup).map((group) => new Cluster(group));
-};
-
-/**
  * [[`Text.text`]] is split at each space and maqqef (U+05BE) both of which are captured.
  * Thus, the string passed to instantiate each `Word` is already properly decomposed, sequenced, qamets qatan patterns converted to the appropriate unicode character (U+05C7), and holem-waw sequences corrected.
  */
@@ -95,6 +68,33 @@ export class Word {
    */
   whiteSpaceAfter: string | null;
   private sylOpts: SylOpts;
+
+  /**
+   *
+   * @param word the word to be split into Cluster
+   * @description splits a word at each consonant or the punctuation character
+   * Sof Pasuq and Nun Hafukha
+   */
+  private makeClusters = (word: string): Cluster[] => {
+    const match = word.match(jerusalemTest);
+    /**
+     * The Masoretic spelling of Jerusalem contains some idiosyncrasies,
+     * namely the final syllable.
+     * Due to the normalization process, this word requires special treatment
+     */
+    if (match?.groups) {
+      const captured = match[0];
+      const { hiriq, vowel, taamimMatch, mem } = match.groups;
+      const partial = word.replace(captured, `${vowel}${taamimMatch}`);
+      return [...partial.split(clusterSlitGroup), `${hiriq}${mem}`].map((group) => {
+        if (group === `${hiriq}${mem}`) {
+          return new Cluster(group, true);
+        }
+        return new Cluster(group);
+      });
+    }
+    return word.split(clusterSlitGroup).map((group) => new Cluster(group));
+  };
 
   constructor(text: string, sylOpts: SylOpts) {
     this.#text = text;
@@ -159,7 +159,7 @@ export class Word {
    * ```
    */
   get clusters(): Cluster[] {
-    const clusters = makeClusters(this.text);
+    const clusters = this.makeClusters(this.text);
     const firstCluster = clusters[0];
     const remainder = clusters.slice(1);
     firstCluster.siblings = remainder;
