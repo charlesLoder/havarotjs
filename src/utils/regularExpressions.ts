@@ -68,8 +68,15 @@ export const splitGroup = /(\S*\u{05BE}(?=\S*\u{05BE})|\S*\u{05BE}(?!\S*\u{05BE}
 /**
  * A positive lookahead expression to split a word into clusters
  */
-export const clusterSlitGroup =
+export const clusterSplitGroup =
   /(?=[\u{05BE}\u{05C3}\u{05C6}\u{05D0}-\u{05F2}\u{2000}-\u{206F}\u{2E00}-\u{2E7F}'!"#$%&()*+,-.\/:;<=>?@\[\]^_`\{|\}~])/u;
+
+/**
+ * A positive lookahead expression to split a word into clusters
+ *
+ * @deprecated use clusterSplitGroup instead; this is a typo
+ */
+export const clusterSlitGroup = clusterSplitGroup;
 
 export const jerusalemTest = new RegExp(
   `(?<vowel>[\u{5B8}\u{5B7}])(?<hiriq>\u{5B4})(?<taamimMatch>${taamim.source}|\u{05BD})(?<mem>\u{05DD}.*)$`,

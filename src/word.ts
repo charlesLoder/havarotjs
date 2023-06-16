@@ -1,5 +1,5 @@
 import { syllabify } from "./utils/syllabifier";
-import { clusterSlitGroup, jerusalemTest } from "./utils/regularExpressions";
+import { clusterSplitGroup, jerusalemTest } from "./utils/regularExpressions";
 import { Syllable } from "./syllable";
 import { Cluster } from "./cluster";
 import { Char } from "./char";
@@ -86,14 +86,14 @@ export class Word {
       const captured = match[0];
       const { hiriq, vowel, taamimMatch, mem } = match.groups;
       const partial = word.replace(captured, `${vowel}${taamimMatch}`);
-      return [...partial.split(clusterSlitGroup), `${hiriq}${mem}`].map((group) => {
+      return [...partial.split(clusterSplitGroup), `${hiriq}${mem}`].map((group) => {
         if (group === `${hiriq}${mem}`) {
           return new Cluster(group, true);
         }
         return new Cluster(group);
       });
     }
-    return word.split(clusterSlitGroup).map((group) => new Cluster(group));
+    return word.split(clusterSplitGroup).map((group) => new Cluster(group));
   };
 
   constructor(text: string, sylOpts: SylOpts) {
