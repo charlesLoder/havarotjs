@@ -81,13 +81,15 @@ describe.each`
 });
 
 describe.each`
-  description         | word         | syllables              | isClosedArr              | longVowelsOpt | qametsQatanOpt
-  ${"regular qamets"} | ${"יָדְךָ"}  | ${["יָ", "דְ", "ךָ"]}  | ${[false, false, false]} | ${true}       | ${true}
-  ${"regular qamets"} | ${"יָדְךָ"}  | ${["יָדְ", "ךָ"]}      | ${[true, false]}         | ${false}      | ${true}
-  ${"qamets qatan"}   | ${"חָפְנִי"} | ${["חׇפְ", "נִי"]}     | ${[true, false]}         | ${true}       | ${true}
-  ${"qamets qatan"}   | ${"חָפְנִי"} | ${["חׇפְ", "נִי"]}     | ${[true, false]}         | ${false}      | ${true}
-  ${"qamets qatan"}   | ${"חָפְנִי"} | ${["חָ", "פְ", "נִי"]} | ${[false, false, false]} | ${true}       | ${false}
-  ${"qamets qatan"}   | ${"חָפְנִי"} | ${["חָפְ", "נִי"]}     | ${[true, false]}         | ${false}      | ${false}
+  description              | word           | syllables                | isClosedArr              | longVowelsOpt | qametsQatanOpt
+  ${"regular qamets"}      | ${"יָדְךָ"}    | ${["יָ", "דְ", "ךָ"]}    | ${[false, false, false]} | ${true}       | ${true}
+  ${"regular qamets"}      | ${"יָדְךָ"}    | ${["יָדְ", "ךָ"]}        | ${[true, false]}         | ${false}      | ${true}
+  ${"qamets qatan"}        | ${"חָפְנִי"}   | ${["חׇפְ", "נִי"]}       | ${[true, false]}         | ${true}       | ${true}
+  ${"qamets qatan"}        | ${"חָפְנִי"}   | ${["חׇפְ", "נִי"]}       | ${[true, false]}         | ${false}      | ${true}
+  ${"qamets qatan"}        | ${"חָפְנִי"}   | ${["חָ", "פְ", "נִי"]}   | ${[false, false, false]} | ${true}       | ${false}
+  ${"qamets qatan"}        | ${"חָפְנִי"}   | ${["חָפְ", "נִי"]}       | ${[true, false]}         | ${false}      | ${false}
+  ${"holem male"}          | ${"הוֹלְכִים"} | ${["הֹו", "לְ", "כִים"]} | ${[false, false, true]}  | ${true}       | ${true}
+  ${"holem male w/ false"} | ${"הוֹלְכִים"} | ${["הֹולְ", "כִים"]}     | ${[true, true]}          | ${false}      | ${true}
 `("longVowels:", ({ description, word, syllables, isClosedArr, longVowelsOpt, qametsQatanOpt }) => {
   const text = new Text(word, { longVowels: longVowelsOpt, qametsQatan: qametsQatanOpt });
   const sylText = text.syllables.map((syl) => syl.text);
