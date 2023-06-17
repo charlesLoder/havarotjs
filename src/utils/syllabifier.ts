@@ -182,7 +182,7 @@ const groupShevas = (arr: Mixed, options: SylOpts): Mixed => {
       continue;
     }
 
-    if (shevaPresent && cluster.isMater) {
+    if (shevaPresent && cluster.isMater && options.longVowels) {
       syl = shevaNewSyllable(syl);
       result.push(cluster);
       shevaPresent = false;
