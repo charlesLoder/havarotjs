@@ -23,8 +23,13 @@ jobs:
         run: npm install --force
       - name: Run tests
         run: npm test
-      - name: Run formatter
-        run: npm run format-check
       - name: Run linter
         run: npm run lint
+      - name: Run formatter
+        run: npm run format
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Apply formatting changes
+          branch: ${{ github.head_ref }}
       - run: echo "This job's status is ${{ job.status }}."
