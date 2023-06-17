@@ -1,5 +1,11 @@
 # Changelog
 
+## 2023-06-17 0.17.0
+
+- Fix incorrect syllabification with holem make (Issue #121)
+- Fix type from `clusterSlitGroup` to `clusterSplitGroup` (Issue #122)
+- Improve devops (Issue #123)
+
 ## 2023-04-27 0.16.2
 
 - Update `Cluster` so that maqqef is it's own Cluster, keeping with the logic of `Cluster.isPunctuation` (PR #120)
