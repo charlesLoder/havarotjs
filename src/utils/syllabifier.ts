@@ -23,7 +23,7 @@ const createNewSyllable = (result: Mixed, syl: Syl, isClosed?: boolean): Syl => 
  * @param strict where to implement strict mode
  * @param vowelsRgx a regex for the set of Hebrew vowels excluding sheva
  */
-const groupFinal = (arr: Cluster[], strict: boolean = true, vowelsRgx: RegExp = vowels): Mixed => {
+const groupFinal = (arr: Cluster[], vowelsRgx: RegExp = vowels): Mixed => {
   // grouping the final first helps to avoid issues with final kafs/tavs
   const len = arr.length;
   let i = 0;
@@ -320,7 +320,7 @@ const groupShureqs = (arr: Mixed, strict: boolean = true): Mixed => {
  */
 const groupClusters = (arr: Cluster[], options: SylOpts): Mixed => {
   const rev = arr.reverse();
-  const finalGrouped = groupFinal(rev, options.strict);
+  const finalGrouped = groupFinal(rev);
   const shevasGrouped = groupShevas(finalGrouped, options);
   const shureqGroups = groupShureqs(shevasGrouped, options.strict);
   const matersGroups = groupMaters(shureqGroups, options.strict);
