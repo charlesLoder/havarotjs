@@ -1,5 +1,9 @@
 # Changelog
 
+## 2023-06-17 0.17.1
+
+- Fix single syllable not being closed with a final-he (Issue #128)
+
 ## 2023-06-17 0.17.0
 
 - Fix incorrect syllabification with holem make (Issue #121)
