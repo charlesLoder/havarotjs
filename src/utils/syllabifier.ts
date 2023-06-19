@@ -23,7 +23,7 @@ const createNewSyllable = (result: Mixed, syl: Syl, isClosed?: boolean): Syl => 
  * @param strict where to implement strict mode
  * @param vowelsRgx a regex for the set of Hebrew vowels excluding sheva
  */
-const groupFinal = (arr: Cluster[], strict: boolean = true, vowelsRgx: RegExp = vowels): Mixed => {
+const groupFinal = (arr: Cluster[], vowelsRgx: RegExp = vowels): Mixed => {
   // grouping the final first helps to avoid issues with final kafs/tavs
   const len = arr.length;
   let i = 0;
@@ -82,7 +82,14 @@ const groupFinal = (arr: Cluster[], strict: boolean = true, vowelsRgx: RegExp = 
 
   const finalChar = finalCluster.chars.filter((c) => c.sequencePosition !== 4).at(-1)?.text || "";
   const hasFinalVowel = vowelsRgx.test(finalChar);
-  const isClosed = !finalCluster.isShureq && !finalCluster.isMater && !/א/.test(finalCluster.text) && !hasFinalVowel;
+  const isClosed =
+    !finalCluster.isShureq &&
+    !finalCluster.isMater &&
+    // if final cluster is an aleph, then the syllable is open
+    !/\u{05D0}/u.test(finalCluster.text) &&
+    // if the final cluster is an he but without a mappiq, then the syllable is open
+    !/\u{05D4}(?!\u{05bc})/u.test(finalCluster.text) &&
+    !hasFinalVowel;
   const finalSyllable = new Syllable(syl, { isClosed });
   const remainder = arr.slice(i);
   result = remainder.length ? remainder : [];
@@ -313,7 +320,7 @@ const groupShureqs = (arr: Mixed, strict: boolean = true): Mixed => {
  */
 const groupClusters = (arr: Cluster[], options: SylOpts): Mixed => {
   const rev = arr.reverse();
-  const finalGrouped = groupFinal(rev, options.strict);
+  const finalGrouped = groupFinal(rev);
   const shevasGrouped = groupShevas(finalGrouped, options);
   const shureqGroups = groupShureqs(shevasGrouped, options.strict);
   const matersGroups = groupMaters(shureqGroups, options.strict);
