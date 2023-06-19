@@ -42,6 +42,7 @@ describe.each`
   ${"consonant w/o niqqud"}                                            | ${"אלְבֶּערְט"} | ${["אלְ", "בֶּערְט"]}     | ${[true, true]}   | ${[false, false]}
   ${"final aleph"}                                                     | ${"בָּרָ֣א"}    | ${["בָּ", "רָ֣א"]}        | ${[false, false]} | ${[false, true]}
   ${"final he"}                                                        | ${"מַלְכָּ֔ה"}  | ${["מַלְ", "כָּ֔ה"]}      | ${[true, false]}  | ${[false, true]}
+  ${"single syllable, final he"}                                                        | ${"פֹּ֖ה"}  | ${["פֹּ֖ה"]}      | ${[false]}  | ${[true]}
 `("2 Syllables:", ({ description, original, sylArr, closedArr, accentArr }) => {
   tests(description, original, sylArr, closedArr, accentArr);
 });
