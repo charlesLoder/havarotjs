@@ -82,7 +82,14 @@ const groupFinal = (arr: Cluster[], strict: boolean = true, vowelsRgx: RegExp = 
 
   const finalChar = finalCluster.chars.filter((c) => c.sequencePosition !== 4).at(-1)?.text || "";
   const hasFinalVowel = vowelsRgx.test(finalChar);
-  const isClosed = !finalCluster.isShureq && !finalCluster.isMater && !/א/.test(finalCluster.text) && !hasFinalVowel;
+  const isClosed =
+    !finalCluster.isShureq &&
+    !finalCluster.isMater &&
+    // if final cluster is an aleph, then the syllable is open
+    !/\u{05D0}/u.test(finalCluster.text) &&
+    // if the final cluster is an he but without a mappiq, then the syllable is open
+    !/\u{05D4}(?!\u{05bc})/u.test(finalCluster.text) &&
+    !hasFinalVowel;
   const finalSyllable = new Syllable(syl, { isClosed });
   const remainder = arr.slice(i);
   result = remainder.length ? remainder : [];
