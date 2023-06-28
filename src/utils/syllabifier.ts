@@ -131,7 +131,7 @@ const groupShevas = (arr: Mixed, options: SylOpts): Mixed => {
     }
 
     if (shevaPresent && cluster.hasShortVowel) {
-      if (cluster.hasMeteg) {
+      if (options.shevaAfterMeteg && cluster.hasMeteg) {
         syl = shevaNewSyllable(syl);
         syl.unshift(cluster);
         continue;
