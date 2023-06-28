@@ -172,7 +172,7 @@ describe.each`
   const sylText = text.syllables.map((syl) => syl.text);
   const isClosed = text.syllables.map((syl) => syl.isClosed);
   describe(description, () => {
-    test(`sqnlvy is ${sqnmlvyOpt}`, () => {
+    test(`sqnmlvy is ${sqnmlvyOpt}`, () => {
       expect(sylText).toEqual(syllables);
     });
 
