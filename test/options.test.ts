@@ -183,6 +183,27 @@ describe.each`
 });
 
 describe.each`
+  description                   | word             | syllables                      | isClosedArr                     | shevaAfterMetegOpt
+  ${"meteg on patach: default"} | ${"יְדַֽעְיָה֙"} | ${["יְ", "דַֽ", "עְ", "יָה֙"]} | ${[false, false, false, false]} | ${true}
+  ${"meteg on patach: false"}   | ${"יְדַֽעְיָה֙"} | ${["יְ", "דַֽעְ", "יָה֙"]}     | ${[false, true, false]}         | ${false}
+  ${"meteg on hiriq: default"}  | ${"מִֽשְׁכ֗וּ"}  | ${["מִֽ", "שְׁ", "כ֗וּ"]}      | ${[false, false, false]}        | ${true}
+  ${"meteg on hiriq: default"}  | ${"מִֽשְׁכ֗וּ"}  | ${["מִֽשְׁ", "כ֗וּ"]}          | ${[true, false]}                | ${false}
+`("shevaAfterMeteg:", ({ description, word, syllables, isClosedArr, shevaAfterMetegOpt }) => {
+  const text = new Text(word, { shevaAfterMeteg: shevaAfterMetegOpt });
+  const sylText = text.syllables.map((syl) => syl.text);
+  const isClosed = text.syllables.map((syl) => syl.isClosed);
+  describe(description, () => {
+    test(`shevaAfterMeteg is ${shevaAfterMetegOpt}`, () => {
+      expect(sylText).toEqual(syllables);
+    });
+
+    test(`isClosed`, () => {
+      expect(isClosed).toEqual(isClosedArr);
+    });
+  });
+});
+
+describe.each`
   description                            | word                | strict
   ${"threw hasShortVowel error"}         | ${"אלִי"}           | ${true}
   ${"threw hasShortVowel error"}         | ${"אלִי"}           | ${false}
