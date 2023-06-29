@@ -386,8 +386,8 @@ const reinsertLatin = (syls: Syllable[], latin: { cluster: Cluster; pos: number 
       }
       const firstSyl = syls[0];
       syls[0] = new Syllable([...partial, ...firstSyl.clusters], {
-        isClosed: firstSyl.isClosed,
         isAccented: firstSyl.isAccented,
+        isClosed: firstSyl.isClosed,
         isFinal: firstSyl.isFinal
       });
     } else {
@@ -397,8 +397,8 @@ const reinsertLatin = (syls: Syllable[], latin: { cluster: Cluster; pos: number 
         index++;
       }
       syls[numOfSyls - 1] = new Syllable([...lastSyl.clusters, ...partial], {
-        isClosed: lastSyl.isClosed,
         isAccented: lastSyl.isAccented,
+        isClosed: lastSyl.isClosed,
         isFinal: lastSyl.isFinal
       });
     }

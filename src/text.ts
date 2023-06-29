@@ -269,10 +269,10 @@ export class Text {
       article: validOpts.article ?? true,
       holemHaser: validOpts.holemHaser ?? "preserve",
       longVowels: validOpts.longVowels ?? true,
-      sqnmlvy: validOpts.sqnmlvy ?? true,
-      shevaAfterMeteg: validOpts.shevaAfterMeteg ?? true,
-      strict: validOpts.strict ?? true,
       qametsQatan: validOpts.qametsQatan ?? true,
+      shevaAfterMeteg: validOpts.shevaAfterMeteg ?? true,
+      sqnmlvy: validOpts.sqnmlvy ?? true,
+      strict: validOpts.strict ?? true,
       wawShureq: validOpts.wawShureq ?? true
     };
   }
