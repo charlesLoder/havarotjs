@@ -204,6 +204,30 @@ describe.each`
 });
 
 describe.each`
+  description            | word         | syllables              | isClosedArr              | shevaAfterMetegOpt | longVowelsOpt
+  ${"qamets with meteg"} | ${"יָֽדְךָ"} | ${["יָֽ", "דְ", "ךָ"]} | ${[false, false, false]} | ${true}            | ${true}
+  ${"qamets with meteg"} | ${"יָֽדְךָ"} | ${["יָֽ", "דְ", "ךָ"]} | ${[false, false, false]} | ${false}           | ${true}
+  ${"qamets with meteg"} | ${"יָֽדְךָ"} | ${["יָֽ", "דְ", "ךָ"]} | ${[false, false, false]} | ${true}            | ${false}
+  ${"qamets with meteg"} | ${"יָֽדְךָ"} | ${["יָֽדְ", "ךָ"]}     | ${[true, false]}         | ${false}           | ${false}
+`(
+  "shevaAfterMeteg and longVowels:",
+  ({ description, word, syllables, isClosedArr, shevaAfterMetegOpt, longVowelsOpt }) => {
+    const text = new Text(word, { shevaAfterMeteg: shevaAfterMetegOpt, longVowels: longVowelsOpt });
+    const sylText = text.syllables.map((syl) => syl.text);
+    const isClosed = text.syllables.map((syl) => syl.isClosed);
+    describe(description, () => {
+      test(`shevaAfterMeteg is ${shevaAfterMetegOpt} and longVowels is ${longVowelsOpt}`, () => {
+        expect(sylText).toEqual(syllables);
+      });
+
+      test(`isClosed`, () => {
+        expect(isClosed).toEqual(isClosedArr);
+      });
+    });
+  }
+);
+
+describe.each`
   description                            | word                | strict
   ${"threw hasShortVowel error"}         | ${"אלִי"}           | ${true}
   ${"threw hasShortVowel error"}         | ${"אלִי"}           | ${false}

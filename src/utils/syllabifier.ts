@@ -165,7 +165,7 @@ const groupShevas = (arr: Mixed, options: SylOpts): Mixed => {
     }
 
     if (shevaPresent && cluster.hasLongVowel) {
-      if (options.longVowels) {
+      if (options.longVowels || (cluster.hasMeteg && options.shevaAfterMeteg)) {
         syl = shevaNewSyllable(syl);
         result.push(cluster);
         shevaPresent = false;
