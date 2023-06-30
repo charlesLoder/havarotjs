@@ -178,7 +178,7 @@ const groupShevas = (arr: Mixed, options: SylOpts): Mixed => {
     }
 
     if (shevaPresent && cluster.isShureq) {
-      if (!options.wawShureq && !cluster.hasMeteg && len - 1 === index) {
+      if (!options.wawShureq && (!options.shevaAfterMeteg || !cluster.hasMeteg) && len - 1 === index) {
         syl.unshift(cluster);
         syl = shevaNewSyllable(syl, true);
       } else {

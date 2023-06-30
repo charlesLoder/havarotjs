@@ -228,6 +228,30 @@ describe.each`
 );
 
 describe.each`
+  description                    | word             | syllables                      | isClosedArr                   | shevaAfterMetegOpt | wawShureqOpt
+  ${"initial shureq with meteg"} | ${"וּֽלְמַזֵּר"} | ${["וּֽ", "לְ", "מַ", "זֵּר"]} | ${[false, false, true, true]} | ${true}            | ${true}
+  ${"initial shureq with meteg"} | ${"וּֽלְמַזֵּר"} | ${["וּֽ", "לְ", "מַ", "זֵּר"]} | ${[false, false, true, true]} | ${false}           | ${true}
+  ${"initial shureq with meteg"} | ${"וּֽלְמַזֵּר"} | ${["וּֽ", "לְ", "מַ", "זֵּר"]} | ${[false, false, true, true]} | ${true}            | ${false}
+  ${"initial shureq with meteg"} | ${"וּֽלְמַזֵּר"} | ${["וּֽלְ", "מַ", "זֵּר"]}     | ${[true, true, true]}         | ${false}           | ${false}
+`(
+  "shevaAfterMeteg and wawShureq:",
+  ({ description, word, syllables, isClosedArr, shevaAfterMetegOpt, wawShureqOpt }) => {
+    const text = new Text(word, { shevaAfterMeteg: shevaAfterMetegOpt, wawShureq: wawShureqOpt });
+    const sylText = text.syllables.map((syl) => syl.text);
+    const isClosed = text.syllables.map((syl) => syl.isClosed);
+    describe(description, () => {
+      test(`shevaAfterMeteg is ${shevaAfterMetegOpt} and longVowels is ${wawShureqOpt}`, () => {
+        expect(sylText).toEqual(syllables);
+      });
+
+      test(`isClosed`, () => {
+        expect(isClosed).toEqual(isClosedArr);
+      });
+    });
+  }
+);
+
+describe.each`
   description                            | word                | strict
   ${"threw hasShortVowel error"}         | ${"אלִי"}           | ${true}
   ${"threw hasShortVowel error"}         | ${"אלִי"}           | ${false}
