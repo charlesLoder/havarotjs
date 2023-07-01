@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Syllabification | havarotjs - v0.17.1</title>
-	<meta name="description" content="Documentation for havarotjs - v0.17.1">
+	<title>Syllabification | havarotjs - v0.18.0</title>
+	<meta name="description" content="Documentation for havarotjs - v0.18.0">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../../assets/css/main.css">
 	<link rel="stylesheet" href="../../assets/css/pages.css">
@@ -23,7 +23,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../../index.html" class="title">havarotjs - v0.17.1</a>
+					<a href="../../index.html" class="title">havarotjs - v0.18.0</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -128,6 +128,20 @@
 					<h2>Options for Syllabification</h2>
 				</a>
 				<p>These are the options for syllabification.</p>
+				<a href="#article" id="article" style="color: inherit; text-decoration: none;">
+					<h3>article</h3>
+				</a>
+				<p>Takes a <code>boolean</code>. Default <code>true</code>.</p>
+				<p>Determines whether to regard the sheva under the letters ילמ when preceded by the article and with a missing dagesh chazaq as as a <em>sheva na&#39;</em>.</p>
+				<pre><code class="language-ts"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">default</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;הַיְאֹ֗ר&quot;</span><span style="color: #000000">);</span>
+<span style="color: #001080">default</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">syl</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">syl</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
+<span style="color: #008000">// [&quot;הַ&quot;, &quot;יְ&quot;, &quot;אֹ֗ר&quot;]</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">optional</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;הַיְאֹ֗ר&quot;</span><span style="color: #000000">, { </span><span style="color: #001080">article:</span><span style="color: #000000"> </span><span style="color: #0000FF">false</span><span style="color: #000000"> });</span>
+<span style="color: #001080">optional</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">syl</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">syl</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
+<span style="color: #008000">// [&quot;הַיְ&quot;, &quot;אֹ֗ר&quot;]</span>
+</code></pre>
+				<p><em>results in example displayed in reverse order to mimic Hebrew writing; the rightmost value is the 0 item</em></p>
 				<a href="#longvowles" id="longvowles" style="color: inherit; text-decoration: none;">
 					<h3>longVowles</h3>
 				</a>
@@ -140,19 +154,6 @@
 <span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">optional</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;יָדְךָ&quot;</span><span style="color: #000000">, { </span><span style="color: #001080">longVowels:</span><span style="color: #000000"> </span><span style="color: #0000FF">false</span><span style="color: #000000"> });</span>
 <span style="color: #001080">optional</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">syl</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">syl</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
 <span style="color: #008000">// [&quot;יָדְ&quot;, &quot;ךָ&quot;]</span>
-</code></pre>
-				<a href="#sqnmlvy" id="sqnmlvy" style="color: inherit; text-decoration: none;">
-					<h3>sqnmlvy</h3>
-				</a>
-				<p>Takes a <code>boolean</code>. Default <code>true</code>.</p>
-				<p>If <code>true</code>, regards the sheva under the letters שׁשׂסצנמלוי when preceded by a waw-consecutive with a missing <em>dagesh chazaq</em> as vocal. If a meteg is present, the sheva is always a <em>sheva na&#39;</em>.</p>
-				<pre><code class="language-typescript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">default</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;וַיְצַחֵק֙&quot;</span><span style="color: #000000">);</span>
-<span style="color: #001080">default</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">syl</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">syl</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
-<span style="color: #008000">// [&quot;וַ&quot;, &quot;יְ&quot;, &quot;צַ&quot;, &quot;חֵק֙&quot;]</span>
-
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">optional</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;וַיְצַחֵק֙&quot;</span><span style="color: #000000">, { </span><span style="color: #001080">sqnmlvy:</span><span style="color: #000000"> </span><span style="color: #0000FF">false</span><span style="color: #000000"> });</span>
-<span style="color: #001080">optional</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">syl</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">syl</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
-<span style="color: #008000">// [&quot;וַיְ&quot;, &quot;צַ&quot;, &quot;חֵק֙&quot;]</span>
 </code></pre>
 				<a href="#qametsqatan" id="qametsqatan" style="color: inherit; text-decoration: none;">
 					<h3>qametsQatan</h3>
@@ -168,6 +169,41 @@
 <span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">optional</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;חָפְנִי֙&quot;</span><span style="color: #000000">, { </span><span style="color: #001080">qametsQatan:</span><span style="color: #000000"> </span><span style="color: #0000FF">false</span><span style="color: #000000"> });</span>
 <span style="color: #001080">qQRegx</span><span style="color: #000000">.</span><span style="color: #795E26">test</span><span style="color: #000000">(</span><span style="color: #001080">optional</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
 <span style="color: #008000">// false</span>
+</code></pre>
+				<a href="#shevaaftermeteg" id="shevaaftermeteg" style="color: inherit; text-decoration: none;">
+					<h3>shevaAfterMeteg</h3>
+				</a>
+				<p>Takes a <code>boolean</code>. Default <code>true</code>.</p>
+				<p>If <code>true</code>, regards the sheva after a meteg as a <em>sheva na&#39;</em>.</p>
+				<pre><code class="language-ts"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">default</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;יְדַֽעְיָה&quot;</span><span style="color: #000000">);</span>
+<span style="color: #001080">default</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">((</span><span style="color: #001080">s</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> ({ </span><span style="color: #001080">text:</span><span style="color: #000000"> </span><span style="color: #001080">s</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">, </span><span style="color: #001080">isClosed:</span><span style="color: #000000"> </span><span style="color: #001080">s</span><span style="color: #000000">.</span><span style="color: #001080">isClosed</span><span style="color: #000000"> }));</span>
+<span style="color: #008000">// [</span>
+<span style="color: #008000">//{ text: &#039;יְ&#039;, isClosed: false },</span>
+<span style="color: #008000">//{ text: &#039;דַֽ&#039;, isClosed: false },</span>
+<span style="color: #008000">//{ text: &#039;עְ&#039;, isClosed: false },</span>
+<span style="color: #008000">//{ text: &#039;יָה&#039;, isClosed: false }</span>
+<span style="color: #008000">// ]</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">optional</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;יְדַֽעְיָה&quot;</span><span style="color: #000000">, { </span><span style="color: #001080">shevaAfterMeteg:</span><span style="color: #000000"> </span><span style="color: #0000FF">false</span><span style="color: #000000"> });</span>
+<span style="color: #001080">optional</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">((</span><span style="color: #001080">s</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> ({ </span><span style="color: #001080">text:</span><span style="color: #000000"> </span><span style="color: #001080">s</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">, </span><span style="color: #001080">isClosed:</span><span style="color: #000000"> </span><span style="color: #001080">s</span><span style="color: #000000">.</span><span style="color: #001080">isClosed</span><span style="color: #000000"> }));</span>
+<span style="color: #008000">// [</span>
+<span style="color: #008000">//{ text: &#039;יְ&#039;, isClosed: false },</span>
+<span style="color: #008000">//{ text: &#039;דַֽעְ&#039;, isClosed: true },</span>
+<span style="color: #008000">//{ text: &#039;יָה&#039;, isClosed: false }</span>
+<span style="color: #008000">// ]</span>
+</code></pre>
+				<a href="#sqnmlvy" id="sqnmlvy" style="color: inherit; text-decoration: none;">
+					<h3>sqnmlvy</h3>
+				</a>
+				<p>Takes a <code>boolean</code>. Default <code>true</code>.</p>
+				<p>If <code>true</code>, regards the sheva under the letters שׁשׂסצנמלוי when preceded by a waw-consecutive with a missing <em>dagesh chazaq</em> as vocal. If a meteg is present, the sheva is always a <em>sheva na&#39;</em>.</p>
+				<pre><code class="language-typescript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">default</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;וַיְצַחֵק֙&quot;</span><span style="color: #000000">);</span>
+<span style="color: #001080">default</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">syl</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">syl</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
+<span style="color: #008000">// [&quot;וַ&quot;, &quot;יְ&quot;, &quot;צַ&quot;, &quot;חֵק֙&quot;]</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">optional</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;וַיְצַחֵק֙&quot;</span><span style="color: #000000">, { </span><span style="color: #001080">sqnmlvy:</span><span style="color: #000000"> </span><span style="color: #0000FF">false</span><span style="color: #000000"> });</span>
+<span style="color: #001080">optional</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">syl</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">syl</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
+<span style="color: #008000">// [&quot;וַיְ&quot;, &quot;צַ&quot;, &quot;חֵק֙&quot;]</span>
 </code></pre>
 				<a href="#wawshureq" id="wawshureq" style="color: inherit; text-decoration: none;">
 					<h3>wawShureq</h3>
@@ -231,7 +267,13 @@
 					<h3>Tiberian</h3>
 				</a>
 				<p>The syllabification options are set as follows:</p>
-				<pre><code class="language-typescript"><span style="color: #000000">{ qametsQatan: </span><span style="color: #0000FF">false</span><span style="color: #000000">, sqnmlvy: </span><span style="color: #0000FF">true</span><span style="color: #000000">, longVowels: </span><span style="color: #0000FF">false</span><span style="color: #000000">, wawShureq: </span><span style="color: #0000FF">false</span><span style="color: #000000"> }</span>
+				<pre><code class="language-typescript"><span style="color: #000000">{</span>
+<span style="color: #000000">  longVowels: </span><span style="color: #0000FF">false</span><span style="color: #000000">,</span>
+<span style="color: #000000">  qametsQatan: </span><span style="color: #0000FF">false</span><span style="color: #000000">,</span>
+<span style="color: #000000">  shevaAfterMeteg: </span><span style="color: #0000FF">false</span><span style="color: #000000">,</span>
+<span style="color: #000000">  sqnmlvy: </span><span style="color: #0000FF">true</span><span style="color: #000000">,</span>
+<span style="color: #000000">  wawShureq: </span><span style="color: #0000FF">false</span><span style="color: #000000">,</span>
+<span style="color: #000000">}</span>
 </code></pre>
 				<p>It can be imported from the <code>/schemas</code>:</p>
 				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">tiberian</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;havarotjs/schemas&quot;</span><span style="color: #000000">;</span>
