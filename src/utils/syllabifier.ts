@@ -138,16 +138,16 @@ const groupShevas = (arr: Mixed, options: SylOpts): Mixed => {
       }
       const dageshRegx = /\u{05BC}/u;
       const prev = syl[0].text;
-      const sqenemlevy = /[שסצקנמלוי]/;
+      const sqnmlvy = /[שסצקנמלוי]/;
       const wawConsecutive = /וַ/;
       // check if there is a doubling dagesh
       if (dageshRegx.test(prev)) {
         syl = shevaNewSyllable(syl);
       }
-      // check for waw-consecutive w/ sqenemlevy letter
+      // check for waw-consecutive w/ sqnmlvy letter
       else if (
         (options.sqnmlvy || (options.shevaAfterMeteg && cluster.hasMeteg)) &&
-        sqenemlevy.test(prev) &&
+        sqnmlvy.test(prev) &&
         wawConsecutive.test(cluster.text)
       ) {
         syl = shevaNewSyllable(syl);
