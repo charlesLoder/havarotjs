@@ -415,8 +415,8 @@ export const syllabify = (clusters: Cluster[], options: SylOpts): Syllable[] => 
   const latinClusters = clusters.map(clusterPos).filter((c) => c.cluster.isNotHebrew);
   const groupedClusters = groupClusters(removeLatin, options);
   const syllables = groupedClusters.map((group) => (group instanceof Syllable ? group : new Syllable([group])));
-  syllables.forEach((syllable, index, arr) => setIsClosed(syllable, index, arr));
-  syllables.forEach((syllable) => setIsAccented(syllable));
+  syllables.forEach(setIsClosed);
+  syllables.forEach(setIsAccented);
   syllables[syllables.length - 1].isFinal = true;
   const [first, ...rest] = syllables;
   first.siblings = rest;
