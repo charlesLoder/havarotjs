@@ -1,5 +1,9 @@
 # Changelog
 
+## 2023-07-01 0.18.1
+
+- Fix quiesced aleph preceded by sheva not being marked as closed (Issue #131)
+
 ## 2023-06-30 0.18.0
 
 - Add a new syllabification option for sheva preceded by meteg (Issue #129)
