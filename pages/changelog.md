@@ -1,5 +1,9 @@
 # Changelog
 
+## 2023-06-30 0.18.0
+
+- Add a new syllabification option for sheva preceded by meteg (Issue #129)
+
 ## 2023-06-17 0.17.1
 
 - Fix single syllable not being closed with a final-he (Issue #128)
