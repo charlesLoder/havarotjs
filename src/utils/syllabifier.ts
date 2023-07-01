@@ -85,9 +85,11 @@ const groupFinal = (arr: Cluster[], vowelsRgx: RegExp = vowels): Mixed => {
   const isClosed =
     !finalCluster.isShureq &&
     !finalCluster.isMater &&
-    // if final cluster is an aleph, then the syllable is open
-    !/\u{05D0}/u.test(finalCluster.text) &&
+    // if final cluster is an aleph, then the syllable is open (e.g. בָּרָ֣א)
+    // unless the preceding cluster has a sheva (e.g. וַיַּ֧רְא)
+    (!/\u{05D0}/u.test(finalCluster.text) || finalCluster?.prev?.value?.hasSheva) &&
     // if the final cluster is an he but without a mappiq, then the syllable is open
+    // this applies even to cases where the he is not a mater (e.g. פֹּ֖ה)
     !/\u{05D4}(?!\u{05bc})/u.test(finalCluster.text) &&
     !hasFinalVowel;
   const finalSyllable = new Syllable(syl, { isClosed });

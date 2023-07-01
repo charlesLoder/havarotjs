@@ -41,6 +41,7 @@ describe.each`
   ${"infinitive construct with prep (bǝšûb)"}                          | ${"בְּשׁ֣וּב"}  | ${["בְּ", "שׁ֣וּב"]}      | ${[false, true]}  | ${[false, true]}
   ${"consonant w/o niqqud"}                                            | ${"אלְבֶּערְט"} | ${["אלְ", "בֶּערְט"]}     | ${[true, true]}   | ${[false, false]}
   ${"final aleph"}                                                     | ${"בָּרָ֣א"}    | ${["בָּ", "רָ֣א"]}        | ${[false, false]} | ${[false, true]}
+  ${"final aleph, preceded by sheva"}                                  | ${"וַיַּ֧רְא"}  | ${["וַ", "יַּ֧רְא"]}      | ${[true, true]}   | ${[false, true]}
   ${"final he"}                                                        | ${"מַלְכָּ֔ה"}  | ${["מַלְ", "כָּ֔ה"]}      | ${[true, false]}  | ${[false, true]}
   ${"single syllable, final he"}                                       | ${"פֹּ֖ה"}      | ${["פֹּ֖ה"]}              | ${[false]}        | ${[true]}
 `("2 Syllables:", ({ description, original, sylArr, closedArr, accentArr }) => {
