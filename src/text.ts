@@ -88,7 +88,7 @@ export interface SylOpts {
    */
   holemHaser?: "update" | "preserve" | "remove";
   /**
-   * determines whether to regard a sheva after a long vowel (excluding waw-shureq, see {@link wawShureq}) as a _sheva na'_.
+   * determines whether to regard a sheva after a long vowel (excluding waw-shureq, see {@link wawShureq}) as a _sheva na'_, unless preceded by a meteg (see {@link shevaAfterMeteg}).
    *
    * @defaultValue true
    * @example
@@ -150,7 +150,7 @@ export interface SylOpts {
    */
   shevaAfterMeteg?: boolean;
   /**
-   * determines whether to regard the sheva under the letters שׁשׂסצנמלוי when preceded by a waw-consecutive with a missing dagesh chazaq as a _sheva na'_.
+   * determines whether to regard the sheva under the letters שׁשׂסצנמלוי when preceded by a waw-consecutive with a missing dagesh chazaq as a _sheva na'_, unless preceded by a meteg (see {@link shevaAfterMeteg}).
    *
    * @defaultValue true
    * @example
@@ -186,7 +186,7 @@ export interface SylOpts {
    */
   strict?: boolean;
   /**
-   * determines whether to regard a sheva after a vav-shureq as vocal.
+   * determines whether to regard a sheva after a vav-shureq as vocal, unless preceded by a meteg (see {@link shevaAfterMeteg}).
    *
    * @defaultValue true
    * @example
