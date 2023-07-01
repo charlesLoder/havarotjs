@@ -145,7 +145,11 @@ const groupShevas = (arr: Mixed, options: SylOpts): Mixed => {
         syl = shevaNewSyllable(syl);
       }
       // check for waw-consecutive w/ sqenemlevy letter
-      else if (options.sqnmlvy && sqenemlevy.test(prev) && wawConsecutive.test(cluster.text)) {
+      else if (
+        (options.sqnmlvy || (options.shevaAfterMeteg && cluster.hasMeteg)) &&
+        sqenemlevy.test(prev) &&
+        wawConsecutive.test(cluster.text)
+      ) {
         syl = shevaNewSyllable(syl);
         result.push(new Syllable([cluster]));
         shevaPresent = false;

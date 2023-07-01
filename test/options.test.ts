@@ -228,6 +228,27 @@ describe.each`
 );
 
 describe.each`
+  description            | word           | syllables                | isClosedArr              | shevaAfterMetegOpt | sqnmlvyOpt
+  ${"wayyiqtol,  meteg"} | ${"וַֽיְהִי֙"} | ${["וַֽ", "יְ", "הִי֙"]} | ${[false, false, false]} | ${true}            | ${true}
+  ${"wayyiqtol,  meteg"} | ${"וַֽיְהִי֙"} | ${["וַֽ", "יְ", "הִי֙"]} | ${[false, false, false]} | ${false}           | ${true}
+  ${"wayyiqtol,  meteg"} | ${"וַֽיְהִי֙"} | ${["וַֽ", "יְ", "הִי֙"]} | ${[false, false, false]} | ${true}            | ${true}
+  ${"wayyiqtol,  meteg"} | ${"וַֽיְהִי֙"} | ${["וַֽיְ", "הִי֙"]}     | ${[true, false]}         | ${false}           | ${false}
+`("shevaAfterMeteg and sqnmlvy:", ({ description, word, syllables, isClosedArr, shevaAfterMetegOpt, sqnmlvyOpt }) => {
+  const text = new Text(word, { sqnmlvy: sqnmlvyOpt, shevaAfterMeteg: shevaAfterMetegOpt });
+  const sylText = text.syllables.map((syl) => syl.text);
+  const isClosed = text.syllables.map((syl) => syl.isClosed);
+  describe(description, () => {
+    test(`shevaAfterMeteg is ${shevaAfterMetegOpt} and sqnmlvy is ${sqnmlvyOpt}`, () => {
+      expect(sylText).toEqual(syllables);
+    });
+
+    test(`isClosed`, () => {
+      expect(isClosed).toEqual(isClosedArr);
+    });
+  });
+});
+
+describe.each`
   description                    | word             | syllables                      | isClosedArr                   | shevaAfterMetegOpt | wawShureqOpt
   ${"initial shureq with meteg"} | ${"וּֽלְמַזֵּר"} | ${["וּֽ", "לְ", "מַ", "זֵּר"]} | ${[false, false, true, true]} | ${true}            | ${true}
   ${"initial shureq with meteg"} | ${"וּֽלְמַזֵּר"} | ${["וּֽ", "לְ", "מַ", "זֵּר"]} | ${[false, false, true, true]} | ${false}           | ${true}
