@@ -1,5 +1,8 @@
+/* eslint-disable  sort-keys  */
+/* eslint-disable  @typescript-eslint/naming-convention */
+// it is better to have they keys sorted by unicode position rather then name
+
 export type CharToNameMap = {
-  /* eslint-disable  @typescript-eslint/naming-convention */
   "\u{05B1}": "HATAF_SEGOL"; // HEBREW POINT HATAF SEGOL (U+05B1)
   "\u{05B2}": "HATAF_PATAH"; // HEBREW POINT HATAF PATAH (U+05B2)
   "\u{05B3}": "HATAF_QAMATS"; // HEBREW POINT HATAF QAMATS (U+05B3)
@@ -21,7 +24,6 @@ export type NameToCharMap = { [K in keyof CharToNameMap as CharToNameMap[K]]: K 
  * — HEBREW POINT has been removed and spaces replaced wiith underscores (e.g. "HATAF_PATAH")
  */
 export const charToNameMap: CharToNameMap = {
-  /* eslint-disable  @typescript-eslint/naming-convention */
   "\u{05B1}": "HATAF_SEGOL",
   "\u{05B2}": "HATAF_PATAH",
   "\u{05B3}": "HATAF_QAMATS",
@@ -41,7 +43,6 @@ export const charToNameMap: CharToNameMap = {
  * — HEBREW POINT has been removed and spaces replaced wiith underscores (e.g. "HATAF_PATAH")
  */
 export const nameToCharMap: NameToCharMap = {
-  /* eslint-disable  @typescript-eslint/naming-convention */
   HATAF_SEGOL: "\u{05B1}",
   HATAF_PATAH: "\u{05B2}",
   HATAF_QAMATS: "\u{05B3}",

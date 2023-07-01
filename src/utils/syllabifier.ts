@@ -131,21 +131,25 @@ const groupShevas = (arr: Mixed, options: SylOpts): Mixed => {
     }
 
     if (shevaPresent && cluster.hasShortVowel) {
-      if (cluster.hasMeteg) {
+      if (options.shevaAfterMeteg && cluster.hasMeteg) {
         syl = shevaNewSyllable(syl);
         syl.unshift(cluster);
         continue;
       }
       const dageshRegx = /\u{05BC}/u;
       const prev = syl[0].text;
-      const sqenemlevy = /[שסצקנמלוי]/;
+      const sqnmlvy = /[שסצקנמלוי]/;
       const wawConsecutive = /וַ/;
       // check if there is a doubling dagesh
       if (dageshRegx.test(prev)) {
         syl = shevaNewSyllable(syl);
       }
-      // check for waw-consecutive w/ sqenemlevy letter
-      else if (options.sqnmlvy && sqenemlevy.test(prev) && wawConsecutive.test(cluster.text)) {
+      // check for waw-consecutive w/ sqnmlvy letter
+      else if (
+        (options.sqnmlvy || (options.shevaAfterMeteg && cluster.hasMeteg)) &&
+        sqnmlvy.test(prev) &&
+        wawConsecutive.test(cluster.text)
+      ) {
         syl = shevaNewSyllable(syl);
         result.push(new Syllable([cluster]));
         shevaPresent = false;
@@ -165,7 +169,7 @@ const groupShevas = (arr: Mixed, options: SylOpts): Mixed => {
     }
 
     if (shevaPresent && cluster.hasLongVowel) {
-      if (options.longVowels) {
+      if (options.longVowels || (cluster.hasMeteg && options.shevaAfterMeteg)) {
         syl = shevaNewSyllable(syl);
         result.push(cluster);
         shevaPresent = false;
@@ -178,7 +182,7 @@ const groupShevas = (arr: Mixed, options: SylOpts): Mixed => {
     }
 
     if (shevaPresent && cluster.isShureq) {
-      if (!options.wawShureq && !cluster.hasMeteg && len - 1 === index) {
+      if (!options.wawShureq && (!options.shevaAfterMeteg || !cluster.hasMeteg) && len - 1 === index) {
         syl.unshift(cluster);
         syl = shevaNewSyllable(syl, true);
       } else {
@@ -386,8 +390,8 @@ const reinsertLatin = (syls: Syllable[], latin: { cluster: Cluster; pos: number 
       }
       const firstSyl = syls[0];
       syls[0] = new Syllable([...partial, ...firstSyl.clusters], {
-        isClosed: firstSyl.isClosed,
         isAccented: firstSyl.isAccented,
+        isClosed: firstSyl.isClosed,
         isFinal: firstSyl.isFinal
       });
     } else {
@@ -397,8 +401,8 @@ const reinsertLatin = (syls: Syllable[], latin: { cluster: Cluster; pos: number 
         index++;
       }
       syls[numOfSyls - 1] = new Syllable([...lastSyl.clusters, ...partial], {
-        isClosed: lastSyl.isClosed,
         isAccented: lastSyl.isAccented,
+        isClosed: lastSyl.isClosed,
         isFinal: lastSyl.isFinal
       });
     }
@@ -411,8 +415,8 @@ export const syllabify = (clusters: Cluster[], options: SylOpts): Syllable[] => 
   const latinClusters = clusters.map(clusterPos).filter((c) => c.cluster.isNotHebrew);
   const groupedClusters = groupClusters(removeLatin, options);
   const syllables = groupedClusters.map((group) => (group instanceof Syllable ? group : new Syllable([group])));
-  syllables.forEach((syllable, index, arr) => setIsClosed(syllable, index, arr));
-  syllables.forEach((syllable) => setIsAccented(syllable));
+  syllables.forEach(setIsClosed);
+  syllables.forEach(setIsAccented);
   syllables[syllables.length - 1].isFinal = true;
   const [first, ...rest] = syllables;
   first.siblings = rest;

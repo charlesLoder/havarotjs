@@ -28,7 +28,7 @@ export interface SylOpts {
    */
   allowNoNiqqud?: boolean;
   /**
-   * determines whether to regard the sheva under the letters ילמ when preceded by the article and with a missing dagesh chazaq as as a _sheva na'_. If a meteg is present, the sheva is always a _sheva na'_.
+   * determines whether to regard the sheva under the letters ילמ when preceded by the article and with a missing dagesh chazaq as as a _sheva na'_.
    *
    * @defaultValue true
    * @example
@@ -88,7 +88,7 @@ export interface SylOpts {
    */
   holemHaser?: "update" | "preserve" | "remove";
   /**
-   * determines whether to regard a sheva after a long vowel (excluding waw-shureq, see {@link wawShureq}) as a _sheva na'_. If a meteg is present, the sheva is always a _sheva na'_.
+   * determines whether to regard a sheva after a long vowel (excluding waw-shureq, see {@link wawShureq}) as a _sheva na'_, unless preceded by a meteg (see {@link shevaAfterMeteg}).
    *
    * @defaultValue true
    * @example
@@ -125,7 +125,32 @@ export interface SylOpts {
    */
   qametsQatan?: boolean;
   /**
-   * determines whether to regard the sheva under the letters שׁשׂסצנמלוי when preceded by a waw-consecutive with a missing dagesh chazaq as a _sheva na'_. If a meteg is present, the sheva is always a _sheva na'_.
+   * determines whether to regard the sheva after a meteg as a _sheva na'_.
+   *
+   * @defaultValue true
+   * @example
+   * ```ts
+   * const default = new Text("יְדַֽעְיָה");
+   * default.syllables.map((s) => ({ text: s.text, isClosed: s.isClosed }));
+   * // [
+   * //    { text: 'יְ', isClosed: false },
+   * //    { text: 'דַֽ', isClosed: false },
+   * //    { text: 'עְ', isClosed: false },
+   * //    { text: 'יָה', isClosed: false }
+   * // ]
+   *
+   * const optional = new Text("יְדַֽעְיָה", { shevaAfterMeteg: false });
+   * optional.syllables.map((s) => ({ text: s.text, isClosed: s.isClosed }));
+   * // [
+   * //    { text: 'יְ', isClosed: false },
+   * //    { text: 'דַֽעְ', isClosed: true },
+   * //    { text: 'יָה', isClosed: false }
+   * // ]
+   * ```
+   */
+  shevaAfterMeteg?: boolean;
+  /**
+   * determines whether to regard the sheva under the letters שׁשׂסצנמלוי when preceded by a waw-consecutive with a missing dagesh chazaq as a _sheva na'_, unless preceded by a meteg (see {@link shevaAfterMeteg}).
    *
    * @defaultValue true
    * @example
@@ -161,7 +186,7 @@ export interface SylOpts {
    */
   strict?: boolean;
   /**
-   * determines whether to regard a sheva after a vav-shureq as vocal. If a meteg is present, the sheva is always a _sheva na'_.
+   * determines whether to regard a sheva after a vav-shureq as vocal, unless preceded by a meteg (see {@link shevaAfterMeteg}).
    *
    * @defaultValue true
    * @example
@@ -218,6 +243,7 @@ export class Text {
       "holemHaser",
       "longVowels",
       "qametsQatan",
+      "shevaAfterMeteg",
       "sqnmlvy",
       "strict",
       "wawShureq"
@@ -243,9 +269,10 @@ export class Text {
       article: validOpts.article ?? true,
       holemHaser: validOpts.holemHaser ?? "preserve",
       longVowels: validOpts.longVowels ?? true,
+      qametsQatan: validOpts.qametsQatan ?? true,
+      shevaAfterMeteg: validOpts.shevaAfterMeteg ?? true,
       sqnmlvy: validOpts.sqnmlvy ?? true,
       strict: validOpts.strict ?? true,
-      qametsQatan: validOpts.qametsQatan ?? true,
       wawShureq: validOpts.wawShureq ?? true
     };
   }

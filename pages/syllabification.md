@@ -41,6 +41,24 @@ According to this decription, hatef vowels and _sheva na'_ **do** constitute syl
 
 These are the options for syllabification.
 
+### article
+
+Takes a `boolean`. Default `true`.
+
+Determines whether to regard the sheva under the letters ילמ when preceded by the article and with a missing dagesh chazaq as as a _sheva na'_.
+
+```ts
+const default = new Text("הַיְאֹ֗ר");
+default.syllables.map(syl => syl.text);
+// ["הַ", "יְ", "אֹ֗ר"]
+
+const optional = new Text("הַיְאֹ֗ר", { article: false });
+optional.syllables.map(syl => syl.text);
+// ["הַיְ", "אֹ֗ר"]
+```
+
+_results in example displayed in reverse order to mimic Hebrew writing; the rightmost value is the 0 item_
+
 ### longVowles
 
 Takes a `boolean`. Default `true`.
@@ -55,22 +73,6 @@ default.syllables.map(syl => syl.text);
 const optional = new Text("יָדְךָ", { longVowels: false });
 optional.syllables.map(syl => syl.text);
 // ["יָדְ", "ךָ"]
-```
-
-### sqnmlvy
-
-Takes a `boolean`. Default `true`.
-
-If `true`, regards the sheva under the letters שׁשׂסצנמלוי when preceded by a waw-consecutive with a missing _dagesh chazaq_ as vocal. If a meteg is present, the sheva is always a _sheva na'_.
-
-```typescript
-const default = new Text("וַיְצַחֵק֙");
-default.syllables.map(syl => syl.text);
-// ["וַ", "יְ", "צַ", "חֵק֙"]
-
-const optional = new Text("וַיְצַחֵק֙", { sqnmlvy: false });
-optional.syllables.map(syl => syl.text);
-// ["וַיְ", "צַ", "חֵק֙"]
 ```
 
 ### qametsQatan
@@ -89,6 +91,47 @@ qQRegx.test(default.text);
 const optional = new Text("חָפְנִי֙", { qametsQatan: false });
 qQRegx.test(optional.text);
 // false
+```
+
+### shevaAfterMeteg
+
+Takes a `boolean`. Default `true`.
+
+If `true`, regards the sheva after a meteg as a _sheva na'_.
+
+```ts
+const default = new Text("יְדַֽעְיָה");
+default.syllables.map((s) => ({ text: s.text, isClosed: s.isClosed }));
+// [
+//{ text: 'יְ', isClosed: false },
+//{ text: 'דַֽ', isClosed: false },
+//{ text: 'עְ', isClosed: false },
+//{ text: 'יָה', isClosed: false }
+// ]
+
+const optional = new Text("יְדַֽעְיָה", { shevaAfterMeteg: false });
+optional.syllables.map((s) => ({ text: s.text, isClosed: s.isClosed }));
+// [
+//{ text: 'יְ', isClosed: false },
+//{ text: 'דַֽעְ', isClosed: true },
+//{ text: 'יָה', isClosed: false }
+// ]
+```
+
+### sqnmlvy
+
+Takes a `boolean`. Default `true`.
+
+If `true`, regards the sheva under the letters שׁשׂסצנמלוי when preceded by a waw-consecutive with a missing _dagesh chazaq_ as vocal. If a meteg is present, the sheva is always a _sheva na'_.
+
+```typescript
+const default = new Text("וַיְצַחֵק֙");
+default.syllables.map(syl => syl.text);
+// ["וַ", "יְ", "צַ", "חֵק֙"]
+
+const optional = new Text("וַיְצַחֵק֙", { sqnmlvy: false });
+optional.syllables.map(syl => syl.text);
+// ["וַיְ", "צַ", "חֵק֙"]
 ```
 
 ### wawShureq
@@ -162,7 +205,13 @@ This package, however, considers it a _sheva na'_.
 The syllabification options are set as follows:
 
 ```typescript
-{ qametsQatan: false, sqnmlvy: true, longVowels: false, wawShureq: false }
+{
+  longVowels: false,
+  qametsQatan: false,
+  shevaAfterMeteg: false,
+  sqnmlvy: true,
+  wawShureq: false,
+}
 ```
 
 It can be imported from the `/schemas`:

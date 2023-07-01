@@ -1,2 +1,8 @@
 import { SylOpts } from "./text";
-export const tiberian: SylOpts = { qametsQatan: false, sqnmlvy: true, longVowels: false, wawShureq: false };
+export const tiberian: SylOpts = {
+  longVowels: false,
+  qametsQatan: false,
+  shevaAfterMeteg: false,
+  sqnmlvy: true,
+  wawShureq: false
+};
