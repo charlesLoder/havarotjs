@@ -364,10 +364,15 @@ const setIsAccented = (syllable: Syllable) => {
     return;
   }
 
+  // if final syllable has a pashta character
+  // it may not necessarily be the accented syllable
+  // check if any preceding syllable has a pashta or qadma character
   const pashta = /\u{0599}/u;
-  if (syllable.isFinal && pashta.test(syllable.text)) {
+  const sylText = syllable.text;
+  if (syllable.isFinal && pashta.test(sylText)) {
+    const qadma = /\u{05A8}/u;
     while (prev) {
-      if (pashta.test(prev.text)) {
+      if (pashta.test(prev.text) || qadma.test(prev.text)) {
         return;
       }
       prev = (prev?.prev?.value as Syllable) ?? null;
