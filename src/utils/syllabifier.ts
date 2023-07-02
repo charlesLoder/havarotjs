@@ -358,7 +358,7 @@ const setIsAccented = (syllable: Syllable) => {
   // TODO: this is pretty hacky, but it works; find a more elegant solution
   const jerusalemFinal = /\u{5B4}\u{05DD}/u;
   const jerusalemPrev = /ל[\u{5B8}\u{5B7}]/u;
-  const prev = syllable.prev as Syllable;
+  let prev = syllable.prev?.value;
   if (jerusalemFinal.test(syllable.text) && prev && jerusalemPrev.test(prev.text)) {
     prev.isAccented = true;
     return;
