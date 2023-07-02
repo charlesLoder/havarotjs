@@ -363,6 +363,16 @@ const setIsAccented = (syllable: Syllable) => {
     prev.isAccented = true;
     return;
   }
+
+  const pashta = /\u{0599}/u;
+  if (syllable.isFinal && pashta.test(syllable.text)) {
+    while (prev) {
+      if (pashta.test(prev.text)) {
+        return;
+      }
+      prev = (prev?.prev?.value as Syllable) ?? null;
+    }
+  }
   const isAccented = syllable.clusters.filter((cluster) => (cluster.hasTaamim || cluster.hasSilluq ? true : false))
     .length
     ? true
