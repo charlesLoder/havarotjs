@@ -1,5 +1,9 @@
 # Changelog
 
+## 2023-07-02 0.18.3
+
+- Fix syllable with pashta not checking for a qadma (Issue #133)
+
 ## 2023-07-02 0.18.2
 
 - Fix incorrect accent with pashta and qadma (Issue #133)
