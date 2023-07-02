@@ -1,5 +1,9 @@
 # Changelog
 
+## 2023-07-02 0.18.2
+
+- Fix incorrect accent with pashta and qadma (Issue #133)
+
 ## 2023-07-01 0.18.1
 
 - Fix quiesced aleph preceded by sheva not being marked as closed (Issue #131)
