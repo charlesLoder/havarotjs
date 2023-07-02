@@ -358,10 +358,20 @@ const setIsAccented = (syllable: Syllable) => {
   // TODO: this is pretty hacky, but it works; find a more elegant solution
   const jerusalemFinal = /\u{5B4}\u{05DD}/u;
   const jerusalemPrev = /ל[\u{5B8}\u{5B7}]/u;
-  const prev = syllable.prev as Syllable;
+  let prev = syllable.prev?.value;
   if (jerusalemFinal.test(syllable.text) && prev && jerusalemPrev.test(prev.text)) {
     prev.isAccented = true;
     return;
+  }
+
+  const pashta = /\u{0599}/u;
+  if (syllable.isFinal && pashta.test(syllable.text)) {
+    while (prev) {
+      if (pashta.test(prev.text)) {
+        return;
+      }
+      prev = (prev?.prev?.value as Syllable) ?? null;
+    }
   }
   const isAccented = syllable.clusters.filter((cluster) => (cluster.hasTaamim || cluster.hasSilluq ? true : false))
     .length
@@ -417,10 +427,14 @@ export const syllabify = (clusters: Cluster[], options: SylOpts): Syllable[] => 
   const latinClusters = clusters.map(clusterPos).filter((c) => c.cluster.isNotHebrew);
   const groupedClusters = groupClusters(removeLatin, options);
   const syllables = groupedClusters.map((group) => (group instanceof Syllable ? group : new Syllable([group])));
-  syllables.forEach(setIsClosed);
-  syllables.forEach(setIsAccented);
-  syllables[syllables.length - 1].isFinal = true;
+
+  // set these before setting isClosed and isAccented siblings can be accsessed
   const [first, ...rest] = syllables;
   first.siblings = rest;
+
+  // set syllable properties
+  syllables[syllables.length - 1].isFinal = true;
+  syllables.forEach(setIsClosed);
+  syllables.forEach(setIsAccented);
   return latinClusters.length ? reinsertLatin(syllables, latinClusters) : syllables;
 };

@@ -44,23 +44,25 @@ describe.each`
   ${"final aleph, preceded by sheva"}                                  | ${"וַיַּ֧רְא"}  | ${["וַ", "יַּ֧רְא"]}      | ${[true, true]}   | ${[false, true]}
   ${"final he"}                                                        | ${"מַלְכָּ֔ה"}  | ${["מַלְ", "כָּ֔ה"]}      | ${[true, false]}  | ${[false, true]}
   ${"single syllable, final he"}                                       | ${"פֹּ֖ה"}      | ${["פֹּ֖ה"]}              | ${[false]}        | ${[true]}
+  ${"with single pashta"}                                              | ${"לָאוֹר֙"}    | ${["לָ", "אֹור֙"]}        | ${[false, true]}  | ${[false, true]}
 `("2 Syllables:", ({ description, original, sylArr, closedArr, accentArr }) => {
   tests(description, original, sylArr, closedArr, accentArr);
 });
 
 describe.each`
-  description                                                        | original       | sylArr                   | closedArr                | accentArr
-  ${"lexical form contains hatef (ĕlohim)"}                          | ${"אֱלֹהִ֑ים"} | ${["אֱ", "לֹ", "הִ֑ים"]} | ${[false, false, true]}  | ${[false, false, true]}
-  ${"lexical form (dāwid) prefixed conj w/ sheva"}                   | ${"וְדָוִ֖ד"}  | ${["וְ", "דָ", "וִ֖ד"]}  | ${[false, false, true]}  | ${[false, false, true]}
-  ${"lexical form contains hatef (ĕmet) prefixed conj w/ vowel"}     | ${"וֶאֱמֶ֔ת"}  | ${["וֶ", "אֱ", "מֶ֔ת"]}  | ${[false, false, true]}  | ${[false, false, true]}
-  ${"inflected form with medial vocal sheva (bārǝkû)"}               | ${"בָּרְכ֣וּ"} | ${["בָּ", "רְ", "כ֣וּ"]} | ${[false, false, false]} | ${[false, false, true]}
-  ${"inflected form with medial vocal sheva and doubling (sappǝrû)"} | ${"סַפְּר֤וּ"} | ${["סַ", "פְּ", "ר֤וּ"]} | ${[true, false, false]}  | ${[false, false, true]}
-  ${"with qamets gadol (ḥākǝmâ)"}                                    | ${"חָֽכְמָ֖ה"} | ${["חָֽ", "כְ", "מָ֖ה"]} | ${[false, false, false]} | ${[false, false, true]}
-  ${"lexical form - two vowels (dābār) + article"}                   | ${"הַדָּבָ֥ר"} | ${["הַ", "דָּ", "בָ֥ר"]} | ${[true, false, true]}   | ${[false, false, true]}
-  ${"inflected with SQNMLVY letter"}                                 | ${"וַיְהִ֗י"}  | ${["וַ", "יְ", "הִ֗י"]}  | ${[false, false, false]} | ${[false, false, true]}
-  ${"aleph with shureq preceded by sheva"}                           | ${"רְאוּבֵ֣ן"} | ${["רְ", "אוּ", "בֵ֣ן"]} | ${[false, false, true]}  | ${[false, false, true]}
-  ${"word and passeq"}                                               | ${"דָּבָ֗ר ׀"} | ${["דָּ", "בָ֗ר", "׀"]}  | ${[false, true, true]}   | ${[false, true, true]}
-  ${"segolate noun"}                                                 | ${"הָאָֽרֶץ׃"} | ${["הָ", "אָֽ", "רֶץ׃"]} | ${[false, false, true]}  | ${[false, true, false]}
+  description                                                        | original        | sylArr                    | closedArr                | accentArr
+  ${"lexical form contains hatef (ĕlohim)"}                          | ${"אֱלֹהִ֑ים"}  | ${["אֱ", "לֹ", "הִ֑ים"]}  | ${[false, false, true]}  | ${[false, false, true]}
+  ${"lexical form (dāwid) prefixed conj w/ sheva"}                   | ${"וְדָוִ֖ד"}   | ${["וְ", "דָ", "וִ֖ד"]}   | ${[false, false, true]}  | ${[false, false, true]}
+  ${"lexical form contains hatef (ĕmet) prefixed conj w/ vowel"}     | ${"וֶאֱמֶ֔ת"}   | ${["וֶ", "אֱ", "מֶ֔ת"]}   | ${[false, false, true]}  | ${[false, false, true]}
+  ${"inflected form with medial vocal sheva (bārǝkû)"}               | ${"בָּרְכ֣וּ"}  | ${["בָּ", "רְ", "כ֣וּ"]}  | ${[false, false, false]} | ${[false, false, true]}
+  ${"inflected form with medial vocal sheva and doubling (sappǝrû)"} | ${"סַפְּר֤וּ"}  | ${["סַ", "פְּ", "ר֤וּ"]}  | ${[true, false, false]}  | ${[false, false, true]}
+  ${"with qamets gadol (ḥākǝmâ)"}                                    | ${"חָֽכְמָ֖ה"}  | ${["חָֽ", "כְ", "מָ֖ה"]}  | ${[false, false, false]} | ${[false, false, true]}
+  ${"lexical form - two vowels (dābār) + article"}                   | ${"הַדָּבָ֥ר"}  | ${["הַ", "דָּ", "בָ֥ר"]}  | ${[true, false, true]}   | ${[false, false, true]}
+  ${"inflected with SQNMLVY letter"}                                 | ${"וַיְהִ֗י"}   | ${["וַ", "יְ", "הִ֗י"]}   | ${[false, false, false]} | ${[false, false, true]}
+  ${"aleph with shureq preceded by sheva"}                           | ${"רְאוּבֵ֣ן"}  | ${["רְ", "אוּ", "בֵ֣ן"]}  | ${[false, false, true]}  | ${[false, false, true]}
+  ${"word and passeq"}                                               | ${"דָּבָ֗ר ׀"}  | ${["דָּ", "בָ֗ר", "׀"]}   | ${[false, true, true]}   | ${[false, true, true]}
+  ${"segolate noun"}                                                 | ${"הָאָֽרֶץ׃"}  | ${["הָ", "אָֽ", "רֶץ׃"]}  | ${[false, false, true]}  | ${[false, true, false]}
+  ${"with pashta and qadma"}                                         | ${"הַמַּ֙יִם֙"} | ${["הַ", "מַּ֙", "יִם֙"]} | ${[true, false, true]}   | ${[false, true, false]}
 `("3 Syllables:", ({ description, original, sylArr, closedArr, accentArr }) => {
   tests(description, original, sylArr, closedArr, accentArr);
 });
