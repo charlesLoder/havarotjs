@@ -1,4 +1,5 @@
 import { Text } from "../src/index";
+import { Cluster } from "../src/cluster";
 
 describe.each`
   description                                        | hebrew              | clusterNum | hasMeteg
@@ -139,6 +140,26 @@ describe.each`
     test(`isTaam to equal ${isTaam}`, () => {
       expect(punc).toEqual(punc);
     });
+  });
+});
+
+describe("syllable:", () => {
+  test("if no syllable, null", () => {
+    const cluster = new Cluster("דָּ");
+    expect(cluster.syllable).toEqual(null);
+  });
+
+  test("cluster text same as syllable text", () => {
+    const text = new Text("דָּבָר");
+    const first = text.clusters[0];
+    expect(first?.syllable?.text).toEqual(first.text);
+  });
+
+  test("cluster text not the same as syllable text", () => {
+    const text = new Text("דָּבָר");
+    const last = text.clusters[text.clusters.length - 1];
+    expect(last?.syllable?.text).not.toEqual("ר");
+    expect(last?.syllable?.text).toEqual("בָר");
   });
 });
 
