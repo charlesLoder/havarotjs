@@ -1,6 +1,60 @@
 import { Text } from "../src/index";
 
 describe.each`
+  description                                        | hebrew              | clusterNum | hasMeteg
+  ${"word with single meteg"}                        | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${true}
+  ${"word with single silluq"}                       | ${"נַפְשִֽׁי׃"}     | ${2}       | ${false}
+  ${"word with meteg & silluq"}                      | ${"הָֽאֲדָמָֽה׃"}   | ${0}       | ${true}
+  ${"word with meteg & silluq"}                      | ${"הָֽאֲדָמָֽה׃"}   | ${3}       | ${false}
+  ${"words with meteg & silluq, joined with maqqef"} | ${"וַֽיְהִי־כֵֽן׃"} | ${0}       | ${true}
+  ${"words with meteg & silluq, joined with maqqef"} | ${"וַֽיְהִי־כֵֽן׃"} | ${5}       | ${false}
+`("hasMeteg:", ({ description, hebrew, clusterNum, hasMeteg }) => {
+  const heb = new Text(hebrew);
+  const cluster = heb.clusters[clusterNum];
+  const meteg = cluster.hasMeteg;
+  describe(description, () => {
+    test(`hasMeteg to equal ${hasMeteg}`, () => {
+      expect(meteg).toEqual(hasMeteg);
+    });
+  });
+});
+
+describe.each`
+  description                                        | hebrew              | clusterNum | hasSilluq
+  ${"word with single meteg"}                        | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${false}
+  ${"word with single silluq"}                       | ${"נַפְשִֽׁי׃"}     | ${2}       | ${true}
+  ${"word with meteg & silluq"}                      | ${"הָֽאֲדָמָֽה׃"}   | ${0}       | ${false}
+  ${"word with meteg & silluq"}                      | ${"הָֽאֲדָמָֽה׃"}   | ${3}       | ${true}
+  ${"words with meteg & silluq, joined with maqqef"} | ${"וַֽיְהִי־כֵֽן׃"} | ${0}       | ${false}
+  ${"words with meteg & silluq, joined with maqqef"} | ${"וַֽיְהִי־כֵֽן׃"} | ${5}       | ${true}
+`("hasSilluq:", ({ description, hebrew, clusterNum, hasSilluq }) => {
+  const heb = new Text(hebrew);
+  const cluster = heb.clusters[clusterNum];
+  const silluq = cluster.hasSilluq;
+  describe(description, () => {
+    test(`hasSilluq to equal ${hasSilluq}`, () => {
+      expect(silluq).toEqual(hasSilluq);
+    });
+  });
+});
+
+describe.each`
+  description                | hebrew              | clusterNum | vowelName   | result
+  ${"cluster with patah"}    | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${"PATAH"}  | ${true}
+  ${"cluster with qamets"}   | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${"QAMATS"} | ${false}
+  ${"cluster with no vowel"} | ${"י֔וֹם"}          | ${2}       | ${"HOLAM"}  | ${false}
+`("hasVowelName:", ({ description, hebrew, clusterNum, vowelName, result }) => {
+  const heb = new Text(hebrew);
+  const cluster = heb.clusters[clusterNum];
+  const clusterHasVowelName = cluster.hasVowelName(vowelName);
+  describe(description, () => {
+    test(`Should cluster have ${vowelName}? ${result}`, () => {
+      expect(clusterHasVowelName).toEqual(result);
+    });
+  });
+});
+
+describe.each`
   description                                                     | original           | sylArr                               | isMaterArr
   ${"hiriq-yod, one syllable"}                                    | ${"פִּי"}          | ${["פִּי"]}                          | ${[false, true]}
   ${"hiriq-yod, two syllables"}                                   | ${"קָטִיל"}        | ${["קָ", "טִיל"]}                    | ${[false, false, true, false]}
@@ -55,6 +109,25 @@ describe.each`
 });
 
 describe.each`
+  description                                 | hebrew         | clusterNum | isShureq
+  ${"mid-word shureq"}                        | ${"קוּם"}      | ${1}       | ${true}
+  ${"mid-word vav dagesh with vowel"}         | ${"שִׁוֵּק"}   | ${1}       | ${false}
+  ${"mid-word vav dagesh with vowel before"}  | ${"שִׁוּוּק"}  | ${1}       | ${false}
+  ${"mid-word shureq with vav dagesh before"} | ${"שִׁוּוּק"}  | ${2}       | ${true}
+  ${"mid-word vav dagesh with sheva"}         | ${"מְצַוְּךָ"} | ${2}       | ${false}
+  ${"final vav dagesh with vowel before"}     | ${"גֵּוּ"}     | ${1}       | ${false}
+`("isShureq:", ({ description, hebrew, clusterNum, isShureq }) => {
+  const heb = new Text(hebrew);
+  const cluster = heb.clusters[clusterNum];
+  const meteg = cluster.isShureq;
+  describe(description, () => {
+    test(`isShureq to equal ${isShureq}`, () => {
+      expect(meteg).toEqual(isShureq);
+    });
+  });
+});
+
+describe.each`
   description    | hebrew         | clusterNum | isTaam
   ${"meteg"}     | ${"הָאָֽרֶץ׃"} | ${1}       | ${false}
   ${"sof pasuq"} | ${"הָאָֽרֶץ׃"} | ${3}       | ${true}
@@ -65,44 +138,6 @@ describe.each`
   describe(description, () => {
     test(`isTaam to equal ${isTaam}`, () => {
       expect(punc).toEqual(punc);
-    });
-  });
-});
-
-describe.each`
-  description                                        | hebrew              | clusterNum | hasMeteg
-  ${"word with single meteg"}                        | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${true}
-  ${"word with single silluq"}                       | ${"נַפְשִֽׁי׃"}     | ${2}       | ${false}
-  ${"word with meteg & silluq"}                      | ${"הָֽאֲדָמָֽה׃"}   | ${0}       | ${true}
-  ${"word with meteg & silluq"}                      | ${"הָֽאֲדָמָֽה׃"}   | ${3}       | ${false}
-  ${"words with meteg & silluq, joined with maqqef"} | ${"וַֽיְהִי־כֵֽן׃"} | ${0}       | ${true}
-  ${"words with meteg & silluq, joined with maqqef"} | ${"וַֽיְהִי־כֵֽן׃"} | ${5}       | ${false}
-`("hasMeteg:", ({ description, hebrew, clusterNum, hasMeteg }) => {
-  const heb = new Text(hebrew);
-  const cluster = heb.clusters[clusterNum];
-  const meteg = cluster.hasMeteg;
-  describe(description, () => {
-    test(`hasMeteg to equal ${hasMeteg}`, () => {
-      expect(meteg).toEqual(hasMeteg);
-    });
-  });
-});
-
-describe.each`
-  description                                        | hebrew              | clusterNum | hasSilluq
-  ${"word with single meteg"}                        | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${false}
-  ${"word with single silluq"}                       | ${"נַפְשִֽׁי׃"}     | ${2}       | ${true}
-  ${"word with meteg & silluq"}                      | ${"הָֽאֲדָמָֽה׃"}   | ${0}       | ${false}
-  ${"word with meteg & silluq"}                      | ${"הָֽאֲדָמָֽה׃"}   | ${3}       | ${true}
-  ${"words with meteg & silluq, joined with maqqef"} | ${"וַֽיְהִי־כֵֽן׃"} | ${0}       | ${false}
-  ${"words with meteg & silluq, joined with maqqef"} | ${"וַֽיְהִי־כֵֽן׃"} | ${5}       | ${true}
-`("hasSilluq:", ({ description, hebrew, clusterNum, hasSilluq }) => {
-  const heb = new Text(hebrew);
-  const cluster = heb.clusters[clusterNum];
-  const silluq = cluster.hasSilluq;
-  describe(description, () => {
-    test(`hasSilluq to equal ${hasSilluq}`, () => {
-      expect(silluq).toEqual(hasSilluq);
     });
   });
 });
@@ -136,41 +171,6 @@ describe.each`
   describe(description, () => {
     test(`vowel name to equal ${vowelName}`, () => {
       expect(clusterVowelName).toEqual(vowelName);
-    });
-  });
-});
-
-describe.each`
-  description                | hebrew              | clusterNum | vowelName   | result
-  ${"cluster with patah"}    | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${"PATAH"}  | ${true}
-  ${"cluster with qamets"}   | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${"QAMATS"} | ${false}
-  ${"cluster with no vowel"} | ${"י֔וֹם"}          | ${2}       | ${"HOLAM"}  | ${false}
-`("hasVowelName:", ({ description, hebrew, clusterNum, vowelName, result }) => {
-  const heb = new Text(hebrew);
-  const cluster = heb.clusters[clusterNum];
-  const clusterHasVowelName = cluster.hasVowelName(vowelName);
-  describe(description, () => {
-    test(`Should cluster have ${vowelName}? ${result}`, () => {
-      expect(clusterHasVowelName).toEqual(result);
-    });
-  });
-});
-
-describe.each`
-  description                                 | hebrew         | clusterNum | isShureq
-  ${"mid-word shureq"}                        | ${"קוּם"}      | ${1}       | ${true}
-  ${"mid-word vav dagesh with vowel"}         | ${"שִׁוֵּק"}   | ${1}       | ${false}
-  ${"mid-word vav dagesh with vowel before"}  | ${"שִׁוּוּק"}  | ${1}       | ${false}
-  ${"mid-word shureq with vav dagesh before"} | ${"שִׁוּוּק"}  | ${2}       | ${true}
-  ${"mid-word vav dagesh with sheva"}         | ${"מְצַוְּךָ"} | ${2}       | ${false}
-  ${"final vav dagesh with vowel before"}     | ${"גֵּוּ"}     | ${1}       | ${false}
-`("isShureq:", ({ description, hebrew, clusterNum, isShureq }) => {
-  const heb = new Text(hebrew);
-  const cluster = heb.clusters[clusterNum];
-  const meteg = cluster.isShureq;
-  describe(description, () => {
-    test(`isShureq to equal ${isShureq}`, () => {
-      expect(meteg).toEqual(isShureq);
     });
   });
 });
