@@ -1,5 +1,6 @@
 import { Char } from "./char";
 import { Node } from "./node";
+import { Syllable } from "./syllable";
 import { taamim, hebChars, vowelsCaptureGroup, punctuation } from "./utils/regularExpressions";
 import { charToNameMap, CharToNameMap, NameToCharMap, nameToCharMap } from "./utils/vowelMap";
 
@@ -18,12 +19,14 @@ import { charToNameMap, CharToNameMap, NameToCharMap, nameToCharMap } from "./ut
 export class Cluster extends Node<Cluster> {
   #original: string;
   #sequenced: Char[];
+  #syllable: Syllable | null = null;
 
   constructor(cluster: string, noSequence: boolean = false) {
     super();
     this.value = this;
     this.#original = cluster;
     this.#sequenced = this.sequence(noSequence);
+    this.#sequenced.forEach((char) => (char.cluster = this));
   }
 
   /**
@@ -409,6 +412,26 @@ export class Cluster extends Node<Cluster> {
   hasVowelName(name: keyof NameToCharMap): boolean {
     if (!nameToCharMap[name]) throw new Error(`${name} is not a valid value`);
     return this.text.indexOf(nameToCharMap[name]) !== -1 ? true : false;
+  }
+
+  /**
+   * The parent `Syllable` of the cluster, if any.
+   *
+   * ```typescript
+   * const text: Text = new Text("דָּבָר");
+   * const lastCluster: Cluster = text.clusters[2];
+   * lastCluster.text;
+   * // "ר"
+   * lastCluster.syllable.text;
+   * // "בָר"
+   * ```
+   */
+  get syllable(): Syllable | null {
+    return this.#syllable;
+  }
+
+  set syllable(syllable: Syllable | null) {
+    this.#syllable = syllable;
   }
 
   /**

@@ -138,10 +138,14 @@ export class Word {
   get syllables(): Syllable[] {
     if (/\w/.test(this.text) || this.isDivineName || this.isNotHebrew) {
       const syl = new Syllable(this.clusters);
+      syl.word = this;
       return [syl];
     }
 
-    return syllabify(this.clusters, this.sylOpts);
+    const syllables = syllabify(this.clusters, this.sylOpts);
+    syllables.forEach((syl) => (syl.word = this));
+
+    return syllables;
   }
 
   /**

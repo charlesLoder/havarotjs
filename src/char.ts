@@ -1,3 +1,4 @@
+import { Cluster } from "./cluster";
 import { taamim } from "./utils/regularExpressions";
 const consonants = /[\u{05D0}-\u{05F2}]/u;
 const ligature = /[\u{05C1}-\u{05C2}]/u;
@@ -10,6 +11,7 @@ const niqqud = /[\u{05B0}-\u{05BB}\u{05C7}]/u;
  */
 export class Char {
   #text: string;
+  #cluster: Cluster | null = null;
 
   constructor(char: string) {
     this.#text = char;
@@ -68,5 +70,25 @@ export class Char {
    */
   get sequencePosition(): number {
     return this.findPos();
+  }
+
+  /**
+   * The parent `Cluster` of the `Char`, if any.
+   *
+   * ```typescript
+   * const text: Text = new Text("דָּבָר");
+   * const firstChar = text.chars[0];
+   * firstChar.text;
+   * // "ד"
+   * firstChar.cluster?.text;
+   * // "דָּ"
+   * ```
+   */
+  get cluster(): Cluster | null {
+    return this.#cluster;
+  }
+
+  set cluster(cluster: Cluster | null) {
+    this.#cluster = cluster;
   }
 }

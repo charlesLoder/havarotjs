@@ -3,6 +3,7 @@ import { Char } from "./char";
 import { CharToNameMap, charToNameMap, NameToCharMap, nameToCharMap } from "./utils/vowelMap";
 import { vowelsCaptureGroupWithSheva } from "./utils/regularExpressions";
 import { Node } from "./node";
+import { Word } from "./word";
 
 interface SyllableCharToNameMap extends CharToNameMap {
   /* eslint-disable  @typescript-eslint/naming-convention */
@@ -32,6 +33,7 @@ export class Syllable extends Node<Syllable> {
   #isClosed: boolean;
   #isAccented: boolean;
   #isFinal: boolean;
+  #word: Word | null = null;
 
   /**
    *
@@ -365,5 +367,13 @@ export class Syllable extends Node<Syllable> {
    */
   get codaWithGemination(): string {
     return this.structure(true)[2];
+  }
+
+  get word(): Word | null {
+    return this.#word;
+  }
+
+  set word(word: Word | null) {
+    this.#word = word;
   }
 }
