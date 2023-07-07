@@ -1,3 +1,4 @@
+import { Cluster } from "../src/cluster";
 import { Text } from "../src/index";
 import { Syllable } from "../src/syllable";
 
@@ -127,5 +128,25 @@ describe.each`
     test(`vowelName to equal ${vowelName}`, () => {
       expect(syllableVowelName).toEqual(vowelName);
     });
+  });
+});
+
+describe("word:", () => {
+  test("if no word, null", () => {
+    const clusters = [new Cluster("דָּ")];
+    const syllable = new Syllable(clusters);
+    expect(syllable.word).toEqual(null);
+  });
+
+  test("syllable text same as word text", () => {
+    const text = new Text("זֶה");
+    const first = text.syllables[0];
+    expect(first?.word?.text).toEqual(first.text);
+  });
+
+  test("syllable text not the same as word text", () => {
+    const text = new Text("דָּבָר");
+    const last = text.syllables[text.syllables.length - 1];
+    expect(last?.word?.text).not.toEqual("דָּ");
   });
 });
