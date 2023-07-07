@@ -1,5 +1,9 @@
 # Changelog
 
+## 2023-07-07 0.19.0
+
+- Add parent property on children (PR #135)
+
 ## 2023-07-02 0.18.3
 
 - Fix syllable with pashta not checking for a qadma (Issue #133)
