@@ -268,13 +268,14 @@ export class Syllable extends Node<Syllable> {
   structure(withGemination: boolean = false): [string, string, string] {
     const heClusters = this.clusters.filter((c) => !c.isNotHebrew);
     if (heClusters.length === 0) {
-      return ["", "", ""];
+      const structure: [string, string, string] = ["", "", ""];
+      return structure;
     }
     // Initial shureq: If the syllable starts with a shureq, then it has no
     // onset, its nucleus is the shureq, and its coda is any remaining clusters
     const first = heClusters[0];
     if (first.isShureq) {
-      return [
+      const structure: [string, string, string] = [
         "",
         first.text,
         heClusters
@@ -282,6 +283,7 @@ export class Syllable extends Node<Syllable> {
           .map((c) => c.text)
           .join("")
       ];
+      return structure;
     }
     // Furtive patah: If the syllable is final and is either a het, ayin, or he
     // (with dagesh) followed by a patah, then it has no onset, its nucleus is
@@ -289,7 +291,8 @@ export class Syllable extends Node<Syllable> {
     if (this.isFinal && !this.isClosed) {
       const matchFurtive = this.text.match(/(\u{05D7}|\u{05E2}|\u{05D4}\u{05BC})(\u{05B7})(\u{05C3})?$/mu);
       if (matchFurtive) {
-        return ["", matchFurtive[2], matchFurtive[1] + (matchFurtive[3] || "")];
+        const structure: [string, string, string] = ["", matchFurtive[2], matchFurtive[1] + (matchFurtive[3] || "")];
+        return structure;
       }
     }
     // Otherwise:
@@ -338,7 +341,8 @@ export class Syllable extends Node<Syllable> {
         }
       }
     }
-    return [onset, nucleus, coda];
+    const structure: [string, string, string] = [onset, nucleus, coda];
+    return structure;
   }
 
   /**
