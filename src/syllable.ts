@@ -34,6 +34,8 @@ export class Syllable extends Node<Syllable> {
   #isAccented: boolean;
   #isFinal: boolean;
   #word: Word | null = null;
+  #cachedStructure: [string, string, string] | null = null;
+  #cachedStructureWithGemination: [string, string, string] | null = null;
 
   /**
    *
@@ -266,9 +268,19 @@ export class Syllable extends Node<Syllable> {
    * ```
    */
   structure(withGemination: boolean = false): [string, string, string] {
+    if (withGemination && this.#cachedStructureWithGemination) {
+      return this.#cachedStructureWithGemination;
+    }
+
+    if (this.#cachedStructure) {
+      return this.#cachedStructure;
+    }
+
     const heClusters = this.clusters.filter((c) => !c.isNotHebrew);
     if (heClusters.length === 0) {
       const structure: [string, string, string] = ["", "", ""];
+      this.#cachedStructure = structure;
+      this.#cachedStructureWithGemination = structure;
       return structure;
     }
     // Initial shureq: If the syllable starts with a shureq, then it has no
@@ -283,6 +295,8 @@ export class Syllable extends Node<Syllable> {
           .map((c) => c.text)
           .join("")
       ];
+      this.#cachedStructure = structure;
+      this.#cachedStructureWithGemination = structure;
       return structure;
     }
     // Furtive patah: If the syllable is final and is either a het, ayin, or he
@@ -292,6 +306,8 @@ export class Syllable extends Node<Syllable> {
       const matchFurtive = this.text.match(/(\u{05D7}|\u{05E2}|\u{05D4}\u{05BC})(\u{05B7})(\u{05C3})?$/mu);
       if (matchFurtive) {
         const structure: [string, string, string] = ["", matchFurtive[2], matchFurtive[1] + (matchFurtive[3] || "")];
+        this.#cachedStructure = structure;
+        this.#cachedStructureWithGemination = structure;
         return structure;
       }
     }
@@ -342,6 +358,11 @@ export class Syllable extends Node<Syllable> {
       }
     }
     const structure: [string, string, string] = [onset, nucleus, coda];
+    if (withGemination) {
+      this.#cachedStructureWithGemination = structure;
+    } else {
+      this.#cachedStructure = structure;
+    }
     return structure;
   }
 
