@@ -188,6 +188,7 @@ export class Syllable extends Node<Syllable> {
    * text.syllables[2].hasVowelName("SHEVA");
    * // false
    * ```
+   *
    * @description
    * This returns a boolean if the vowel character is present, even for most mater lectionis (e.g. in a holam vav construction, "HOLAM" would return true)
    * The only exception is a shureq, because there is no vowel character for a shureq.
