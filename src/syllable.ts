@@ -1,6 +1,7 @@
 import { Cluster } from "./cluster";
 import { Char } from "./char";
 import { CharToNameMap, charToNameMap, NameToCharMap, nameToCharMap } from "./utils/vowelMap";
+import { vowelsCaptureGroupWithSheva } from "./utils/regularExpressions";
 import { removeTaamim } from "./utils/removeTaamim";
 import { Node } from "./node";
 import { Word } from "./word";
@@ -138,8 +139,16 @@ export class Syllable extends Node<Syllable> {
   get vowel(): keyof SyllableCharToNameMap | null {
     const nucleus = this.nucleus;
     const noTaamim = removeTaamim(nucleus)[0];
+
+    // for regular vowel characters and shureqs, this should match
     if (this.isVowelKeyOfSyllableCharToNameMap(noTaamim)) {
       return noTaamim;
+    }
+
+    // for maters, we have to match the vowel character
+    const match = noTaamim.match(vowelsCaptureGroupWithSheva);
+    if (match && this.isVowelKeyOfSyllableCharToNameMap(match[0])) {
+      return match[0];
     }
 
     return null;
