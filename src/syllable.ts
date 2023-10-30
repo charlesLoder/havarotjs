@@ -285,6 +285,7 @@ export class Syllable extends Node<Syllable> {
       this.#cachedStructureWithGemination = structure;
       return structure;
     }
+
     // Initial shureq: If the syllable starts with a shureq, then it has no
     // onset, its nucleus is the shureq, and its coda is any remaining clusters
     const first = heClusters[0];
@@ -303,6 +304,7 @@ export class Syllable extends Node<Syllable> {
       this.#cachedStructureWithGemination = structure;
       return structure;
     }
+
     // Furtive patah: If the syllable is final and is either a het, ayin, or he
     // (with dagesh) followed by a patah, then it has no onset, its nucleus is
     // the patah and its coda is the consonant
@@ -317,6 +319,7 @@ export class Syllable extends Node<Syllable> {
         return structure;
       }
     }
+
     // Otherwise:
     // 1. The onset is any initial consonant, ligature, dagesh, and/or rafe
     //    (as defined in char.ts) of the first cluster
@@ -363,6 +366,7 @@ export class Syllable extends Node<Syllable> {
         }
       }
     }
+
     const structure: [string, string, string] = [onset, nucleus, coda];
     if (withGemination) {
       this.#cachedStructureWithGemination = structure;
