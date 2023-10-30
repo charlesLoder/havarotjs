@@ -1,5 +1,9 @@
 # Changelog
 
+## 2023-10-30 0.19.2
+
+- Fix `vowel`, `vowelName`, and `hasVowelName` props on the `Syllable` that were broken in v0.19.1 (PR #143)
+
 ## 2023-10-29 0.19.1
 
 - Fix how shureq is handled for Syllable props vowel, vowelName, and hasVowelName (Issue #141)
