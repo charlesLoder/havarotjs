@@ -1,7 +1,7 @@
 import { Cluster } from "./cluster";
 import { Char } from "./char";
 import { CharToNameMap, charToNameMap, NameToCharMap, nameToCharMap } from "./utils/vowelMap";
-import { vowelsCaptureGroupWithSheva } from "./utils/regularExpressions";
+import { removeTaamim } from "./utils/removeTaamim";
 import { Node } from "./node";
 import { Word } from "./word";
 
@@ -106,6 +106,10 @@ export class Syllable extends Node<Syllable> {
     return this.clusters.map((cluster) => cluster.chars).flat();
   }
 
+  private isVowelKeyOfSyllableCharToNameMap(vowel: string): vowel is keyof SyllableCharToNameMap {
+    return vowel in sylCharToNameMap;
+  }
+
   /**
    * Returns the vowel character of the syllable
    *
@@ -121,8 +125,13 @@ export class Syllable extends Node<Syllable> {
    * ```
    */
   get vowel(): keyof SyllableCharToNameMap | null {
-    const match = this.text.match(vowelsCaptureGroupWithSheva);
-    return match ? (match[0] as keyof SyllableCharToNameMap) : match;
+    const nucleus = this.nucleus;
+    const noTaamim = removeTaamim(nucleus)[0];
+    if (this.isVowelKeyOfSyllableCharToNameMap(noTaamim)) {
+      return noTaamim;
+    }
+
+    return null;
   }
 
   /**
