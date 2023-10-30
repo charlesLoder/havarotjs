@@ -193,7 +193,15 @@ export class Syllable extends Node<Syllable> {
    * The only exception is a shureq, because there is no vowel character for a shureq.
    */
   hasVowelName(name: keyof SyllableNameToCharMap): boolean {
-    if (!sylNameToCharMap[name]) throw new Error(`${name} is not a valid value`);
+    if (!sylNameToCharMap[name]) {
+      throw new Error(`${name} is not a valid value`);
+    }
+
+    if (name === "SHUREQ") {
+      // if any cluster has a shureq, then that should be the defacto vowel
+      return this.clusters.filter((c) => c.isShureq).length ? true : false;
+    }
+
     const isShevaSilent = name === "SHEVA" && this.clusters.filter((c) => c.hasVowel).length ? true : false;
     return !isShevaSilent && this.text.indexOf(sylNameToCharMap[name]) !== -1 ? true : false;
   }
