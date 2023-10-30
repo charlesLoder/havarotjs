@@ -8,21 +8,28 @@ import { Word } from "./word";
 interface SyllableCharToNameMap extends CharToNameMap {
   /* eslint-disable  @typescript-eslint/naming-convention */
   "\u{05B0}": "SHEVA"; // HEBREW POINT HATAF SHEVA (U+05B0)
+  /**
+   * Unlike a holam vav construction which has the holam present, the shureq has no vowel character.
+   */
+  "\u{05D5}\u{05BC}": "SHUREQ"; // HEBREW LETTER VAV (U+05D5) + HEBREW POINT DAGESH OR MAPIQ (U+05BC)
 }
 
 const sylCharToNameMap: SyllableCharToNameMap = {
   ...charToNameMap,
-  "\u{05B0}": "SHEVA"
+  "\u{05B0}": "SHEVA",
+  "\u{05D5}\u{05BC}": "SHUREQ"
 };
 
 interface SyllableNameToCharMap extends NameToCharMap {
   /* eslint-disable  @typescript-eslint/naming-convention */
   SHEVA: "\u{05B0}"; // HEBREW POINT HATAF SHEVA (U+05B0)
+  SHUREQ: "\u{05D5}\u{05BC}"; // HEBREW LETTER VAV (U+05D5) + HEBREW POINT DAGESH OR MAPIQ (U+05BC)
 }
 
 const sylNameToCharMap: SyllableNameToCharMap = {
   ...nameToCharMap,
-  SHEVA: "\u{05B0}"
+  SHEVA: "\u{05B0}",
+  SHUREQ: "\u{05D5}\u{05BC}"
 };
 
 /**
@@ -123,6 +130,10 @@ export class Syllable extends Node<Syllable> {
    * text.syllables[1].vowel;
    * // "\u{05B0}"
    * ```
+   *
+   * @description
+   * This returns a single vowel character, even for most mater lectionis (e.g. a holam vav would return the holam, not the vav).
+   * The only exception is a shureq, which returns the vav and the dagesh because there is no vowel character for a shureq.
    */
   get vowel(): keyof SyllableCharToNameMap | null {
     const nucleus = this.nucleus;
@@ -146,6 +157,10 @@ export class Syllable extends Node<Syllable> {
    * // "PATAH"
    * text.syllables[1].vowelName;
    * // "SHEVA"
+   *
+   * @description
+   * This returns the vowel name, even for most mater lectionis (e.g. a holam vav would return the HOLAM, not the vav).
+   * The only exception is a shureq, which returns "SHUREQ" because there is no vowel character for a shureq.
    * ```
    */
   get vowelName(): SyllableCharToNameMap[keyof SyllableCharToNameMap] | null {
@@ -173,6 +188,9 @@ export class Syllable extends Node<Syllable> {
    * text.syllables[2].hasVowelName("SHEVA");
    * // false
    * ```
+   * @description
+   * This returns a boolean if the vowel character is present, even for most mater lectionis (e.g. in a holam vav construction, "HOLAM" would return true)
+   * The only exception is a shureq, because there is no vowel character for a shureq.
    */
   hasVowelName(name: keyof SyllableNameToCharMap): boolean {
     if (!sylNameToCharMap[name]) throw new Error(`${name} is not a valid value`);
