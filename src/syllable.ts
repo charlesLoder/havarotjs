@@ -1,28 +1,35 @@
 import { Cluster } from "./cluster";
 import { Char } from "./char";
 import { CharToNameMap, charToNameMap, NameToCharMap, nameToCharMap } from "./utils/vowelMap";
-import { vowelsCaptureGroupWithSheva } from "./utils/regularExpressions";
+import { removeTaamim } from "./utils/removeTaamim";
 import { Node } from "./node";
 import { Word } from "./word";
 
 interface SyllableCharToNameMap extends CharToNameMap {
   /* eslint-disable  @typescript-eslint/naming-convention */
   "\u{05B0}": "SHEVA"; // HEBREW POINT HATAF SHEVA (U+05B0)
+  /**
+   * Unlike a holam vav construction which has the holam present, the shureq has no vowel character.
+   */
+  "\u{05D5}\u{05BC}": "SHUREQ"; // HEBREW LETTER VAV (U+05D5) + HEBREW POINT DAGESH OR MAPIQ (U+05BC)
 }
 
 const sylCharToNameMap: SyllableCharToNameMap = {
   ...charToNameMap,
-  "\u{05B0}": "SHEVA"
+  "\u{05B0}": "SHEVA",
+  "\u{05D5}\u{05BC}": "SHUREQ"
 };
 
 interface SyllableNameToCharMap extends NameToCharMap {
   /* eslint-disable  @typescript-eslint/naming-convention */
   SHEVA: "\u{05B0}"; // HEBREW POINT HATAF SHEVA (U+05B0)
+  SHUREQ: "\u{05D5}\u{05BC}"; // HEBREW LETTER VAV (U+05D5) + HEBREW POINT DAGESH OR MAPIQ (U+05BC)
 }
 
 const sylNameToCharMap: SyllableNameToCharMap = {
   ...nameToCharMap,
-  SHEVA: "\u{05B0}"
+  SHEVA: "\u{05B0}",
+  SHUREQ: "\u{05D5}\u{05BC}"
 };
 
 /**
@@ -34,6 +41,8 @@ export class Syllable extends Node<Syllable> {
   #isAccented: boolean;
   #isFinal: boolean;
   #word: Word | null = null;
+  #cachedStructure: [string, string, string] | null = null;
+  #cachedStructureWithGemination: [string, string, string] | null = null;
 
   /**
    *
@@ -104,6 +113,10 @@ export class Syllable extends Node<Syllable> {
     return this.clusters.map((cluster) => cluster.chars).flat();
   }
 
+  private isVowelKeyOfSyllableCharToNameMap(vowel: string): vowel is keyof SyllableCharToNameMap {
+    return vowel in sylCharToNameMap;
+  }
+
   /**
    * Returns the vowel character of the syllable
    *
@@ -117,10 +130,19 @@ export class Syllable extends Node<Syllable> {
    * text.syllables[1].vowel;
    * // "\u{05B0}"
    * ```
+   *
+   * @description
+   * This returns a single vowel character, even for most mater lectionis (e.g. a holam vav would return the holam, not the vav).
+   * The only exception is a shureq, which returns the vav and the dagesh because there is no vowel character for a shureq.
    */
   get vowel(): keyof SyllableCharToNameMap | null {
-    const match = this.text.match(vowelsCaptureGroupWithSheva);
-    return match ? (match[0] as keyof SyllableCharToNameMap) : match;
+    const nucleus = this.nucleus;
+    const noTaamim = removeTaamim(nucleus)[0];
+    if (this.isVowelKeyOfSyllableCharToNameMap(noTaamim)) {
+      return noTaamim;
+    }
+
+    return null;
   }
 
   /**
@@ -135,6 +157,10 @@ export class Syllable extends Node<Syllable> {
    * // "PATAH"
    * text.syllables[1].vowelName;
    * // "SHEVA"
+   *
+   * @description
+   * This returns the vowel name, even for most mater lectionis (e.g. a holam vav would return the HOLAM, not the vav).
+   * The only exception is a shureq, which returns "SHUREQ" because there is no vowel character for a shureq.
    * ```
    */
   get vowelName(): SyllableCharToNameMap[keyof SyllableCharToNameMap] | null {
@@ -162,9 +188,21 @@ export class Syllable extends Node<Syllable> {
    * text.syllables[2].hasVowelName("SHEVA");
    * // false
    * ```
+   *
+   * @description
+   * This returns a boolean if the vowel character is present, even for most mater lectionis (e.g. in a holam vav construction, "HOLAM" would return true)
+   * The only exception is a shureq, because there is no vowel character for a shureq.
    */
   hasVowelName(name: keyof SyllableNameToCharMap): boolean {
-    if (!sylNameToCharMap[name]) throw new Error(`${name} is not a valid value`);
+    if (!sylNameToCharMap[name]) {
+      throw new Error(`${name} is not a valid value`);
+    }
+
+    if (name === "SHUREQ") {
+      // if any cluster has a shureq, then that should be the defacto vowel
+      return this.clusters.filter((c) => c.isShureq).length ? true : false;
+    }
+
     const isShevaSilent = name === "SHEVA" && this.clusters.filter((c) => c.hasVowel).length ? true : false;
     return !isShevaSilent && this.text.indexOf(sylNameToCharMap[name]) !== -1 ? true : false;
   }
@@ -266,15 +304,31 @@ export class Syllable extends Node<Syllable> {
    * ```
    */
   structure(withGemination: boolean = false): [string, string, string] {
+    if (withGemination && this.#cachedStructureWithGemination) {
+      return this.#cachedStructureWithGemination;
+    }
+
+    if (this.#cachedStructure) {
+      return this.#cachedStructure;
+    }
+
     const heClusters = this.clusters.filter((c) => !c.isNotHebrew);
     if (heClusters.length === 0) {
-      return ["", "", ""];
+      // eslint complains about shadowing, but I think it makes sense here
+      /* eslint-disable-next-line @typescript-eslint/no-shadow */
+      const structure: [string, string, string] = ["", "", ""];
+      this.#cachedStructure = structure;
+      this.#cachedStructureWithGemination = structure;
+      return structure;
     }
+
     // Initial shureq: If the syllable starts with a shureq, then it has no
     // onset, its nucleus is the shureq, and its coda is any remaining clusters
     const first = heClusters[0];
     if (first.isShureq) {
-      return [
+      // eslint complains about shadowing, but I think it makes sense here
+      /* eslint-disable-next-line @typescript-eslint/no-shadow */
+      const structure: [string, string, string] = [
         "",
         first.text,
         heClusters
@@ -282,16 +336,26 @@ export class Syllable extends Node<Syllable> {
           .map((c) => c.text)
           .join("")
       ];
+      this.#cachedStructure = structure;
+      this.#cachedStructureWithGemination = structure;
+      return structure;
     }
+
     // Furtive patah: If the syllable is final and is either a het, ayin, or he
     // (with dagesh) followed by a patah, then it has no onset, its nucleus is
     // the patah and its coda is the consonant
     if (this.isFinal && !this.isClosed) {
       const matchFurtive = this.text.match(/(\u{05D7}|\u{05E2}|\u{05D4}\u{05BC})(\u{05B7})(\u{05C3})?$/mu);
       if (matchFurtive) {
-        return ["", matchFurtive[2], matchFurtive[1] + (matchFurtive[3] || "")];
+        // eslint complains about shadowing, but I think it makes sense here
+        /* eslint-disable-next-line @typescript-eslint/no-shadow */
+        const structure: [string, string, string] = ["", matchFurtive[2], matchFurtive[1] + (matchFurtive[3] || "")];
+        this.#cachedStructure = structure;
+        this.#cachedStructureWithGemination = structure;
+        return structure;
       }
     }
+
     // Otherwise:
     // 1. The onset is any initial consonant, ligature, dagesh, and/or rafe
     //    (as defined in char.ts) of the first cluster
@@ -338,7 +402,14 @@ export class Syllable extends Node<Syllable> {
         }
       }
     }
-    return [onset, nucleus, coda];
+
+    const structure: [string, string, string] = [onset, nucleus, coda];
+    if (withGemination) {
+      this.#cachedStructureWithGemination = structure;
+    } else {
+      this.#cachedStructure = structure;
+    }
+    return structure;
   }
 
   /**
