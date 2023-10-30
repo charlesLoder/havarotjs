@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Syllable | havarotjs - v0.19.0</title>
-	<meta name="description" content="Documentation for havarotjs - v0.19.0">
+	<title>Syllable | havarotjs - v0.19.1</title>
+	<meta name="description" content="Documentation for havarotjs - v0.19.1">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 	<link rel="stylesheet" href="../assets/css/pages.css">
@@ -23,7 +23,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">havarotjs - v0.19.0</a>
+					<a href="../index.html" class="title">havarotjs - v0.19.1</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -141,7 +141,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides Node&lt;Syllable&gt;.constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/0b27ff4/src/syllable.ts#L46">syllable.ts:46</a></li>
+									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/8683a11/src/syllable.ts#L55">syllable.ts:55</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -181,7 +181,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/0b27ff4/src/syllable.ts#L69">syllable.ts:69</a></li>
+									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/8683a11/src/syllable.ts#L78">syllable.ts:78</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -208,7 +208,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/0b27ff4/src/syllable.ts#L85">syllable.ts:85</a></li>
+									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/8683a11/src/syllable.ts#L94">syllable.ts:94</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Cluster</span><span class="tsd-signature-symbol">[]</span></h4>
@@ -233,7 +233,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/0b27ff4/src/syllable.ts#L103">syllable.ts:103</a></li>
+									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/8683a11/src/syllable.ts#L112">syllable.ts:112</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Char</span><span class="tsd-signature-symbol">[]</span></h4>
@@ -260,7 +260,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/0b27ff4/src/syllable.ts#L121">syllable.ts:121</a></li>
+									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/8683a11/src/syllable.ts#L138">syllable.ts:138</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -275,6 +275,12 @@
 <span style="color: #001080">text</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">[</span><span style="color: #098658">1</span><span style="color: #000000">].</span><span style="color: #001080">vowel</span><span style="color: #000000">;</span>
 <span style="color: #008000">// &quot;\u{05B0}&quot;</span>
 </code></pre>
+								<dl class="tsd-comment-tags">
+									<dt>description</dt>
+									<dd><p>This returns a single vowel character, even for most mater lectionis (e.g. a holam vav would return the holam, not the vav).
+										The only exception is a shureq, which returns the vav and the dagesh because there is no vowel character for a shureq.</p>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">SyllableCharToNameMap</span></h4>
 						</li>
@@ -284,13 +290,13 @@
 					<a name="vowelName" class="tsd-anchor"></a>
 					<h3>vowel<wbr>Name</h3>
 					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> vowelName<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HATAF_SEGOL&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HATAF_PATAH&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HATAF_QAMATS&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HIRIQ&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;TSERE&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;SEGOL&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;PATAH&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;QAMATS&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HOLAM&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HOLAM_HASER&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;QUBUTS&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;QAMATS_QATAN&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;SHEVA&quot;</span></li>
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> vowelName<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HATAF_SEGOL&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HATAF_PATAH&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HATAF_QAMATS&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HIRIQ&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;TSERE&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;SEGOL&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;PATAH&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;QAMATS&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HOLAM&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HOLAM_HASER&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;QUBUTS&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;QAMATS_QATAN&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;SHEVA&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;SHUREQ&quot;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/0b27ff4/src/syllable.ts#L140">syllable.ts:140</a></li>
+									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/8683a11/src/syllable.ts#L166">syllable.ts:166</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -304,9 +310,13 @@
 <span style="color: #008000">// &quot;PATAH&quot;</span>
 <span style="color: #001080">text</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">[</span><span style="color: #098658">1</span><span style="color: #000000">].</span><span style="color: #001080">vowelName</span><span style="color: #000000">;</span>
 <span style="color: #008000">// &quot;SHEVA&quot;</span>
+
+<span style="color: #000000">@</span><span style="color: #001080">description</span>
+<span style="color: #001080">This</span><span style="color: #000000"> </span><span style="color: #001080">returns</span><span style="color: #000000"> </span><span style="color: #001080">the</span><span style="color: #000000"> </span><span style="color: #001080">vowel</span><span style="color: #000000"> </span><span style="color: #001080">name</span><span style="color: #000000">, </span><span style="color: #001080">even</span><span style="color: #000000"> </span><span style="color: #001080">for</span><span style="color: #000000"> </span><span style="color: #001080">most</span><span style="color: #000000"> </span><span style="color: #001080">mater</span><span style="color: #000000"> </span><span style="color: #795E26">lectionis</span><span style="color: #000000"> (</span><span style="color: #001080">e</span><span style="color: #000000">.</span><span style="color: #001080">g</span><span style="color: #000000">. </span><span style="color: #001080">a</span><span style="color: #000000"> </span><span style="color: #001080">holam</span><span style="color: #000000"> </span><span style="color: #001080">vav</span><span style="color: #000000"> </span><span style="color: #001080">would</span><span style="color: #000000"> </span><span style="color: #001080">return</span><span style="color: #000000"> </span><span style="color: #001080">the</span><span style="color: #000000"> </span><span style="color: #0070C1">HOLAM</span><span style="color: #000000">, </span><span style="color: #001080">not</span><span style="color: #000000"> </span><span style="color: #001080">the</span><span style="color: #000000"> </span><span style="color: #001080">vav</span><span style="color: #000000">).</span>
+<span style="color: #001080">The</span><span style="color: #000000"> </span><span style="color: #001080">only</span><span style="color: #000000"> </span><span style="color: #001080">exception</span><span style="color: #000000"> </span><span style="color: #001080">is</span><span style="color: #000000"> </span><span style="color: #001080">a</span><span style="color: #000000"> </span><span style="color: #001080">shureq</span><span style="color: #000000">, </span><span style="color: #001080">which</span><span style="color: #000000"> </span><span style="color: #001080">returns</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;SHUREQ&quot;</span><span style="color: #000000"> </span><span style="color: #001080">because</span><span style="color: #000000"> </span><span style="color: #001080">there</span><span style="color: #000000"> </span><span style="color: #001080">is</span><span style="color: #000000"> </span><span style="color: #001080">no</span><span style="color: #000000"> </span><span style="color: #001080">vowel</span><span style="color: #000000"> </span><span style="color: #001080">character</span><span style="color: #000000"> </span><span style="color: #001080">for</span><span style="color: #000000"> </span><span style="color: #001080">a</span><span style="color: #000000"> </span><span style="color: #001080">shureq</span><span style="color: #000000">.</span>
 </code></pre>
 							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HATAF_SEGOL&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HATAF_PATAH&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HATAF_QAMATS&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HIRIQ&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;TSERE&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;SEGOL&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;PATAH&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;QAMATS&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HOLAM&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HOLAM_HASER&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;QUBUTS&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;QAMATS_QATAN&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;SHEVA&quot;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HATAF_SEGOL&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HATAF_PATAH&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HATAF_QAMATS&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HIRIQ&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;TSERE&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;SEGOL&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;PATAH&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;QAMATS&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HOLAM&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HOLAM_HASER&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;QUBUTS&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;QAMATS_QATAN&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;SHEVA&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;SHUREQ&quot;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -321,7 +331,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/0b27ff4/src/syllable.ts#L185">syllable.ts:185</a></li>
+									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/8683a11/src/syllable.ts#L223">syllable.ts:223</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -337,7 +347,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/0b27ff4/src/syllable.ts#L194">syllable.ts:194</a></li>
+									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/8683a11/src/syllable.ts#L232">syllable.ts:232</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -373,7 +383,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/0b27ff4/src/syllable.ts#L211">syllable.ts:211</a></li>
+									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/8683a11/src/syllable.ts#L249">syllable.ts:249</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -389,7 +399,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/0b27ff4/src/syllable.ts#L220">syllable.ts:220</a></li>
+									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/8683a11/src/syllable.ts#L258">syllable.ts:258</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -425,7 +435,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/0b27ff4/src/syllable.ts#L235">syllable.ts:235</a></li>
+									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/8683a11/src/syllable.ts#L273">syllable.ts:273</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -440,7 +450,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/0b27ff4/src/syllable.ts#L242">syllable.ts:242</a></li>
+									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/8683a11/src/syllable.ts#L280">syllable.ts:280</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -473,7 +483,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/0b27ff4/src/syllable.ts#L347">syllable.ts:347</a></li>
+									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/8683a11/src/syllable.ts#L418">syllable.ts:418</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -495,7 +505,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/0b27ff4/src/syllable.ts#L354">syllable.ts:354</a></li>
+									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/8683a11/src/syllable.ts#L425">syllable.ts:425</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -513,7 +523,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/0b27ff4/src/syllable.ts#L361">syllable.ts:361</a></li>
+									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/8683a11/src/syllable.ts#L432">syllable.ts:432</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -531,7 +541,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/0b27ff4/src/syllable.ts#L368">syllable.ts:368</a></li>
+									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/8683a11/src/syllable.ts#L439">syllable.ts:439</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -550,7 +560,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/0b27ff4/src/syllable.ts#L372">syllable.ts:372</a></li>
+									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/8683a11/src/syllable.ts#L443">syllable.ts:443</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Word</span></h4>
@@ -558,7 +568,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/0b27ff4/src/syllable.ts#L376">syllable.ts:376</a></li>
+									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/8683a11/src/syllable.ts#L447">syllable.ts:447</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -584,7 +594,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/0b27ff4/src/syllable.ts#L166">syllable.ts:166</a></li>
+									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/8683a11/src/syllable.ts#L196">syllable.ts:196</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -606,6 +616,12 @@
 <span style="color: #001080">text</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">[</span><span style="color: #098658">2</span><span style="color: #000000">].</span><span style="color: #795E26">hasVowelName</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;SHEVA&quot;</span><span style="color: #000000">);</span>
 <span style="color: #008000">// false</span>
 </code></pre>
+								<dl class="tsd-comment-tags">
+									<dt>description</dt>
+									<dd><p>This returns a boolean if the vowel character is present, even for most mater lectionis (e.g. in a holam vav construction, &quot;HOLAM&quot; would return true)
+										The only exception is a shureq, because there is no vowel character for a shureq.</p>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -627,7 +643,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/0b27ff4/src/syllable.ts#L268">syllable.ts:268</a></li>
+									<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/8683a11/src/syllable.ts#L306">syllable.ts:306</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
