@@ -20,12 +20,13 @@ describe.each`
 });
 
 describe.each`
-  description                     | hebrew              | syllableNum | vowelName   | result
-  ${"syllable with patah"}        | ${"הַֽ֭יְחָבְרְךָ"} | ${0}        | ${"PATAH"}  | ${true}
-  ${"syllable with sheva"}        | ${"הַֽ֭יְחָבְרְךָ"} | ${1}        | ${"SHEVA"}  | ${true}
-  ${"syllable with silent sheva"} | ${"הַֽ֭יְחָבְרְךָ"} | ${2}        | ${"SHEVA"}  | ${false}
-  ${"syllable with qamats"}       | ${"הַֽ֭יְחָבְרְךָ"} | ${2}        | ${"QAMATS"} | ${true}
-  ${"syllable with shureq"}       | ${"תִגְּע֖וּ"}      | ${2}        | ${"SHUREQ"} | ${true}
+  description                                    | hebrew              | syllableNum | vowelName   | result
+  ${"syllable with patah"}                       | ${"הַֽ֭יְחָבְרְךָ"} | ${0}        | ${"PATAH"}  | ${true}
+  ${"syllable with sheva"}                       | ${"הַֽ֭יְחָבְרְךָ"} | ${1}        | ${"SHEVA"}  | ${true}
+  ${"syllable with silent sheva"}                | ${"הַֽ֭יְחָבְרְךָ"} | ${2}        | ${"SHEVA"}  | ${false}
+  ${"syllable with qamats"}                      | ${"הַֽ֭יְחָבְרְךָ"} | ${2}        | ${"QAMATS"} | ${true}
+  ${"syllable with shureq"}                      | ${"תִגְּע֖וּ"}      | ${2}        | ${"SHUREQ"} | ${true}
+  ${"syllable with vav and dagesh (not shureq)"} | ${"הַוּֽוֹת׃"}      | ${1}        | ${"SHUREQ"} | ${false}
 `("hasVowelName:", ({ description, hebrew, syllableNum, vowelName, result }) => {
   const heb = new Text(hebrew);
   const syllable = heb.syllables[syllableNum];
