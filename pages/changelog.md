@@ -1,5 +1,9 @@
 # Changelog
 
+## 2023-10-29 0.19.1
+
+- Fix how shureq is handled for Syllable props vowel, vowelName, and hasVowelName (Issue #141)
+
 ## 2023-07-07 0.19.0
 
 - Add parent property on children (PR #135)
