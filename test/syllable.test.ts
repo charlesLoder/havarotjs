@@ -100,6 +100,29 @@ describe.each`
   });
 });
 
+describe("structure cache", () => {
+  const str = "סַפִּ֖יר";
+  test("without gemination", () => {
+    const heb = new Text(str);
+    const syllable = heb.syllables[0];
+    // first call to structure() will cache the result
+    // but use the opposite of what is being tested
+    syllable.structure(true);
+    const [syllableOnset, syllableNucleus, syllableCoda] = ["ס", "ַ", ""];
+    expect(syllable.structure()).toEqual([syllableOnset, syllableNucleus, syllableCoda]);
+  });
+
+  test("with gemination", () => {
+    const heb = new Text(str);
+    const syllable = heb.syllables[0];
+    // first call to structure() will cache the result
+    // but use the opposite of what is being tested
+    syllable.structure();
+    const [syllableOnset, syllableNucleus, syllableCoda] = ["ס", "ַ", "פּ"];
+    expect(syllable.structure(true)).toEqual([syllableOnset, syllableNucleus, syllableCoda]);
+  });
+});
+
 describe.each`
   description                     | hebrew              | syllableNum | vowel                 | allowNoNiqqud
   ${"syllable with patah"}        | ${"הַֽ֭יְחָבְרְךָ"} | ${0}        | ${"\u{05B7}"}         | ${false}
