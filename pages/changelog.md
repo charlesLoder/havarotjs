@@ -1,5 +1,9 @@
 # Changelog
 
+## 2023-10-31 0.19.3
+
+- Fix issues with caching for `Syllable.structure` (PR #144)
+
 ## 2023-10-30 0.19.2
 
 - Fix `vowel`, `vowelName`, and `hasVowelName` props on the `Syllable` that were broken in v0.19.1 (PR #143)
