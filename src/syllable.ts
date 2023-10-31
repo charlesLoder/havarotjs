@@ -317,7 +317,7 @@ export class Syllable extends Node<Syllable> {
       return this.#cachedStructureWithGemination;
     }
 
-    if (this.#cachedStructure) {
+    if (!withGemination && this.#cachedStructure) {
       return this.#cachedStructure;
     }
 
