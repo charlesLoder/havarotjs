@@ -45,6 +45,7 @@ describe.each`
   ${"final he"}                                                        | ${"מַלְכָּ֔ה"}  | ${["מַלְ", "כָּ֔ה"]}      | ${[true, false]}  | ${[false, true]}
   ${"single syllable, final he"}                                       | ${"פֹּ֖ה"}      | ${["פֹּ֖ה"]}              | ${[false]}        | ${[true]}
   ${"with single pashta"}                                              | ${"לָאוֹר֙"}    | ${["לָ", "אֹור֙"]}        | ${[false, true]}  | ${[false, true]}
+  ${"with pashta and qadma"}                                           | ${"תֹ֨הוּ֙"}    | ${["תֹ֨", "הוּ֙"]}        | ${[false, false]} | ${[true, false]}
 `("2 Syllables:", ({ description, original, sylArr, closedArr, accentArr }) => {
   tests(description, original, sylArr, closedArr, accentArr);
 });
@@ -63,7 +64,6 @@ describe.each`
   ${"word and passeq"}                                               | ${"דָּבָ֗ר ׀"}  | ${["דָּ", "בָ֗ר", "׀"]}   | ${[false, true, true]}   | ${[false, true, true]}
   ${"segolate noun"}                                                 | ${"הָאָֽרֶץ׃"}  | ${["הָ", "אָֽ", "רֶץ׃"]}  | ${[false, false, true]}  | ${[false, true, false]}
   ${"with pashta and pastha"}                                        | ${"הַמַּ֙יִם֙"} | ${["הַ", "מַּ֙", "יִם֙"]} | ${[true, false, true]}   | ${[false, true, false]}
-  ${"with pashta and qadma"}                                         | ${"תֹ֨הוּ֙"}    | ${["תֹ֨", "הוּ֙"]}        | ${[false, false]}        | ${[true, false]}
   ${"with one telisha qetana"}                                       | ${"וַיֹּאמֶר֩"} | ${["וַ", "יֹּא", "מֶר֩"]} | ${[true, false, true]}   | ${[false, true, false]}
 `("3 Syllables:", ({ description, original, sylArr, closedArr, accentArr }) => {
   tests(description, original, sylArr, closedArr, accentArr);
