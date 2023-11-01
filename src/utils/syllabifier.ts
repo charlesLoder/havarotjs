@@ -355,6 +355,9 @@ const setIsClosed = (syllable: Syllable, index: number, arr: Syllable[]) => {
 };
 
 const setIsAccented = (syllable: Syllable) => {
+  if (syllable.isAccented) {
+    return;
+  }
   // TODO: this is pretty hacky, but it works; find a more elegant solution
   const jerusalemFinal = /\u{5B4}\u{05DD}/u;
   const jerusalemPrev = /ל[\u{5B8}\u{5B7}]/u;
