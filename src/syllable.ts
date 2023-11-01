@@ -145,8 +145,8 @@ export class Syllable extends Node<Syllable> {
       return noTaamim;
     }
 
-    // for maters, we have to match the vowel character
-    const match = noTaamim.match(vowelsCaptureGroupWithSheva);
+    // for maters or text with mixed scripts (e.g. Hebrew and Latin), we have to extract the vowel character
+    const match = this.text.match(vowelsCaptureGroupWithSheva);
     if (match && this.isVowelKeyOfSyllableCharToNameMap(match[0])) {
       return match[0];
     }
