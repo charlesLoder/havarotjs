@@ -1,5 +1,10 @@
 # Changelog
 
+## 2023-10-31 0.19.4
+
+- Fix telisha qetana being incorrectly marked as accented (PR #146)
+- Fix vowel character being extracted in mixed script syllables (PR #145)
+
 ## 2023-10-31 0.19.3
 
 - Fix issues with caching for `Syllable.structure` (PR #144)
