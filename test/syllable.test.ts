@@ -30,6 +30,7 @@ describe.each`
   ${"syllable with tsere-yod"}                   | ${"קָדְשֵׁ֧י"}      | ${1}        | ${"TSERE"}  | ${true}
   ${"syllable with holam-vav"}                   | ${"בַּיּ֣וֹם"}      | ${1}        | ${"HOLAM"}  | ${true}
   ${"syllable with hiriq-yod"}                   | ${"אָנֹֽכִי"}       | ${2}        | ${"HIRIQ"}  | ${true}
+  ${"syllable with mixed chars"}                 | ${"rˁִː֣"}          | ${0}        | ${"HIRIQ"}  | ${true}
 `("hasVowelName:", ({ description, hebrew, syllableNum, vowelName, result }) => {
   const heb = new Text(hebrew);
   const syllable = heb.syllables[syllableNum];
@@ -133,6 +134,7 @@ describe.each`
   ${"syllable with tsere-yod"}    | ${"קָדְשֵׁ֧י"}      | ${1}        | ${"\u{05B5}"}         | ${false}
   ${"syllable with holam-vav"}    | ${"בַּיּ֣וֹם"}      | ${1}        | ${"\u{05B9}"}         | ${false}
   ${"syllable with hiriq-yod"}    | ${"אָנֹֽכִי"}       | ${2}        | ${"\u{05B4}"}         | ${false}
+  ${"syllable with mixed chars"}  | ${"rˁִː֣"}          | ${0}        | ${"\u{05B4}"}         | ${false}
 `("vowel:", ({ description, hebrew, syllableNum, vowel, allowNoNiqqud }) => {
   // normally don't use `allowNoNiqqud` in testing, but needed to get `null`
   const heb = new Text(hebrew, { allowNoNiqqud });
@@ -155,6 +157,7 @@ describe.each`
   ${"syllable with tsere-yod"}    | ${"קָדְשֵׁ֧י"}      | ${1}        | ${"TSERE"}  | ${false}
   ${"syllable with holam-vav"}    | ${"בַּיּ֣וֹם"}      | ${1}        | ${"HOLAM"}  | ${false}
   ${"syllable with hiriq-yod"}    | ${"אָנֹֽכִי"}       | ${2}        | ${"HIRIQ"}  | ${false}
+  ${"syllable with mixed chars"}  | ${"rˁִː֣"}          | ${0}        | ${"HIRIQ"}  | ${true}
 `("vowelName:", ({ description, hebrew, syllableNum, vowelName, allowNoNiqqud }) => {
   // normally don't use `allowNoNiqqud` in testing, but needed to get `null`
   const heb = new Text(hebrew, { allowNoNiqqud });
