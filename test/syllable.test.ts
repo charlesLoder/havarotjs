@@ -130,9 +130,9 @@ describe.each`
   ${"syllable with silent sheva"} | ${"הַֽ֭יְחָבְרְךָ"} | ${2}        | ${"\u{05B8}"}         | ${false}
   ${"syllable with none"}         | ${"test"}           | ${0}        | ${null}               | ${true}
   ${"syllable with shureq"}       | ${"תִגְּע֖וּ"}      | ${2}        | ${"\u{05D5}\u{05BC}"} | ${false}
-  ${"syllable with tsere-yod"}    | ${"קָדְשֵׁ֧י"}      | ${1}        | ${"\u{05B5}"}         | ${true}
-  ${"syllable with holam-vav"}    | ${"בַּיּ֣וֹם"}      | ${1}        | ${"\u{05B9}"}         | ${true}
-  ${"syllable with hiriq-yod"}    | ${"אָנֹֽכִי"}       | ${2}        | ${"\u{05B4}"}         | ${true}
+  ${"syllable with tsere-yod"}    | ${"קָדְשֵׁ֧י"}      | ${1}        | ${"\u{05B5}"}         | ${false}
+  ${"syllable with holam-vav"}    | ${"בַּיּ֣וֹם"}      | ${1}        | ${"\u{05B9}"}         | ${false}
+  ${"syllable with hiriq-yod"}    | ${"אָנֹֽכִי"}       | ${2}        | ${"\u{05B4}"}         | ${false}
 `("vowel:", ({ description, hebrew, syllableNum, vowel, allowNoNiqqud }) => {
   // normally don't use `allowNoNiqqud` in testing, but needed to get `null`
   const heb = new Text(hebrew, { allowNoNiqqud });
@@ -153,8 +153,8 @@ describe.each`
   ${"syllable with none"}         | ${"test"}           | ${0}        | ${null}     | ${true}
   ${"syllable with shureq"}       | ${"תִגְּע֖וּ"}      | ${2}        | ${"SHUREQ"} | ${false}
   ${"syllable with tsere-yod"}    | ${"קָדְשֵׁ֧י"}      | ${1}        | ${"TSERE"}  | ${false}
-  ${"syllable with holam-vav"}    | ${"בַּיּ֣וֹם"}      | ${1}        | ${"HOLAM"}  | ${true}
-  ${"syllable with hiriq-yod"}    | ${"אָנֹֽכִי"}       | ${2}        | ${"HIRIQ"}  | ${true}
+  ${"syllable with holam-vav"}    | ${"בַּיּ֣וֹם"}      | ${1}        | ${"HOLAM"}  | ${false}
+  ${"syllable with hiriq-yod"}    | ${"אָנֹֽכִי"}       | ${2}        | ${"HIRIQ"}  | ${false}
 `("vowelName:", ({ description, hebrew, syllableNum, vowelName, allowNoNiqqud }) => {
   // normally don't use `allowNoNiqqud` in testing, but needed to get `null`
   const heb = new Text(hebrew, { allowNoNiqqud });
