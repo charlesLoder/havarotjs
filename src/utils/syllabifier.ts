@@ -472,6 +472,11 @@ export const syllabify = (clusters: Cluster[], options: SylOpts): Syllable[] => 
   syllables.forEach(setIsClosed);
   syllables.forEach(setIsAccented);
 
+  // if there is no accented syllable, then the last syllable is accented
+  if (!syllables.map((s) => s.isAccented).includes(true)) {
+    syllables[syllables.length - 1].isAccented = true;
+  }
+
   // for each cluster, set its syllable
   syllables.forEach((s) => s.clusters.forEach((c) => (c.syllable = s)));
   return latinClusters.length ? reinsertLatin(syllables, latinClusters) : syllables;
