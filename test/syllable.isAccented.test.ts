@@ -92,4 +92,14 @@ describe("Test if a syllable is accented", () => {
       testIsAccented("אַלְפַּ֪יִם", [false, true, false]);
     });
   });
+
+  describe("Taamim that do not fall on the stressed syllable", () => {
+    test("segolta on accented syllable", () => {
+      testIsAccented("לָֽאָדָם֒", [false, false, true]);
+    });
+
+    test("segolta on unaaccented syllable", () => {
+      testIsAccented("מֶּלֶךְ֒", [false, true]);
+    });
+  });
 });
