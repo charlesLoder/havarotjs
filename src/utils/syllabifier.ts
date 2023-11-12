@@ -367,6 +367,14 @@ const setIsAccented = (syllable: Syllable) => {
     return;
   }
 
+  /**
+   * Note: Miqra Al Pi HaMesorah (MAPM) sometimes has "accent helpers".
+   * Often if the taam is not placed on the accented syllable,
+   * then a taam is added on the previous, accented syllable.
+   *
+   * E.g.: עַל־יֹאשִׁיָּ֒הוּ֒
+   */
+
   // if final syllable has a pashta character
   // it may not necessarily be the accented syllable
   // check if any preceding syllable has a pashta or qadma character
