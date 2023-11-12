@@ -375,6 +375,30 @@ const setIsAccented = (syllable: Syllable) => {
    * E.g.: עַל־יֹאשִׁיָּ֒הוּ֒
    */
 
+  // check for segolta
+  const segolta = /\u{0592}/u;
+  if (segolta.test(syllable.text)) {
+    const prev = syllable.prev?.value;
+
+    // see לָֽאָדָם֒ as an example
+    if (syllable.isFinal && prev) {
+      const isUltimateVowelLong = syllable.clusters.filter((cluster) => cluster.hasLongVowel).length ? true : false;
+      const isPenultimateVowelLong = syllable.prev?.value?.clusters.filter((cluster) => cluster.hasLongVowel)
+        ? true
+        : false;
+
+      if (!isUltimateVowelLong && !isPenultimateVowelLong) {
+        prev.isAccented = true;
+        return;
+      }
+
+      syllable.isAccented = true;
+    }
+
+    syllable.isAccented = true;
+    return;
+  }
+
   // if final syllable has a pashta character
   // it may not necessarily be the accented syllable
   // check if any preceding syllable has a pashta or qadma character
