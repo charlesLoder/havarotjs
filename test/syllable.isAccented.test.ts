@@ -98,7 +98,7 @@ describe("Test if a syllable is accented", () => {
       testIsAccented("לָֽאָדָם֒", [false, false, true]);
     });
 
-    test("segolta on unaaccented syllable", () => {
+    test("segolta on unaccented syllable", () => {
       testIsAccented("מֶּלֶךְ֒", [false, true]);
     });
 
