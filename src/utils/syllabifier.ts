@@ -378,23 +378,20 @@ const setIsAccented = (syllable: Syllable) => {
   // check for segolta
   const segolta = /\u{0592}/u;
   if (segolta.test(syllable.text)) {
-    const prev = syllable.prev?.value;
-
-    // see לָֽאָדָם֒ as an example
+    // see לָֽאָדָם֒ as an example of segolta on the final syllable
     if (syllable.isFinal && prev) {
-      const isUltimateVowelLong = syllable.clusters.filter((cluster) => cluster.hasLongVowel).length ? true : false;
-      const isPenultimateVowelLong = syllable.prev?.value?.clusters.filter((cluster) => cluster.hasLongVowel)
-        ? true
-        : false;
-
-      if (!isUltimateVowelLong && !isPenultimateVowelLong) {
-        prev.isAccented = true;
-        return;
+      // see יֹאשִׁיָּ֒הוּ֒ as an example of segolta on a previous syllable
+      while (prev) {
+        if (segolta.test(prev.text)) {
+          prev.isAccented = true;
+          return;
+        }
+        prev = (prev?.prev?.value as Syllable) ?? null;
       }
-
-      syllable.isAccented = true;
     }
 
+    // if the segolta is not final, then it is the accented syllable
+    // though, it was likely already accented in the while loop above
     syllable.isAccented = true;
     return;
   }
