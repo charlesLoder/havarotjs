@@ -105,5 +105,21 @@ describe("Test if a syllable is accented", () => {
     test("two segoltas", () => {
       testIsAccented("יֹאשִׁיָּ֒הוּ֒", [false, false, true, false]);
     });
+
+    test("pashta on accented syllable", () => {
+      testIsAccented("לָאוֹר֙", [false, true]);
+    });
+
+    xtest("pashta on unaccented syllable", () => {
+      // I'm not sure if this is possible to have in a text
+    });
+
+    test("qadma, with no pashta", () => {
+      testIsAccented("רָגַ֨ל", [false, true]);
+    });
+
+    test("pastha and qadma", () => {
+      testIsAccented("יֹאשִׁיָּ֒הוּ֒", [false, false, true, false]);
+    });
   });
 });
