@@ -101,5 +101,9 @@ describe("Test if a syllable is accented", () => {
     test("segolta on unaaccented syllable", () => {
       testIsAccented("מֶּלֶךְ֒", [false, true]);
     });
+
+    test("two segoltas", () => {
+      testIsAccented("יֹאשִׁיָּ֒הוּ֒", [false, false, true, false]);
+    });
   });
 });
