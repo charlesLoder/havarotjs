@@ -373,6 +373,9 @@ const setIsAccented = (syllable: Syllable) => {
    * then a taam is added on the previous, accented syllable.
    *
    * E.g.: עַל־יֹאשִׁיָּ֒הוּ֒
+   *
+   * Because it is not entirely possible to ascertain strss from just the taamim,
+   * it is best to MAPM because of the aforementioned "accent helpers".
    */
 
   // check for segolta
