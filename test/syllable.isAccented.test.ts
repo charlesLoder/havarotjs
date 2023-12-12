@@ -121,5 +121,20 @@ describe("Test if a syllable is accented", () => {
     test("pastha and qadma", () => {
       testIsAccented("יֹאשִׁיָּ֒הוּ֒", [false, false, true, false]);
     });
+
+    // note that the zarqa is incorrectly named in the Unicode spec as ZINOR (U+05AE)
+    test("zarqa on accented syllable", () => {
+      testIsAccented("לִבָּם֮ ", [false, true]);
+    });
+
+    // the zarqa over the yod is a "helper" unique to MAM, it is encoded as a zinor (which is actually called a zarqa in the Unicode spec)
+    test("two zarqas", () => {
+      testIsAccented("וַיֹּ֘אמֶר֮", [false, true, false]);
+    });
+
+    xtest("zarqa on unaccented syllable", () => {
+      // this will never pass
+      testIsAccented("וַיֹּאמֶר֮", [false, true, false]);
+    });
   });
 });

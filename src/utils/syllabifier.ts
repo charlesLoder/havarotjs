@@ -396,6 +396,28 @@ const setIsAccented = (syllable: Syllable) => {
     return;
   }
 
+  // check for zarqa
+  // note that a zarqa is incorrectly encoded as "zinor" in the Unicode spec
+  const zarqa = /\u{05AE}/u;
+  // a zarqa helper
+  // see more https://forums.accordancebible.com/topic/31576-zinor-and-zarqa-accents/#comment-156318
+  const zarqaHelper = /\u{0598}/u;
+
+  if (zarqa.test(syllable.text)) {
+    // see לָֽאָדָם֒ as an example of zarqa on the final syllable
+    // a zarqa should always be on the final syllable
+    if (syllable.isFinal && prev) {
+      // see וַיֹּ֘אמֶר֮ as an example of zarqa helper on a previous syllable
+      while (prev) {
+        if (zarqaHelper.test(prev.text)) {
+          prev.isAccented = true;
+          return;
+        }
+        prev = (prev?.prev?.value as Syllable) ?? null;
+      }
+    }
+  }
+
   // if final syllable has a pashta character
   // it may not necessarily be the accented syllable
   // check if any preceding syllable has a pashta or qadma character
