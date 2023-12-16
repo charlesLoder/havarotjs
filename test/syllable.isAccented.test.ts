@@ -136,5 +136,17 @@ describe("Test if a syllable is accented", () => {
       // this will never pass
       testIsAccented("וַיֹּאמֶר֮", [false, true, false]);
     });
+
+    test("yethib on accented syllable", () => {
+      testIsAccented("יַ֚עַן ", [true, false]);
+    });
+
+    xtest("two yethibs", () => {
+      // unable to find an example of this
+    });
+
+    xtest("yethib on unaccented syllable", () => {
+      // unable to find an example of this
+    });
   });
 });
