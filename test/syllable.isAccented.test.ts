@@ -94,59 +94,73 @@ describe("Test if a syllable is accented", () => {
   });
 
   describe("Taamim that do not fall on the stressed syllable", () => {
-    test("segolta on accented syllable", () => {
-      testIsAccented("לָֽאָדָם֒", [false, false, true]);
-    });
+    describe("Disjunctive accents", () => {
+      describe("postpositive accents", () => {
+        describe("segolta", () => {
+          test("segolta on accented syllable", () => {
+            testIsAccented("לָֽאָדָם֒", [false, false, true]);
+          });
 
-    test("segolta on unaccented syllable", () => {
-      testIsAccented("מֶּלֶךְ֒", [false, true]);
-    });
+          test("segolta on unaccented syllable", () => {
+            testIsAccented("מֶּלֶךְ֒", [false, true]);
+          });
 
-    test("two segoltas", () => {
-      testIsAccented("יֹאשִׁיָּ֒הוּ֒", [false, false, true, false]);
-    });
+          test("two segoltas", () => {
+            testIsAccented("יֹאשִׁיָּ֒הוּ֒", [false, false, true, false]);
+          });
+        });
 
-    test("pashta on accented syllable", () => {
-      testIsAccented("לָאוֹר֙", [false, true]);
-    });
+        describe("zarqa", () => {
+          // note that the zarqa is incorrectly named in the Unicode spec as ZINOR (U+05AE)
+          test("zarqa on accented syllable", () => {
+            testIsAccented("לִבָּם֮ ", [false, true]);
+          });
 
-    xtest("pashta on unaccented syllable", () => {
-      // I'm not sure if this is possible to have in a text
-    });
+          // the zarqa over the yod is a "helper" unique to MAM, it is encoded as a zinor (which is actually called a zarqa in the Unicode spec)
+          test("two zarqas", () => {
+            testIsAccented("וַיֹּ֘אמֶר֮", [false, true, false]);
+          });
 
-    test("qadma, with no pashta", () => {
-      testIsAccented("רָגַ֨ל", [false, true]);
-    });
+          xtest("zarqa on unaccented syllable", () => {
+            // this will never pass
+            testIsAccented("וַיֹּאמֶר֮", [false, true, false]);
+          });
+        });
 
-    test("pastha and qadma", () => {
-      testIsAccented("יֹאשִׁיָּ֒הוּ֒", [false, false, true, false]);
-    });
+        describe("pashta", () => {
+          test("pashta on accented syllable", () => {
+            testIsAccented("לָאוֹר֙", [false, true]);
+          });
 
-    // note that the zarqa is incorrectly named in the Unicode spec as ZINOR (U+05AE)
-    test("zarqa on accented syllable", () => {
-      testIsAccented("לִבָּם֮ ", [false, true]);
-    });
+          xtest("pashta on unaccented syllable", () => {
+            // I'm not sure if this is possible to have in a text
+          });
 
-    // the zarqa over the yod is a "helper" unique to MAM, it is encoded as a zinor (which is actually called a zarqa in the Unicode spec)
-    test("two zarqas", () => {
-      testIsAccented("וַיֹּ֘אמֶר֮", [false, true, false]);
-    });
+          test("qadma, with no pashta", () => {
+            testIsAccented("רָגַ֨ל", [false, true]);
+          });
 
-    xtest("zarqa on unaccented syllable", () => {
-      // this will never pass
-      testIsAccented("וַיֹּאמֶר֮", [false, true, false]);
-    });
+          test("pastha and qadma", () => {
+            testIsAccented("יֹאשִׁיָּ֒הוּ֒", [false, false, true, false]);
+          });
+        });
+      });
 
-    test("yethib on accented syllable", () => {
-      testIsAccented("יַ֚עַן ", [true, false]);
-    });
+      describe("prepositive accents", () => {
+        describe("yethib", () => {
+          test("yethib on accented syllable", () => {
+            testIsAccented("יַ֚עַן ", [true, false]);
+          });
 
-    xtest("two yethibs", () => {
-      // unable to find an example of this
-    });
+          xtest("two yethibs", () => {
+            // unable to find an example of this
+          });
 
-    xtest("yethib on unaccented syllable", () => {
-      // unable to find an example of this
+          xtest("yethib on unaccented syllable", () => {
+            // unable to find an example of this
+          });
+        });
+      });
     });
   });
 });
