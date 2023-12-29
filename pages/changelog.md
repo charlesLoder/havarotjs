@@ -1,5 +1,9 @@
 # Changelog
 
+## 2023-12-29 0.19.5
+
+- Improve how accents are handled (PR #148)
+
 ## 2023-10-31 0.19.4
 
 - Fix telisha qetana being incorrectly marked as accented (PR #146)
