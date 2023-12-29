@@ -52,3 +52,5 @@ Read the docs at online [here](https://charlesloder.github.io/havarotjs/)
 Free to open an issue or pull request.
 
 See the [terms list](https://charlesloder.github.io/havarotjs/pages/Linguistic/terms.html) for a list of naming conventions.
+
+All Hebrew test input should be from [Sefaria](https://www.sefaria.org/texts) using the Miqra 'al pi ha-Mesorah text (unless another text is needed for a specific reason)
