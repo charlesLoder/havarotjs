@@ -94,8 +94,8 @@ describe("Test if a syllable is accented", () => {
   });
 
   describe("Taamim that do not fall on the stressed syllable", () => {
-    describe("Disjunctive accents", () => {
-      describe("postpositive accents", () => {
+    describe("Disjunctive taamim", () => {
+      describe("postpositive taamim", () => {
         describe("segolta", () => {
           test("segolta on accented syllable", () => {
             testIsAccented("לָֽאָדָם֒", [false, false, true]);
@@ -146,7 +146,7 @@ describe("Test if a syllable is accented", () => {
         });
       });
 
-      describe("prepositive accents", () => {
+      describe("prepositive taamim", () => {
         describe("yethib", () => {
           test("yethib on accented syllable", () => {
             testIsAccented("יַ֚עַן ", [true, false]);
