@@ -177,5 +177,24 @@ describe("Test if a syllable is accented", () => {
         });
       });
     });
+
+    describe("Conjunctive taamim", () => {
+      describe("postpositive taamim", () => {
+        describe("little telisha", () => {
+          test("little telisha on accented syllable", () => {
+            testIsAccented("וַיִּבְכּוּ֩", [false, false, true]);
+          });
+
+          xtest("little telisha on unaccented syllable", () => {
+            // this will never pass
+            testIsAccented("לְמַעַן֩", [false, true, false]);
+          });
+
+          test("two little telishas", () => {
+            testIsAccented("לְמַ֩עַן֩", [false, true, false]);
+          });
+        });
+      });
+    });
   });
 });
