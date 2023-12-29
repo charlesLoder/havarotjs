@@ -367,8 +367,59 @@ const setIsAccented = (syllable: Syllable) => {
     return;
   }
 
-  // if final syllable has a pashta character
-  // it may not necessarily be the accented syllable
+  /**
+   * Note: Miqra Al Pi HaMesorah (MAPM) has "accent helpers".
+   * Often if the taam is not placed on the accented syllable,
+   * then a taam is added on the previous/next, accented syllable.
+   *
+   * E.g.: עַל־יֹאשִׁיָּ֒הוּ֒
+   *
+   * Because it is not entirely possible to ascertain stress from just the taamim,
+   * it is best to MAPM because of the aforementioned "accent helpers".
+   */
+
+  const segolta = /\u{0592}/u;
+  if (segolta.test(syllable.text)) {
+    // see לָֽאָדָם֒ as an example of segolta on the final syllable
+    if (syllable.isFinal && prev) {
+      // see יֹאשִׁיָּ֒הוּ֒ as an example of segolta on a previous syllable
+      while (prev) {
+        if (segolta.test(prev.text)) {
+          prev.isAccented = true;
+          return;
+        }
+        prev = (prev?.prev?.value as Syllable) ?? null;
+      }
+    }
+
+    // if the segolta is not final, then it is the accented syllable
+    // though, it was likely already accented in the while loop above
+    syllable.isAccented = true;
+    return;
+  }
+
+  // note that a zarqa is incorrectly encoded as "zinor" in the Unicode spec
+  const zarqa = /\u{05AE}/u;
+  // a zarqa's "helper" in MAPM
+  // see more https://forums.accordancebible.com/topic/31576-zinor-and-zarqa-accents/#comment-156318
+  const zarqaHelper = /\u{0598}/u;
+
+  if (zarqa.test(syllable.text)) {
+    // see לָֽאָדָם֒ as an example of zarqa on the final syllable
+    // a zarqa should always be on the final syllable
+    if (syllable.isFinal && prev) {
+      // see וַיֹּ֘אמֶר֮ as an example of zarqa helper on a previous syllable
+      while (prev) {
+        if (zarqaHelper.test(prev.text)) {
+          prev.isAccented = true;
+          return;
+        }
+        prev = (prev?.prev?.value as Syllable) ?? null;
+      }
+    }
+  }
+
+  // postpositive
   // check if any preceding syllable has a pashta or qadma character
   const pashta = /\u{0599}/u;
   const sylText = syllable.text;
@@ -382,30 +433,36 @@ const setIsAccented = (syllable: Syllable) => {
     }
   }
 
-  // the telisha qetana is a postpositive accent
+  // postpositive
   const telishaQetana = /\u{05A9}/u;
-  if (telishaQetana.test(syllable.text) && prev) {
-    // if the telisha qetana is preceded by a telisha qetana, then the previous syllable is accented
-    // e.g. the last syllable in וְהֵסִ֩ירָה֩
-    if (telishaQetana.test(prev.text)) {
-      prev.isAccented = true;
-      return;
+  if (telishaQetana.test(syllable.text)) {
+    while (prev) {
+      if (telishaQetana.test(prev.text)) {
+        prev.isAccented = true;
+        return;
+      }
+      prev = (prev?.prev?.value as Syllable) ?? null;
     }
 
-    // if the telisha qetana is followed by a telisha qetana, then the current syllable is accented
-    // e.g. the penultimate syllable in וְהֵסִ֩ירָה֩
-    const next = syllable.next?.value;
-    if (next && telishaQetana.test(next.text)) {
-      syllable.isAccented = true;
-      return;
+    syllable.isAccented = true;
+    return;
+  }
+
+  // prepositive
+  const teslishaGedola = /\u{05A0}/u;
+  if (teslishaGedola.test(syllable.text)) {
+    let next = syllable.next?.value;
+
+    while (next) {
+      if (teslishaGedola.test(next.text)) {
+        next.isAccented = true;
+        return;
+      }
+      next = (next?.next?.value as Syllable) ?? null;
     }
 
-    // if none of the above, then this is a standard telisha qetana
-    // e.g. the final syllable in וַיֹּאמֶר֩
-    if (!telishaQetana.test(prev.text)) {
-      prev.isAccented = true;
-      return;
-    }
+    syllable.isAccented = true;
+    return;
   }
 
   const isAccented = syllable.clusters.filter((cluster) => (cluster.hasTaamim || cluster.hasSilluq ? true : false))
@@ -471,6 +528,11 @@ export const syllabify = (clusters: Cluster[], options: SylOpts): Syllable[] => 
   syllables[syllables.length - 1].isFinal = true;
   syllables.forEach(setIsClosed);
   syllables.forEach(setIsAccented);
+
+  // if there is no accented syllable, then the last syllable is accented
+  if (!syllables.map((s) => s.isAccented).includes(true)) {
+    syllables[syllables.length - 1].isAccented = true;
+  }
 
   // for each cluster, set its syllable
   syllables.forEach((s) => s.clusters.forEach((c) => (c.syllable = s)));

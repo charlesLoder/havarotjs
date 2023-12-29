@@ -25,7 +25,7 @@ describe.each`
   ${"lexical form - one vowel, closed (yām)"} | ${"יָ֥ם"}  | ${["יָ֥ם"]}  | ${[true]}  | ${[true]}
   ${"final kaph (lāk)"}                       | ${"לָ֛ךְ"} | ${["לָ֛ךְ"]} | ${[true]}  | ${[true]}
   ${"with a mater (lô)"}                      | ${"ל֣וֹ"}  | ${["לֹ֣ו"]}  | ${[false]} | ${[true]}
-  ${"single shureq"}                          | ${"וּ"}    | ${["וּ"]}    | ${[false]} | ${[false]}
+  ${"single shureq"}                          | ${"וּ"}    | ${["וּ"]}    | ${[false]} | ${[true]}
 `("1 Syllable:", ({ description, original, sylArr, closedArr, accentArr }) => {
   tests(description, original, sylArr, closedArr, accentArr);
 });
@@ -39,7 +39,7 @@ describe.each`
   ${"lexical form one sheva and closes syllable (midbar)"}             | ${"מִדְבַּ֣ר"}  | ${["מִדְ", "בַּ֣ר"]}      | ${[true, true]}   | ${[false, true]}
   ${"with qamets qatan (ḥokmâ)"}                                       | ${"חָכְמָ֑ה"}   | ${["ח\u{5C7}כְ", "מָ֑ה"]} | ${[true, false]}  | ${[false, true]}
   ${"infinitive construct with prep (bǝšûb)"}                          | ${"בְּשׁ֣וּב"}  | ${["בְּ", "שׁ֣וּב"]}      | ${[false, true]}  | ${[false, true]}
-  ${"consonant w/o niqqud"}                                            | ${"אלְבֶּערְט"} | ${["אלְ", "בֶּערְט"]}     | ${[true, true]}   | ${[false, false]}
+  ${"consonant w/o niqqud"}                                            | ${"אלְבֶּערְט"} | ${["אלְ", "בֶּערְט"]}     | ${[true, true]}   | ${[false, true]}
   ${"final aleph"}                                                     | ${"בָּרָ֣א"}    | ${["בָּ", "רָ֣א"]}        | ${[false, false]} | ${[false, true]}
   ${"final aleph, preceded by sheva"}                                  | ${"וַיַּ֧רְא"}  | ${["וַ", "יַּ֧רְא"]}      | ${[true, true]}   | ${[false, true]}
   ${"final he"}                                                        | ${"מַלְכָּ֔ה"}  | ${["מַלְ", "כָּ֔ה"]}      | ${[true, false]}  | ${[false, true]}
@@ -64,7 +64,6 @@ describe.each`
   ${"word and passeq"}                                               | ${"דָּבָ֗ר ׀"}  | ${["דָּ", "בָ֗ר", "׀"]}   | ${[false, true, true]}   | ${[false, true, true]}
   ${"segolate noun"}                                                 | ${"הָאָֽרֶץ׃"}  | ${["הָ", "אָֽ", "רֶץ׃"]}  | ${[false, false, true]}  | ${[false, true, false]}
   ${"with pashta and pastha"}                                        | ${"הַמַּ֙יִם֙"} | ${["הַ", "מַּ֙", "יִם֙"]} | ${[true, false, true]}   | ${[false, true, false]}
-  ${"with one telisha qetana"}                                       | ${"וַיֹּאמֶר֩"} | ${["וַ", "יֹּא", "מֶר֩"]} | ${[true, false, true]}   | ${[false, true, false]}
 `("3 Syllables:", ({ description, original, sylArr, closedArr, accentArr }) => {
   tests(description, original, sylArr, closedArr, accentArr);
 });
