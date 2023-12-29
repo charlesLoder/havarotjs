@@ -160,6 +160,21 @@ describe("Test if a syllable is accented", () => {
             // unable to find an example of this
           });
         });
+
+        describe("great telisha", () => {
+          test("great telisha on accented syllable", () => {
+            testIsAccented("כִּ֠י", [true]);
+          });
+
+          xtest("great telisha on unaccented syllable", () => {
+            // this will never pass
+            testIsAccented("הָ֠עָם", [false, true]);
+          });
+
+          test("two great telishas", () => {
+            testIsAccented("הָ֠עָ֠ם", [false, true]);
+          });
+        });
       });
     });
   });
