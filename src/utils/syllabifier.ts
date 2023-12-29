@@ -438,28 +438,17 @@ const setIsAccented = (syllable: Syllable) => {
 
   // the telisha qetana is a postpositive accent
   const telishaQetana = /\u{05A9}/u;
-  if (telishaQetana.test(syllable.text) && prev) {
-    // if the telisha qetana is preceded by a telisha qetana, then the previous syllable is accented
-    // e.g. the last syllable in וְהֵסִ֩ירָה֩
-    if (telishaQetana.test(prev.text)) {
-      prev.isAccented = true;
-      return;
+  if (telishaQetana.test(syllable.text)) {
+    while (prev) {
+      if (telishaQetana.test(prev.text)) {
+        prev.isAccented = true;
+        return;
+      }
+      prev = (prev?.prev?.value as Syllable) ?? null;
     }
 
-    // if the telisha qetana is followed by a telisha qetana, then the current syllable is accented
-    // e.g. the penultimate syllable in וְהֵסִ֩ירָה֩
-    const next = syllable.next?.value;
-    if (next && telishaQetana.test(next.text)) {
-      syllable.isAccented = true;
-      return;
-    }
-
-    // if none of the above, then this is a standard telisha qetana
-    // e.g. the final syllable in וַיֹּאמֶר֩
-    if (!telishaQetana.test(prev.text)) {
-      prev.isAccented = true;
-      return;
-    }
+    syllable.isAccented = true;
+    return;
   }
 
   // this is a prepositive accent
