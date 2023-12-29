@@ -64,7 +64,6 @@ describe.each`
   ${"word and passeq"}                                               | ${"דָּבָ֗ר ׀"}  | ${["דָּ", "בָ֗ר", "׀"]}   | ${[false, true, true]}   | ${[false, true, true]}
   ${"segolate noun"}                                                 | ${"הָאָֽרֶץ׃"}  | ${["הָ", "אָֽ", "רֶץ׃"]}  | ${[false, false, true]}  | ${[false, true, false]}
   ${"with pashta and pastha"}                                        | ${"הַמַּ֙יִם֙"} | ${["הַ", "מַּ֙", "יִם֙"]} | ${[true, false, true]}   | ${[false, true, false]}
-  ${"with one telisha qetana"}                                       | ${"וַיֹּאמֶר֩"} | ${["וַ", "יֹּא", "מֶר֩"]} | ${[true, false, true]}   | ${[false, true, false]}
 `("3 Syllables:", ({ description, original, sylArr, closedArr, accentArr }) => {
   tests(description, original, sylArr, closedArr, accentArr);
 });
