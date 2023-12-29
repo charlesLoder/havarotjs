@@ -462,6 +462,23 @@ const setIsAccented = (syllable: Syllable) => {
     }
   }
 
+  // this is a prepositive accent
+  const teslishaGedola = /\u{05A0}/u;
+  if (teslishaGedola.test(syllable.text)) {
+    let next = syllable.next?.value;
+
+    while (next) {
+      if (teslishaGedola.test(next.text)) {
+        next.isAccented = true;
+        return;
+      }
+      next = (next?.next?.value as Syllable) ?? null;
+    }
+
+    syllable.isAccented = true;
+    return;
+  }
+
   const isAccented = syllable.clusters.filter((cluster) => (cluster.hasTaamim || cluster.hasSilluq ? true : false))
     .length
     ? true
