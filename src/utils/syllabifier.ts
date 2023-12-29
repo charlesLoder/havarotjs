@@ -368,17 +368,16 @@ const setIsAccented = (syllable: Syllable) => {
   }
 
   /**
-   * Note: Miqra Al Pi HaMesorah (MAPM) sometimes has "accent helpers".
+   * Note: Miqra Al Pi HaMesorah (MAPM) has "accent helpers".
    * Often if the taam is not placed on the accented syllable,
-   * then a taam is added on the previous, accented syllable.
+   * then a taam is added on the previous/next, accented syllable.
    *
    * E.g.: עַל־יֹאשִׁיָּ֒הוּ֒
    *
-   * Because it is not entirely possible to ascertain strss from just the taamim,
+   * Because it is not entirely possible to ascertain stress from just the taamim,
    * it is best to MAPM because of the aforementioned "accent helpers".
    */
 
-  // check for segolta
   const segolta = /\u{0592}/u;
   if (segolta.test(syllable.text)) {
     // see לָֽאָדָם֒ as an example of segolta on the final syllable
@@ -399,10 +398,9 @@ const setIsAccented = (syllable: Syllable) => {
     return;
   }
 
-  // check for zarqa
   // note that a zarqa is incorrectly encoded as "zinor" in the Unicode spec
   const zarqa = /\u{05AE}/u;
-  // a zarqa helper
+  // a zarqa's "helper" in MAPM
   // see more https://forums.accordancebible.com/topic/31576-zinor-and-zarqa-accents/#comment-156318
   const zarqaHelper = /\u{0598}/u;
 
@@ -421,8 +419,7 @@ const setIsAccented = (syllable: Syllable) => {
     }
   }
 
-  // if final syllable has a pashta character
-  // it may not necessarily be the accented syllable
+  // postpositive
   // check if any preceding syllable has a pashta or qadma character
   const pashta = /\u{0599}/u;
   const sylText = syllable.text;
@@ -436,7 +433,7 @@ const setIsAccented = (syllable: Syllable) => {
     }
   }
 
-  // the telisha qetana is a postpositive accent
+  // postpositive
   const telishaQetana = /\u{05A9}/u;
   if (telishaQetana.test(syllable.text)) {
     while (prev) {
@@ -451,7 +448,7 @@ const setIsAccented = (syllable: Syllable) => {
     return;
   }
 
-  // this is a prepositive accent
+  // prepositive
   const teslishaGedola = /\u{05A0}/u;
   if (teslishaGedola.test(syllable.text)) {
     let next = syllable.next?.value;
