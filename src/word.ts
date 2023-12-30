@@ -142,7 +142,7 @@ export class Word {
       return [syl];
     }
 
-    const syllables = syllabify(this.clusters, this.sylOpts);
+    const syllables = syllabify(this.clusters, this.sylOpts, this.isInConstruct);
     syllables.forEach((syl) => (syl.word = this));
 
     return syllables;

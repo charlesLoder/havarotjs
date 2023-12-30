@@ -514,7 +514,7 @@ const reinsertLatin = (syls: Syllable[], latin: { cluster: Cluster; pos: number 
   return syls;
 };
 
-export const syllabify = (clusters: Cluster[], options: SylOpts): Syllable[] => {
+export const syllabify = (clusters: Cluster[], options: SylOpts, isWordInConstruct: boolean): Syllable[] => {
   const removeLatin = clusters.filter((cluster) => !cluster.isNotHebrew);
   const latinClusters = clusters.map(clusterPos).filter((c) => c.cluster.isNotHebrew);
   const groupedClusters = groupClusters(removeLatin, options);
@@ -530,7 +530,8 @@ export const syllabify = (clusters: Cluster[], options: SylOpts): Syllable[] => 
   syllables.forEach(setIsAccented);
 
   // if there is no accented syllable, then the last syllable is accented
-  if (!syllables.map((s) => s.isAccented).includes(true)) {
+  // unless that syllable is part of a word in construct
+  if (!syllables.map((s) => s.isAccented).includes(true) && !isWordInConstruct) {
     syllables[syllables.length - 1].isAccented = true;
   }
 
