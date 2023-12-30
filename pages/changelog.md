@@ -1,5 +1,9 @@
 # Changelog
 
+## 2023-12-29 0.20.0
+
+- Add `Word.isInConstruct` (PR #149)
+
 ## 2023-12-29 0.19.5
 
 - Improve how accents are handled (PR #148)
