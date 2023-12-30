@@ -50,3 +50,14 @@ describe.each`
     });
   });
 });
+
+describe.each`
+  description      | heb              | isInConstructArray
+  ${"with maqqef"} | ${"בֶּן־אָדָ֕ם"} | ${[true, false]}
+  ${"now maqqef"}  | ${"בֶּן אָדָ֕ם"} | ${[false, false]}
+`("isInConstruct:", ({ description, heb, isInConstructArray }) => {
+  const text = new Text(heb);
+  test(`${description}`, () => {
+    expect(text.words.map((word) => word.isInConstruct)).toEqual(isInConstructArray);
+  });
+});

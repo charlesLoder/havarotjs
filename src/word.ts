@@ -221,4 +221,15 @@ export class Word {
   get isNotHebrew(): boolean {
     return !this.clusters.map((c) => c.isNotHebrew).includes(false);
   }
+
+  /**
+   * Returns `true` if the Word is in a construct state
+   *
+   * @description
+   * The construct state is indicated by the presence of a maqqef (U+05BE) character
+   */
+  get isInConstruct(): boolean {
+    // if word has a maqqef, it is in construct
+    return this.text.includes("\u05BE");
+  }
 }
