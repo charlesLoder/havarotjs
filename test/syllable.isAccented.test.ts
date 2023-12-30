@@ -14,6 +14,10 @@ describe("Test if a syllable is accented", () => {
     testIsAccented("דָּבָר", [false, true]);
   });
 
+  test("If in construct, no accent", () => {
+    testIsAccented("כָּל־הָעָ֖ם", [false, false, true]);
+  });
+
   describe("Taamim that fall on the stressed syllable", () => {
     test("silluq", () => {
       testIsAccented("חֽוּשָׁה׃", [true, false]);
