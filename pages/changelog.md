@@ -1,5 +1,9 @@
 # Changelog
 
+## 2023-12-30 0.20.1
+
+- Removes stress from final syllable when the Word is in construct. (PR #150)
+
 ## 2023-12-29 0.20.0
 
 - Add `Word.isInConstruct` (PR #149)
