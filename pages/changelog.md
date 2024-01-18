@@ -1,5 +1,9 @@
 # Changelog
 
+## 2024-01-17 0.21.0
+
+- Have `Word` extend `Node` class (PR #151)
+
 ## 2023-12-30 0.20.1
 
 - Removes stress from final syllable when the Word is in construct. (PR #150)
