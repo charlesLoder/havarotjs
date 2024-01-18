@@ -61,3 +61,17 @@ describe.each`
     expect(text.words.map((word) => word.isInConstruct)).toEqual(isInConstructArray);
   });
 });
+
+describe("Implements node", () => {
+  const text = new Text("בֶּן־אָדָ֕ם");
+  const word = text.words[0];
+  test("prev", () => {
+    expect(word.prev).toEqual(null);
+  });
+  test("next", () => {
+    expect(word.next?.value?.text).toEqual("אָדָ֕ם");
+  });
+  test("value", () => {
+    expect(word.value?.text).toEqual("בֶּן־");
+  });
+});
