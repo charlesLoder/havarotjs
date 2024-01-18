@@ -4,13 +4,14 @@ import { Syllable } from "./syllable";
 import { Cluster } from "./cluster";
 import { Char } from "./char";
 import { SylOpts } from "./text";
+import { Node } from "./node";
 import { isDivineName, hasDivineName } from "./utils/divineName";
 
 /**
  * [[`Text.text`]] is split at each space and maqqef (U+05BE) both of which are captured.
  * Thus, the string passed to instantiate each `Word` is already properly decomposed, sequenced, qamets qatan patterns converted to the appropriate unicode character (U+05C7), and holem-waw sequences corrected.
  */
-export class Word {
+export class Word extends Node<Word> {
   #text: string;
   /**
    * Returns a string with any whitespace characters (e.g. `/\s/`) from before the word.
@@ -97,6 +98,8 @@ export class Word {
   };
 
   constructor(text: string, sylOpts: SylOpts) {
+    super();
+    this.value = this;
     this.#text = text;
     const startMatch = text.match(/^\s*/g);
     const endMatch = text.match(/\s*$/g);

@@ -332,6 +332,9 @@ export class Text {
     const split = this.sanitized.split(splitGroup);
     const groups = split.filter((group) => group);
     const words = groups.map((word) => new Word(word, this.options));
+    const [first, ...rest] = words;
+    first.siblings = rest;
+
     return words;
   }
 
