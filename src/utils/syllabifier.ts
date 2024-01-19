@@ -120,7 +120,18 @@ const groupShevas = (arr: Mixed, options: SylOpts): Mixed => {
     }
 
     const clusterHasSheva = cluster.hasSheva;
-    if (!shevaPresent && clusterHasSheva) {
+    const consonant = cluster.chars[0].text;
+    const prevConsonant = arr[index - 1]?.chars[0].text || "";
+    const nextClusterVowel = arr[index + 1];
+    // We also need to check if this cluster and the previous cluster are different consonants
+    // because if they are the same consonant (and the previous vowel is not short), then the sheva will be vocal.
+    // e.g. "סָבְב֥וּ" is [ 'סָ', 'בְ', 'ב֥וּ' ], but "הִנְנִי֩" is [ 'הִנְ', 'נִי֩' ] b/c of the short vowel.
+    // Also remember that prev and next are switched because we are iterating backwards.
+    if (
+      !shevaPresent &&
+      clusterHasSheva &&
+      (consonant !== prevConsonant || (nextClusterVowel instanceof Cluster && nextClusterVowel.hasShortVowel))
+    ) {
       shevaPresent = true;
       syl.unshift(cluster);
       continue;
