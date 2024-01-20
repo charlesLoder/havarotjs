@@ -1,5 +1,9 @@
 # Changelog
 
+## 2024-01-19 0.21.1
+
+- Ensures when a sheva is under a pair of identical consonants it is vocal, unless the vowel is short (PR #152)
+
 ## 2024-01-17 0.21.0
 
 - Have `Word` extend `Node` class (PR #151)
