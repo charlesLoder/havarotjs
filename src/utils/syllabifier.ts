@@ -256,7 +256,7 @@ const groupMaters = (arr: Mixed, strict: boolean = true): Mixed => {
 
       if (nxt instanceof Syllable) {
         const word = arr.map((i) => i.text).join("");
-        throw new Error(`Syllable ${nxt.text} should not precede a Cluster with a Mater in ${word}`);
+        console.warn(`Syllable ${nxt.text} should not precede a Cluster with a Mater in ${word}`);
       }
 
       if (nxt) syl.unshift(nxt);
