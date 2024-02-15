@@ -301,6 +301,7 @@ describe.each`
   ${"medial segol yod"}     | ${"אֱלֹהֶ֑יךָ"}   | ${false} | ${["אֱ", "לֹ", "הֶ֑י", "ךָ"]}
   ${"medial shureq"}        | ${"רוּחַ"}        | ${false} | ${["רוּ", "חַ"]}
   ${"medial shureq"}        | ${"רוּחַ"}        | ${true}  | ${["רוּ", "חַ"]}
+  ${"sheva and hiriq"}      | ${"תְִּירָא֑וּם"} | ${false} | ${["תְִּי", "רָ", "א֑וּם"]}
 `("strict, correct syls:", ({ description, word, strict, syllables }) => {
   describe(description, () => {
     test(`${word}`, () => {
