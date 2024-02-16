@@ -1,5 +1,9 @@
 # Changelog
 
+## 2024-02-15 0.21.2
+
+- Fix issue with תְִּירָא֑וּם being syllabified (PR #154, PR #153)
+
 ## 2024-01-19 0.21.1
 
 - Ensures when a sheva is under a pair of identical consonants it is vocal, unless the vowel is short (PR #152)
