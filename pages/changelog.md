@@ -1,5 +1,9 @@
 # Changelog
 
+## 2024-02-20 0.22.0
+
+- Add option for `shevaWithMeteg` (PR #156)
+
 ## 2024-02-15 0.21.2
 
 - Fix issue with תְִּירָא֑וּם being syllabified (PR #154, PR #153)
