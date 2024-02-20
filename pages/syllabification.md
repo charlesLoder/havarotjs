@@ -41,6 +41,19 @@ According to this decription, hatef vowels and _sheva na'_ **do** constitute syl
 
 These are the options for syllabification.
 
+### allowNoNiqqud
+
+Takes a `boolean`. Default `false`.
+
+Allows text with no niqqud to be passed; words with no niqqud or incomplete pointing will not be syllabified
+
+```ts
+const text = new Text("בְּרֵאשִׁ֖ית בָּרָ֣א אֱלֹהִ֑ים", { allowNoNiqqud: true });
+text.syllables.map((syl) => syl.text);
+// [ 'בְּ', 'רֵא', 'שִׁ֖ית', 'בָּרא', 'אלהים' ]
+// note 2nd word has incomplete pointing, and 3rd has none
+```
+
 ### article
 
 Takes a `boolean`. Default `true`.
@@ -58,6 +71,46 @@ optional.syllables.map((syl) => syl.text);
 ```
 
 _results in example displayed in reverse order to mimic Hebrew writing; the rightmost value is the 0 item_
+
+### longVowles
+
+Takes a options `"update" | "preserve" | "remove"`. Default `"preserve"`
+
+**update**
+
+Converts all holems in a vav + holem sequence where vav is a consonant to HOLAM HASER FOR VAV
+
+```ts
+const holemHaser = /\u{05BA}/u;
+const str = "עָוֹן"; // vav + holem
+holemHaser.test(str); // false
+const newStr = new Text(updated, { holemHaser: "update" }).text;
+holemHaser.test(newStr); // true
+```
+
+**preserve**
+
+Leaves the text as is — does not remove HOLAM HASER FOR VAV, but does not update
+
+```ts
+const holemHaser = /\u{05BA}/u;
+const str = "עָוֹן"; // vav + holem
+holemHaser.test(str); // false
+const newStr = new Text(updated, { holemHaser: "preserve" }).text;
+holemHaser.test(newStr); // false
+```
+
+**remove**
+
+Converts all HOLAM HASER FOR VAV to regular holem
+
+```ts
+const holemHaser = /\u{05BA}/u;
+const str = "עָוֺן"; // vav + holem haser
+holemHaser.test(str); // true
+const newStr = new Text(updated, { holemHaser: "remove" }).text;
+holemHaser.test(newStr); // false
+```
 
 ### longVowles
 
@@ -118,6 +171,43 @@ optional.syllables.map((s) => ({ text: s.text, isClosed: s.isClosed }));
 // ]
 ```
 
+### shevaWithMeteg
+
+Takes a `boolean`. Default `true`.
+
+If `true`, regards a sheva with a meteg as a _sheva na'_.
+
+```ts
+const usingDefault = new Text("אַ֥שְֽׁרֵי");
+usingusingDefault.syllables.map((s) => ({ text: s.text, isClosed: s.isClosed }));
+// [
+//  { text: 'אַ֥', isClosed: false },
+//  { text: 'שְֽׁ', isClosed: false },//  { text: 'רֵי', isClosed: false }
+// ]
+
+const optional = new Text("אַ֥שְֽׁרֵי", { shevaWithMeteg: false });
+optional.syllables.map((s) => ({ text: s.text, isClosed: s.isClosed }));
+// [
+//  { text: 'אַ֥שְֽׁ', isClosed: true },
+//  { text: 'רֵי', isClosed: false }
+// ]
+```
+
+### strict
+
+Takes a `boolean`. Default `true`.
+
+Determines whether to syllabify incorrectly pointed text.
+
+```ts
+const text1 = new Text("לְוּדְרְדַּיְל", { strict: true });
+// Error: Syllable לְ should not precede a Cluster with a Shureq in דַּיְלרְדְוּלְ
+
+const text2 = new Text("לְוּדְרְדַּיְל", { strict: false });
+text2.syllables.map((syl) => syl.text);
+// [ 'וּ', 'דְ', 'רְ', 'דַּיְל' ]
+```
+
 ### sqnmlvy
 
 Takes a `boolean`. Default `true`.
@@ -157,12 +247,6 @@ optional.syllables.map((syl) => syl.text);
 The traditional schema for syllabification is that most commonly taught in schools and seminaries.
 It is most similar to the Sephardi pronunciation (see especially, S. Morag, "Pronunciation of Hebrew" _EJ_ 16:547–562).
 
-The syllabification options the default that are set as follows:
-
-```typescript
-{ longVowels: true, sqnmlvy: true, qametsQatan: true, wawShureq: true }
-```
-
 The `traditional` schema follows the default options.
 
 ```typescript
@@ -171,44 +255,15 @@ usingDefault.syllables.map((syl) => syl.text);
 // "וּ", "לְ", "מַ", "זֵּר"]
 ```
 
-#### Vocal & Silent Shevas
-
-In regards to the realization of shevas, Khan remarks (I.2.5.1.1):
-
-> The shewa (שְׁוָּא) sign (אְ) in the Tiberian vocalization system was read either as a vowel or as zero. When shewa was read as vocalic, its quality in the Tiberian tradition was by default the same as that of the pataḥ vowel sign
-
-This package does **not** consider the quality of the realization of the sheva.
-It only determines whether the sheva is a _sheva na'_ (vocal) or _sheva nach_ (silent).
-
-##### Vocal Shevas
-
-A sheva is considered a _sheva na'_ under the following conditions:
-
-1. when it is the first vowel in a word
-2. when two shevas occur together in the middle of word, the first is silent and the second is vocal
-3. when it appears under a geminated consonant
-4. when it is preceded by a long vowel
-
-##### Silent Shevas
-
-If a sheva does not fall into the criteria above, it is generally silent (i.e. _sheva nach_).
-
-There is one major exception:
-
-- In the word שְׁתַּיִם _štayim_ (and variants), the first sheva is technially silent.
-
-This package, however, considers it a _sheva na'_.
-
 ### Tiberian
 
-The syllabification options are set as follows:
+For Tiberian, the defaults are adjusted like this:
 
 ```typescript
 {
   longVowels: false,
   qametsQatan: false,
   shevaAfterMeteg: false,
-  sqnmlvy: true,
   wawShureq: false,
 }
 ```
@@ -227,3 +282,18 @@ usingDefault.syllables.map((syl) => syl.text);
 #### Long Vowels
 
 note: see p.325 for "word such as קוֹל [ˈq̟oː.ol]" and why it is counted as one syllable
+
+## Vocal & Silent Shevas
+
+In regards to the realization of shevas, Khan remarks (I.2.5.1.1):
+
+> The shewa (שְׁוָּא) sign (אְ) in the Tiberian vocalization system was read either as a vowel or as zero. When shewa was read as vocalic, its quality in the Tiberian tradition was by default the same as that of the pataḥ vowel sign
+
+This package does **not** consider the quality of the realization of the sheva.
+It only determines whether the sheva is a _sheva na'_ (vocal) or _sheva nach_ (silent).
+
+### Edge case
+
+- In the word שְׁתַּיִם _štayim_ (and variants), the first sheva is technially silent.
+
+This package, however, considers it a _sheva na'_.
