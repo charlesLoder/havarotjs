@@ -150,6 +150,29 @@ export interface SylOpts {
    */
   shevaAfterMeteg?: boolean;
   /**
+   * determines whether to regard a sheva with a meteg as a _sheva na'_. This is also called a sheva ga'ya.
+   *
+   * @defaultValue true
+   * @example
+   * ```ts
+   * const usingDefault = new Text("אַ֥שְֽׁרֵי");
+   * usingDefault.syllables.map((s) => ({ text: s.text, isClosed: s.isClosed }));
+   * // [
+   * //  { text: 'אַ֥', isClosed: false },
+   * //  { text: 'שְֽׁ', isClosed: false },
+   * //  { text: 'רֵי', isClosed: false }
+   * // ]
+   *
+   * const optional = new Text("אַ֥שְֽׁרֵי", { shevaWithMeteg: false });
+   * optional.syllables.map((s) => ({ text: s.text, isClosed: s.isClosed }));
+   * // [
+   * //  { text: 'אַ֥שְֽׁ', isClosed: true },
+   * //  { text: 'רֵי', isClosed: false }
+   * // ]
+   * ```
+   */
+  shevaWithMeteg?: boolean;
+  /**
    * determines whether to regard the sheva under the letters שׁשׂסצנמלוי when preceded by a waw-consecutive with a missing dagesh chazaq as a _sheva na'_, unless preceded by a meteg (see {@link shevaAfterMeteg}).
    *
    * @defaultValue true
@@ -244,6 +267,7 @@ export class Text {
       "longVowels",
       "qametsQatan",
       "shevaAfterMeteg",
+      "shevaWithMeteg",
       "sqnmlvy",
       "strict",
       "wawShureq"
@@ -271,6 +295,7 @@ export class Text {
       longVowels: validOpts.longVowels ?? true,
       qametsQatan: validOpts.qametsQatan ?? true,
       shevaAfterMeteg: validOpts.shevaAfterMeteg ?? true,
+      shevaWithMeteg: validOpts.shevaWithMeteg ?? true,
       sqnmlvy: validOpts.sqnmlvy ?? true,
       strict: validOpts.strict ?? true,
       wawShureq: validOpts.wawShureq ?? true

@@ -275,6 +275,25 @@ describe.each`
 );
 
 describe.each`
+  description                  | word            | syllables                 | isClosedArr              | shevaWithMetegOpt
+  ${"medial sheva with meteg"} | ${"אַ֥שְֽׁרֵי"} | ${["אַ֥שְֽׁ", "רֵי"]}     | ${[true, false]}         | ${false}
+  ${"medial sheva with meteg"} | ${"אַ֥שְֽׁרֵי"} | ${["אַ֥", "שְֽׁ", "רֵי"]} | ${[false, false, false]} | ${true}
+`("shevaWithMeteg:", ({ description, word, syllables, isClosedArr, shevaWithMetegOpt }) => {
+  const text = new Text(word, { shevaWithMeteg: shevaWithMetegOpt });
+  const sylText = text.syllables.map((syl) => syl.text);
+  const isClosed = text.syllables.map((syl) => syl.isClosed);
+  describe(description, () => {
+    test(`shevaWithMeteg is ${shevaWithMetegOpt}`, () => {
+      expect(sylText).toEqual(syllables);
+    });
+
+    test(`isClosed`, () => {
+      expect(isClosed).toEqual(isClosedArr);
+    });
+  });
+});
+
+describe.each`
   description                            | word                | strict
   ${"threw hasShortVowel error"}         | ${"אלִי"}           | ${true}
   ${"threw hasShortVowel error"}         | ${"אלִי"}           | ${false}
