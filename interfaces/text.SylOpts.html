@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>SylOpts | havarotjs - v0.21.2</title>
-	<meta name="description" content="Documentation for havarotjs - v0.21.2">
+	<title>SylOpts | havarotjs - v0.22.0</title>
+	<meta name="description" content="Documentation for havarotjs - v0.22.0">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 	<link rel="stylesheet" href="../assets/css/pages.css">
@@ -23,7 +23,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">havarotjs - v0.21.2</a>
+					<a href="../index.html" class="title">havarotjs - v0.22.0</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -98,6 +98,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="text.SylOpts.html#longVowels" class="tsd-kind-icon">long<wbr>Vowels</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="text.SylOpts.html#qametsQatan" class="tsd-kind-icon">qamets<wbr>Qatan</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="text.SylOpts.html#shevaAfterMeteg" class="tsd-kind-icon">sheva<wbr>After<wbr>Meteg</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="text.SylOpts.html#shevaWithMeteg" class="tsd-kind-icon">sheva<wbr>With<wbr>Meteg</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="text.SylOpts.html#sqnmlvy" class="tsd-kind-icon">sqnmlvy</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="text.SylOpts.html#strict" class="tsd-kind-icon">strict</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="text.SylOpts.html#wawShureq" class="tsd-kind-icon">waw<wbr>Shureq</a></li>
@@ -114,7 +115,7 @@
 					<div class="tsd-signature tsd-kind-icon">allow<wbr>NoNiqqud<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/f550198/src/text.ts#L29">text.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/d0c8447/src/text.ts#L29">text.ts:29</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -144,7 +145,7 @@
 					<div class="tsd-signature tsd-kind-icon">article<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/f550198/src/text.ts#L49">text.ts:49</a></li>
+							<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/d0c8447/src/text.ts#L49">text.ts:49</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -156,8 +157,8 @@
 							<dd><p>true</p>
 							</dd>
 							<dt>example</dt>
-							<dd><pre><code class="language-ts"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">default</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;הַיְאֹ֗ר&quot;</span><span style="color: #000000">);</span>
-<span style="color: #001080">default</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">syl</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">syl</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
+							<dd><pre><code class="language-ts"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">usingDefault</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;הַיְאֹ֗ר&quot;</span><span style="color: #000000">);</span>
+<span style="color: #001080">usingDefault</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">syl</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">syl</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
 <span style="color: #008000">// [&quot;הַ&quot;, &quot;יְ&quot;, &quot;אֹ֗ר&quot;]</span>
 
 <span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">optional</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;הַיְאֹ֗ר&quot;</span><span style="color: #000000">, { </span><span style="color: #001080">article:</span><span style="color: #000000"> </span><span style="color: #0000FF">false</span><span style="color: #000000"> });</span>
@@ -177,7 +178,7 @@
 					<div class="tsd-signature tsd-kind-icon">holem<wbr>Haser<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;update&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;preserve&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;remove&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/f550198/src/text.ts#L89">text.ts:89</a></li>
+							<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/d0c8447/src/text.ts#L89">text.ts:89</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -233,7 +234,7 @@
 					<div class="tsd-signature tsd-kind-icon">long<wbr>Vowels<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/f550198/src/text.ts#L109">text.ts:109</a></li>
+							<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/d0c8447/src/text.ts#L109">text.ts:109</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -245,8 +246,8 @@
 							<dd><p>true</p>
 							</dd>
 							<dt>example</dt>
-							<dd><pre><code class="language-ts"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">default</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;יָדְךָ&quot;</span><span style="color: #000000">);</span>
-<span style="color: #001080">default</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">syl</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">syl</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
+							<dd><pre><code class="language-ts"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">usingDefault</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;יָדְךָ&quot;</span><span style="color: #000000">);</span>
+<span style="color: #001080">usingDefault</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">syl</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">syl</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
 <span style="color: #008000">// [&quot;יָ&quot;, &quot;דְ&quot;, &quot;ךָ&quot;]</span>
 
 <span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">optional</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;יָדְךָ&quot;</span><span style="color: #000000">, { </span><span style="color: #001080">longVowels:</span><span style="color: #000000"> </span><span style="color: #0000FF">false</span><span style="color: #000000"> });</span>
@@ -266,7 +267,7 @@
 					<div class="tsd-signature tsd-kind-icon">qamets<wbr>Qatan<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/f550198/src/text.ts#L126">text.ts:126</a></li>
+							<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/d0c8447/src/text.ts#L126">text.ts:126</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -279,7 +280,7 @@
 							</dd>
 							<dt>example</dt>
 							<dd><pre><code class="language-ts"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">qQRegx</span><span style="color: #000000"> =</span><span style="color: #811F3F"> /</span><span style="color: #EE0000">\u</span><span style="color: #811F3F">{05C7}/</span><span style="color: #0000FF">u</span><span style="color: #000000">;</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">default</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;חָפְנִי֙&quot;</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">usingDefault</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;חָפְנִי֙&quot;</span><span style="color: #000000">);</span>
 <span style="color: #001080">qQRegx</span><span style="color: #000000">.</span><span style="color: #795E26">test</span><span style="color: #000000">(</span><span style="color: #001080">default</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
 <span style="color: #008000">// true</span>
 
@@ -297,7 +298,7 @@
 					<div class="tsd-signature tsd-kind-icon">sheva<wbr>After<wbr>Meteg<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/f550198/src/text.ts#L151">text.ts:151</a></li>
+							<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/d0c8447/src/text.ts#L151">text.ts:151</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -309,8 +310,8 @@
 							<dd><p>true</p>
 							</dd>
 							<dt>example</dt>
-							<dd><pre><code class="language-ts"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">default</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;יְדַֽעְיָה&quot;</span><span style="color: #000000">);</span>
-<span style="color: #001080">default</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">((</span><span style="color: #001080">s</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> ({ </span><span style="color: #001080">text:</span><span style="color: #000000"> </span><span style="color: #001080">s</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">, </span><span style="color: #001080">isClosed:</span><span style="color: #000000"> </span><span style="color: #001080">s</span><span style="color: #000000">.</span><span style="color: #001080">isClosed</span><span style="color: #000000"> }));</span>
+							<dd><pre><code class="language-ts"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">usingDefault</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;יְדַֽעְיָה&quot;</span><span style="color: #000000">);</span>
+<span style="color: #001080">usingDefault</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">((</span><span style="color: #001080">s</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> ({ </span><span style="color: #001080">text:</span><span style="color: #000000"> </span><span style="color: #001080">s</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">, </span><span style="color: #001080">isClosed:</span><span style="color: #000000"> </span><span style="color: #001080">s</span><span style="color: #000000">.</span><span style="color: #001080">isClosed</span><span style="color: #000000"> }));</span>
 <span style="color: #008000">// [</span>
 <span style="color: #008000">//    { text: &#039;יְ&#039;, isClosed: false },</span>
 <span style="color: #008000">//    { text: &#039;דַֽ&#039;, isClosed: false },</span>
@@ -331,12 +332,49 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="shevaWithMeteg" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> sheva<wbr>With<wbr>Meteg</h3>
+					<div class="tsd-signature tsd-kind-icon">sheva<wbr>With<wbr>Meteg<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/d0c8447/src/text.ts#L174">text.ts:174</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>determines whether to regard a sheva with a meteg as a <em>sheva na&#39;</em>. This is also called a sheva ga&#39;ya.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>defaultvalue</dt>
+							<dd><p>true</p>
+							</dd>
+							<dt>example</dt>
+							<dd><pre><code class="language-ts"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">usingDefault</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;אַ֥שְֽׁרֵי&quot;</span><span style="color: #000000">);</span>
+<span style="color: #001080">usingusingDefault</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">((</span><span style="color: #001080">s</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> ({ </span><span style="color: #001080">text:</span><span style="color: #000000"> </span><span style="color: #001080">s</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">, </span><span style="color: #001080">isClosed:</span><span style="color: #000000"> </span><span style="color: #001080">s</span><span style="color: #000000">.</span><span style="color: #001080">isClosed</span><span style="color: #000000"> }));</span>
+<span style="color: #008000">// [</span>
+<span style="color: #008000">//  { text: &#039;אַ֥&#039;, isClosed: false },</span>
+<span style="color: #008000">//  { text: &#039;שְֽׁ&#039;, isClosed: false },</span>
+<span style="color: #008000">//  { text: &#039;רֵי&#039;, isClosed: false }</span>
+<span style="color: #008000">// ]</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">optional</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;אַ֥שְֽׁרֵי&quot;</span><span style="color: #000000">, { </span><span style="color: #001080">shevaWithMeteg:</span><span style="color: #000000"> </span><span style="color: #0000FF">false</span><span style="color: #000000"> });</span>
+<span style="color: #001080">optional</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">((</span><span style="color: #001080">s</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> ({ </span><span style="color: #001080">text:</span><span style="color: #000000"> </span><span style="color: #001080">s</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">, </span><span style="color: #001080">isClosed:</span><span style="color: #000000"> </span><span style="color: #001080">s</span><span style="color: #000000">.</span><span style="color: #001080">isClosed</span><span style="color: #000000"> }));</span>
+<span style="color: #008000">// [</span>
+<span style="color: #008000">//  { text: &#039;אַ֥שְֽׁ&#039;, isClosed: true },</span>
+<span style="color: #008000">//  { text: &#039;רֵי&#039;, isClosed: false }</span>
+<span style="color: #008000">// ]</span>
+</code></pre>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="sqnmlvy" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> sqnmlvy</h3>
 					<div class="tsd-signature tsd-kind-icon">sqnmlvy<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/f550198/src/text.ts#L167">text.ts:167</a></li>
+							<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/d0c8447/src/text.ts#L190">text.ts:190</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -348,8 +386,8 @@
 							<dd><p>true</p>
 							</dd>
 							<dt>example</dt>
-							<dd><pre><code class="language-ts"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">default</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;וַיְצַחֵק֙&quot;</span><span style="color: #000000">);</span>
-<span style="color: #001080">default</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">syl</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">syl</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
+							<dd><pre><code class="language-ts"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">usingDefault</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;וַיְצַחֵק֙&quot;</span><span style="color: #000000">);</span>
+<span style="color: #001080">usingDefault</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">syl</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">syl</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
 <span style="color: #008000">// [&quot;וַ&quot;, &quot;יְ&quot;, &quot;צַ&quot;, &quot;חֵק֙&quot;]</span>
 
 <span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">optional</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;וַיְצַחֵק֙&quot;</span><span style="color: #000000">, { </span><span style="color: #001080">sqnmlvy:</span><span style="color: #000000"> </span><span style="color: #0000FF">false</span><span style="color: #000000"> });</span>
@@ -366,7 +404,7 @@
 					<div class="tsd-signature tsd-kind-icon">strict<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/f550198/src/text.ts#L187">text.ts:187</a></li>
+							<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/d0c8447/src/text.ts#L210">text.ts:210</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -398,7 +436,7 @@
 					<div class="tsd-signature tsd-kind-icon">waw<wbr>Shureq<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/f550198/src/text.ts#L207">text.ts:207</a></li>
+							<li>Defined in <a href="https://github.com/charlesLoder/havarotjs/blob/d0c8447/src/text.ts#L230">text.ts:230</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -410,8 +448,8 @@
 							<dd><p>true</p>
 							</dd>
 							<dt>example</dt>
-							<dd><pre><code class="language-ts"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">default</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;וּלְמַזֵּר&quot;</span><span style="color: #000000">);</span>
-<span style="color: #001080">default</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">syl</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">syl</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
+							<dd><pre><code class="language-ts"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">usingDefault</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;וּלְמַזֵּר&quot;</span><span style="color: #000000">);</span>
+<span style="color: #001080">usingDefault</span><span style="color: #000000">.</span><span style="color: #001080">syllables</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">syl</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">syl</span><span style="color: #000000">.</span><span style="color: #001080">text</span><span style="color: #000000">);</span>
 <span style="color: #008000">// &quot;וּ&quot;, &quot;לְ&quot;, &quot;מַ&quot;, &quot;זֵּר&quot;]</span>
 
 <span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">optional</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Text</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;וּלְמַזֵּר&quot;</span><span style="color: #000000">, { </span><span style="color: #001080">wawShureq:</span><span style="color: #000000"> </span><span style="color: #0000FF">false</span><span style="color: #000000"> });</span>
@@ -495,6 +533,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="text.SylOpts.html#shevaAfterMeteg" class="tsd-kind-icon">sheva<wbr>After<wbr>Meteg</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="text.SylOpts.html#shevaWithMeteg" class="tsd-kind-icon">sheva<wbr>With<wbr>Meteg</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="text.SylOpts.html#sqnmlvy" class="tsd-kind-icon">sqnmlvy</a>
