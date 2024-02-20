@@ -48,12 +48,12 @@ Takes a `boolean`. Default `true`.
 Determines whether to regard the sheva under the letters ילמ when preceded by the article and with a missing dagesh chazaq as as a _sheva na'_.
 
 ```ts
-const default = new Text("הַיְאֹ֗ר");
-default.syllables.map(syl => syl.text);
+const usingDefault = new Text("הַיְאֹ֗ר");
+usingDefault.syllables.map((syl) => syl.text);
 // ["הַ", "יְ", "אֹ֗ר"]
 
 const optional = new Text("הַיְאֹ֗ר", { article: false });
-optional.syllables.map(syl => syl.text);
+optional.syllables.map((syl) => syl.text);
 // ["הַיְ", "אֹ֗ר"]
 ```
 
@@ -66,12 +66,12 @@ Takes a `boolean`. Default `true`.
 If `true`, regards a sheva after a long vowel (excluding waw-shureq) as a _sheva na'_ .
 
 ```typescript
-const default = new Text("יָדְךָ");
-default.syllables.map(syl => syl.text);
+const usingDefault = new Text("יָדְךָ");
+usingDefault.syllables.map((syl) => syl.text);
 // ["יָ", "דְ", "ךָ"]
 
 const optional = new Text("יָדְךָ", { longVowels: false });
-optional.syllables.map(syl => syl.text);
+optional.syllables.map((syl) => syl.text);
 // ["יָדְ", "ךָ"]
 ```
 
@@ -84,7 +84,7 @@ The former is a "long-vowel" whereas the latter is a "short-vowel."
 
 ```typescript
 const qQRegx = /\u{05C7}/u;
-const default = new Text("חָפְנִי֙");
+const usingDefault = new Text("חָפְנִי֙");
 qQRegx.test(default.text);
 // true
 
@@ -100,8 +100,8 @@ Takes a `boolean`. Default `true`.
 If `true`, regards the sheva after a meteg as a _sheva na'_.
 
 ```ts
-const default = new Text("יְדַֽעְיָה");
-default.syllables.map((s) => ({ text: s.text, isClosed: s.isClosed }));
+const usingDefault = new Text("יְדַֽעְיָה");
+usingDefault.syllables.map((s) => ({ text: s.text, isClosed: s.isClosed }));
 // [
 //{ text: 'יְ', isClosed: false },
 //{ text: 'דַֽ', isClosed: false },
@@ -125,12 +125,12 @@ Takes a `boolean`. Default `true`.
 If `true`, regards the sheva under the letters שׁשׂסצנמלוי when preceded by a waw-consecutive with a missing _dagesh chazaq_ as vocal. If a meteg is present, the sheva is always a _sheva na'_.
 
 ```typescript
-const default = new Text("וַיְצַחֵק֙");
-default.syllables.map(syl => syl.text);
+const usingDefault = new Text("וַיְצַחֵק֙");
+usingDefault.syllables.map((syl) => syl.text);
 // ["וַ", "יְ", "צַ", "חֵק֙"]
 
 const optional = new Text("וַיְצַחֵק֙", { sqnmlvy: false });
-optional.syllables.map(syl => syl.text);
+optional.syllables.map((syl) => syl.text);
 // ["וַיְ", "צַ", "חֵק֙"]
 ```
 
@@ -141,12 +141,12 @@ Takes a `boolean`. Default is `true`.
 If `true`, regards a sheva after a waw-shureq as a _sheva na'_, unless a meteg is present.
 
 ```typescript
-const default = new Text("וּלְמַזֵּר");
-default.syllables.map(syl => syl.text);
+const usingDefault = new Text("וּלְמַזֵּר");
+usingDefault.syllables.map((syl) => syl.text);
 // "וּ", "לְ", "מַ", "זֵּר"]
 
 const optional = new Text("וּלְמַזֵּר", { wawShureq: false });
-optional.syllables.map(syl => syl.text);
+optional.syllables.map((syl) => syl.text);
 // ["וּלְ", "מַ", "זֵּר"]
 ```
 
@@ -167,9 +167,8 @@ The `traditional` schema follows the default options.
 
 ```typescript
 const defaut = new Text("וּלְמַזֵּר");
-default.syllables.map(syl => syl.text);
+usingDefault.syllables.map((syl) => syl.text);
 // "וּ", "לְ", "מַ", "זֵּר"]
-
 ```
 
 #### Vocal & Silent Shevas
@@ -221,7 +220,7 @@ import { tiberian } from "havarotjs/schemas";
 import { Text } from "havarotjs";
 
 const defaut = new Text("וּלְמַזֵּר", tiberian);
-default.syllables.map(syl => syl.text);
+usingDefault.syllables.map((syl) => syl.text);
 // "וּלְ", "מַ", "זֵּר"]
 ```
 

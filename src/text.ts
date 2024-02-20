@@ -33,8 +33,8 @@ export interface SylOpts {
    * @defaultValue true
    * @example
    * ```ts
-   * const default = new Text("הַיְאֹ֗ר");
-   * default.syllables.map(syl => syl.text);
+   * const usingDefault = new Text("הַיְאֹ֗ר");
+   * usingDefault.syllables.map(syl => syl.text);
    * // ["הַ", "יְ", "אֹ֗ר"]
    *
    * const optional = new Text("הַיְאֹ֗ר", { article: false });
@@ -93,8 +93,8 @@ export interface SylOpts {
    * @defaultValue true
    * @example
    * ```ts
-   * const default = new Text("יָדְךָ");
-   * default.syllables.map(syl => syl.text);
+   * const usingDefault = new Text("יָדְךָ");
+   * usingDefault.syllables.map(syl => syl.text);
    * // ["יָ", "דְ", "ךָ"]
    *
    * const optional = new Text("יָדְךָ", { longVowels: false });
@@ -114,7 +114,7 @@ export interface SylOpts {
    * @example
    * ```ts
    * const qQRegx = /\u{05C7}/u;
-   * const default = new Text("חָפְנִי֙");
+   * const usingDefault = new Text("חָפְנִי֙");
    * qQRegx.test(default.text);
    * // true
    *
@@ -130,8 +130,8 @@ export interface SylOpts {
    * @defaultValue true
    * @example
    * ```ts
-   * const default = new Text("יְדַֽעְיָה");
-   * default.syllables.map((s) => ({ text: s.text, isClosed: s.isClosed }));
+   * const usingDefault = new Text("יְדַֽעְיָה");
+   * usingDefault.syllables.map((s) => ({ text: s.text, isClosed: s.isClosed }));
    * // [
    * //    { text: 'יְ', isClosed: false },
    * //    { text: 'דַֽ', isClosed: false },
@@ -156,7 +156,7 @@ export interface SylOpts {
    * @example
    * ```ts
    * const usingDefault = new Text("אַ֥שְֽׁרֵי");
-   * usingDefault.syllables.map((s) => ({ text: s.text, isClosed: s.isClosed }));
+   * usingusingDefault.syllables.map((s) => ({ text: s.text, isClosed: s.isClosed }));
    * // [
    * //  { text: 'אַ֥', isClosed: false },
    * //  { text: 'שְֽׁ', isClosed: false },
@@ -178,8 +178,8 @@ export interface SylOpts {
    * @defaultValue true
    * @example
    * ```ts
-   * const default = new Text("וַיְצַחֵק֙");
-   * default.syllables.map(syl => syl.text);
+   * const usingDefault = new Text("וַיְצַחֵק֙");
+   * usingDefault.syllables.map(syl => syl.text);
    * // ["וַ", "יְ", "צַ", "חֵק֙"]
    *
    * const optional = new Text("וַיְצַחֵק֙", { sqnmlvy: false });
@@ -214,8 +214,8 @@ export interface SylOpts {
    * @defaultValue true
    * @example
    * ```ts
-   * const default = new Text("וּלְמַזֵּר");
-   * default.syllables.map(syl => syl.text);
+   * const usingDefault = new Text("וּלְמַזֵּר");
+   * usingDefault.syllables.map(syl => syl.text);
    * // "וּ", "לְ", "מַ", "זֵּר"]
    *
    * const optional = new Text("וּלְמַזֵּר", { wawShureq: false });
