@@ -120,6 +120,12 @@ const groupShevas = (arr: Mixed, options: SylOpts): Mixed => {
     }
 
     const clusterHasSheva = cluster.hasSheva;
+
+    if (clusterHasSheva && cluster.hasMeteg && options.shevaWithMeteg) {
+      syl.unshift(cluster);
+      syl = shevaNewSyllable(syl);
+      continue;
+    }
     const consonant = cluster.chars[0].text;
     const prevConsonant = arr[index - 1]?.chars[0].text || "";
     const nextClusterVowel = arr[index + 1];
