@@ -486,6 +486,13 @@ const setIsAccented = (syllable: Syllable) => {
     return;
   }
 
+  // ole-weyored, the ole does not take the accent, only the "yored" (i.e. a merkha)
+  const ole = /\u{05AB}/u;
+  if (ole.test(syllable.text)) {
+    syllable.isAccented = false;
+    return;
+  }
+
   const isAccented = syllable.clusters.filter((cluster) => (cluster.hasTaamim || cluster.hasSilluq ? true : false))
     .length
     ? true

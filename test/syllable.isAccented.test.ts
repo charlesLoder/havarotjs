@@ -179,6 +179,11 @@ describe("Test if a syllable is accented", () => {
             testIsAccented("הָ֠עָ֠ם", [false, true]);
           });
         });
+
+        test("ole-weyored", () => {
+          // only the ole is prepositive
+          testIsAccented("רְשָׁ֫עִ֥ים", [false, false, true]);
+        });
       });
     });
 
@@ -199,12 +204,6 @@ describe("Test if a syllable is accented", () => {
           });
         });
       });
-    });
-  });
-
-  describe("Taamim that do not receive the stress", () => {
-    test("ole-weyored", () => {
-      testIsAccented("רְשָׁ֫עִ֥ים", [false, false, true]);
     });
   });
 });
