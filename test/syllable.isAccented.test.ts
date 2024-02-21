@@ -201,4 +201,10 @@ describe("Test if a syllable is accented", () => {
       });
     });
   });
+
+  describe("Taamim that do not receive the stress", () => {
+    test("ole-weyored", () => {
+      testIsAccented("רְשָׁ֫עִ֥ים", [false, false, true]);
+    });
+  });
 });
