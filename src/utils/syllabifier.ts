@@ -493,6 +493,22 @@ const setIsAccented = (syllable: Syllable) => {
     return;
   }
 
+  // dechi, the dechi does not take the accent
+  // so always assume the final syallble is accented
+  const dechi = /\u{05AD}/u;
+  if (dechi.test(syllable.text)) {
+    let next = syllable.next?.value;
+
+    while (next) {
+      // if the last syllable, set as accented
+      if (!next?.next) {
+        next.isAccented = true;
+        return;
+      }
+      next = (next?.next?.value as Syllable) ?? null;
+    }
+  }
+
   const isAccented = syllable.clusters.filter((cluster) => (cluster.hasTaamim || cluster.hasSilluq ? true : false))
     .length
     ? true
