@@ -184,6 +184,18 @@ describe("Test if a syllable is accented", () => {
           // only the ole is prepositive
           testIsAccented("רְשָׁ֫עִ֥ים", [false, false, true]);
         });
+
+        describe("dechi", () => {
+          // for dechi, always assume the final syllable is accented
+          test("dechi on unaccented syllable", () => {
+            testIsAccented("נָ֭בוּב", [false, true]);
+          });
+
+          // this will incorrectly accent the final syllable
+          xtest("dechi on accented syllable", () => {
+            testIsAccented("לַ֭יְלָה", [false, true]);
+          });
+        });
       });
     });
 
