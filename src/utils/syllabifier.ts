@@ -423,9 +423,8 @@ const setIsAccented = (syllable: Syllable) => {
   const zarqa = /\u{05AE}/u;
   // a zarqa's "helper" in MAPM
   // see more https://forums.accordancebible.com/topic/31576-zinor-and-zarqa-accents/#comment-156318
-  const zarqaHelper = /\u{0598}/u;
-
   if (zarqa.test(syllable.text)) {
+    const zarqaHelper = /\u{0598}/u;
     // see לָֽאָדָם֒ as an example of zarqa on the final syllable
     // a zarqa should always be on the final syllable
     if (syllable.isFinal && prev) {
@@ -438,6 +437,15 @@ const setIsAccented = (syllable: Syllable) => {
         prev = (prev?.prev?.value as Syllable) ?? null;
       }
     }
+  }
+
+  // prepositive
+  // the sinnorit is incorrectly named in the Unicode spec as ZARQA (U+0598)
+  // the same character is also used as the zarqaHelper above
+  const sinnorit = /\u{0598}/u;
+  if (sinnorit.test(syllable.text)) {
+    syllable.isAccented = false;
+    return;
   }
 
   // postpositive
@@ -484,6 +492,29 @@ const setIsAccented = (syllable: Syllable) => {
 
     syllable.isAccented = true;
     return;
+  }
+
+  // ole-weyored, the ole does not take the accent, only the "yored" (i.e. a merkha)
+  const ole = /\u{05AB}/u;
+  if (ole.test(syllable.text)) {
+    syllable.isAccented = false;
+    return;
+  }
+
+  // dechi, the dechi does not take the accent
+  // so always assume the final syallble is accented
+  const dechi = /\u{05AD}/u;
+  if (dechi.test(syllable.text)) {
+    let next = syllable.next?.value;
+
+    while (next) {
+      // if the last syllable, set as accented
+      if (!next?.next) {
+        next.isAccented = true;
+        return;
+      }
+      next = (next?.next?.value as Syllable) ?? null;
+    }
   }
 
   const isAccented = syllable.clusters.filter((cluster) => (cluster.hasTaamim || cluster.hasSilluq ? true : false))
