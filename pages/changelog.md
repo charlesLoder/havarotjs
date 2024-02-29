@@ -1,5 +1,9 @@
 # Changelog
 
+## 2024-02-28 0.22.1
+
+- Improve how poetic accents are handled (PR #157)
+
 ## 2024-02-20 0.22.0
 
 - Add option for `shevaWithMeteg` (PR #156)
