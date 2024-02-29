@@ -439,6 +439,15 @@ const setIsAccented = (syllable: Syllable) => {
     }
   }
 
+  // prepositive
+  // the sinnorit is incorrectly named in the Unicode spec as ZARQA (U+0598)
+  // the same character is also used as the zarqaHelper above
+  const sinnorit = /\u{0598}/u;
+  if (sinnorit.test(syllable.text)) {
+    syllable.isAccented = false;
+    return;
+  }
+
   // postpositive
   // check if any preceding syllable has a pashta or qadma character
   const pashta = /\u{0599}/u;
