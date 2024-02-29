@@ -231,6 +231,14 @@ describe("Test if a syllable is accented", () => {
           });
         });
       });
+
+      describe("prepositive taamim", () => {
+        test("sinnorit", () => {
+          // the sinnorit is incorrectly named in the Unicode spec as ZARQA (U+0598)
+          // it does not appear by itself
+          testIsAccented("אֱלֹ֘הֵ֤י", [false, false, true]);
+        });
+      });
     });
   });
 });
