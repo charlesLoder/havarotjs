@@ -8,7 +8,9 @@ function testIsAccented(hebrew: string, isAccentedArray: boolean[]) {
 
 // Taamim and their relation to stress from Introduction to Tiberian Hebrew Accents by Sung Jin Park
 // https://assets.cambridge.org/97811084/79936/excerpt/9781108479936_excerpt.pdf
-// hence the use of non-Hebrew terms (i.e. little zaqeph instead of zaqeph qatan)
+// hence the use of non-Hebrew terms (i.e. little zaqeph instead of zaqeph qatan).
+// The poetic accents are not complete, but rather the test aimed to deal with those that are most complicated.
+// Poetic accents from http://jamesdprice.com/images/21_Syntax_of_Accents_rev._ed..pdf
 describe("Test if a syllable is accented", () => {
   test("No taaimim, default last syllable", () => {
     testIsAccented("דָּבָר", [false, true]);
