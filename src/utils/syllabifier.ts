@@ -423,9 +423,8 @@ const setIsAccented = (syllable: Syllable) => {
   const zarqa = /\u{05AE}/u;
   // a zarqa's "helper" in MAPM
   // see more https://forums.accordancebible.com/topic/31576-zinor-and-zarqa-accents/#comment-156318
-  const zarqaHelper = /\u{0598}/u;
-
   if (zarqa.test(syllable.text)) {
+    const zarqaHelper = /\u{0598}/u;
     // see לָֽאָדָם֒ as an example of zarqa on the final syllable
     // a zarqa should always be on the final syllable
     if (syllable.isFinal && prev) {
