@@ -150,6 +150,19 @@ describe("Test if a syllable is accented", () => {
             testIsAccented("יֹאשִׁיָּ֒הוּ֒", [false, false, true, false]);
           });
         });
+
+        describe("sinor", () => {
+          // note that the sinor is uses the same character as the zarqa, and like the zarqa is always postpositive
+          // unlike the zarqa, in MAM, there is not a "helper."
+          test("sinor on accented syllable", () => {
+            testIsAccented("אֱלֹהַי֮", [false, false, true]);
+          });
+
+          xtest("sinor on unaccented syllable", () => {
+            // this will never pass
+            testIsAccented("פָּנֶיךָ֮", [false, true, false]);
+          });
+        });
       });
 
       describe("prepositive taamim", () => {
