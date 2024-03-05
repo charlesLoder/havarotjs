@@ -211,6 +211,13 @@ describe("Test if a syllable is accented", () => {
             testIsAccented("לַ֭יְלָה", [false, true]);
           });
         });
+
+        describe("gersh muqdam", () => {
+          // for gersh muqdam, always/mostly appears before a rebia, which receives the stress
+          test("will always be unaccented", () => {
+            testIsAccented("לֵ֝צִ֗ים", [false, true]);
+          });
+        });
       });
     });
 
