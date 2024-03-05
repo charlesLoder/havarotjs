@@ -517,6 +517,13 @@ const setIsAccented = (syllable: Syllable) => {
     }
   }
 
+  // the geresh muqdam always appears before a rebia, which receives the stress
+  const gereshMuqdam = /\u{059D}/u;
+  if (gereshMuqdam.test(syllable.text)) {
+    syllable.isAccented = false;
+    return;
+  }
+
   const isAccented = syllable.clusters.filter((cluster) => (cluster.hasTaamim || cluster.hasSilluq ? true : false))
     .length
     ? true
