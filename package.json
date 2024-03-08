@@ -2,73 +2,75 @@
   "name": "havarotjs",
   "version": "0.22.1",
   "description": "A Typescript package for syllabic data about Hebrew text",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "type": "module",
+  "types": "./dist/types/index.d.ts",
   "engines": {
     "node": ">=15.0.0"
   },
   "exports": {
     "./package.json": "./package.json",
     ".": {
-      "types": "./dist/index.d.ts",
-      "require": "./dist/index.js",
-      "import": "./dist/index.js"
+      "types": "./dist/types/index.d.ts",
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js"
     },
     "./dist/*": {
-      "types": "./dist/*.d.ts",
-      "require": "./dist/*.js",
-      "import": "./dist/*.js"
+      "types": "./dist/types/*.d.ts",
+      "require": "./dist/cjs/*.js",
+      "import": "./dist/esm/*.js"
     },
     "./text": {
-      "types": "./dist/text.d.ts",
-      "require": "./dist/text.js",
-      "import": "./dist/text.js"
+      "types": "./dist/types/text.d.ts",
+      "require": "./dist/cjs/text.js",
+      "import": "./dist/esm/text.js"
     },
     "./word": {
-      "types": "./dist/word.d.ts",
-      "require": "./dist/word.js",
-      "import": "./dist/word.js"
+      "types": "./dist/types/word.d.ts",
+      "require": "./dist/cjs/word.js",
+      "import": "./dist/esm/word.js"
     },
     "./syllable": {
-      "types": "./dist/syllable.d.ts",
-      "require": "./dist/syllable.js",
-      "import": "./dist/syllable.js"
+      "types": "./dist/types/syllable.d.ts",
+      "require": "./dist/cjs/syllable.js",
+      "import": "./dist/esm/syllable.js"
     },
     "./cluster": {
-      "types": "./dist/cluster.d.ts",
-      "require": "./dist/cluster.js",
-      "import": "./dist/cluster.js"
+      "types": "./dist/types/cluster.d.ts",
+      "require": "./dist/cjs/cluster.js",
+      "import": "./dist/esm/cluster.js"
     },
     "./char": {
-      "types": "./dist/char.d.ts",
-      "require": "./dist/char.js",
-      "import": "./dist/char.js"
+      "types": "./dist/types/char.d.ts",
+      "require": "./dist/cjs/char.js",
+      "import": "./dist/esm/char.js"
     },
     "./schemas": {
-      "types": "./dist/schemas.d.ts",
-      "require": "./dist/schemas.js",
+      "types": "./dist/types/schemas.d.ts",
+      "require": "./dist/cjs/schemas.js",
       "import": "./dist/schemas.js"
     }
   },
   "typesVersions": {
     "*": {
       "schemas": [
-        "./dist/schemas.d.ts"
+        "./dist/types/schemas.d.ts"
       ],
       "text": [
-        "./dist/text.d.ts"
+        "./dist/types/text.d.ts"
       ],
       "word": [
-        "./dist/word.d.ts"
+        "./dist/types/word.d.ts"
       ],
       "syllable": [
-        "./dist/syllable.d.ts"
+        "./dist/types/syllable.d.ts"
       ],
       "cluster": [
-        "./dist/cluster.d.ts"
+        "./dist/types/cluster.d.ts"
       ],
       "char": [
-        "./dist/char.d.ts"
+        "./dist/types/char.d.ts"
       ]
     }
   },
