@@ -103,6 +103,7 @@
   "author": "Charles Loder",
   "license": "MIT",
   "devDependencies": {
+    "@alcalzone/esm2cjs": "^1.1.2",
     "@types/jest": "^29.5.12",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "eslint": "^8.57.0",
@@ -113,6 +114,7 @@
     "npm-check-updates": "^16.14.15",
     "prettier": "^3.2.5",
     "ts-jest": "^29.1.2",
+    "tsc-alias": "^1.8.8",
     "typedoc": "^0.25.10",
     "typedoc-plugin-pages-fork": "^0.0.1",
     "typescript": "^5.3.3"
