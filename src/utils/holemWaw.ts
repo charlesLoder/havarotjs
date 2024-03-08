@@ -43,7 +43,7 @@ export const holemWaw = (word: string, options: SylOpts): string => {
   }
 
   word = vavHolemMale.test(word)
-    ? findMatches(word, vavHolemMale, (w, s, e) => {
+    ? findMatches(word, vavHolemMale, () => {
         return word.replaceAll(vavHolemMale, "\u{05B9}\u{05D5}");
       })
     : word;
