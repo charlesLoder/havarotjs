@@ -195,9 +195,15 @@ describe("Test if a syllable is accented", () => {
           });
         });
 
-        test("ole-weyored", () => {
-          // only the ole is prepositive
-          testIsAccented("רְשָׁ֫עִ֥ים", [false, false, true]);
+        describe("ole-weyored", () => {
+          test("ole-weyored", () => {
+            // only the ole is prepositive
+            testIsAccented("רְשָׁ֫עִ֥ים", [false, false, true]);
+          });
+
+          test("ole alone", () => {
+            testIsAccented("טַ֫עַם", [true, false]);
+          });
         });
 
         describe("dechi", () => {
