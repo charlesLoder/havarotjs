@@ -1,5 +1,9 @@
 # Changelog
 
+## 2024-03-089 0.22.4
+
+- Fix when an ole is by itself (PR #162)
+
 ## 2024-03-089 0.22.3
 
 - Fix how utils are exported (PR #161)
