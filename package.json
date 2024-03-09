@@ -15,11 +15,6 @@
       "require": "./dist/cjs/index.js",
       "import": "./dist/esm/index.js"
     },
-    "./dist/*": {
-      "types": "./dist/types/*.d.ts",
-      "require": "./dist/cjs/*.js",
-      "import": "./dist/esm/*.js"
-    },
     "./text": {
       "types": "./dist/types/text.d.ts",
       "require": "./dist/cjs/text.js",
@@ -48,7 +43,12 @@
     "./schemas": {
       "types": "./dist/types/schemas.d.ts",
       "require": "./dist/cjs/schemas.js",
-      "import": "./dist/schemas.js"
+      "import": "./dist/esm/schemas.js"
+    },
+    "./utils/*": {
+      "types": "./dist/types/utils/*.d.ts",
+      "require": "./dist/cjs/utils/*.js",
+      "import": "./dist/esm/utils/*.js"
     }
   },
   "typesVersions": {
@@ -70,6 +70,9 @@
       ],
       "char": [
         "./dist/types/char.d.ts"
+      ],
+      "utils/*": [
+        "./dist/types/utils/*.d.ts"
       ]
     }
   },
