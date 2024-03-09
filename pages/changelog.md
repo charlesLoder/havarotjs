@@ -1,5 +1,10 @@
 # Changelog
 
+## 2024-03-08 0.22.2
+
+- Fix geresh muqdam (PR #159)
+- Output cjs and esm build (PR #160)
+
 ## 2024-02-28 0.22.1
 
 - Improve how poetic accents are handled (PR #157)
