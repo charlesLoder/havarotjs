@@ -1,5 +1,9 @@
 # Changelog
 
+## 2024-03-089 0.22.3
+
+- Fix how utils are exported (PR #161)
+
 ## 2024-03-08 0.22.2
 
 - Fix geresh muqdam (PR #159)
