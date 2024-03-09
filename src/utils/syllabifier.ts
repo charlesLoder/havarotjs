@@ -495,9 +495,22 @@ const setIsAccented = (syllable: Syllable) => {
   }
 
   // ole-weyored, the ole does not take the accent, only the "yored" (i.e. a merkha)
+  // unless the ole is by itself
   const ole = /\u{05AB}/u;
   if (ole.test(syllable.text)) {
-    syllable.isAccented = false;
+    const yored = /\u{05A5}/u;
+    let next = syllable.next?.value;
+
+    while (next) {
+      if (yored.test(next.text)) {
+        next.isAccented = true;
+        syllable.isAccented = false;
+        return;
+      }
+      next = (next?.next?.value as Syllable) ?? null;
+    }
+
+    syllable.isAccented = true;
     return;
   }
 
