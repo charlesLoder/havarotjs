@@ -1,11 +1,16 @@
 {
+  "$schema": "https://typedoc.org/schema.json",
   "includeVersion": true,
   "entryPoints": ["src/"],
-  "exclude": ["src/utils", "src/index.ts", "src/node.ts"],
+  "entryPointStrategy": "expand",
+  "exclude": ["src/utils/*.ts", "src/index.ts", "src/node.ts", "src/schemas.ts"],
   "out": "docs",
-  "theme": "pages-plugin",
+  "plugin": ["typedoc-material-theme"],
+  "themeColor": "#f0f0f0",
   "excludePrivate": true,
   "excludeProtected": true,
-  "sort": ["instance-first"],
+  "excludeNotDocumented": true,
+  "excludeNotDocumentedKinds": ["Module"],
+  "sort": ["alphabetical"],
   "readme": "./pages/introduction.md"
 }

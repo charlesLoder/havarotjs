@@ -87,7 +87,7 @@
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "./changelog.sh && npm run format && npm run lint && npm test",
     "postversion": "git push && git push --tags",
-    "docs": "typedoc",
+    "docs": "typedoc && cp havarot-2400.png ./docs",
     "update": " npm-check-updates '/^(?!typedoc).*$/' -u"
   },
   "files": [
@@ -109,6 +109,7 @@
   "license": "MIT",
   "devDependencies": {
     "@alcalzone/esm2cjs": "^1.1.2",
+    "@droppedcode/typedoc-plugin-copy-assets": "^1.0.11",
     "@types/jest": "^29.5.12",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "eslint": "^8.57.0",
@@ -121,6 +122,7 @@
     "ts-jest": "^29.1.2",
     "tsc-alias": "^1.8.8",
     "typedoc": "^0.25.10",
+    "typedoc-material-theme": "^1.0.2",
     "typedoc-plugin-pages-fork": "^0.0.1",
     "typescript": "^5.3.3"
   }
