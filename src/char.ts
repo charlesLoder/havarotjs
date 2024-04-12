@@ -121,6 +121,10 @@ export class Char {
     return Char.rafe.test(this.#text);
   }
 
+  get isSheva(): boolean {
+    return Char.sheva.test(this.#text);
+  }
+
   get isVowel(): boolean {
     return Char.vowels.test(this.#text);
   }
