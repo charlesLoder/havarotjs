@@ -102,6 +102,7 @@ describe("Char", () => {
       expect(consonant.isLigature).toBe(false);
       expect(consonant.isDagesh).toBe(false);
       expect(consonant.isRafe).toBe(false);
+      expect(consonant.isSheva).toBe(false);
       expect(consonant.isVowel).toBe(false);
       expect(consonant.isTaamim).toBe(false);
       expect(consonant.isNotHebrew).toBe(false);
@@ -111,6 +112,7 @@ describe("Char", () => {
       expect(dagesh.isLigature).toBe(false);
       expect(dagesh.isDagesh).toBe(true);
       expect(dagesh.isRafe).toBe(false);
+      expect(consonant.isSheva).toBe(false);
       expect(dagesh.isVowel).toBe(false);
       expect(dagesh.isTaamim).toBe(false);
       expect(dagesh.isNotHebrew).toBe(false);
@@ -120,15 +122,27 @@ describe("Char", () => {
       expect(rafe.isLigature).toBe(false);
       expect(rafe.isDagesh).toBe(false);
       expect(rafe.isRafe).toBe(true);
+      expect(consonant.isSheva).toBe(false);
       expect(rafe.isVowel).toBe(false);
       expect(rafe.isTaamim).toBe(false);
       expect(rafe.isNotHebrew).toBe(false);
+
+      const sheva = new Char("ְ");
+      expect(sheva.isConsonant).toBe(false);
+      expect(sheva.isLigature).toBe(false);
+      expect(sheva.isDagesh).toBe(false);
+      expect(sheva.isRafe).toBe(false);
+      expect(sheva.isSheva).toBe(true);
+      expect(sheva.isVowel).toBe(false);
+      expect(sheva.isTaamim).toBe(false);
+      expect(sheva.isNotHebrew).toBe(false);
 
       const vowel = new Char("ָ");
       expect(vowel.isConsonant).toBe(false);
       expect(vowel.isLigature).toBe(false);
       expect(vowel.isDagesh).toBe(false);
       expect(vowel.isRafe).toBe(false);
+      expect(consonant.isSheva).toBe(false);
       expect(vowel.isVowel).toBe(true);
       expect(vowel.isTaamim).toBe(false);
       expect(vowel.isNotHebrew).toBe(false);
@@ -138,6 +152,7 @@ describe("Char", () => {
       expect(taamim.isLigature).toBe(false);
       expect(taamim.isDagesh).toBe(false);
       expect(taamim.isRafe).toBe(false);
+      expect(consonant.isSheva).toBe(false);
       expect(taamim.isVowel).toBe(false);
       expect(taamim.isTaamim).toBe(true);
       expect(taamim.isNotHebrew).toBe(false);
@@ -147,6 +162,7 @@ describe("Char", () => {
       expect(nonHebrew.isLigature).toBe(false);
       expect(nonHebrew.isDagesh).toBe(false);
       expect(nonHebrew.isRafe).toBe(false);
+      expect(consonant.isSheva).toBe(false);
       expect(nonHebrew.isVowel).toBe(false);
       expect(nonHebrew.isTaamim).toBe(false);
       expect(nonHebrew.isNotHebrew).toBe(true);
