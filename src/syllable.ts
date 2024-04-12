@@ -1,6 +1,6 @@
 import { Cluster } from "./cluster";
 import { Char } from "./char";
-import { CharToNameMap, charToNameMap, NameToCharMap, nameToCharMap } from "./utils/vowelMap";
+import { CharToNameMap, charToNameMap, NameToCharMap, nameToCharMap } from "./utils/charMap";
 import { vowelsCaptureGroupWithSheva } from "./utils/regularExpressions";
 import { removeTaamim } from "./utils/removeTaamim";
 import { Node } from "./node";
