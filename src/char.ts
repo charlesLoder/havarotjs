@@ -17,19 +17,6 @@ export class Char {
     this.#text = char;
   }
 
-  /**
-   * @returns the text of the Char
-   *
-   * ```typescript
-   * const text: Text = new Text("אֱלֹהִ֑ים");
-   * text.chars[0].text;
-   * // "א"
-   * ```
-   */
-  get text(): string {
-    return this.#text;
-  }
-
   private findPos(): number {
     const char = this.text;
     if (consonants.test(char)) {
@@ -49,6 +36,26 @@ export class Char {
     }
     // i.e. any non-hebrew char
     return 10;
+  }
+
+  /**
+   * The parent `Cluster` of the `Char`, if any.
+   *
+   * ```typescript
+   * const text: Text = new Text("דָּבָר");
+   * const firstChar = text.chars[0];
+   * firstChar.text;
+   * // "ד"
+   * firstChar.cluster?.text;
+   * // "דָּ"
+   * ```
+   */
+  get cluster(): Cluster | null {
+    return this.#cluster;
+  }
+
+  set cluster(cluster: Cluster | null) {
+    this.#cluster = cluster;
   }
 
   /**
@@ -73,22 +80,15 @@ export class Char {
   }
 
   /**
-   * The parent `Cluster` of the `Char`, if any.
+   * @returns the text of the Char
    *
    * ```typescript
-   * const text: Text = new Text("דָּבָר");
-   * const firstChar = text.chars[0];
-   * firstChar.text;
-   * // "ד"
-   * firstChar.cluster?.text;
-   * // "דָּ"
+   * const text: Text = new Text("אֱלֹהִ֑ים");
+   * text.chars[0].text;
+   * // "א"
    * ```
    */
-  get cluster(): Cluster | null {
-    return this.#cluster;
-  }
-
-  set cluster(cluster: Cluster | null) {
-    this.#cluster = cluster;
+  get text(): string {
+    return this.#text;
   }
 }
