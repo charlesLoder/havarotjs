@@ -1,9 +1,6 @@
 import { Cluster } from "./cluster";
-import { taamim } from "./utils/regularExpressions";
-const consonants = /[\u{05D0}-\u{05F2}]/u;
-const ligature = /[\u{05C1}-\u{05C2}]/u;
-const dagesh = /[\u{05BC}\u{05BF}]/u; // includes rafe
-const niqqud = /[\u{05B0}-\u{05BB}\u{05C7}]/u;
+import { consonants, dagesh, ligatures, vowels, rafe, taamim } from "./utils/regularExpressions";
+import { CharToNameMap, charToNameMap, NameToCharMap, nameToCharMap } from "./utils/charMap";
 
 /**
  * A Hebrew character and its positioning number for being sequenced correctly.
@@ -12,30 +9,63 @@ const niqqud = /[\u{05B0}-\u{05BB}\u{05C7}]/u;
 export class Char {
   #text: string;
   #cluster: Cluster | null = null;
+  #sequencePosition: number;
 
   constructor(char: string) {
     this.#text = char;
+    this.#sequencePosition = this.findPos();
   }
 
   private findPos(): number {
     const char = this.text;
-    if (consonants.test(char)) {
+    if (Char.consonants.test(char)) {
       return 0;
     }
-    if (ligature.test(char)) {
+    if (Char.ligatures.test(char)) {
       return 1;
     }
-    if (dagesh.test(char)) {
+    if (Char.dagesh.test(char)) {
       return 2;
     }
-    if (niqqud.test(char)) {
+    if (Char.rafe.test(char)) {
+      return 2;
+    }
+    if (Char.vowels.test(char)) {
       return 3;
     }
-    if (taamim.test(char)) {
+    if (Char.taamim.test(char)) {
       return 4;
     }
     // i.e. any non-hebrew char
     return 10;
+  }
+
+  private isCharKeyOfCharToNameMap(char: string): char is keyof CharToNameMap {
+    return char in charToNameMap;
+  }
+
+  private static get consonants() {
+    return consonants;
+  }
+
+  private static get ligatures() {
+    return ligatures;
+  }
+
+  private static get dagesh() {
+    return dagesh;
+  }
+
+  private static get vowels() {
+    return vowels;
+  }
+
+  private static get taamim() {
+    return taamim;
+  }
+
+  private static get rafe() {
+    return rafe;
   }
 
   /**
@@ -58,6 +88,61 @@ export class Char {
     this.#cluster = cluster;
   }
 
+  isCharacterName(name: keyof NameToCharMap): boolean {
+    if (!nameToCharMap[name]) {
+      throw new Error(`${name} is not a valid value`);
+    }
+
+    const match = this.#text.match(nameToCharMap[name]);
+
+    return !!match;
+  }
+
+  get isConsonant(): boolean {
+    return Char.consonants.test(this.#text);
+  }
+
+  get isLigature(): boolean {
+    return Char.ligatures.test(this.#text);
+  }
+
+  get isDagesh(): boolean {
+    return Char.dagesh.test(this.#text);
+  }
+
+  get isRafe(): boolean {
+    return Char.rafe.test(this.#text);
+  }
+
+  get isVowel(): boolean {
+    return Char.vowels.test(this.#text);
+  }
+
+  get isTaamim(): boolean {
+    return Char.taamim.test(this.#text);
+  }
+
+  get isNotHebrew(): boolean {
+    return this.sequencePosition === 10;
+  }
+
+  /**
+   * Returns the name of the character
+   *
+   * ```typescript
+   * const text: Text = new Text("אֱלֹהִ֑ים");
+   * text.chars[0].characterName;
+   * // "ALEF"
+   * ```
+   */
+  get characterName(): CharToNameMap[keyof CharToNameMap] | null {
+    const text = this.#text;
+    if (this.isCharKeyOfCharToNameMap(text)) {
+      return charToNameMap[text];
+    }
+    return null;
+  }
+
   /**
    * @returns a number used for sequencing
    *
@@ -76,7 +161,7 @@ export class Char {
    * ```
    */
   get sequencePosition(): number {
-    return this.findPos();
+    return this.#sequencePosition;
   }
 
   /**

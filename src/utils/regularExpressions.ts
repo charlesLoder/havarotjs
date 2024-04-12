@@ -1,4 +1,29 @@
-export const taamim = /[\u{0591}-\u{05AF}\u{05BF}\u{05C0}\u{05C4}-\u{05C6}\u{05F3}\u{05F4}]/u;
+// export const taamim = /[\u{0591}-\u{05AF}\u{05BF}\u{05C0}\u{05C4}-\u{05C6}\u{05F3}\u{05F4}]/u;
+export const taamim = /[\u{0591}-\u{05AE}]/u;
+
+/**
+ * All the Hebrew consonants
+ * - \u{05D0}-\u{05F2}
+ */
+export const consonants = /[\u{05D0}-\u{05F2}]/u;
+
+/**
+ * All the Hebrew ligatures
+ * - \u{05C1}-\u{05C2}
+ */
+export const ligatures = /[\u{05C1}-\u{05C2}]/u;
+
+/**
+ * The dagesh character
+ * - \u{05BC}
+ */
+export const dagesh = /[\u{05BC}]/u;
+
+/**
+ * The rafe character
+ * - \u{05BF}
+ */
+export const rafe = /\u{05BF}/u;
 
 /**
  * a regular expression containing all the Hebrew characters of the category PUNCTUATION:
