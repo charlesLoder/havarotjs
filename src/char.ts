@@ -105,34 +105,105 @@ export class Char {
     return !!match;
   }
 
+  /**
+   * Returns `true` if the `Char` is a consonant
+   *
+   * ```typescript
+   * const text: Text = new Text("אֱלֹהִ֑ים");
+   * text.chars[0].isConsonant;
+   * // true
+   * ```
+   */
   get isConsonant(): boolean {
     return Char.consonants.test(this.#text);
   }
 
+  /**
+   * Returns `true` if the `Char` is a ligature
+   *
+   * ```typescript
+   * const text: Text = new Text("שָׁלֽוֹם");
+   * text.chars[1].isLigature;
+   * // true
+   * ```
+   */
   get isLigature(): boolean {
     return Char.ligatures.test(this.#text);
   }
 
+  /**
+   * Returns `true` if the `Char` is a dagesh
+   *
+   * ```typescript
+   * const text: Text = new Text("בּ");
+   * text.chars[1].isDagesh;
+   * // true
+   */
   get isDagesh(): boolean {
     return Char.dagesh.test(this.#text);
   }
 
+  /**
+   * Returns `true` if the `Char` is a rafe
+   *
+   * ```typescript
+   * const text: Text = new Text("בֿ");
+   * text.chars[1].isRafe;
+   * // true
+   * ```
+   */
   get isRafe(): boolean {
     return Char.rafe.test(this.#text);
   }
 
+  /**
+   * Returns `true` if the `Char` is a sheva
+   * ```typescript
+   * const text: Text = new Text("בְ");
+   * text.chars[1].isSheva;
+   * // true
+   * ```
+   */
   get isSheva(): boolean {
     return Char.sheva.test(this.#text);
   }
 
+  /**
+   * Returns `true` if the `Char` is a sheva
+   *
+   *
+   * ```typescript
+   * const text: Text = new Text("בֺ");
+   * text.chars[1].isVowel;
+   * // true
+   * ```
+   */
   get isVowel(): boolean {
     return Char.vowels.test(this.#text);
   }
 
+  /**
+   * Returns `true` if the `Char` is a taamim
+   *
+   * ```typescript
+   * const text: Text = new Text("בֺ֨");
+   * text.chars[2].isTaamim;
+   * // true
+   * ```
+   */
   get isTaamim(): boolean {
     return Char.taamim.test(this.#text);
   }
 
+  /**
+   * Returns `true` if the `Char` is not a Hebrew character
+   *
+   * ```typescript
+   * const text: Text = new Text("a");
+   * text.chars[0].isNotHebrew;
+   * // true
+   * ```
+   */
   get isNotHebrew(): boolean {
     return this.sequencePosition === 10;
   }
