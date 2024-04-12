@@ -1,8 +1,8 @@
 import { Char } from "./char";
 import { Node } from "./node";
 import { Syllable } from "./syllable";
-import { taamim, hebChars, vowelsCaptureGroup, punctuation } from "./utils/regularExpressions";
-import { charToNameMap, CharToNameMap, NameToCharMap, nameToCharMap } from "./utils/charMap";
+import { taamim, hebChars, punctuation } from "./utils/regularExpressions";
+import { charToNameMap, CharToNameMap, NameToCharMap, nameToCharMap, isCharKeyOfCharToNameMap } from "./utils/charMap";
 
 /**
  * A cluster is group of Hebrew character constituted by:
@@ -28,6 +28,8 @@ export class Cluster extends Node<Cluster> {
     this.#sequenced = this.sequence(noSequence);
     this.#sequenced.forEach((char) => (char.cluster = this));
   }
+
+  private isCharKeyOfCharToNameMap = isCharKeyOfCharToNameMap;
 
   /**
    * @returns the original string passed
@@ -449,8 +451,13 @@ export class Cluster extends Node<Cluster> {
    * ```
    */
   get vowel(): keyof CharToNameMap | null {
-    const match = this.text.match(vowelsCaptureGroup);
-    return match ? (match[0] as keyof CharToNameMap) : match;
+    const char = this.chars.find((char) => char.isVowel);
+
+    if (!char) {
+      return null;
+    }
+
+    return this.isCharKeyOfCharToNameMap(char.text) ? char.text : null;
   }
 
   /**
