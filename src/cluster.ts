@@ -412,8 +412,13 @@ export class Cluster extends Node<Cluster> {
    * ```
    */
   hasVowelName(name: keyof NameToCharMap): boolean {
-    if (!nameToCharMap[name]) throw new Error(`${name} is not a valid value`);
-    return this.text.indexOf(nameToCharMap[name]) !== -1 ? true : false;
+    if (!nameToCharMap[name]) {
+      throw new Error(`${name} is not a valid value`);
+    }
+
+    const char = this.chars.find((char) => char.isCharacterName(name));
+
+    return !!char;
   }
 
   /**
