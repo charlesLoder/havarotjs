@@ -1,5 +1,5 @@
 import { Cluster } from "./cluster";
-import { consonants, dagesh, ligatures, vowels, rafe, taamim } from "./utils/regularExpressions";
+import { consonants, dagesh, ligatures, vowels, rafe, sheva, taamim } from "./utils/regularExpressions";
 import { CharToNameMap, charToNameMap, NameToCharMap, nameToCharMap } from "./utils/charMap";
 
 /**
@@ -33,6 +33,9 @@ export class Char {
     if (Char.vowels.test(char)) {
       return 3;
     }
+    if (Char.sheva.test(char)) {
+      return 3;
+    }
     if (Char.taamim.test(char)) {
       return 4;
     }
@@ -48,24 +51,28 @@ export class Char {
     return consonants;
   }
 
-  private static get ligatures() {
-    return ligatures;
-  }
-
   private static get dagesh() {
     return dagesh;
   }
 
-  private static get vowels() {
-    return vowels;
+  private static get ligatures() {
+    return ligatures;
+  }
+
+  private static get rafe() {
+    return rafe;
+  }
+
+  private static get sheva() {
+    return sheva;
   }
 
   private static get taamim() {
     return taamim;
   }
 
-  private static get rafe() {
-    return rafe;
+  private static get vowels() {
+    return vowels;
   }
 
   /**

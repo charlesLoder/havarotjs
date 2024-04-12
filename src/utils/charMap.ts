@@ -49,6 +49,11 @@ export const charToNameMap = {
   "\u{05AE}": "ZINOR",
 
   // ------
+  // SHEVA
+  // ------
+  "\u{05B0}": "SHEVA",
+
+  // ------
   // NIQQUD
   // ------
   "\u{05B1}": "HATAF_SEGOL",
@@ -179,6 +184,11 @@ export const nameToCharMap: NameToCharMap = {
   ILUY: "\u{05AC}",
   DEHI: "\u{05AD}",
   ZINOR: "\u{05AE}",
+
+  // ------
+  // SHEVA
+  // ------
+  SHEVA: "\u{05B0}",
 
   // ------
   // NIQQUD

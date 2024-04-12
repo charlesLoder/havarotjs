@@ -100,6 +100,15 @@ export const rafe = /\u{05BF}/u;
 export const splitGroup = /(\S*\u{05BE}(?=\S*\u{05BE})|\S*\u{05BE}(?!\S*\u{05BE})|\S*-(?!\S*-)|\S*-(?=\S*-)|\S*\s*)/u;
 
 /**
+ * A regular expression for the sheva character
+ *
+ * ```js
+ * /\u{05B0}/u;
+ * ```
+ */
+export const sheva = /\u{05B0}/u;
+
+/**
  * A regular expression containing all the Hebrew characters of the category ACCENT:
  *
  * ```js
