@@ -375,7 +375,7 @@ export class Syllable extends Node<Syllable> {
    * ```
    */
   get text(): string {
-    return this.clusters.reduce((init, cluster) => init + cluster.text, "");
+    return this.clusters.map((c) => c.text).join("");
   }
 
   /**
