@@ -29,32 +29,23 @@ export class Cluster extends Node<Cluster> {
     this.#sequenced.forEach((char) => (char.cluster = this));
   }
 
-  private isCharKeyOfCharToNameMap = isCharKeyOfCharToNameMap;
-
-  /**
-   * @returns the original string passed
-   */
-  get original(): string {
-    return this.#original;
+  private sequence(noSequence: boolean = false): Char[] {
+    const chars = [...this.original].map((char) => new Char(char));
+    return noSequence ? chars : chars.sort((a, b) => a.sequencePosition - b.sequencePosition);
   }
 
-  /**
-   * @returns a string that has been built up from the text of its constituent Chars
-   *
-   * ```typescript
-   * const text: Text = new Text("הֲבָרֹות");
-   * const clusters = text.clusters.map((cluster) => cluster.text);
-   * // [
-   * //  "הֲ",
-   * //  "בָ",
-   * //  "רֹ",
-   * //  "ו",
-   * //  "ת"
-   * // ]
-   * ```
-   */
-  get text(): string {
-    return this.chars.reduce((init, char) => init + char.text, "");
+  private isCharKeyOfCharToNameMap = isCharKeyOfCharToNameMap;
+
+  private get hasMetegCharacter(): boolean {
+    const text = this.text;
+    if (this.metegCharacter.test(text)) {
+      return true;
+    }
+    return false;
+  }
+
+  private get metegCharacter(): RegExp {
+    return /\u{05BD}/u;
   }
 
   /**
@@ -71,138 +62,6 @@ export class Cluster extends Node<Cluster> {
    */
   get chars(): Char[] {
     return this.#sequenced;
-  }
-
-  private get hasMetegCharacter(): boolean {
-    const text = this.text;
-    if (this.metegCharacter.test(text)) {
-      return true;
-    }
-    return false;
-  }
-
-  private get metegCharacter(): RegExp {
-    return /\u{05BD}/u;
-  }
-
-  private sequence(noSequence: boolean = false): Char[] {
-    const chars = [...this.original].map((char) => new Char(char));
-    return noSequence ? chars : chars.sort((a, b) => a.sequencePosition - b.sequencePosition);
-  }
-
-  /**
-   * Returns `true` if `Cluster.hasVowel`, `Cluster.hasSheva`, `Cluster.isShureq`, and `Cluster.next.isShureq` are all `false` and `Cluster.text` contains a:
-   * - `ה` preceded by a qamets, tsere, or segol
-   * - `ו` preceded by a holem
-   * - `י` preceded by a hiriq, tsere, or segol
-   *
-   * There are potentially other instances when a consonant may be a _mater_ (e.g. a silent aleph), but these are the most common.
-   * Though a shureq is a _mater_ letter, it is also a vowel itself, and thus separate from `isMater`.
-   *
-   * ```typescript
-   * const text: Text = new Text("סוּסָה");
-   * text.clusters[1].isMater; // the shureq
-   * // false
-   * text.clusters[3].isMater; // the heh
-   * // true
-   * ```
-   */
-  get isMater(): boolean {
-    const nxtIsShureq = this.next instanceof Cluster ? this.next.isShureq : false;
-    if (!this.hasVowel && !this.isShureq && !this.hasSheva && !nxtIsShureq) {
-      const text = this.text;
-      const prevText = this.prev instanceof Cluster ? this.prev.text : "";
-      const maters = /[היו](?!\u{05BC})/u;
-      if (!maters.test(text)) {
-        return false;
-      }
-      if (/ה/.test(text) && /\u{05B8}|\u{05B6}|\u{05B5}/u.test(prevText)) {
-        return true;
-      }
-      if (/ו/.test(text) && /\u{05B9}/u.test(prevText)) {
-        return true;
-      }
-      if (/י/.test(text) && /\u{05B4}|\u{05B5}|\u{05B6}/u.test(prevText)) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  /**
-   * Returns `true` if the Cluster does not have Hebrew chars
-   *
-   * ```typescript
-   * * const text: Text = new Text("(לְעֹלָם)");
-   * text.clusters[0].isNotHebrew;
-   * // true
-   * ```
-   */
-  get isNotHebrew(): boolean {
-    return !hebChars.test(this.text);
-  }
-
-  /**
-   * Returns `true` is the Cluster is any of the following characters:
-   * - \u{05BE} HEBREW PUNCTUATION MAQAF ־
-   * - \u{05C0} HEBREW PUNCTUATION PASEQ ׀
-   * - \u{05C3} HEBREW PUNCTUATION SOF PASUQ ׃
-   * - \u{05C6} HEBREW PUNCTUATION NUN HAFUKHA ׆
-   *
-   * ```typescript
-   * const text: Text = new Text("הָאָֽרֶץ׃");
-   * text.clusters[3].isPunctuation;
-   * // true
-   * ```
-   *
-   * @description
-   * These are all the Hebrew characters of the category PUNCTUATION
-   */
-  get isPunctuation(): boolean {
-    const punctuationOnly = new RegExp(`^${punctuation.source}+$`, "u");
-    return punctuationOnly.test(this.text);
-  }
-
-  /**
-   *
-   * Returns `true` if `Cluster.hasVowel`, `Cluster.hasSheva`, and `Cluster.prev.hasVowel` are all `false` and `Cluster.text` is a waw followed by a dagesh (e.g. `וּ`)
-   * A shureq is a vowel itself, but contains no vowel characters (hence why `hasVowel` cannot be `true`).
-   * This allows for easier syllabification.
-   *
-   * ```typescript
-   * const text: Text = new Text("קוּם");
-   * text.clusters[0].isShureq;
-   * // false
-   * text.clusters[1].isShureq;
-   * // true
-   * ```
-   */
-  get isShureq(): boolean {
-    const shureq = /\u{05D5}\u{05BC}/u;
-    const prvHasVowel = this.prev?.value?.hasVowel ?? false;
-    return !this.hasVowel && !this.hasSheva && !prvHasVowel ? shureq.test(this.text) : false;
-  }
-
-  /**
-   * An alias of `isPunctuation`.
-   * Returns `true` is the Cluster is any of the following characters:
-   * - \u{05BE} HEBREW PUNCTUATION MAQAF ־
-   * - \u{05C0} HEBREW PUNCTUATION PASEQ ׀
-   * - \u{05C3} HEBREW PUNCTUATION SOF PASUQ ׃
-   * - \u{05C6} HEBREW PUNCTUATION NUN HAFUKHA ׆
-   *
-   * ```typescript
-   * const text: Text = new Text("הָאָֽרֶץ׃");
-   * text.clusters[3].isPunctuation;
-   * // true
-   * ```
-   *
-   * @description
-   * These are all the Hebrew characters of the category PUNCTUATION
-   */
-  get isTaam(): boolean {
-    return this.isPunctuation;
   }
 
   /**
@@ -422,6 +281,128 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
+   * Returns `true` if `Cluster.hasVowel`, `Cluster.hasSheva`, `Cluster.isShureq`, and `Cluster.next.isShureq` are all `false` and `Cluster.text` contains a:
+   * - `ה` preceded by a qamets, tsere, or segol
+   * - `ו` preceded by a holem
+   * - `י` preceded by a hiriq, tsere, or segol
+   *
+   * There are potentially other instances when a consonant may be a _mater_ (e.g. a silent aleph), but these are the most common.
+   * Though a shureq is a _mater_ letter, it is also a vowel itself, and thus separate from `isMater`.
+   *
+   * ```typescript
+   * const text: Text = new Text("סוּסָה");
+   * text.clusters[1].isMater; // the shureq
+   * // false
+   * text.clusters[3].isMater; // the heh
+   * // true
+   * ```
+   */
+  get isMater(): boolean {
+    const nxtIsShureq = this.next instanceof Cluster ? this.next.isShureq : false;
+    if (!this.hasVowel && !this.isShureq && !this.hasSheva && !nxtIsShureq) {
+      const text = this.text;
+      const prevText = this.prev instanceof Cluster ? this.prev.text : "";
+      const maters = /[היו](?!\u{05BC})/u;
+      if (!maters.test(text)) {
+        return false;
+      }
+      if (/ה/.test(text) && /\u{05B8}|\u{05B6}|\u{05B5}/u.test(prevText)) {
+        return true;
+      }
+      if (/ו/.test(text) && /\u{05B9}/u.test(prevText)) {
+        return true;
+      }
+      if (/י/.test(text) && /\u{05B4}|\u{05B5}|\u{05B6}/u.test(prevText)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Returns `true` if the Cluster does not have Hebrew chars
+   *
+   * ```typescript
+   * * const text: Text = new Text("(לְעֹלָם)");
+   * text.clusters[0].isNotHebrew;
+   * // true
+   * ```
+   */
+  get isNotHebrew(): boolean {
+    return !hebChars.test(this.text);
+  }
+
+  /**
+   * Returns `true` is the Cluster is any of the following characters:
+   * - \u{05BE} HEBREW PUNCTUATION MAQAF ־
+   * - \u{05C0} HEBREW PUNCTUATION PASEQ ׀
+   * - \u{05C3} HEBREW PUNCTUATION SOF PASUQ ׃
+   * - \u{05C6} HEBREW PUNCTUATION NUN HAFUKHA ׆
+   *
+   * ```typescript
+   * const text: Text = new Text("הָאָֽרֶץ׃");
+   * text.clusters[3].isPunctuation;
+   * // true
+   * ```
+   *
+   * @description
+   * These are all the Hebrew characters of the category PUNCTUATION
+   */
+  get isPunctuation(): boolean {
+    const punctuationOnly = new RegExp(`^${punctuation.source}+$`, "u");
+    return punctuationOnly.test(this.text);
+  }
+
+  /**
+   *
+   * Returns `true` if `Cluster.hasVowel`, `Cluster.hasSheva`, and `Cluster.prev.hasVowel` are all `false` and `Cluster.text` is a waw followed by a dagesh (e.g. `וּ`)
+   * A shureq is a vowel itself, but contains no vowel characters (hence why `hasVowel` cannot be `true`).
+   * This allows for easier syllabification.
+   *
+   * ```typescript
+   * const text: Text = new Text("קוּם");
+   * text.clusters[0].isShureq;
+   * // false
+   * text.clusters[1].isShureq;
+   * // true
+   * ```
+   */
+  get isShureq(): boolean {
+    const shureq = /\u{05D5}\u{05BC}/u;
+    const prvHasVowel = this.prev?.value?.hasVowel ?? false;
+    return !this.hasVowel && !this.hasSheva && !prvHasVowel ? shureq.test(this.text) : false;
+  }
+
+  /**
+   * An alias of `isPunctuation`.
+   * Returns `true` is the Cluster is any of the following characters:
+   * - \u{05BE} HEBREW PUNCTUATION MAQAF ־
+   * - \u{05C0} HEBREW PUNCTUATION PASEQ ׀
+   * - \u{05C3} HEBREW PUNCTUATION SOF PASUQ ׃
+   * - \u{05C6} HEBREW PUNCTUATION NUN HAFUKHA ׆
+   *
+   * ```typescript
+   * const text: Text = new Text("הָאָֽרֶץ׃");
+   * text.clusters[3].isPunctuation;
+   * // true
+   * ```
+   *
+   * @description
+   * These are all the Hebrew characters of the category PUNCTUATION
+   */
+  get isTaam(): boolean {
+    return this.isPunctuation;
+  }
+
+  /**
+   * @returns the original string passed
+   */
+  get original(): string {
+    return this.#original;
+  }
+
+  /**
    * The parent `Syllable` of the cluster, if any.
    *
    * ```typescript
@@ -439,6 +420,25 @@ export class Cluster extends Node<Cluster> {
 
   set syllable(syllable: Syllable | null) {
     this.#syllable = syllable;
+  }
+
+  /**
+   * @returns a string that has been built up from the text of its constituent Chars
+   *
+   * ```typescript
+   * const text: Text = new Text("הֲבָרֹות");
+   * const clusters = text.clusters.map((cluster) => cluster.text);
+   * // [
+   * //  "הֲ",
+   * //  "בָ",
+   * //  "רֹ",
+   * //  "ו",
+   * //  "ת"
+   * // ]
+   * ```
+   */
+  get text(): string {
+    return this.chars.reduce((init, char) => init + char.text, "");
   }
 
   /**
