@@ -1,37 +1,25 @@
 import { Char } from "./char";
 import { Cluster } from "./cluster";
 import { Node } from "./node";
-import { CharToNameMap, charToNameMap, NameToCharMap, nameToCharMap } from "./utils/charMap";
+import { charToNameMap, nameToCharMap } from "./utils/charMap";
 import { vowelsCaptureGroupWithSheva } from "./utils/regularExpressions";
 import { removeTaamim } from "./utils/removeTaamim";
 import { Word } from "./word";
 
-interface SyllableCharToNameMap extends CharToNameMap {
-  /* eslint-disable  @typescript-eslint/naming-convention */
-  "\u{05B0}": "SHEVA"; // HEBREW POINT HATAF SHEVA (U+05B0)
-  /**
-   * Unlike a holam vav construction which has the holam present, the shureq has no vowel character.
-   */
-  "\u{05D5}\u{05BC}": "SHUREQ"; // HEBREW LETTER VAV (U+05D5) + HEBREW POINT DAGESH OR MAPIQ (U+05BC)
-}
-
-const sylCharToNameMap: SyllableCharToNameMap = {
+const sylCharToNameMap = {
   ...charToNameMap,
-  "\u{05B0}": "SHEVA",
   "\u{05D5}\u{05BC}": "SHUREQ"
-};
+} as const;
 
-interface SyllableNameToCharMap extends NameToCharMap {
-  /* eslint-disable  @typescript-eslint/naming-convention */
-  SHEVA: "\u{05B0}"; // HEBREW POINT HATAF SHEVA (U+05B0)
-  SHUREQ: "\u{05D5}\u{05BC}"; // HEBREW LETTER VAV (U+05D5) + HEBREW POINT DAGESH OR MAPIQ (U+05BC)
-}
+type SyllableCharToNameMap = typeof sylCharToNameMap;
 
-const sylNameToCharMap: SyllableNameToCharMap = {
+const sylNameToCharMap = {
   ...nameToCharMap,
-  SHEVA: "\u{05B0}",
+  /* eslint-disable  @typescript-eslint/naming-convention */
   SHUREQ: "\u{05D5}\u{05BC}"
-};
+} as const;
+
+type SyllableNameToCharMap = typeof sylNameToCharMap;
 
 /**
  * A `Syllable` is created from an array of [[`Clusters`]].
