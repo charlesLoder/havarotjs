@@ -1,11 +1,11 @@
-import { syllabify } from "./utils/syllabifier";
-import { clusterSplitGroup, jerusalemTest } from "./utils/regularExpressions";
-import { Syllable } from "./syllable";
-import { Cluster } from "./cluster";
 import { Char } from "./char";
-import { SylOpts } from "./text";
+import { Cluster } from "./cluster";
 import { Node } from "./node";
-import { isDivineName, hasDivineName } from "./utils/divineName";
+import { Syllable } from "./syllable";
+import { SylOpts } from "./text";
+import { hasDivineName, isDivineName } from "./utils/divineName";
+import { clusterSplitGroup, jerusalemTest } from "./utils/regularExpressions";
+import { syllabify } from "./utils/syllabifier";
 
 /**
  * [[`Text.text`]] is split at each space and maqqef (U+05BE) both of which are captured.

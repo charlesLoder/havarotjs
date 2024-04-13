@@ -1,9 +1,9 @@
-import { Cluster } from "./cluster";
 import { Char } from "./char";
+import { Cluster } from "./cluster";
+import { Node } from "./node";
 import { CharToNameMap, charToNameMap, NameToCharMap, nameToCharMap } from "./utils/charMap";
 import { vowelsCaptureGroupWithSheva } from "./utils/regularExpressions";
 import { removeTaamim } from "./utils/removeTaamim";
-import { Node } from "./node";
 import { Word } from "./word";
 
 interface SyllableCharToNameMap extends CharToNameMap {

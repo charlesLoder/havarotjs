@@ -1,8 +1,8 @@
 import { Char } from "./char";
 import { Node } from "./node";
 import { Syllable } from "./syllable";
-import { taamim, hebChars, punctuation, meteg } from "./utils/regularExpressions";
-import { charToNameMap, CharToNameMap, NameToCharMap, nameToCharMap, isCharKeyOfCharToNameMap } from "./utils/charMap";
+import { CharToNameMap, NameToCharMap, charToNameMap, isCharKeyOfCharToNameMap, nameToCharMap } from "./utils/charMap";
+import { hebChars, meteg, punctuation, taamim } from "./utils/regularExpressions";
 
 /**
  * A cluster is group of Hebrew character constituted by:

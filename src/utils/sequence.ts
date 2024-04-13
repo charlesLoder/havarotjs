@@ -1,5 +1,5 @@
-import { Cluster } from "../cluster";
 import { Char } from "../char";
+import { Cluster } from "../cluster";
 
 /**
  * @returns a two dimensional array of sequenced Char objects

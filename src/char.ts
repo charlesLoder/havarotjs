@@ -1,6 +1,6 @@
 import { Cluster } from "./cluster";
-import { consonants, dagesh, ligatures, vowels, rafe, sheva, taamim } from "./utils/regularExpressions";
-import { CharToNameMap, charToNameMap, NameToCharMap, nameToCharMap, isCharKeyOfCharToNameMap } from "./utils/charMap";
+import { CharToNameMap, NameToCharMap, charToNameMap, isCharKeyOfCharToNameMap, nameToCharMap } from "./utils/charMap";
+import { consonants, dagesh, ligatures, rafe, sheva, taamim, vowels } from "./utils/regularExpressions";
 
 /**
  * A Hebrew character and its positioning number for being sequenced correctly.
