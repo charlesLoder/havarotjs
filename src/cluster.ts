@@ -1,7 +1,7 @@
 import { Char } from "./char";
 import { Node } from "./node";
 import { Syllable } from "./syllable";
-import { taamim, hebChars, punctuation } from "./utils/regularExpressions";
+import { taamim, hebChars, punctuation, meteg } from "./utils/regularExpressions";
 import { charToNameMap, CharToNameMap, NameToCharMap, nameToCharMap, isCharKeyOfCharToNameMap } from "./utils/charMap";
 
 /**
@@ -37,15 +37,11 @@ export class Cluster extends Node<Cluster> {
   private isCharKeyOfCharToNameMap = isCharKeyOfCharToNameMap;
 
   private get hasMetegCharacter(): boolean {
-    const text = this.text;
-    if (this.metegCharacter.test(text)) {
-      return true;
-    }
-    return false;
+    return Cluster.meteg.test(this.text);
   }
 
-  private get metegCharacter(): RegExp {
-    return /\u{05BD}/u;
+  private static get meteg() {
+    return meteg;
   }
 
   /**
@@ -137,7 +133,7 @@ export class Cluster extends Node<Cluster> {
       if (next instanceof Cluster) {
         const nextText = next.text;
         const sofPassuq = /\u{05C3}/u;
-        if (this.metegCharacter.test(nextText)) {
+        if (Cluster.meteg.test(nextText)) {
           return true;
         }
         if (sofPassuq.test(nextText)) {
