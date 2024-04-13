@@ -150,9 +150,9 @@ export type CharToNameMap = typeof charToNameMap;
  * @param char a character
  * @returns true if the character is a key in the `CharToNameMap`
  */
-export function isCharKeyOfCharToNameMap(char: string): char is keyof CharToNameMap {
+export const isCharKeyOfCharToNameMap = (char: string): char is keyof CharToNameMap => {
   return char in charToNameMap;
-}
+};
 
 export type NameToCharMap = { [K in keyof CharToNameMap as CharToNameMap[K]]: K };
 
