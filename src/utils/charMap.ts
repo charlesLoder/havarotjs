@@ -288,3 +288,7 @@ export const nameToCharMap: NameToCharMap = {
   VAV_YOD: "\u{05F1}",
   DOUBLE_YOD: "\u{05F2}"
 };
+
+export const isNameKeyOfNameToCharMap = (name: string): name is keyof NameToCharMap => {
+  return name in nameToCharMap;
+};
