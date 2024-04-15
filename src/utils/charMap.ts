@@ -79,10 +79,6 @@ export const taamimNameToCharMap: TaamimNameToCharMap = {
   ZINOR: "\u{05AE}"
 };
 
-export const isNameKeyOfTaamimNameToCharMap = (name: string): name is keyof TaamimNameToCharMap => {
-  return name in taamimNameToCharMap;
-};
-
 // ------
 // VOWELS
 // ------
@@ -122,10 +118,6 @@ export const vowelNameToCharMap: VowelNameToCharMap = {
   HOLAM_HASER: "\u{05BA}",
   QUBUTS: "\u{05BB}",
   QAMATS_QATAN: "\u{05C7}"
-};
-
-export const isNameKeyOfVowelNameToCharMap = (name: string): name is keyof VowelNameToCharMap => {
-  return name in vowelNameToCharMap;
 };
 
 // ----------
@@ -197,10 +189,6 @@ export const consonantNameToCharMap: ConsonantNameToCharMap = {
   RESH: "\u{05E8}",
   SHIN: "\u{05E9}",
   TAV: "\u{05EA}"
-};
-
-export const isNameKeyOfConsonantNameToCharMap = (name: string): name is keyof ConsonantNameToCharMap => {
-  return name in consonantNameToCharMap;
 };
 
 // ------
