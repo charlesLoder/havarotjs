@@ -2,21 +2,10 @@
 /* eslint-disable  @typescript-eslint/naming-convention */
 // it is better to have they keys sorted by unicode position rather then name
 
-/**
- * An object where the key is a character and the value is its partial Unicode name
- *
- * @description
- * Typically, the partial Unicode name is the same as the name of the character without any prefixes (e.g. HEBREW ACCENT).
- * The only exceptions that had to be changed were:
- * - \u{0592} from `"SEGOL"` to `"SEGOL_ACCENT"`
- * - \u{05F3} from `"GERESH"` to `"GERESH_PUNCTUATION"`
- * - \u{05F4} from `"GERSHAYIM"` to `"GERSHAYIM_PUNCTUATION"`
- *
- */
-export const charToNameMap = {
-  // ------
-  // TAAMIM
-  // ------
+// ------
+// TAAMIM
+// ------
+export const taamimCharToNameMap = {
   "\u{0591}": "ETNAHTA",
   "\u{0592}": "SEGOL_ACCENT",
   "\u{0593}": "SHALSHELET",
@@ -46,16 +35,58 @@ export const charToNameMap = {
   "\u{05AB}": "OLE",
   "\u{05AC}": "ILUY",
   "\u{05AD}": "DEHI",
-  "\u{05AE}": "ZINOR",
+  "\u{05AE}": "ZINOR"
+} as const;
 
-  // ------
-  // SHEVA
-  // ------
-  "\u{05B0}": "SHEVA",
+export type TaamimCharToNameMap = typeof taamimCharToNameMap;
 
-  // ------
-  // NIQQUD
-  // ------
+export const isCharKeyOfTaamimNameToCharMap = (char: string): char is keyof TaamimCharToNameMap => {
+  return char in taamimCharToNameMap;
+};
+
+export type TaamimNameToCharMap = { [K in keyof TaamimCharToNameMap as TaamimCharToNameMap[K]]: K };
+
+export const taamimNameToCharMap: TaamimNameToCharMap = {
+  ETNAHTA: "\u{0591}",
+  SEGOL_ACCENT: "\u{0592}",
+  SHALSHELET: "\u{0593}",
+  ZAQEF_QATAN: "\u{0594}",
+  ZAQEF_GADOL: "\u{0595}",
+  TIPEHA: "\u{0596}",
+  REVIA: "\u{0597}",
+  ZARQA: "\u{0598}",
+  PASHTA: "\u{0599}",
+  YETIV: "\u{059A}",
+  TEVIR: "\u{059B}",
+  GERESH: "\u{059C}",
+  GERESH_MUQDAM: "\u{059D}",
+  GERSHAYIM: "\u{059E}",
+  QARNEY_PARA: "\u{059F}",
+  TELISHA_GEDOLA: "\u{05A0}",
+  PAZER: "\u{05A1}",
+  ATNAH_HAFUKH: "\u{05A2}",
+  MUNAH: "\u{05A3}",
+  MAHAPAKH: "\u{05A4}",
+  MERKHA: "\u{05A5}",
+  MERKHA_KEFULA: "\u{05A6}",
+  DARGA: "\u{05A7}",
+  QADMA: "\u{05A8}",
+  TELISHA_QETANA: "\u{05A9}",
+  YERAH_BEN_YOMO: "\u{05AA}",
+  OLE: "\u{05AB}",
+  ILUY: "\u{05AC}",
+  DEHI: "\u{05AD}",
+  ZINOR: "\u{05AE}"
+};
+
+export const isNameKeyOfTaamimNameToCharMap = (name: string): name is keyof TaamimNameToCharMap => {
+  return name in taamimNameToCharMap;
+};
+
+// ------
+// VOWELS
+// ------
+export const vowelCharToNameMap = {
   "\u{05B1}": "HATAF_SEGOL",
   "\u{05B2}": "HATAF_PATAH",
   "\u{05B3}": "HATAF_QAMATS",
@@ -67,11 +98,40 @@ export const charToNameMap = {
   "\u{05B9}": "HOLAM",
   "\u{05BA}": "HOLAM_HASER",
   "\u{05BB}": "QUBUTS",
-  "\u{05C7}": "QAMATS_QATAN",
+  "\u{05C7}": "QAMATS_QATAN"
+} as const;
 
-  // ------
-  // CONSONANTS
-  // ------
+export type VowelCharToNameMap = typeof vowelCharToNameMap;
+
+export const isCharKeyOfVowelNameToCharMap = (char: string): char is keyof VowelCharToNameMap => {
+  return char in vowelCharToNameMap;
+};
+
+export type VowelNameToCharMap = { [K in keyof VowelCharToNameMap as VowelCharToNameMap[K]]: K };
+
+export const vowelNameToCharMap: VowelNameToCharMap = {
+  HATAF_SEGOL: "\u{05B1}",
+  HATAF_PATAH: "\u{05B2}",
+  HATAF_QAMATS: "\u{05B3}",
+  HIRIQ: "\u{05B4}",
+  TSERE: "\u{05B5}",
+  SEGOL: "\u{05B6}",
+  PATAH: "\u{05B7}",
+  QAMATS: "\u{05B8}",
+  HOLAM: "\u{05B9}",
+  HOLAM_HASER: "\u{05BA}",
+  QUBUTS: "\u{05BB}",
+  QAMATS_QATAN: "\u{05C7}"
+};
+
+export const isNameKeyOfVowelNameToCharMap = (name: string): name is keyof VowelNameToCharMap => {
+  return name in vowelNameToCharMap;
+};
+
+// ----------
+// CONSONANTS
+// ----------
+export const consonantCharToNameMap = {
   "\u{05D0}": "ALEF",
   "\u{05D1}": "BET",
   "\u{05D2}": "GIMEL",
@@ -98,7 +158,73 @@ export const charToNameMap = {
   "\u{05E7}": "QOF",
   "\u{05E8}": "RESH",
   "\u{05E9}": "SHIN",
-  "\u{05EA}": "TAV",
+  "\u{05EA}": "TAV"
+} as const;
+
+export type ConsonantCharToNameMap = typeof consonantCharToNameMap;
+
+export const isCharKeyOfConsonantNameToCharMap = (char: string): char is keyof ConsonantCharToNameMap => {
+  return char in consonantCharToNameMap;
+};
+
+export type ConsonantNameToCharMap = { [K in keyof ConsonantCharToNameMap as ConsonantCharToNameMap[K]]: K };
+
+export const consonantNameToCharMap: ConsonantNameToCharMap = {
+  ALEF: "\u{05D0}",
+  BET: "\u{05D1}",
+  GIMEL: "\u{05D2}",
+  DALET: "\u{05D3}",
+  HE: "\u{05D4}",
+  VAV: "\u{05D5}",
+  ZAYIN: "\u{05D6}",
+  HET: "\u{05D7}",
+  TET: "\u{05D8}",
+  YOD: "\u{05D9}",
+  FINAL_KAF: "\u{05DA}",
+  KAF: "\u{05DB}",
+  LAMED: "\u{05DC}",
+  FINAL_MEM: "\u{05DD}",
+  MEM: "\u{05DE}",
+  FINAL_NUN: "\u{05DF}",
+  NUN: "\u{05E0}",
+  SAMEKH: "\u{05E1}",
+  AYIN: "\u{05E2}",
+  FINAL_PE: "\u{05E3}",
+  PE: "\u{05E4}",
+  FINAL_TSADI: "\u{05E5}",
+  TSADI: "\u{05E6}",
+  QOF: "\u{05E7}",
+  RESH: "\u{05E8}",
+  SHIN: "\u{05E9}",
+  TAV: "\u{05EA}"
+};
+
+export const isNameKeyOfConsonantNameToCharMap = (name: string): name is keyof ConsonantNameToCharMap => {
+  return name in consonantNameToCharMap;
+};
+
+// ------
+// ALL
+// ------
+/**
+ * An object where the key is a character and the value is its partial Unicode name
+ *
+ * @description
+ * Typically, the partial Unicode name is the same as the name of the character without any prefixes (e.g. HEBREW ACCENT).
+ * The only exceptions that had to be changed were:
+ * - \u{0592} from `"SEGOL"` to `"SEGOL_ACCENT"`
+ * - \u{05F3} from `"GERESH"` to `"GERESH_PUNCTUATION"`
+ * - \u{05F4} from `"GERSHAYIM"` to `"GERSHAYIM_PUNCTUATION"`
+ *
+ */
+export const charToNameMap = {
+  ...taamimCharToNameMap,
+  ...vowelCharToNameMap,
+  ...consonantCharToNameMap,
+  // ------
+  // SHEVA
+  // ------
+  "\u{05B0}": "SHEVA",
 
   // ------
   // DAGESH & RAFE
@@ -161,91 +287,14 @@ export type NameToCharMap = { [K in keyof CharToNameMap as CharToNameMap[K]]: K 
  * — HEBREW POINT has been removed and spaces replaced wiith underscores (e.g. "HATAF_PATAH")
  */
 export const nameToCharMap: NameToCharMap = {
-  // ------
-  // TAAMIM
-  // ------
-  ETNAHTA: "\u{0591}",
-  SEGOL_ACCENT: "\u{0592}",
-  SHALSHELET: "\u{0593}",
-  ZAQEF_QATAN: "\u{0594}",
-  ZAQEF_GADOL: "\u{0595}",
-  TIPEHA: "\u{0596}",
-  REVIA: "\u{0597}",
-  ZARQA: "\u{0598}",
-  PASHTA: "\u{0599}",
-  YETIV: "\u{059A}",
-  TEVIR: "\u{059B}",
-  GERESH: "\u{059C}",
-  GERESH_MUQDAM: "\u{059D}",
-  GERSHAYIM: "\u{059E}",
-  QARNEY_PARA: "\u{059F}",
-  TELISHA_GEDOLA: "\u{05A0}",
-  PAZER: "\u{05A1}",
-  ATNAH_HAFUKH: "\u{05A2}",
-  MUNAH: "\u{05A3}",
-  MAHAPAKH: "\u{05A4}",
-  MERKHA: "\u{05A5}",
-  MERKHA_KEFULA: "\u{05A6}",
-  DARGA: "\u{05A7}",
-  QADMA: "\u{05A8}",
-  TELISHA_QETANA: "\u{05A9}",
-  YERAH_BEN_YOMO: "\u{05AA}",
-  OLE: "\u{05AB}",
-  ILUY: "\u{05AC}",
-  DEHI: "\u{05AD}",
-  ZINOR: "\u{05AE}",
+  ...taamimNameToCharMap,
+  ...vowelNameToCharMap,
+  ...consonantNameToCharMap,
 
   // ------
   // SHEVA
   // ------
   SHEVA: "\u{05B0}",
-
-  // ------
-  // NIQQUD
-  // ------
-  HATAF_SEGOL: "\u{05B1}",
-  HATAF_PATAH: "\u{05B2}",
-  HATAF_QAMATS: "\u{05B3}",
-  HIRIQ: "\u{05B4}",
-  TSERE: "\u{05B5}",
-  SEGOL: "\u{05B6}",
-  PATAH: "\u{05B7}",
-  QAMATS: "\u{05B8}",
-  HOLAM: "\u{05B9}",
-  HOLAM_HASER: "\u{05BA}",
-  QUBUTS: "\u{05BB}",
-  QAMATS_QATAN: "\u{05C7}",
-
-  // ------
-  // CONSONANTS
-  // ------
-  ALEF: "\u{05D0}",
-  BET: "\u{05D1}",
-  GIMEL: "\u{05D2}",
-  DALET: "\u{05D3}",
-  HE: "\u{05D4}",
-  VAV: "\u{05D5}",
-  ZAYIN: "\u{05D6}",
-  HET: "\u{05D7}",
-  TET: "\u{05D8}",
-  YOD: "\u{05D9}",
-  FINAL_KAF: "\u{05DA}",
-  KAF: "\u{05DB}",
-  LAMED: "\u{05DC}",
-  FINAL_MEM: "\u{05DD}",
-  MEM: "\u{05DE}",
-  FINAL_NUN: "\u{05DF}",
-  NUN: "\u{05E0}",
-  SAMEKH: "\u{05E1}",
-  AYIN: "\u{05E2}",
-  FINAL_PE: "\u{05E3}",
-  PE: "\u{05E4}",
-  FINAL_TSADI: "\u{05E5}",
-  TSADI: "\u{05E6}",
-  QOF: "\u{05E7}",
-  RESH: "\u{05E8}",
-  SHIN: "\u{05E9}",
-  TAV: "\u{05EA}",
 
   // ------
   // DAGESH & RAFE
