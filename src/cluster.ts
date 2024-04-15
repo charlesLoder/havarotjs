@@ -1,7 +1,19 @@
 import { Char } from "./char";
 import { Node } from "./node";
 import { Syllable } from "./syllable";
-import { CharToNameMap, NameToCharMap, charToNameMap, isCharKeyOfCharToNameMap, nameToCharMap } from "./utils/charMap";
+import {
+  ConsonantCharToNameMap,
+  ConsonantNameToCharMap,
+  TaamimCharToNameMap,
+  VowelCharToNameMap,
+  VowelNameToCharMap,
+  charToNameMap,
+  consonantNameToCharMap,
+  isCharKeyOfConsonantNameToCharMap,
+  isCharKeyOfTaamimNameToCharMap,
+  isCharKeyOfVowelNameToCharMap,
+  vowelNameToCharMap
+} from "./utils/charMap";
 import { hebChars, meteg, punctuation, taamim } from "./utils/regularExpressions";
 
 /**
@@ -34,7 +46,11 @@ export class Cluster extends Node<Cluster> {
     return noSequence ? chars : chars.sort((a, b) => a.sequencePosition - b.sequencePosition);
   }
 
-  private isCharKeyOfCharToNameMap = isCharKeyOfCharToNameMap;
+  private isCharKeyOfConsonantNameToCharMap = isCharKeyOfConsonantNameToCharMap;
+
+  private isCharKeyOfTaamimNameToCharMap = isCharKeyOfTaamimNameToCharMap;
+
+  private isCharKeyOfVowelNameToCharMap = isCharKeyOfVowelNameToCharMap;
 
   private get hasMetegCharacter(): boolean {
     return Cluster.meteg.test(this.text);
@@ -58,6 +74,101 @@ export class Cluster extends Node<Cluster> {
    */
   get chars(): Char[] {
     return this.#sequenced;
+  }
+
+  /**
+   * Returns the first consonant character in the cluster.
+   *
+   * ```typescript
+   * const text: Text = new Text("הֲבָרֹות");
+   * text.clusters[0].consonant;
+   * // "ה"
+   * ```
+   */
+  get consonant(): keyof ConsonantCharToNameMap | null {
+    const char = this.chars.find((char) => char.isConsonant);
+
+    if (!char) {
+      return null;
+    }
+
+    return this.isCharKeyOfConsonantNameToCharMap(char.text) ? char.text : null;
+  }
+
+  /**
+   * Returns all consonant characters in the cluster.
+   *
+   * ```typescript
+   * const text: Text = new Text("הֲבָרֹות");
+   * text.clusters[0].consonants;
+   * // ["ה"]
+   * ```
+   *
+   * @warning
+   * This can only every return one consonant, as a `Cluster` is defined by having only one consonant.
+   * Though it is impossible to have two consonants in a cluster, this api is meant for consistency with `vowels` and `taamim`
+   */
+  get consonants(): (keyof ConsonantCharToNameMap | null)[] {
+    const chars = this.chars.filter((char) => char.isConsonant);
+
+    if (!chars.length) {
+      return [null];
+    }
+
+    return chars.map((char) => (this.isCharKeyOfConsonantNameToCharMap(char.text) ? char.text : null));
+  }
+
+  /**
+   * Returns the name of the first consonant character in the cluster.
+   *
+   * ```typescript
+   * const text: Text = new Text("הֲבָרֹות");
+   * text.clusters[0].consonantName;
+   * // "HE"
+   */
+  get consonantName(): ConsonantCharToNameMap[keyof ConsonantCharToNameMap] | null {
+    const consonant = this.consonant;
+    return consonant ? charToNameMap[consonant] : null;
+  }
+
+  /**
+   * Returns all consonant names in the cluster.
+   *
+   * ```typescript
+   * const text: Text = new Text("הֲבָרֹות");
+   * text.clusters[0].consonantNames;
+   * // ["HE"]
+   * ```
+   */
+  get consonantNames(): (ConsonantCharToNameMap[keyof ConsonantCharToNameMap] | null)[] {
+    const chars = this.chars.filter((char) => char.isConsonant);
+
+    if (!chars.length) {
+      return [null];
+    }
+
+    return chars.map((char) => (this.isCharKeyOfConsonantNameToCharMap(char.text) ? charToNameMap[char.text] : null));
+  }
+
+  /**
+   * Returns `true` if the cluster contains the given consonant name.
+   *
+   * ```typescript
+   * const text: Text = new Text("הֲבָרֹות");
+   * text.clusters[0].hasConsonantName("HE");
+   * // true
+   * text.clusters[0].hasConsonantName("BET");
+   * // false
+   * ```
+   */
+  hasConsonantName(name: keyof ConsonantNameToCharMap): boolean {
+    if (!consonantNameToCharMap[name]) {
+      throw new Error(`${name} is not a valid value`);
+    }
+
+    const char = this.chars.find((c) => c.isCharacterName(name));
+
+    return !!char;
   }
 
   /**
@@ -266,8 +377,8 @@ export class Cluster extends Node<Cluster> {
    * // false
    * ```
    */
-  hasVowelName(name: keyof NameToCharMap): boolean {
-    if (!nameToCharMap[name]) {
+  hasVowelName(name: keyof VowelNameToCharMap): boolean {
+    if (!vowelNameToCharMap[name]) {
       throw new Error(`${name} is not a valid value`);
     }
 
@@ -419,6 +530,77 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
+   * Returns the first taamim character of the cluster
+   *
+   * ```typescript
+   * const text: Text = new Text("בֺ֨");
+   * text.clusters[0].taam;
+   * // "֨" (i.e. \u{05A8})
+   * ```
+   */
+  get taam(): keyof TaamimCharToNameMap | null {
+    const char = this.chars.find((char) => char.isTaamim);
+
+    if (!char) {
+      return null;
+    }
+
+    return this.isCharKeyOfTaamimNameToCharMap(char.text) ? char.text : null;
+  }
+
+  /**
+   * Returns an array of taamim characters in the cluster
+   *
+   * ```typescript
+   * const text: Text = new Text("אֱלֹהֶ֑֔יךָ");
+   * text.clusters[2].taamim;
+   * // ["֑", "֔"]
+   * ```
+   */
+  get taamim(): (keyof TaamimCharToNameMap | null)[] {
+    const chars = this.chars.filter((char) => char.isTaamim);
+
+    if (!chars.length) {
+      return [null];
+    }
+
+    return chars.map((c) => (this.isCharKeyOfTaamimNameToCharMap(c.text) ? c.text : null));
+  }
+
+  /**
+   * Return the name first taamim character of the cluster
+   *
+   * ```typescript
+   * const text: Text = new Text("בֺ֨");
+   * text.clusters[0].taam;
+   * // "QADMA"
+   * ```
+   */
+  get taamName(): TaamimCharToNameMap[keyof TaamimCharToNameMap] | null {
+    const taam = this.taam;
+    return taam ? charToNameMap[taam] : null;
+  }
+
+  /**
+   * Returns an array of names of taamim characters in the cluster
+   *
+   * ```typescript
+   * const text: Text = new Text("אֱלֹהֶ֑֔יךָ");
+   * text.clusters[2].taam;
+   * // ['ETNAHTA', 'ZAQEF_QATAN' ]
+   * ```
+   */
+  get taamimNames(): (TaamimCharToNameMap[keyof TaamimCharToNameMap] | null)[] {
+    const chars = this.chars.filter((char) => char.isTaamim);
+
+    if (!chars.length) {
+      return [null];
+    }
+
+    return chars.map((c) => (this.isCharKeyOfTaamimNameToCharMap(c.text) ? charToNameMap[c.text] : null));
+  }
+
+  /**
    * @returns a string that has been built up from the text of its constituent Chars
    *
    * ```typescript
@@ -451,14 +633,14 @@ export class Cluster extends Node<Cluster> {
    * // null
    * ```
    */
-  get vowel(): keyof CharToNameMap | null {
+  get vowel(): keyof VowelCharToNameMap | null {
     const char = this.chars.find((c) => c.isVowel);
 
     if (!char) {
       return null;
     }
 
-    return this.isCharKeyOfCharToNameMap(char.text) ? char.text : null;
+    return this.isCharKeyOfVowelNameToCharMap(char.text) ? char.text : null;
   }
 
   /**
@@ -475,8 +657,54 @@ export class Cluster extends Node<Cluster> {
    * // null
    * ```
    */
-  get vowelName(): CharToNameMap[keyof CharToNameMap] | null {
+  get vowelName(): VowelCharToNameMap[keyof VowelCharToNameMap] | null {
     const vowel = this.vowel;
     return vowel ? charToNameMap[vowel] : null;
+  }
+
+  /**
+   * Returns an array of names of vowel characters in the cluster
+   *
+   * ```typescript
+   * const text: Text = new Text("הַֽ֭יְחָבְרְךָ");
+   * text.clusters[0].vowelNames;
+   * // ['PATAH']
+   * ```
+   *
+   * @description
+   * It is exceedingly rare to find more than one vowel character in a cluster.
+   */
+  get vowelNames(): (VowelCharToNameMap[keyof VowelCharToNameMap] | null)[] {
+    const chars = this.chars.filter((c) => c.isVowel);
+
+    if (!chars.length) {
+      return [null];
+    }
+
+    return chars.map((c) => (this.isCharKeyOfVowelNameToCharMap(c.text) ? charToNameMap[c.text] : null));
+  }
+
+  /**
+   * Returns an array of vowel characters in the cluster
+   *
+   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
+   * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character
+   *
+   * ```typescript
+   * const text: Text = new Text("הַֽ֭יְחָבְרְךָ");
+   * text.clusters[0].vowel;
+   * // "\u{05B7}"
+   * text.clusters[3].vowel;
+   * // null
+   * ```
+   */
+  get vowels(): (keyof VowelCharToNameMap | null)[] {
+    const chars = this.chars.filter((c) => c.isVowel);
+
+    if (!chars.length) {
+      return [null];
+    }
+
+    return chars.map((c) => (this.isCharKeyOfVowelNameToCharMap(c.text) ? c.text : null));
   }
 }
