@@ -333,7 +333,7 @@ describe.each`
   ${"multiple vowels"}    | ${"מִתָּ֑͏ַ֜חַת"}    | ${1}       | ${["QAMATS", "PATAH"]}
 `("vowelNames:", ({ description, hebrew, clusterNum, vowelNames }) => {
   describe(description, () => {
-    test(`taam to equal ${vowelNames}`, () => {
+    test(`vowel names to equal ${vowelNames}`, () => {
       const text = new Text(hebrew);
       expect(text.clusters[clusterNum].vowelNames).toEqual(vowelNames);
     });
@@ -348,7 +348,7 @@ describe.each`
   ${"multiple vowels"}    | ${"מִתָּ֑͏ַ֜חַת"}    | ${1}       | ${["\u{5B8}", "\u{5B7}"]}
 `("vowels:", ({ description, hebrew, clusterNum, vowels }) => {
   describe(description, () => {
-    test(`taam to equal ${vowels}`, () => {
+    test(`vowels to equal ${vowels}`, () => {
       const text = new Text(hebrew);
       expect(text.clusters[clusterNum].vowels).toEqual(vowels);
     });
