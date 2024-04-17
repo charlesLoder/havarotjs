@@ -17,7 +17,7 @@ describe.each`
 describe.each`
   description       | hebrew              | clusterNum | consonant
   ${"consonant"}    | ${"הָאָ֖רֶץ"}       | ${0}       | ${["ה"]}
-  ${"no consonant"} | ${"וַֽיְהִי־כֵֽן׃"} | ${4}       | ${[null]}
+  ${"no consonant"} | ${"וַֽיְהִי־כֵֽן׃"} | ${4}       | ${[]}
 `("consonants:", ({ description, hebrew, clusterNum, consonant }) => {
   describe(description, () => {
     test(`consonant to equal ${consonant}`, () => {
@@ -43,7 +43,7 @@ describe.each`
 describe.each`
   description       | hebrew              | clusterNum | name
   ${"consonant"}    | ${"הָאָ֖רֶץ"}       | ${0}       | ${["HE"]}
-  ${"no consonant"} | ${"וַֽיְהִי־כֵֽן׃"} | ${4}       | ${[null]}
+  ${"no consonant"} | ${"וַֽיְהִי־כֵֽן׃"} | ${4}       | ${[]}
 `("consonantNames:", ({ description, hebrew, clusterNum, name }) => {
   describe(description, () => {
     test(`consonantNames to equal ${name}`, () => {
@@ -253,7 +253,7 @@ describe.each`
 describe.each`
   description              | hebrew              | clusterNum | taamim
   ${"one character"}       | ${"הָאָ֖רֶץ"}       | ${1}       | ${["\u{596}"]}
-  ${"no characters"}       | ${"וַֽיְהִי־כֵֽן׃"} | ${1}       | ${[null]}
+  ${"no characters"}       | ${"וַֽיְהִי־כֵֽן׃"} | ${1}       | ${[]}
   ${"multiple characters"} | ${"מִתָּ֑͏ַ֜חַת"}    | ${1}       | ${["\u{591}", "\u{59C}"]}
 `("taamim:", ({ description, hebrew, clusterNum, taamim }) => {
   describe(description, () => {
@@ -281,7 +281,7 @@ describe.each`
 describe.each`
   description              | hebrew              | clusterNum | taamimNames
   ${"one character"}       | ${"הָאָ֖רֶץ"}       | ${1}       | ${["TIPEHA"]}
-  ${"no characters"}       | ${"וַֽיְהִי־כֵֽן׃"} | ${1}       | ${[null]}
+  ${"no characters"}       | ${"וַֽיְהִי־כֵֽן׃"} | ${1}       | ${[]}
   ${"multiple characters"} | ${"מִתָּ֑͏ַ֜חַת"}    | ${1}       | ${["ETNAHTA", "GERESH"]}
 `("taamimNames:", ({ description, hebrew, clusterNum, taamimNames }) => {
   describe(description, () => {
@@ -328,8 +328,8 @@ describe.each`
 describe.each`
   description             | hebrew              | clusterNum | vowelNames
   ${"with one character"} | ${"הָאָ֖רֶץ"}       | ${1}       | ${["QAMATS"]}
-  ${"with sheva"}         | ${"וַֽיְהִי־כֵֽן׃"} | ${1}       | ${[null]}
-  ${"with maqqaf"}        | ${"וַֽיְהִי־כֵֽן׃"} | ${4}       | ${[null]}
+  ${"with sheva"}         | ${"וַֽיְהִי־כֵֽן׃"} | ${1}       | ${[]}
+  ${"with maqqaf"}        | ${"וַֽיְהִי־כֵֽן׃"} | ${4}       | ${[]}
   ${"multiple vowels"}    | ${"מִתָּ֑͏ַ֜חַת"}    | ${1}       | ${["QAMATS", "PATAH"]}
 `("vowelNames:", ({ description, hebrew, clusterNum, vowelNames }) => {
   describe(description, () => {
@@ -343,8 +343,8 @@ describe.each`
 describe.each`
   description             | hebrew              | clusterNum | vowels
   ${"cluster with patah"} | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${["\u{05B7}"]}
-  ${"cluster with sheva"} | ${"הַֽ֭יְחָבְרְךָ"} | ${1}       | ${[null]}
-  ${"with maqqaf"}        | ${"וַֽיְהִי־כֵֽן׃"} | ${4}       | ${[null]}
+  ${"cluster with sheva"} | ${"הַֽ֭יְחָבְרְךָ"} | ${1}       | ${[]}
+  ${"with maqqaf"}        | ${"וַֽיְהִי־כֵֽן׃"} | ${4}       | ${[]}
   ${"multiple vowels"}    | ${"מִתָּ֑͏ַ֜חַת"}    | ${1}       | ${["\u{5B8}", "\u{5B7}"]}
 `("vowels:", ({ description, hebrew, clusterNum, vowels }) => {
   describe(description, () => {
