@@ -108,14 +108,17 @@ export class Cluster extends Node<Cluster> {
    * This can only every return one consonant, as a `Cluster` is defined by having only one consonant.
    * Though it is impossible to have two consonants in a cluster, this api is meant for consistency with `vowels` and `taamim`
    */
-  get consonants(): (keyof ConsonantCharToNameMap | null)[] {
-    const chars = this.chars.filter((char) => char.isConsonant);
-
-    if (!chars.length) {
-      return [null];
-    }
-
-    return chars.map((char) => (this.isCharKeyOfConsonantNameToCharMap(char.text) ? char.text : null));
+  get consonants(): (keyof ConsonantCharToNameMap)[] {
+    return this.chars.reduce(
+      (a, char) => {
+        const text = char.text;
+        if (char.isConsonant && this.isCharKeyOfConsonantNameToCharMap(text)) {
+          a.push(text);
+        }
+        return a;
+      },
+      [] as (keyof ConsonantCharToNameMap)[]
+    );
   }
 
   /**
@@ -140,14 +143,17 @@ export class Cluster extends Node<Cluster> {
    * // ["HE"]
    * ```
    */
-  get consonantNames(): (ConsonantCharToNameMap[keyof ConsonantCharToNameMap] | null)[] {
-    const chars = this.chars.filter((char) => char.isConsonant);
-
-    if (!chars.length) {
-      return [null];
-    }
-
-    return chars.map((char) => (this.isCharKeyOfConsonantNameToCharMap(char.text) ? charToNameMap[char.text] : null));
+  get consonantNames(): ConsonantCharToNameMap[keyof ConsonantCharToNameMap][] {
+    return this.chars.reduce(
+      (a, char) => {
+        const text = char.text;
+        if (char.isConsonant && this.isCharKeyOfConsonantNameToCharMap(text)) {
+          a.push(charToNameMap[text]);
+        }
+        return a;
+      },
+      [] as ConsonantCharToNameMap[keyof ConsonantCharToNameMap][]
+    );
   }
 
   /**
@@ -558,13 +564,16 @@ export class Cluster extends Node<Cluster> {
    * ```
    */
   get taamim(): (keyof TaamimCharToNameMap | null)[] {
-    const chars = this.chars.filter((char) => char.isTaamim);
+    return this.chars.reduce(
+      (a, char) => {
+        if (char.isTaamim && this.isCharKeyOfTaamimNameToCharMap(char.text)) {
+          a.push(char.text);
+        }
 
-    if (!chars.length) {
-      return [null];
-    }
-
-    return chars.map((c) => (this.isCharKeyOfTaamimNameToCharMap(c.text) ? c.text : null));
+        return a;
+      },
+      [] as (keyof TaamimCharToNameMap)[]
+    );
   }
 
   /**
@@ -590,14 +599,18 @@ export class Cluster extends Node<Cluster> {
    * // ['ETNAHTA', 'ZAQEF_QATAN' ]
    * ```
    */
-  get taamimNames(): (TaamimCharToNameMap[keyof TaamimCharToNameMap] | null)[] {
-    const chars = this.chars.filter((char) => char.isTaamim);
+  get taamimNames(): TaamimCharToNameMap[keyof TaamimCharToNameMap][] {
+    return this.chars.reduce(
+      (a, char) => {
+        const text = char.text;
+        if (char.isTaamim && this.isCharKeyOfTaamimNameToCharMap(text)) {
+          a.push(charToNameMap[text]);
+        }
 
-    if (!chars.length) {
-      return [null];
-    }
-
-    return chars.map((c) => (this.isCharKeyOfTaamimNameToCharMap(c.text) ? charToNameMap[c.text] : null));
+        return a;
+      },
+      [] as TaamimCharToNameMap[keyof TaamimCharToNameMap][]
+    );
   }
 
   /**
@@ -674,14 +687,17 @@ export class Cluster extends Node<Cluster> {
    * @description
    * It is exceedingly rare to find more than one vowel character in a cluster.
    */
-  get vowelNames(): (VowelCharToNameMap[keyof VowelCharToNameMap] | null)[] {
-    const chars = this.chars.filter((c) => c.isVowel);
+  get vowelNames(): VowelCharToNameMap[keyof VowelCharToNameMap][] {
+    return this.chars.reduce(
+      (a, char) => {
+        if (char.isVowel && this.isCharKeyOfVowelNameToCharMap(char.text)) {
+          a.push(charToNameMap[char.text]);
+        }
 
-    if (!chars.length) {
-      return [null];
-    }
-
-    return chars.map((c) => (this.isCharKeyOfVowelNameToCharMap(c.text) ? charToNameMap[c.text] : null));
+        return a;
+      },
+      [] as VowelCharToNameMap[keyof VowelCharToNameMap][]
+    );
   }
 
   /**
@@ -698,13 +714,16 @@ export class Cluster extends Node<Cluster> {
    * // null
    * ```
    */
-  get vowels(): (keyof VowelCharToNameMap | null)[] {
-    const chars = this.chars.filter((c) => c.isVowel);
-
-    if (!chars.length) {
-      return [null];
-    }
-
-    return chars.map((c) => (this.isCharKeyOfVowelNameToCharMap(c.text) ? c.text : null));
+  get vowels(): (keyof VowelCharToNameMap)[] {
+    return this.chars.reduce(
+      (a, char) => {
+        const text = char.text;
+        if (char.isVowel && this.isCharKeyOfVowelNameToCharMap(text)) {
+          a.push(text);
+        }
+        return a;
+      },
+      [] as (keyof VowelCharToNameMap)[]
+    );
   }
 }
