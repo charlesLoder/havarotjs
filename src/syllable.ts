@@ -1,25 +1,33 @@
 import { Char } from "./char";
 import { Cluster } from "./cluster";
 import { Node } from "./node";
-import { charToNameMap, nameToCharMap } from "./utils/charMap";
+import {
+  ConsonantCharToNameMap,
+  ConsonantNameToCharMap,
+  consonantNameToCharMap,
+  vowelCharToNameMap,
+  vowelNameToCharMap
+} from "./utils/charMap";
 import { vowelsCaptureGroupWithSheva } from "./utils/regularExpressions";
 import { removeTaamim } from "./utils/removeTaamim";
 import { Word } from "./word";
 
-const sylCharToNameMap = {
-  ...charToNameMap,
-  "\u{05D5}\u{05BC}": "SHUREQ"
+const sylVowelCharToNameMap = {
+  ...vowelCharToNameMap,
+  "\u{05D5}\u{05BC}": "SHUREQ",
+  "\u{05B0}": "SHEVA"
 } as const;
 
-type SyllableCharToNameMap = typeof sylCharToNameMap;
+type SyllableVowelCharToNameMap = typeof sylVowelCharToNameMap;
 
-const sylNameToCharMap = {
-  ...nameToCharMap,
+const sylVowelNameToCharMap = {
+  ...vowelNameToCharMap,
   /* eslint-disable  @typescript-eslint/naming-convention */
-  SHUREQ: "\u{05D5}\u{05BC}"
+  SHUREQ: "\u{05D5}\u{05BC}",
+  SHEVA: "\u{05B0}"
 } as const;
 
-type SyllableNameToCharMap = typeof sylNameToCharMap;
+type SyllablVowelNameToCharMap = typeof sylVowelNameToCharMap;
 
 /**
  * A `Syllable` is created from an array of [[`Clusters`]].
@@ -50,8 +58,8 @@ export class Syllable extends Node<Syllable> {
     this.#isFinal = isFinal;
   }
 
-  private isVowelKeyOfSyllableCharToNameMap(vowel: string): vowel is keyof SyllableCharToNameMap {
-    return vowel in sylCharToNameMap;
+  private isCharKeyOfSyllableVowelCharToNameMap(char: string): char is keyof SyllableVowelCharToNameMap {
+    return char in sylVowelCharToNameMap;
   }
 
   /**
@@ -103,6 +111,71 @@ export class Syllable extends Node<Syllable> {
   }
 
   /**
+   * Gets the consonant _characters_ of the syllable.
+   *
+   * @example
+   * ```typescript
+   * const text: Text = new Text("רְ֭שָׁעִים");
+   * text.syllables[2].consonants;
+   * // ["ע", "י", "ם"]
+   * ```
+   *
+   * @description
+   * This returns a one dimensional array of consonant characters, even if the characters are not phonemic consonants.
+   * Meaning evenn maters are returned as consonant characters.
+   *
+   * @see {@link structure} if you need the consonants with phonemic value
+   *
+   *
+   */
+  get consonants(): (keyof ConsonantCharToNameMap)[] {
+    return this.clusters.map((cluster) => cluster.consonants).flat();
+  }
+
+  /**
+   * Gets the names of the consonant _characters_ of the syllable.
+   *
+   * @example
+   * ```typescript
+   * const text: Text = new Text("רְ֭שָׁעִים");
+   * text.syllables[2].consonantNames;
+   * // ["AYIN", "YOD", "FINAL_MEM"]
+   * ```
+   *
+   * @description
+   * This returns a one dimensional array of consonant names, even if the characters are not phonemic consonants,
+   * meaning even the name of maters are returned (see example).
+   *
+   * @see {@link structure} if you need the consonants with phonemic value
+   */
+  get consonantNames(): ConsonantCharToNameMap[keyof ConsonantCharToNameMap][] {
+    return this.clusters.map((cluster) => cluster.consonantNames).flat();
+  }
+
+  /**
+   * Returns `true` if the syllable contains the consonant _character_ matching the name passed in.
+   *
+   * @example
+   * ```typescript
+   * const text: Text = new Text("רְ֭שָׁעִים");
+   * text.syllables[2].hasConsonantName("AYIN");
+   * // true
+   * text.syllables[2].hasConsonantName("YOD");
+   * // false
+   * ```
+   *
+   * @description
+   * This checks if the syllable contains the given consonant name, even if the character is not a phonemic consonant.
+   */
+  hasConsonantName(name: keyof ConsonantNameToCharMap): boolean {
+    if (!consonantNameToCharMap[name]) {
+      throw new Error(`${name} is not a valid value`);
+    }
+
+    return this.consonantNames.includes(name);
+  }
+
+  /**
    * Returns `true` if syllables contains the vowel character of the name passed in
    *
    * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
@@ -127,8 +200,8 @@ export class Syllable extends Node<Syllable> {
    * This returns a boolean if the vowel character is present, even for most mater lectionis (e.g. in a holam vav construction, "HOLAM" would return true)
    * The only exception is a shureq, because there is no vowel character for a shureq.
    */
-  hasVowelName(name: keyof SyllableNameToCharMap): boolean {
-    if (!sylNameToCharMap[name]) {
+  hasVowelName(name: keyof SyllablVowelNameToCharMap): boolean {
+    if (!sylVowelNameToCharMap[name]) {
       throw new Error(`${name} is not a valid value`);
     }
 
@@ -138,7 +211,7 @@ export class Syllable extends Node<Syllable> {
     }
 
     const isShevaSilent = name === "SHEVA" && this.clusters.filter((c) => c.hasVowel).length ? true : false;
-    return !isShevaSilent && this.text.indexOf(sylNameToCharMap[name]) !== -1 ? true : false;
+    return !isShevaSilent && this.text.indexOf(sylVowelNameToCharMap[name]) !== -1 ? true : false;
   }
 
   /**
@@ -396,18 +469,18 @@ export class Syllable extends Node<Syllable> {
    * This returns a single vowel character, even for most mater lectionis (e.g. a holam vav would return the holam, not the vav).
    * The only exception is a shureq, which returns the vav and the dagesh because there is no vowel character for a shureq.
    */
-  get vowel(): keyof SyllableCharToNameMap | null {
+  get vowel(): keyof SyllableVowelCharToNameMap | null {
     const nucleus = this.nucleus;
     const noTaamim = removeTaamim(nucleus)[0];
 
     // for regular vowel characters and shureqs, this should match
-    if (this.isVowelKeyOfSyllableCharToNameMap(noTaamim)) {
+    if (this.isCharKeyOfSyllableVowelCharToNameMap(noTaamim)) {
       return noTaamim;
     }
 
     // for maters or text with mixed scripts (e.g. Hebrew and Latin), we have to extract the vowel character
     const match = this.text.match(vowelsCaptureGroupWithSheva);
-    if (match && this.isVowelKeyOfSyllableCharToNameMap(match[0])) {
+    if (match && this.isCharKeyOfSyllableVowelCharToNameMap(match[0])) {
       return match[0];
     }
 
@@ -432,9 +505,66 @@ export class Syllable extends Node<Syllable> {
    * The only exception is a shureq, which returns "SHUREQ" because there is no vowel character for a shureq.
    * ```
    */
-  get vowelName(): SyllableCharToNameMap[keyof SyllableCharToNameMap] | null {
+  get vowelName(): SyllableVowelCharToNameMap[keyof SyllableVowelCharToNameMap] | null {
     const vowel = this.vowel;
-    return vowel ? sylCharToNameMap[vowel] : null;
+    return vowel ? sylVowelCharToNameMap[vowel] : null;
+  }
+
+  get vowelNames(): SyllableVowelCharToNameMap[keyof SyllableVowelCharToNameMap][] {
+    return this.vowels
+      .reduce(
+        (a, vowel) => {
+          if (sylVowelCharToNameMap[vowel]) {
+            a.push(sylVowelCharToNameMap[vowel]);
+          }
+          return a;
+        },
+        [] as SyllableVowelCharToNameMap[keyof SyllableVowelCharToNameMap][]
+      )
+      .flat();
+  }
+
+  /**
+   * Returns an array of vowel character of the syllable
+   *
+   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
+   * Unlike `Cluster`, a `Syllable` is concerned with linguistics, so a sheva **is** a vowel character
+   *
+   * ```typescript
+   * const text: Text = new Text("מִתָּ֑͏ַ֜חַת");
+   * text.syllables[0].vowels;
+   * // ["\u{05B4}"]
+   * text.syllables[1].vowels;
+   * // ["\u{05B8}", "\u{05B7}"]
+   * ```
+   *
+   * @description
+   * This returns a single vowel character, even for most mater lectionis (e.g. a holam vav would return the holam, not the vav).
+   * The only exception is a shureq, which returns the vav and the dagesh because there is no vowel character for a shureq.
+   */
+  get vowels(): (keyof SyllableVowelCharToNameMap)[] {
+    // the nucleus returns as many vowels characters as there are in the syllable
+    const nucleus = this.nucleus;
+    const noTaamim = removeTaamim(nucleus)[0];
+    const shureq = sylVowelNameToCharMap["SHUREQ"];
+    const PRIVATE_CHAR = "\uE000"; // a private use character
+    return noTaamim
+      .replace(shureq, PRIVATE_CHAR)
+      .split("")
+      .reduce(
+        (a, v) => {
+          console.log(v);
+
+          if (this.isCharKeyOfSyllableVowelCharToNameMap(v)) {
+            a.push(v);
+          }
+          if (v === PRIVATE_CHAR) {
+            a.push(shureq);
+          }
+          return a;
+        },
+        [] as (keyof SyllableVowelCharToNameMap)[]
+      );
   }
 
   get word(): Word | null {
