@@ -659,8 +659,6 @@ export class Syllable extends Node<Syllable> {
       .split("")
       .reduce(
         (a, v) => {
-          console.log(v);
-
           if (this.isCharKeyOfSyllableVowelCharToNameMap(v)) {
             a.push(v);
           }
