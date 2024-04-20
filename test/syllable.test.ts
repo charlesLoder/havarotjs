@@ -182,6 +182,20 @@ describe("structure cache", () => {
 });
 
 describe.each`
+  description              | hebrew              | sylNum | taamim
+  ${"one character"}       | ${"הָאָ֖רֶץ"}       | ${1}   | ${["\u{596}"]}
+  ${"no characters"}       | ${"וַֽיְהִי־כֵֽן׃"} | ${1}   | ${[]}
+  ${"multiple characters"} | ${"מִתָּ֑͏ַ֜חַת"}    | ${1}   | ${["\u{591}", "\u{59C}"]}
+`("taamim:", ({ description, hebrew, sylNum, taamim }) => {
+  describe(description, () => {
+    test(`taamim to equal ${taamim}`, () => {
+      const text = new Text(hebrew);
+      expect(text.syllables[sylNum].taamim).toEqual(taamim);
+    });
+  });
+});
+
+describe.each`
   description                     | hebrew              | syllableNum | vowel                 | allowNoNiqqud
   ${"syllable with patah"}        | ${"הַֽ֭יְחָבְרְךָ"} | ${0}        | ${"\u{05B7}"}         | ${false}
   ${"syllable with sheva"}        | ${"הַֽ֭יְחָבְרְךָ"} | ${1}        | ${"\u{05B0}"}         | ${false}
