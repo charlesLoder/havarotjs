@@ -33,6 +33,20 @@ export class Cluster extends Node<Cluster> {
   #sequenced: Char[];
   #syllable: Syllable | null = null;
 
+  /**
+   * Creates a new cluster
+   *
+   * @param cluster - the original cluster
+   * @param noSequence - whether to sequence the cluster
+   *
+   * @example
+   * ```ts
+   * const str = "הָ";
+   * const cluster = new Cluster(str);
+   * cluster.text;
+   * // "הָ"
+   * ```
+   */
   constructor(cluster: string, noSequence: boolean = false) {
     super();
     this.value = this;
@@ -61,10 +75,13 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
+   * Gets all the {@link Char | characters} in the Cluster
+   *
    * @returns an array of sequenced Char objects
    *
-   * ```typescript
-   * const text: Text = new Text("הֲבָרֹות");
+   * @example
+   * ```ts
+   * const text = new Text("הֲבָרֹות");
    * text.clusters[0].chars;
    * // [
    * //  Char { original: "ה" },
@@ -77,13 +94,19 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
-   * Returns the first consonant character in the cluster.
+   * Gets the first consonant character in the cluster
    *
-   * ```typescript
-   * const text: Text = new Text("הֲבָרֹות");
+   * @returns the first consonant character in the cluster
+   *
+   * @example
+   * ```ts
+   * const text = new Text("הֲבָרֹות");
    * text.clusters[0].consonant;
    * // "ה"
    * ```
+   *
+   * @description
+   * A Cluster only ever has one consonant.
    */
   get consonant(): keyof ConsonantCharToNameMap | null {
     const char = this.chars.find((char) => char.isConsonant);
@@ -96,10 +119,13 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
-   * Returns all consonant characters in the cluster.
+   * Gets all the consonant characters in the cluster
    *
-   * ```typescript
-   * const text: Text = new Text("הֲבָרֹות");
+   * @returns an array of the consonant characters in the cluster
+   *
+   * @example
+   * ```ts
+   * const text = new Text("הֲבָרֹות");
    * text.clusters[0].consonants;
    * // ["ה"]
    * ```
@@ -122,12 +148,15 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
-   * Returns the name of the first consonant character in the cluster.
+   * Gets the name of the first consonant character in the cluster
    *
-   * ```typescript
-   * const text: Text = new Text("הֲבָרֹות");
+   * @returns the name of the first consonant character in the cluster
+   *
+   * ```ts
+   * const text = new Text("הֲבָרֹות");
    * text.clusters[0].consonantName;
    * // "HE"
+   * ```
    */
   get consonantName(): ConsonantCharToNameMap[keyof ConsonantCharToNameMap] | null {
     const consonant = this.consonant;
@@ -135,13 +164,20 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
-   * Returns all consonant names in the cluster.
+   * Gets all consonant names in the cluster.
    *
-   * ```typescript
-   * const text: Text = new Text("הֲבָרֹות");
+   * @returns an array of the consonant names in the cluster
+   *
+   * @example
+   * ```ts
+   * const text = new Text("הֲבָרֹות");
    * text.clusters[0].consonantNames;
    * // ["HE"]
    * ```
+   *
+   * @warning
+   * This can only every return one consonant, as a `Cluster` is defined by having only one consonant.
+   * Though it is impossible to have two consonants in a cluster, this api is meant for consistency with `vowelNames` and `taamimNames`
    */
   get consonantNames(): ConsonantCharToNameMap[keyof ConsonantCharToNameMap][] {
     return this.chars.reduce(
@@ -157,10 +193,13 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
-   * Returns `true` if the cluster contains the given consonant name.
+   * Checks if the cluster contains the consonant character of the name passed in
    *
-   * ```typescript
-   * const text: Text = new Text("הֲבָרֹות");
+   * @returns a boolean indicating if the cluster contains the consonant character of the name passed in
+   *
+   * @example
+   * ```ts
+   * const text = new Text("הֲבָרֹות");
    * text.clusters[0].hasConsonantName("HE");
    * // true
    * text.clusters[0].hasConsonantName("BET");
@@ -178,68 +217,89 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
+   * Checks if the cluster contains a half-vowel
    *
-   * Returns `true` if one of the following long vowel characters is present:
-   * - \u{05B1} HATAF SEGOL
-   * - \u{05B2} HATAF PATAH
-   * - \u{05B3} HATAF QAMATS
+   * @returns a boolean indicating if the cluster contains a half-vowel
    *
-   * ```typescript
-   * const text: Text = new Text("הֲבָרֹות");
+   * @example
+   * ```ts
+   * const text = new Text("הֲבָרֹות");
    * text.clusters[0].hasHalfVowel;
    * // true
    * text.clusters[1].hasHalfVowel;
    * // false
    * ```
+   *
+   * @description
+   * The following characters are considered half-vowels:
+   * - \u{05B1} HATAF SEGOL
+   * - \u{05B2} HATAF PATAH
+   * - \u{05B3} HATAF QAMATS
    */
   get hasHalfVowel(): boolean {
     return /[\u{05B1}-\u{05B3}]/u.test(this.text);
   }
 
   /**
-   * Returns `true` if one of the following long vowel characters is present:
-   * - \u{05B5} TSERE
-   * - \u{05B8} QAMATS
-   * - \u{05B9} HOLAM
-   * - \u{05BA} HOLAM HASER FOR VAV
+   * Checks if the cluster contains a long vowel
    *
-   * ```typescript
-   * const text: Text = new Text("הֲבָרֹות");
+   * @returns a boolean indicating if the cluster contains a long vowel
+   *
+   * @example
+   * ```ts
+   * const text = new Text("הֲבָרֹות");
    * text.clusters[0].hasLongVowel;
    * // false
    * text.clusters[1].hasLongVowel;
    * // true
    * ```
+   *
+   * @description
+   * The following characters are considered long vowels:
+   * - \u{05B5} TSERE
+   * - \u{05B8} QAMATS
+   * - \u{05B9} HOLAM
+   * - \u{05BA} HOLAM HASER FOR VAV
    */
   get hasLongVowel(): boolean {
     return /[\u{05B5}\u{05B8}\u{05B9}\u{05BA}]/u.test(this.text);
   }
 
   /**
-   * Returns `true` if the following character is present and a _sof pasuq_ does not follow it:
-   * - \u{05BD} METEG
+   * Checks if the cluster contains a _meteg_
+   *
+   * @returns a boolean indicating if the cluster contains a _meteg_
    *
    * @deprecated use `hasMeteg`
    *
    * ```typescript
-   * const text: Text = new Text("הֲבָרֹות");
-   * text.clusters[0].hasMetheg;
-   * // false
+   * const text: Text = new Text("נַפְשִֽׁי׃");
+   * text.clusters[2].hasMetheg;
+   * // true
    * ```
+   *
+   * @description
+   * Checks if the following character is present and a _sof pasuq_ does not follow it:
+   * - \u{05BD} METEG
    */
   get hasMetheg(): boolean {
     return this.hasMeteg;
   }
 
   /**
-   * Returns `true` if the following character is present and a _sof pasuq_ does **not** follow it:
-   * - \u{05BD} METEG
+   * Checks if the cluster contains a _meteg_
    *
-   * ```typescript
-   * const text: Text = new Text("וַֽיִּמְצְא֗וּ");
-   * text.clusters[0].hasMeteg;
-   * // true
+   * @returns a boolean indicating if the cluster contains a _meteg_
+   *
+   * ```ts
+   * const text = new Text("נַפְשִֽׁי׃");
+   * text.clusters[2].hasMetheg;
+   * // truw
    * ```
+   *
+   * @description
+   * Checks if the following character is present and a _sof pasuq_ does not follow it:
+   * - \u{05BD} METEG
    */
   get hasMeteg(): boolean {
     if (!this.hasMetegCharacter) {
@@ -263,68 +323,91 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
-   * Returns `true` if the following character is present:
-   * - \u{05B0} SHEVA
+   * Checks if the cluster contains a sheva
    *
-   * ```typescript
-   * const text: Text = new Text("מַלְכָּה");
+   * @returns a boolean indicating if the cluster contains a sheva
+   *
+   * @example
+   * ```ts
+   * const text = new Text("מַלְכָּה");
    * text.clusters[0].hasSheva;
    * // false
    * text.clusters[1].hasSheva;
    * // true
    * ```
+   *
+   * @description
+   * Checks if the following character is present:
+   * - \u{05B0} SHEVA
    */
   get hasSheva(): boolean {
     return /\u{05B0}/u.test(this.text);
   }
 
   /**
-   * Returns `true` if the following character is present:
-   * - \u{05B0} SHEVA
+   * Checks if the cluster contains a sheva
+   *
+   * @returns a boolean indicating if the cluster contains a sheva
    *
    * @deprecated now use `hasSheva`
    *
-   * ```typescript
-   * const text: Text = new Text("מַלְכָּה");
+   * ```ts
+   * const text = new Text("מַלְכָּה");
    * text.clusters[0].hasSheva;
    * // false
    * text.clusters[1].hasSheva;
    * // true
    * ```
+   *
+   * @description
+   * Checks if the following character is present:
+   * - \u{05B0} SHEVA
    */
   get hasShewa(): boolean {
     return this.hasSheva;
   }
 
   /**
-   * Returns `true` if one of the following long vowel characters is present:
-   * - \u{05B4} HIRIQ
-   * - \u{05B6} SEGOL
-   * - \u{05B7} PATAH
-   * - \u{05BB} QUBUTS
-   * - \u{05C7} QAMATS QATAN
+   * Checks if the cluster contains a short vowel
    *
-   * ```typescript
-   * const text: Text = new Text("מַלְכָּה");
+   * @returns a boolean indicating if the cluster contains a short vowel
+   *
+   * @example
+   * ```ts
+   * const text = new Text("מַלְכָּה");
    * text.clusters[0].hasShortVowel;
    * // true
    * text.clusters[2].hasShortVowel;
    * // false
    * ```
+   *
+   * @description
+   * The following characters are considered short vowels:
+   * - \u{05B4} HIRIQ
+   * - \u{05B6} SEGOL
+   * - \u{05B7} PATAH
+   * - \u{05BB} QUBUTS
+   * - \u{05C7} QAMATS QATAN
    */
   get hasShortVowel(): boolean {
     return /[\u{05B4}\u{05B6}\u{05B7}\u{05BB}\u{05C7}]/u.test(this.text);
   }
 
   /**
-   * Returns `true` if the following character is present and a _sof pasuq_ follows it:
-   * - \u{05BD} METEG
+   * Checks if the cluster contains a _silluq_
    *
-   * ```typescript
-   * const text: Text = new Text("הָאָֽרֶץ׃");
-   * text.clusters[1].hasSilluq;
+   * @returns a boolean indicating if the cluster contains a _silluq_
+   *
+   * @example
+   * ```ts
+   * const text = new Text("הָאָֽרֶץ׃");
+   * text.clusters[2].hasSilluq;
    * // true
    * ```
+   *
+   * @description
+   * Checks if the following character is present and a _sof pasuq_ follows it:
+   * - \u{05BD} METEG
    */
   get hasSilluq(): boolean {
     if (this.hasMetegCharacter && !this.hasMeteg) {
@@ -336,52 +419,66 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
-   * Returns `true` if the following characters are present:
-   * - \u{0591}-\u{05AF}\u{05BF}\u{05C0}\u{05C3}-\u{05C6}\u{05F3}\u{05F4}
+   * Checks if the cluster contains a taamim character
    *
-   * ```typescript
-   * const text: Text = new Text("אֱלֹהִ֑ים");
+   * @returns a boolean indicating if the cluster contains a taamim character
+   *
+   * @example
+   * ```ts
+   * const text = new Text("אֱלֹהִ֑ים");
    * text.clusters[0].hasTaamim;
    * // false
    * text.clusters[2].hasTaamim;
    * // true
    * ```
+   *
+   * @description
+   * The following characters are considered taamim:
+   * - \u{0591}-\u{05AF}\u{05BF}\u{05C0}\u{05C3}-\u{05C6}\u{05F3}\u{05F4}
    */
   get hasTaamim(): boolean {
     return taamim.test(this.text);
   }
 
   /**
-   * Returns `true` if `Cluster.hasLongVowel`, `Cluster.hasShortVowel`, or `Cluster.hasHalfVowel` is true.
+   * Checks if the cluster contains any vowel character
    *
-   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
-   * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character.
+   * @returns a boolean indicating if the cluster contains any vowel character
    *
-   * ```typescript
-   * const text: Text = new Text("הֲבָרֹות");
+   * @example
+   * ```ts
+   * const text = new Text("הֲבָרֹות");
    * text.clusters[0].hasVowel;
    * // true
    * text.clusters[4].hasVowel;
    * // false
    * ```
+   *
+   * @description
+   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
+   * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character.
    */
   get hasVowel(): boolean {
     return this.hasLongVowel || this.hasShortVowel || this.hasHalfVowel;
   }
 
   /**
-   * Returns `true` if cluster contains the vowel character of the name passed in
+   * Checks if the cluster contains the vowel character of the name passed in
    *
-   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
-   * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character.
+   * @returns a boolean indicating if the cluster contains the vowel character of the name passed in
    *
-   * ```typescript
-   * const text: Text = new Text("הַיְחָבְרְךָ");
+   * @example
+   * ```ts
+   * const text = new Text("הַיְחָבְרְךָ");
    * text.clusters[0].hasVowelName("PATAH");
    * // true
    * text.clusters[0].hasVowelName("HIRIQ");
    * // false
    * ```
+   *
+   * @description
+   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
+   * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character.
    */
   hasVowelName(name: keyof VowelNameToCharMap): boolean {
     if (!vowelNameToCharMap[name]) {
@@ -394,6 +491,21 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
+   * Checks if the cluster is a _mater_ letter
+   *
+   * @returns a boolean indicating if the cluster is a _mater_ letter
+   *
+   *@example
+   * ```ts
+   * const text = new Text("סוּסָה");
+   * text.clusters[1].isMater; // the shureq
+   * // false
+   * text.clusters[3].isMater; // the heh
+   * // true
+   * ```
+   *
+   * @description
+   *
    * Returns `true` if `Cluster.hasVowel`, `Cluster.hasSheva`, `Cluster.isShureq`, and `Cluster.next.isShureq` are all `false` and `Cluster.text` contains a:
    * - `ה` preceded by a qamets, tsere, or segol
    * - `ו` preceded by a holem
@@ -401,14 +513,6 @@ export class Cluster extends Node<Cluster> {
    *
    * There are potentially other instances when a consonant may be a _mater_ (e.g. a silent aleph), but these are the most common.
    * Though a shureq is a _mater_ letter, it is also a vowel itself, and thus separate from `isMater`.
-   *
-   * ```typescript
-   * const text: Text = new Text("סוּסָה");
-   * text.clusters[1].isMater; // the shureq
-   * // false
-   * text.clusters[3].isMater; // the heh
-   * // true
-   * ```
    */
   get isMater(): boolean {
     const nxtIsShureq = this.next instanceof Cluster ? this.next.isShureq : false;
@@ -434,10 +538,12 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
-   * Returns `true` if the Cluster does not have Hebrew chars
+   * Checks if the Cluster does not have Hebrew chars
    *
-   * ```typescript
-   * * const text: Text = new Text("(לְעֹלָם)");
+   * @returns a boolean indicating if the Cluster does not have Hebrew chars
+   *
+   * ```ts
+   * * const text = new Text("(לְעֹלָם)");
    * text.clusters[0].isNotHebrew;
    * // true
    * ```
@@ -447,20 +553,23 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
-   * Returns `true` is the Cluster is any of the following characters:
-   * - \u{05BE} HEBREW PUNCTUATION MAQAF ־
-   * - \u{05C0} HEBREW PUNCTUATION PASEQ ׀
-   * - \u{05C3} HEBREW PUNCTUATION SOF PASUQ ׃
-   * - \u{05C6} HEBREW PUNCTUATION NUN HAFUKHA ׆
+   * Checks if the Cluster has any punctuation characters
    *
-   * ```typescript
-   * const text: Text = new Text("הָאָֽרֶץ׃");
+   * @returns a boolean indicating if the Cluster has any punctuation characters
+   *
+   * @example
+   * ```ts
+   * const text = new Text("הָאָֽרֶץ׃");
    * text.clusters[3].isPunctuation;
    * // true
    * ```
    *
    * @description
    * These are all the Hebrew characters of the category PUNCTUATION
+   * - \u{05BE} HEBREW PUNCTUATION MAQAF ־
+   * - \u{05C0} HEBREW PUNCTUATION PASEQ ׀
+   * - \u{05C3} HEBREW PUNCTUATION SOF PASUQ ׃
+   * - \u{05C6} HEBREW PUNCTUATION NUN HAFUKHA ׆
    */
   get isPunctuation(): boolean {
     const punctuationOnly = new RegExp(`^${punctuation.source}+$`, "u");
@@ -468,18 +577,23 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
+   * Checks if the Cluster is a shureq
    *
-   * Returns `true` if `Cluster.hasVowel`, `Cluster.hasSheva`, and `Cluster.prev.hasVowel` are all `false` and `Cluster.text` is a waw followed by a dagesh (e.g. `וּ`)
-   * A shureq is a vowel itself, but contains no vowel characters (hence why `hasVowel` cannot be `true`).
-   * This allows for easier syllabification.
+   * @returns a boolean indicating if the Cluster is a shureq
    *
-   * ```typescript
-   * const text: Text = new Text("קוּם");
+   *
+   * ```ts
+   * const text = new Text("קוּם");
    * text.clusters[0].isShureq;
    * // false
    * text.clusters[1].isShureq;
    * // true
    * ```
+   *
+   * @description
+   * Returns `true` if `Cluster.hasVowel`, `Cluster.hasSheva`, and `Cluster.prev.hasVowel` are all `false` and `Cluster.text` is a vav followed by a dagesh (e.g. `וּ`)
+   * A shureq is a vowel itself, but contains no vowel characters (hence why `hasVowel` cannot be `true`).
+   * This allows for easier syllabification.
    */
   get isShureq(): boolean {
     const shureq = /\u{05D5}\u{05BC}/u;
@@ -488,57 +602,76 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
-   * An alias of `isPunctuation`.
+   * Checks if the Cluster is a taam
+   *
+   * @returns a boolean indicating if the Cluster is a taam
+   *
+   * @example
+   * ```ts
+   * const text = new Text("הָאָֽרֶץ׃");
+   * text.clusters[3].isTaam;
+   * // true
+   * ```
+   *
+   * @description
+   * This is an alias for `isPunctuation`.
    * Returns `true` is the Cluster is any of the following characters:
    * - \u{05BE} HEBREW PUNCTUATION MAQAF ־
    * - \u{05C0} HEBREW PUNCTUATION PASEQ ׀
    * - \u{05C3} HEBREW PUNCTUATION SOF PASUQ ׃
    * - \u{05C6} HEBREW PUNCTUATION NUN HAFUKHA ׆
    *
-   * ```typescript
-   * const text: Text = new Text("הָאָֽרֶץ׃");
-   * text.clusters[3].isPunctuation;
-   * // true
-   * ```
-   *
-   * @description
-   * These are all the Hebrew characters of the category PUNCTUATION
    */
   get isTaam(): boolean {
     return this.isPunctuation;
   }
 
   /**
+   * The original string passed
+   *
    * @returns the original string passed
+   *
+   * @description
+   * The original string passed to the constructor that has not been normalized or sequenced. See {@link text}
    */
   get original(): string {
     return this.#original;
   }
 
   /**
-   * The parent `Syllable` of the cluster, if any.
+   * The parent `Syllable` of the cluster
    *
-   * ```typescript
-   * const text: Text = new Text("דָּבָר");
+   * ```ts
+   * const text = new Text("דָּבָר");
    * const lastCluster: Cluster = text.clusters[2];
    * lastCluster.text;
    * // "ר"
    * lastCluster.syllable.text;
    * // "בָר"
    * ```
+   *
+   * @description
+   * If created via the `Text` class, there should always be a syllable.
    */
   get syllable(): Syllable | null {
     return this.#syllable;
   }
 
+  /**
+   * Sets the parent `Syllable` of the cluster
+   *
+   */
   set syllable(syllable: Syllable | null) {
     this.#syllable = syllable;
   }
 
   /**
-   * Returns the first taamim character of the cluster
+   * Gets the first taamim character of the cluster
    *
-   * ```typescript
+   * @returns the first taamim character in the cluster
+   *
+   * @example
+   * ```ts
    * const text: Text = new Text("בֺ֨");
    * text.clusters[0].taam;
    * // "֨" (i.e. \u{05A8})
@@ -555,15 +688,17 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
-   * Returns an array of taamim characters in the cluster
+   * Gets all the taamim characters in the cluster
    *
-   * ```typescript
-   * const text: Text = new Text("אֱלֹהֶ֑֔יךָ");
+   * @returns an array of taamim characters in the cluster
+   *
+   * ```ts
+   * const text = new Text("אֱלֹהֶ֑֔יךָ");
    * text.clusters[2].taamim;
    * // ["֑", "֔"]
    * ```
    */
-  get taamim(): (keyof TaamimCharToNameMap | null)[] {
+  get taamim(): (keyof TaamimCharToNameMap)[] {
     return this.chars.reduce(
       (a, char) => {
         if (char.isTaamim && this.isCharKeyOfTaamimNameToCharMap(char.text)) {
@@ -577,10 +712,12 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
-   * Return the name first taamim character of the cluster
+   * Gets the name of the first taamim character in the cluster
    *
-   * ```typescript
-   * const text: Text = new Text("בֺ֨");
+   * @returns the name of the first taamim character in the cluster
+   *
+   * ```ts
+   * const text = new Text("בֺ֨");
    * text.clusters[0].taam;
    * // "QADMA"
    * ```
@@ -591,10 +728,12 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
-   * Returns an array of names of taamim characters in the cluster
+   * Gets all the names of the taamim characters in the cluster
    *
-   * ```typescript
-   * const text: Text = new Text("אֱלֹהֶ֑֔יךָ");
+   * @returns an array of names of taamim characters in the cluster
+   *
+   * ```ts
+   * const text = new Text("אֱלֹהֶ֑֔יךָ");
    * text.clusters[2].taam;
    * // ['ETNAHTA', 'ZAQEF_QATAN' ]
    * ```
@@ -614,10 +753,13 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
-   * @returns a string that has been built up from the text of its constituent Chars
+   * Gets text of the cluster
    *
-   * ```typescript
-   * const text: Text = new Text("הֲבָרֹות");
+   * @returns the text of the cluster that has been built up from the .text of its constituent `Char`s
+   *
+   * @example
+   * ```ts
+   * const text = new Text("הֲבָרֹות");
    * const clusters = text.clusters.map((cluster) => cluster.text);
    * // [
    * //  "הֲ",
@@ -627,24 +769,31 @@ export class Cluster extends Node<Cluster> {
    * //  "ת"
    * // ]
    * ```
+   *
+   * @description
+   * The text has been normalized and sequenced — see {@link original} for text passed in the constructor.
    */
   get text(): string {
     return this.chars.reduce((init, char) => init + char.text, "");
   }
 
   /**
-   * Returns the vowel character of the cluster
+   * Gets the first vowel character of the cluster
    *
-   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
-   * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character
+   * @returns the first vowel character in the cluster
    *
-   * ```typescript
-   * const text: Text = new Text("הַֽ֭יְחָבְרְךָ");
+   * @example
+   * ```ts
+   * const text = new Text("הַֽ֭יְחָבְרְךָ");
    * text.clusters[0].vowel;
    * // "\u{05B7}"
    * text.clusters[3].vowel;
    * // null
    * ```
+   *
+   * @description
+   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
+   * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character
    */
   get vowel(): keyof VowelCharToNameMap | null {
     const char = this.chars.find((c) => c.isVowel);
@@ -657,18 +806,22 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
-   * Returns the vowel character name of the cluster
+   * Gets the name of the first vowel character in the cluster
    *
-   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
-   * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character
+   * @returns the name of the first vowel character in the cluster
    *
-   * ```typescript
-   * const text: Text = new Text("הַֽ֭יְחָבְרְךָ");
+   * @example
+   * ```ts
+   * const text = new Text("הַֽ֭יְחָבְרְךָ");
    * text.clusters[0].vowelName;
    * // "PATAH"
    * text.clusters[3].vowelName;
    * // null
    * ```
+   *
+   * @description
+   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
+   * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character
    */
   get vowelName(): VowelCharToNameMap[keyof VowelCharToNameMap] | null {
     const vowel = this.vowel;
@@ -676,16 +829,21 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
-   * Returns an array of names of vowel characters in the cluster
+   * Gets all the names of the vowel characters in the cluster
    *
-   * ```typescript
-   * const text: Text = new Text("הַֽ֭יְחָבְרְךָ");
+   * @returns an array of names of vowel characters in the cluster
+   *
+   * @example
+   * ```ts
+   * const text = new Text("הַֽ֭יְחָבְרְךָ");
    * text.clusters[0].vowelNames;
    * // ['PATAH']
    * ```
    *
    * @description
    * It is exceedingly rare to find more than one vowel character in a cluster.
+   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
+   * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character
    */
   get vowelNames(): VowelCharToNameMap[keyof VowelCharToNameMap][] {
     return this.chars.reduce(
@@ -701,18 +859,23 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
-   * Returns an array of vowel characters in the cluster
+   * Gets all the vowel characters in the cluster
    *
-   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
-   * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character
+   * @returns an array of vowel characters in the cluster
    *
-   * ```typescript
-   * const text: Text = new Text("הַֽ֭יְחָבְרְךָ");
+   * @example
+   * ```ts
+   * const text = new Text("הַֽ֭יְחָבְרְךָ");
    * text.clusters[0].vowel;
    * // "\u{05B7}"
    * text.clusters[3].vowel;
    * // null
    * ```
+   *
+   * @description
+   * It is exceedingly rare to find more than one vowel character in a cluster.
+   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
+   * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character
    */
   get vowels(): (keyof VowelCharToNameMap)[] {
     return this.chars.reduce(
