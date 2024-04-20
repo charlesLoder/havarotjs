@@ -8,21 +8,22 @@ import { clusterSplitGroup, jerusalemTest } from "./utils/regularExpressions";
 import { syllabify } from "./utils/syllabifier";
 
 /**
- * [[`Text.text`]] is split at each space and maqqef (U+05BE) both of which are captured.
- * Thus, the string passed to instantiate each `Word` is already properly decomposed, sequenced, qamets qatan patterns converted to the appropriate unicode character (U+05C7), and holem-waw sequences corrected.
+ * A subunit of a {@link Text} consisting of words, which are strings are text separated by spaces or maqqefs.
  */
 export class Word extends Node<Word> {
   #text: string;
   /**
-   * Returns a string with any whitespace characters (e.g. `/\s/`) from before the word.
-   * It does **not** capture whitespace at the start of a `Text`.
+   * The white space that appears before the word
    *
-   * ```typescript
+   * @returns any white space that appears before the word such as a space or new line
+   *
+   * @example
+   * ```ts
    * const heb = `
    * עֶבֶד
    * אֱלֹהִים
    * `;
-   * const text: Text = new Text(heb);
+   * const text = new Text(heb);
    * text.words;
    * // [
    * //   Word {
@@ -42,14 +43,17 @@ export class Word extends Node<Word> {
    */
   whiteSpaceBefore: string | null;
   /**
-   * Returns a string with any whitespace characters (e.g. `/\s/`) after the word.
+   * The white space that appears after the word
    *
-   * ```typescript
+   * @returns any white space that appears after the word such as a space or new line
+   *
+   * @example
+   * ```ts
    * const heb = `
    * עֶבֶד
    * אֱלֹהִים
    * `;
-   * const text: Text = new Text(heb);
+   * const text = new Text(heb);
    * text.words;
    * // [
    * //   Word {
@@ -109,10 +113,14 @@ export class Word extends Node<Word> {
   }
 
   /**
+   * Gets all the {@link Char | characters} in the Word
+   *
    * @returns a one dimensional array of Chars
    *
-   * ```typescript
-   * const text: Text = new Text("אֵיפֹה־אַתָּה מֹשֶה");text.words[0].chars;
+   * @example
+   * ```ts
+   * const text = new Text("אֵיפֹה־אַתָּה מֹשֶה");
+   * text.words[0].chars;
    * // [
    * //    Char { original: "א" },
    * //    Char { original: "ֵ" }, (tsere)
@@ -128,10 +136,13 @@ export class Word extends Node<Word> {
   }
 
   /**
+   * Gets all the {@link Cluster | clusters} in the Word
+   *
    * @returns a one dimensional array of Clusters
    *
-   * ```typescript
-   * const text: Text = new Text("אֵיפֹה־אַתָּה מֹשֶה");
+   * @example
+   * ```ts
+   * const text = new Text("אֵיפֹה־אַתָּה מֹשֶה");
    * text.words[0].clusters;
    * // [
    * //    Cluster { original: "אֵ" },
@@ -150,10 +161,13 @@ export class Word extends Node<Word> {
   }
 
   /**
+   * Checks if the word has a form of the Divine Name (i.e the tetragrammaton)
+   *
    * @returns a boolean indicating if the word has a form of the Divine Name
    *
-   * ```typescript
-   * const text: Text = new Text("בַּֽיהוָ֔ה");
+   * @example
+   * ```ts
+   * const text = new Text("בַּֽיהוָ֔ה");
    * text.words[0].hasDivineName;
    * // true
    * ```
@@ -163,10 +177,13 @@ export class Word extends Node<Word> {
   }
 
   /**
+   * Checks if the text is a form of the Divine Name (i.e the tetragrammaton)
+   *
    * @returns a boolean indicating if the text is a form of the Divine Name
    *
-   * ```typescript
-   * const text: Text = new Text("יְהוָה");
+   * @example
+   * ```ts
+   * const text = new Text("יְהוָה");
    * text.words[0].isDivineName;
    * // true
    * ```
@@ -176,14 +193,35 @@ export class Word extends Node<Word> {
   }
 
   /**
-   * Returns `true` if the Cluster does not have Hebrew chars
+   * Checks if the Word contains non-Hebrew characters
+   *
+   * @returns a boolean indicating if the Word contains non-Hebrew characters
+   *
+   * @example
+   * ```ts
+   * const text = new Text("Hi!");
+   * text.words[0].isNotHebrew;
+   * // true
+   * ```
+   *
+   * @description
+   * If the word contains non-Hebrew characters, it is not considered Hebrew because syllabification is likely not correct.
    */
   get isNotHebrew(): boolean {
     return !this.clusters.map((c) => c.isNotHebrew).includes(false);
   }
 
   /**
-   * Returns `true` if the Word is in a construct state
+   * Checks if the Word is in a construct state
+   *
+   * @returns a boolean indicating if the Word is in a construct state
+   *
+   * @example
+   * ```ts
+   * const text = new Text("בֶּן־אָדָ֕ם");
+   * text.words[0].isInConstruct;
+   * // true
+   * ```
    *
    * @description
    * The construct state is indicated by the presence of a maqqef (U+05BE) character
@@ -194,10 +232,12 @@ export class Word extends Node<Word> {
   }
 
   /**
+   * Gets all the {@link Syllable | syllables} in the Word
+   *
    * @returns a one dimensional array of Syllables
    *
-   * ```typescript
-   * const text: Text = new Text("אֵיפֹה־אַתָּה מֹשֶה");
+   * ```ts
+   * const text = new Text("אֵיפֹה־אַתָּה מֹשֶה");
    * text.words[0].syllables;
    * // [
    * //    Syllable { original: "אֵי" },
@@ -219,10 +259,12 @@ export class Word extends Node<Word> {
   }
 
   /**
+   * Gets the text of the Word
+   *
    * @returns the word's text trimmed of any whitespace characters
    *
-   * ```typescript
-   * const text: Text = new Text("אֵיפֹה־אַתָּה מֹשֶה");
+   * ```ts
+   * const text = new Text("אֵיפֹה־אַתָּה מֹשֶה");
    * const words = text.words.map((word) => word.text);
    * words;
    * // [
