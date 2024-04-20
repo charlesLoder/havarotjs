@@ -109,21 +109,88 @@ export class Word extends Node<Word> {
   }
 
   /**
-   * @returns the word's text trimmed of any whitespace characters
+   * @returns a one dimensional array of Chars
    *
    * ```typescript
-   * const text: Text = new Text("אֵיפֹה־אַתָּה מֹשֶה");
-   * const words = text.words.map((word) => word.text);
-   * words;
+   * const text: Text = new Text("אֵיפֹה־אַתָּה מֹשֶה");text.words[0].chars;
    * // [
-   * //    "אֵיפֹה־",
-   * //    "אַתָּה",
-   * //    "מֹשֶׁה"
+   * //    Char { original: "א" },
+   * //    Char { original: "ֵ" }, (tsere)
+   * //    Char { original: "פ" },
+   * //    Char { original: "ֹ" }, (holem)
+   * //    Char { original: "ה"},
+   * //    Char { original: "־" }
    * //  ]
    * ```
    */
-  get text(): string {
-    return this.#text.trim();
+  get chars(): Char[] {
+    return this.clusters.map((cluster) => cluster.chars).flat();
+  }
+
+  /**
+   * @returns a one dimensional array of Clusters
+   *
+   * ```typescript
+   * const text: Text = new Text("אֵיפֹה־אַתָּה מֹשֶה");
+   * text.words[0].clusters;
+   * // [
+   * //    Cluster { original: "אֵ" },
+   * //    Cluster { original: "י" },
+   * //    Cluster { original: "פֹ" },
+   * //    Cluster { original: "ה־" }
+   * //  ]
+   * ```
+   */
+  get clusters(): Cluster[] {
+    const clusters = this.makeClusters(this.text);
+    const firstCluster = clusters[0];
+    const remainder = clusters.slice(1);
+    firstCluster.siblings = remainder;
+    return clusters;
+  }
+
+  /**
+   * @returns a boolean indicating if the word has a form of the Divine Name
+   *
+   * ```typescript
+   * const text: Text = new Text("בַּֽיהוָ֔ה");
+   * text.words[0].hasDivineName;
+   * // true
+   * ```
+   */
+  get hasDivineName(): boolean {
+    return hasDivineName(this.text);
+  }
+
+  /**
+   * @returns a boolean indicating if the text is a form of the Divine Name
+   *
+   * ```typescript
+   * const text: Text = new Text("יְהוָה");
+   * text.words[0].isDivineName;
+   * // true
+   * ```
+   */
+  get isDivineName(): boolean {
+    return isDivineName(this.text);
+  }
+
+  /**
+   * Returns `true` if the Cluster does not have Hebrew chars
+   */
+  get isNotHebrew(): boolean {
+    return !this.clusters.map((c) => c.isNotHebrew).includes(false);
+  }
+
+  /**
+   * Returns `true` if the Word is in a construct state
+   *
+   * @description
+   * The construct state is indicated by the presence of a maqqef (U+05BE) character
+   */
+  get isInConstruct(): boolean {
+    // if word has a maqqef, it is in construct
+    return this.text.includes("\u05BE");
   }
 
   /**
@@ -152,87 +219,20 @@ export class Word extends Node<Word> {
   }
 
   /**
-   * @returns a one dimensional array of Clusters
+   * @returns the word's text trimmed of any whitespace characters
    *
    * ```typescript
    * const text: Text = new Text("אֵיפֹה־אַתָּה מֹשֶה");
-   * text.words[0].clusters;
+   * const words = text.words.map((word) => word.text);
+   * words;
    * // [
-   * //    Cluster { original: "אֵ" },
-   * //    Cluster { original: "י" },
-   * //    Cluster { original: "פֹ" },
-   * //    Cluster { original: "ה־" }
+   * //    "אֵיפֹה־",
+   * //    "אַתָּה",
+   * //    "מֹשֶׁה"
    * //  ]
    * ```
    */
-  get clusters(): Cluster[] {
-    const clusters = this.makeClusters(this.text);
-    const firstCluster = clusters[0];
-    const remainder = clusters.slice(1);
-    firstCluster.siblings = remainder;
-    return clusters;
-  }
-
-  /**
-   * @returns a one dimensional array of Chars
-   *
-   * ```typescript
-   * const text: Text = new Text("אֵיפֹה־אַתָּה מֹשֶה");text.words[0].chars;
-   * // [
-   * //    Char { original: "א" },
-   * //    Char { original: "ֵ" }, (tsere)
-   * //    Char { original: "פ" },
-   * //    Char { original: "ֹ" }, (holem)
-   * //    Char { original: "ה"},
-   * //    Char { original: "־" }
-   * //  ]
-   * ```
-   */
-  get chars(): Char[] {
-    return this.clusters.map((cluster) => cluster.chars).flat();
-  }
-
-  /**
-   * @returns a boolean indicating if the text is a form of the Divine Name
-   *
-   * ```typescript
-   * const text: Text = new Text("יְהוָה");
-   * text.words[0].isDivineName;
-   * // true
-   * ```
-   */
-  get isDivineName(): boolean {
-    return isDivineName(this.text);
-  }
-
-  /**
-   * @returns a boolean indicating if the word has a form of the Divine Name
-   *
-   * ```typescript
-   * const text: Text = new Text("בַּֽיהוָ֔ה");
-   * text.words[0].hasDivineName;
-   * // true
-   * ```
-   */
-  get hasDivineName(): boolean {
-    return hasDivineName(this.text);
-  }
-
-  /**
-   * Returns `true` if the Cluster does not have Hebrew chars
-   */
-  get isNotHebrew(): boolean {
-    return !this.clusters.map((c) => c.isNotHebrew).includes(false);
-  }
-
-  /**
-   * Returns `true` if the Word is in a construct state
-   *
-   * @description
-   * The construct state is indicated by the presence of a maqqef (U+05BE) character
-   */
-  get isInConstruct(): boolean {
-    // if word has a maqqef, it is in construct
-    return this.text.includes("\u05BE");
+  get text(): string {
+    return this.#text.trim();
   }
 }
