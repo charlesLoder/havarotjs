@@ -513,6 +513,22 @@ export class Syllable extends Node<Syllable> {
   }
 
   /**
+   * Gets all the taamim characters in the Syllable
+   *
+   * @returns a one dimensional array of taamim characters in the syllable
+   *
+   * @example
+   * ```ts
+   * const text = new Text("הָאָ֖רֶץ");
+   * text.syllables[1].taamim;
+   * // ["\u{596}"]
+   * ```
+   */
+  get taamim() {
+    return this.clusters.map((c) => c.taamim).flat();
+  }
+
+  /**
    * The text of the syllable
    *
    * @returns the sequenced and normalized text of the syllable
