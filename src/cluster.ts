@@ -3,10 +3,8 @@ import { Node } from "./node";
 import { Syllable } from "./syllable";
 import {
   ConsonantCharToNameMap,
-  ConsonantNameToCharMap,
   TaamimCharToNameMap,
   VowelCharToNameMap,
-  VowelNameToCharMap,
   charToNameMap,
   consonantNameToCharMap,
   isCharKeyOfConsonantNameToCharMap,

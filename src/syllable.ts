@@ -2,13 +2,11 @@ import { Char } from "./char";
 import { Cluster } from "./cluster";
 import { Node } from "./node";
 import {
-  ConsonantCharToNameMap,
   ConsonantNameToCharMap,
   consonantNameToCharMap,
   vowelCharToNameMap,
   vowelNameToCharMap
 } from "./utils/charMap";
-import { vowelsCaptureGroupWithSheva } from "./utils/regularExpressions";
 import { removeTaamim } from "./utils/removeTaamim";
 import { Word } from "./word";
 
