@@ -166,7 +166,7 @@ export class Syllable extends Node<Syllable> {
    *
    *
    */
-  get consonants(): (keyof ConsonantCharToNameMap)[] {
+  get consonants() {
     return this.clusters.map((cluster) => cluster.consonants).flat();
   }
 
@@ -186,7 +186,7 @@ export class Syllable extends Node<Syllable> {
    * This returns a one dimensional array of consonant names, even if the characters are not phonemic consonants,
    * meaning even the name of maters are returned. See the {@link structure} method if you need the consonants with phonemic value.
    */
-  get consonantNames(): ConsonantCharToNameMap[keyof ConsonantCharToNameMap][] {
+  get consonantNames() {
     return this.clusters.map((cluster) => cluster.consonantNames).flat();
   }
 
