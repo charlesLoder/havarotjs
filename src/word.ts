@@ -263,6 +263,21 @@ export class Word extends Node<Word> {
   }
 
   /**
+   * Gets all the taamim characters in the Word
+   *
+   * @returns a one dimensional array of all the taamim characters in the Word
+   *
+   * ```ts
+   * const text = new Text("הָאָ֖רֶץ");
+   * text.words[0].taamim;
+   * // ["\u{596}"];
+   * ```
+   */
+  get taamim() {
+    return this.syllables.map((syl) => syl.taamim).flat();
+  }
+
+  /**
    * Gets the text of the Word
    *
    * @returns the word's text trimmed of any whitespace characters
