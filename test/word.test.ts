@@ -1,30 +1,6 @@
 import { Text } from "../src/index";
 
 describe.each`
-  description                           | heb                               | whiteSpaceBefore    | whiteSpaceAfter
-  ${"single word: leading is deleted"}  | ${" מֶלֶךְ"}                      | ${[""]}             | ${[""]}
-  ${"single word: trailing is deleted"} | ${"מֶלךְ "}                       | ${[""]}             | ${[""]}
-  ${"two words"}                        | ${"מֶלֶךְ יִשְׁרָאֵל"}             | ${["", ""]}         | ${[" ", ""]}
-  ${"two words, first w/ maqqef"}       | ${"כָּל־הָעָם"}                   | ${["", ""]}         | ${["", ""]}
-  ${"two words, two spaces between"}    | ${"מֶלֶךְ  יִשְׁרָאֵל"}            | ${["", ""]}         | ${["  ", ""]}
-  ${"text with two spaces and maqqefs"} | ${"מֶלֶךְ  יִשְׁרָאֵל כָּל־הָעָם"} | ${["", "", "", ""]} | ${["  ", " ", "", ""]}
-  ${"text with maqqefs and two spaces"} | ${"כָּל־הָעָם מֶלֶךְ  יִשְׁרָאֵל"} | ${["", "", "", ""]} | ${["", " ", "  ", ""]}
-`("whiteSpace:", ({ description, heb, whiteSpaceBefore, whiteSpaceAfter }) => {
-  const text = new Text(heb);
-  const words = text.words;
-  const before = words.map((word) => word.whiteSpaceBefore);
-  const after = words.map((word) => word.whiteSpaceAfter);
-  describe(`${description}`, () => {
-    test("Space Before", () => {
-      expect(before).toEqual(whiteSpaceBefore);
-    });
-    test("Space After", () => {
-      expect(after).toEqual(whiteSpaceAfter);
-    });
-  });
-});
-
-describe.each`
   description                 | name             | isDivineName | hasDivineName
   ${"Yehwah"}                 | ${"יְהוָה"}      | ${true}      | ${true}
   ${"Yehowah"}                | ${"יְהֹוָ֨ה"}    | ${true}      | ${true}
@@ -51,17 +27,6 @@ describe.each`
   });
 });
 
-describe.each`
-  description      | heb              | isInConstructArray
-  ${"with maqqef"} | ${"בֶּן־אָדָ֕ם"} | ${[true, false]}
-  ${"now maqqef"}  | ${"בֶּן אָדָ֕ם"} | ${[false, false]}
-`("isInConstruct:", ({ description, heb, isInConstructArray }) => {
-  const text = new Text(heb);
-  test(`${description}`, () => {
-    expect(text.words.map((word) => word.isInConstruct)).toEqual(isInConstructArray);
-  });
-});
-
 describe("Implements node", () => {
   const text = new Text("בֶּן־אָדָ֕ם");
   const word = text.words[0];
@@ -75,3 +40,39 @@ describe("Implements node", () => {
     expect(word.value?.text).toEqual("בֶּן־");
   });
 });
+
+describe.each`
+  description      | heb              | isInConstructArray
+  ${"with maqqef"} | ${"בֶּן־אָדָ֕ם"} | ${[true, false]}
+  ${"now maqqef"}  | ${"בֶּן אָדָ֕ם"} | ${[false, false]}
+`("isInConstruct:", ({ description, heb, isInConstructArray }) => {
+  const text = new Text(heb);
+  test(`${description}`, () => {
+    expect(text.words.map((word) => word.isInConstruct)).toEqual(isInConstructArray);
+  });
+});
+
+describe.each`
+  description                           | heb                               | whiteSpaceBefore    | whiteSpaceAfter
+  ${"single word: leading is deleted"}  | ${" מֶלֶךְ"}                      | ${[""]}             | ${[""]}
+  ${"single word: trailing is deleted"} | ${"מֶלךְ "}                       | ${[""]}             | ${[""]}
+  ${"two words"}                        | ${"מֶלֶךְ יִשְׁרָאֵל"}             | ${["", ""]}         | ${[" ", ""]}
+  ${"two words, first w/ maqqef"}       | ${"כָּל־הָעָם"}                   | ${["", ""]}         | ${["", ""]}
+  ${"two words, two spaces between"}    | ${"מֶלֶךְ  יִשְׁרָאֵל"}            | ${["", ""]}         | ${["  ", ""]}
+  ${"text with two spaces and maqqefs"} | ${"מֶלֶךְ  יִשְׁרָאֵל כָּל־הָעָם"} | ${["", "", "", ""]} | ${["  ", " ", "", ""]}
+  ${"text with maqqefs and two spaces"} | ${"כָּל־הָעָם מֶלֶךְ  יִשְׁרָאֵל"} | ${["", "", "", ""]} | ${["", " ", "  ", ""]}
+`("whiteSpace:", ({ description, heb, whiteSpaceBefore, whiteSpaceAfter }) => {
+  const text = new Text(heb);
+  const words = text.words;
+  const before = words.map((word) => word.whiteSpaceBefore);
+  const after = words.map((word) => word.whiteSpaceAfter);
+  describe(`${description}`, () => {
+    test("Space Before", () => {
+      expect(before).toEqual(whiteSpaceBefore);
+    });
+    test("Space After", () => {
+      expect(after).toEqual(whiteSpaceAfter);
+    });
+  });
+});
+
