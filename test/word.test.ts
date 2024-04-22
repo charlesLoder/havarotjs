@@ -74,6 +74,21 @@ describe.each`
 });
 
 describe.each`
+  description              | hebrew              | taamim
+  ${"one character"}       | ${"הָאָ֖רֶץ"}       | ${["\u{596}"]}
+  ${"no characters"}       | ${"וַֽיְהִי־כֵֽן׃"} | ${[]}
+  ${"multiple characters"} | ${"מִתָּ֑͏ַ֜חַת"}    | ${["\u{591}", "\u{59C}"]}
+  ${"ole veyored"}         | ${"רְשָׁ֫עִ֥ים"}    | ${["\u{5AB}", "\u{5A5}"]}
+`("taamim:", ({ description, hebrew, taamim }) => {
+  describe(description, () => {
+    test(`taamim to equal ${taamim}`, () => {
+      const text = new Text(hebrew);
+      expect(text.words[0].taamim).toEqual(taamim);
+    });
+  });
+});
+
+describe.each`
   description                     | hebrew              | vowelNames
   ${"regular characters"}         | ${"הָאָ֖רֶץ"}       | ${["QAMATS", "QAMATS", "SEGOL"]}
   ${"with sheva"}                 | ${"וַֽיְהִי־כֵֽן׃"} | ${["PATAH", "SHEVA", "HIRIQ"]}
