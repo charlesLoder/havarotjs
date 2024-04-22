@@ -196,6 +196,20 @@ describe.each`
 });
 
 describe.each`
+  description              | hebrew              | sylNum | taamimNames
+  ${"one character"}       | ${"הָאָ֖רֶץ"}       | ${1}   | ${["TIPEHA"]}
+  ${"no characters"}       | ${"וַֽיְהִי־כֵֽן׃"} | ${1}   | ${[]}
+  ${"multiple characters"} | ${"מִתָּ֑͏ַ֜חַת"}    | ${1}   | ${["ETNAHTA", "GERESH"]}
+`("taamimNames:", ({ description, hebrew, sylNum, taamimNames }) => {
+  describe(description, () => {
+    test(`taamimNames to equal ${taamimNames}`, () => {
+      const text = new Text(hebrew);
+      expect(text.syllables[sylNum].taamimNames).toEqual(taamimNames);
+    });
+  });
+});
+
+describe.each`
   description                     | hebrew              | syllableNum | vowel                 | allowNoNiqqud
   ${"syllable with patah"}        | ${"הַֽ֭יְחָבְרְךָ"} | ${0}        | ${"\u{05B7}"}         | ${false}
   ${"syllable with sheva"}        | ${"הַֽ֭יְחָבְרְךָ"} | ${1}        | ${"\u{05B0}"}         | ${false}
