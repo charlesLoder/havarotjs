@@ -16,6 +16,13 @@ import {
 } from "./utils/charMap";
 import { hebChars, meteg, punctuation, taamim } from "./utils/regularExpressions";
 
+type Consonant = keyof ConsonantCharToNameMap;
+type ConsonantName = ConsonantCharToNameMap[keyof ConsonantCharToNameMap];
+type Taam = keyof TaamimCharToNameMap;
+type TaamimName = TaamimCharToNameMap[keyof TaamimCharToNameMap];
+type Vowel = keyof VowelCharToNameMap;
+type VowelName = VowelCharToNameMap[keyof VowelCharToNameMap];
+
 /**
  * A cluster is group of Hebrew character constituted by:
  * - an obligatory Hebrew consonant character
@@ -29,9 +36,15 @@ import { hebChars, meteg, punctuation, taamim } from "./utils/regularExpressions
  * Every [[`Char`]] is sequenced first for normalization, see the [SBL Hebrew Font Manual](https://www.sbl-site.org/Fonts/SBLHebrewUserManual1.5x.pdf), p.8.
  */
 export class Cluster extends Node<Cluster> {
+  #consonantsCache: Consonant[] | null = null;
+  #consonantNameCache: ConsonantName[] | null = null;
   #original: string;
   #sequenced: Char[];
   #syllable: Syllable | null = null;
+  #taamimCache: Taam[] | null = null;
+  #vowelsCache: Vowel[] | null = null;
+  #vowelNamesCache: VowelName[] | null = null;
+  #taamimNamesCache: TaamimName[] | null = null;
 
   /**
    * Creates a new cluster
@@ -108,14 +121,8 @@ export class Cluster extends Node<Cluster> {
    * @description
    * A Cluster only ever has one consonant.
    */
-  get consonant(): keyof ConsonantCharToNameMap | null {
-    const char = this.chars.find((char) => char.isConsonant);
-
-    if (!char) {
-      return null;
-    }
-
-    return this.isCharKeyOfConsonantNameToCharMap(char.text) ? char.text : null;
+  get consonant(): Consonant | null {
+    return this.consonants[0] || null;
   }
 
   /**
@@ -134,17 +141,20 @@ export class Cluster extends Node<Cluster> {
    * This can only every return one consonant, as a `Cluster` is defined by having only one consonant.
    * Though it is impossible to have two consonants in a cluster, this api is meant for consistency with `vowels` and `taamim`
    */
-  get consonants(): (keyof ConsonantCharToNameMap)[] {
-    return this.chars.reduce(
-      (a, char) => {
-        const text = char.text;
-        if (char.isConsonant && this.isCharKeyOfConsonantNameToCharMap(text)) {
-          a.push(text);
-        }
-        return a;
-      },
-      [] as (keyof ConsonantCharToNameMap)[]
-    );
+  get consonants(): Consonant[] {
+    if (this.#consonantsCache) {
+      return this.#consonantsCache;
+    }
+
+    const consonants = this.chars.reduce((a, char) => {
+      const text = char.text;
+      if (char.isConsonant && this.isCharKeyOfConsonantNameToCharMap(text)) {
+        a.push(text);
+      }
+      return a;
+    }, [] as Consonant[]);
+
+    return (this.#consonantsCache = consonants);
   }
 
   /**
@@ -158,9 +168,8 @@ export class Cluster extends Node<Cluster> {
    * // "HE"
    * ```
    */
-  get consonantName(): ConsonantCharToNameMap[keyof ConsonantCharToNameMap] | null {
-    const consonant = this.consonant;
-    return consonant ? charToNameMap[consonant] : null;
+  get consonantName(): ConsonantName | null {
+    return this.consonantNames[0] ?? null;
   }
 
   /**
@@ -179,17 +188,20 @@ export class Cluster extends Node<Cluster> {
    * This can only every return one consonant, as a `Cluster` is defined by having only one consonant.
    * Though it is impossible to have two consonants in a cluster, this api is meant for consistency with `vowelNames` and `taamimNames`
    */
-  get consonantNames(): ConsonantCharToNameMap[keyof ConsonantCharToNameMap][] {
-    return this.chars.reduce(
-      (a, char) => {
-        const text = char.text;
-        if (char.isConsonant && this.isCharKeyOfConsonantNameToCharMap(text)) {
-          a.push(charToNameMap[text]);
-        }
-        return a;
-      },
-      [] as ConsonantCharToNameMap[keyof ConsonantCharToNameMap][]
-    );
+  get consonantNames(): ConsonantName[] {
+    if (this.#consonantNameCache) {
+      return this.#consonantNameCache;
+    }
+
+    const consonantNames = this.chars.reduce((a, char) => {
+      const text = char.text;
+      if (char.isConsonant && this.isCharKeyOfConsonantNameToCharMap(text)) {
+        a.push(charToNameMap[text]);
+      }
+      return a;
+    }, [] as ConsonantName[]);
+
+    return (this.#consonantNameCache = consonantNames);
   }
 
   /**
@@ -206,7 +218,7 @@ export class Cluster extends Node<Cluster> {
    * // false
    * ```
    */
-  hasConsonantName(name: keyof ConsonantNameToCharMap): boolean {
+  hasConsonantName(name: ConsonantName): boolean {
     if (!consonantNameToCharMap[name]) {
       throw new Error(`${name} is not a valid value`);
     }
@@ -480,7 +492,7 @@ export class Cluster extends Node<Cluster> {
    * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
    * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character.
    */
-  hasVowelName(name: keyof VowelNameToCharMap): boolean {
+  hasVowelName(name: VowelName): boolean {
     if (!vowelNameToCharMap[name]) {
       throw new Error(`${name} is not a valid value`);
     }
@@ -677,14 +689,8 @@ export class Cluster extends Node<Cluster> {
    * // "֨" (i.e. \u{05A8})
    * ```
    */
-  get taam(): keyof TaamimCharToNameMap | null {
-    const char = this.chars.find((char) => char.isTaamim);
-
-    if (!char) {
-      return null;
-    }
-
-    return this.isCharKeyOfTaamimNameToCharMap(char.text) ? char.text : null;
+  get taam(): Taam | null {
+    return this.taamim[0] ?? null;
   }
 
   /**
@@ -698,17 +704,20 @@ export class Cluster extends Node<Cluster> {
    * // ["֑", "֔"]
    * ```
    */
-  get taamim(): (keyof TaamimCharToNameMap)[] {
-    return this.chars.reduce(
-      (a, char) => {
-        if (char.isTaamim && this.isCharKeyOfTaamimNameToCharMap(char.text)) {
-          a.push(char.text);
-        }
+  get taamim(): Taam[] {
+    if (this.#taamimCache) {
+      return this.#taamimCache;
+    }
 
-        return a;
-      },
-      [] as (keyof TaamimCharToNameMap)[]
-    );
+    const taamim = this.chars.reduce((a, char) => {
+      if (char.isTaamim && this.isCharKeyOfTaamimNameToCharMap(char.text)) {
+        a.push(char.text);
+      }
+
+      return a;
+    }, [] as Taam[]);
+
+    return (this.#taamimCache = taamim);
   }
 
   /**
@@ -722,9 +731,8 @@ export class Cluster extends Node<Cluster> {
    * // "QADMA"
    * ```
    */
-  get taamName(): TaamimCharToNameMap[keyof TaamimCharToNameMap] | null {
-    const taam = this.taam;
-    return taam ? charToNameMap[taam] : null;
+  get taamName(): TaamimName | null {
+    return this.taamimNames[0] ?? null;
   }
 
   /**
@@ -738,18 +746,21 @@ export class Cluster extends Node<Cluster> {
    * // ['ETNAHTA', 'ZAQEF_QATAN' ]
    * ```
    */
-  get taamimNames(): TaamimCharToNameMap[keyof TaamimCharToNameMap][] {
-    return this.chars.reduce(
-      (a, char) => {
-        const text = char.text;
-        if (char.isTaamim && this.isCharKeyOfTaamimNameToCharMap(text)) {
-          a.push(charToNameMap[text]);
-        }
+  get taamimNames(): TaamimName[] {
+    if (this.#taamimNamesCache) {
+      return this.#taamimNamesCache;
+    }
 
-        return a;
-      },
-      [] as TaamimCharToNameMap[keyof TaamimCharToNameMap][]
-    );
+    const taaminNames = this.chars.reduce((a, char) => {
+      const text = char.text;
+      if (char.isTaamim && this.isCharKeyOfTaamimNameToCharMap(text)) {
+        a.push(charToNameMap[text]);
+      }
+
+      return a;
+    }, [] as TaamimName[]);
+
+    return (this.#taamimNamesCache = taaminNames);
   }
 
   /**
@@ -796,13 +807,7 @@ export class Cluster extends Node<Cluster> {
    * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character
    */
   get vowel(): keyof VowelCharToNameMap | null {
-    const char = this.chars.find((c) => c.isVowel);
-
-    if (!char) {
-      return null;
-    }
-
-    return this.isCharKeyOfVowelNameToCharMap(char.text) ? char.text : null;
+    return this.vowels[0] ?? null;
   }
 
   /**
@@ -824,8 +829,7 @@ export class Cluster extends Node<Cluster> {
    * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character
    */
   get vowelName(): VowelCharToNameMap[keyof VowelCharToNameMap] | null {
-    const vowel = this.vowel;
-    return vowel ? charToNameMap[vowel] : null;
+    return this.vowelNames[0] ?? null;
   }
 
   /**
@@ -845,17 +849,20 @@ export class Cluster extends Node<Cluster> {
    * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
    * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character
    */
-  get vowelNames(): VowelCharToNameMap[keyof VowelCharToNameMap][] {
-    return this.chars.reduce(
-      (a, char) => {
-        if (char.isVowel && this.isCharKeyOfVowelNameToCharMap(char.text)) {
-          a.push(charToNameMap[char.text]);
-        }
+  get vowelNames(): VowelName[] {
+    if (this.#vowelNamesCache) {
+      return this.#vowelNamesCache;
+    }
 
-        return a;
-      },
-      [] as VowelCharToNameMap[keyof VowelCharToNameMap][]
-    );
+    const vowelNames = this.chars.reduce((a, char) => {
+      if (char.isVowel && this.isCharKeyOfVowelNameToCharMap(char.text)) {
+        a.push(charToNameMap[char.text]);
+      }
+
+      return a;
+    }, [] as VowelName[]);
+
+    return (this.#vowelNamesCache = vowelNames);
   }
 
   /**
@@ -877,16 +884,19 @@ export class Cluster extends Node<Cluster> {
    * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
    * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character
    */
-  get vowels(): (keyof VowelCharToNameMap)[] {
-    return this.chars.reduce(
-      (a, char) => {
-        const text = char.text;
-        if (char.isVowel && this.isCharKeyOfVowelNameToCharMap(text)) {
-          a.push(text);
-        }
-        return a;
-      },
-      [] as (keyof VowelCharToNameMap)[]
-    );
+  get vowels(): Vowel[] {
+    if (this.#vowelsCache) {
+      return this.#vowelsCache;
+    }
+
+    const vowels = this.chars.reduce((a, char) => {
+      const text = char.text;
+      if (char.isVowel && this.isCharKeyOfVowelNameToCharMap(text)) {
+        a.push(text);
+      }
+      return a;
+    }, [] as Vowel[]);
+
+    return (this.#vowelsCache = vowels);
   }
 }
