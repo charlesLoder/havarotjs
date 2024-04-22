@@ -19,6 +19,7 @@ const sylVowelCharToNameMap = {
 } as const;
 
 type SyllableVowelCharToNameMap = typeof sylVowelCharToNameMap;
+type Vowel = keyof SyllableVowelCharToNameMap;
 
 const sylVowelNameToCharMap = {
   ...vowelNameToCharMap,
@@ -35,17 +36,21 @@ type SyllableParams = {
   isFinal?: boolean;
 };
 
+type VowelName = SyllableVowelCharToNameMap[keyof SyllableVowelCharToNameMap];
+
 /**
  * A subunit of a {@link Word} consisting of consonants, vowels, and other linguistic and ortographic features.
  */
 export class Syllable extends Node<Syllable> {
+  #cachedStructure: [string, string, string] | null = null;
+  #cachedStructureWithGemination: [string, string, string] | null = null;
   #clusters: Cluster[];
   #isClosed: boolean;
   #isAccented: boolean;
   #isFinal: boolean;
+  #vowelsCache: Vowel[] | null = null;
+  #vowelNamesCache: VowelName[] | null = null;
   #word: Word | null = null;
-  #cachedStructure: [string, string, string] | null = null;
-  #cachedStructureWithGemination: [string, string, string] | null = null;
 
   /**
    * Creates a new Syllable
@@ -586,22 +591,8 @@ export class Syllable extends Node<Syllable> {
    * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
    * Unlike `Cluster`, a `Syllable` is concerned with linguistics, so a sheva **is** a vowel character.
    */
-  get vowel(): keyof SyllableVowelCharToNameMap | null {
-    const nucleus = this.nucleus;
-    const noTaamim = removeTaamim(nucleus)[0];
-
-    // for regular vowel characters and shureqs, this should match
-    if (this.isCharKeyOfSyllableVowelCharToNameMap(noTaamim)) {
-      return noTaamim;
-    }
-
-    // for maters or text with mixed scripts (e.g. Hebrew and Latin), we have to extract the vowel character
-    const match = this.text.match(vowelsCaptureGroupWithSheva);
-    if (match && this.isCharKeyOfSyllableVowelCharToNameMap(match[0])) {
-      return match[0];
-    }
-
-    return null;
+  get vowel(): Vowel | null {
+    return this.vowels[0] ?? null;
   }
 
   /**
@@ -624,9 +615,8 @@ export class Syllable extends Node<Syllable> {
    * Unlike `Cluster`, a `Syllable` is concerned with linguistics, so a sheva **is** a vowel character.
    * ```
    */
-  get vowelName(): SyllableVowelCharToNameMap[keyof SyllableVowelCharToNameMap] | null {
-    const vowel = this.vowel;
-    return vowel ? sylVowelCharToNameMap[vowel] : null;
+  get vowelName(): VowelName | null {
+    return this.vowelNames[0] ?? null;
   }
 
   /**
@@ -647,18 +637,21 @@ export class Syllable extends Node<Syllable> {
    * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
    * Unlike `Cluster`, a `Syllable` is concerned with linguistics, so a sheva **is** a vowel character.
    */
-  get vowelNames(): SyllableVowelCharToNameMap[keyof SyllableVowelCharToNameMap][] {
-    return this.vowels
-      .reduce(
-        (a, vowel) => {
-          if (sylVowelCharToNameMap[vowel]) {
-            a.push(sylVowelCharToNameMap[vowel]);
-          }
-          return a;
-        },
-        [] as SyllableVowelCharToNameMap[keyof SyllableVowelCharToNameMap][]
-      )
+  get vowelNames(): VowelName[] {
+    if (this.#vowelNamesCache) {
+      return this.#vowelNamesCache;
+    }
+
+    const vowelNames = this.vowels
+      .reduce((a, vowel) => {
+        if (sylVowelCharToNameMap[vowel]) {
+          a.push(sylVowelCharToNameMap[vowel]);
+        }
+        return a;
+      }, [] as VowelName[])
       .flat();
+
+    return (this.#vowelNamesCache = vowelNames);
   }
 
   /**
@@ -680,27 +673,29 @@ export class Syllable extends Node<Syllable> {
    * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
    * Unlike `Cluster`, a `Syllable` is concerned with linguistics, so a sheva **is** a vowel character
    */
-  get vowels(): (keyof SyllableVowelCharToNameMap)[] {
+  get vowels(): Vowel[] {
+    if (this.#vowelsCache) {
+      return this.#vowelsCache;
+    }
     // the nucleus returns as many vowels characters as there are in the syllable
     const nucleus = this.nucleus;
     const noTaamim = removeTaamim(nucleus)[0];
     const shureq = sylVowelNameToCharMap["SHUREQ"];
-    const shureqPresentation = "\u{FB35}"; // a private use character
-    return noTaamim
+    const shureqPresentation = "\u{FB35}";
+    const vowels = noTaamim
       .replace(shureq, shureqPresentation)
       .split("")
-      .reduce(
-        (a, v) => {
-          if (this.isCharKeyOfSyllableVowelCharToNameMap(v)) {
-            a.push(v);
-          }
-          if (v === shureqPresentation) {
-            a.push(shureq);
-          }
-          return a;
-        },
-        [] as (keyof SyllableVowelCharToNameMap)[]
-      );
+      .reduce((a, v) => {
+        if (this.isCharKeyOfSyllableVowelCharToNameMap(v)) {
+          a.push(v);
+        }
+        if (v === shureqPresentation) {
+          a.push(shureq);
+        }
+        return a;
+      }, [] as Vowel[]);
+
+    return (this.#vowelsCache = vowels);
   }
 
   /**
