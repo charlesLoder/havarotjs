@@ -27,6 +27,27 @@ describe.each`
   });
 });
 
+describe.each`
+  description                      | hebrew              | vowelName   | result
+  ${"with patah"}                  | ${"הַֽ֭יְחָבְרְךָ"} | ${"PATAH"}  | ${true}
+  ${"sheva"}                       | ${"הַֽ֭יְחָבְרְךָ"} | ${"SHEVA"}  | ${true}
+  ${"silent sheva"}                | ${"בַּרְנֵֽעַ׃"}    | ${"SHEVA"}  | ${false}
+  ${"qamats"}                      | ${"הַֽ֭יְחָבְרְךָ"} | ${"QAMATS"} | ${true}
+  ${"shureq"}                      | ${"תִגְּע֖וּ"}      | ${"SHUREQ"} | ${true}
+  ${"vav and dagesh (not shureq)"} | ${"הַוּֽוֹת׃"}      | ${"SHUREQ"} | ${false}
+  ${"tsere-yod"}                   | ${"קָדְשֵׁ֧י"}      | ${"TSERE"}  | ${true}
+  ${"holam-vav"}                   | ${"בַּיּ֣וֹם"}      | ${"HOLAM"}  | ${true}
+  ${"hiriq-yod"}                   | ${"אָנֹֽכִי"}       | ${"HIRIQ"}  | ${true}
+  ${"mixed chars"}                 | ${"rˁִː֣"}          | ${"HIRIQ"}  | ${true}
+`("hasVowelName:", ({ description, hebrew, vowelName, result }) => {
+  const heb = new Text(hebrew);
+  describe(description, () => {
+    test(`vowelName to equal ${vowelName}`, () => {
+      expect(heb.words[0].hasVowelName(vowelName)).toEqual(result);
+    });
+  });
+});
+
 describe("Implements node", () => {
   const text = new Text("בֶּן־אָדָ֕ם");
   const word = text.words[0];
@@ -49,6 +70,36 @@ describe.each`
   const text = new Text(heb);
   test(`${description}`, () => {
     expect(text.words.map((word) => word.isInConstruct)).toEqual(isInConstructArray);
+  });
+});
+
+describe.each`
+  description                     | hebrew              | vowelNames
+  ${"regular characters"}         | ${"הָאָ֖רֶץ"}       | ${["QAMATS", "QAMATS", "SEGOL"]}
+  ${"with sheva"}                 | ${"וַֽיְהִי־כֵֽן׃"} | ${["PATAH", "SHEVA", "HIRIQ"]}
+  ${"with shureq"}                | ${"מַדּ֥וּעַ"}      | ${["PATAH", "SHUREQ", "PATAH"]}
+  ${"multiple vowels on one syl"} | ${"מִתָּ֑͏ַ֜חַת"}    | ${["HIRIQ", "QAMATS", "PATAH", "PATAH"]}
+`("vowelNames:", ({ description, hebrew, vowelNames }) => {
+  describe(description, () => {
+    test(`vowelNames to equal ${vowelNames}`, () => {
+      const text = new Text(hebrew);
+      expect(text.words[0].vowelNames).toEqual(vowelNames);
+    });
+  });
+});
+
+describe.each`
+  description                     | hebrew              | vowels
+  ${"regular characters"}         | ${"הָאָ֖רֶץ"}       | ${["\u{05B8}", "\u{05B8}", "\u{05B6}"]}
+  ${"with sheva"}                 | ${"וַֽיְהִי־כֵֽן׃"} | ${["\u{05B7}", "\u{05B0}", "\u{05B4}"]}
+  ${"with shureq"}                | ${"מַדּ֥וּעַ"}      | ${["\u{05B7}", "\u{05D5}\u{05BC}", "\u{05B7}"]}
+  ${"multiple vowels on one syl"} | ${"מִתָּ֑͏ַ֜חַת"}    | ${["\u{05B4}", "\u{05B8}", "\u{05B7}", "\u{05B7}"]}
+`("vowels:", ({ description, hebrew, vowels }) => {
+  describe(description, () => {
+    test(`vowelNames to equal ${vowels}`, () => {
+      const text = new Text(hebrew);
+      expect(text.words[0].vowels).toEqual(vowels);
+    });
   });
 });
 
@@ -76,3 +127,16 @@ describe.each`
   });
 });
 
+// describe.each`
+//   description              | hebrew           | taamim
+//   ${"one character"}       | ${"הָאָ֖רֶץ"}    | ${["\u{596}"]}
+//   ${"no characters"}       | ${"וַיְהִי"}     | ${[]}
+//   ${"multiple characters"} | ${"רְשָׁ֫עִ֥ים"} | ${["\u{5AB}", "\u{5A5}"]}
+// `("taamim:", ({ description, hebrew, clusterNum, taamim }) => {
+//   describe(description, () => {
+//     test(`taam to equal ${taamim}`, () => {
+//       const text = new Text(hebrew);
+//       expect(text.words[0].taamim).toEqual(taamim);
+//     });
+//   });
+// });
