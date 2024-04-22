@@ -27,7 +27,7 @@ const sylVowelNameToCharMap = {
   SHEVA: "\u{05B0}"
 } as const;
 
-type SyllablVowelNameToCharMap = typeof sylVowelNameToCharMap;
+export type SyllablVowelNameToCharMap = typeof sylVowelNameToCharMap;
 
 type SyllableParams = {
   isClosed?: boolean;

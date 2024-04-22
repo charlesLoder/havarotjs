@@ -1,7 +1,7 @@
 import { Char } from "./char";
 import { Cluster } from "./cluster";
 import { Node } from "./node";
-import { Syllable } from "./syllable";
+import { Syllable, SyllablVowelNameToCharMap } from "./syllable";
 import { SylOpts } from "./text";
 import { hasDivineName, isDivineName } from "./utils/divineName";
 import { clusterSplitGroup, jerusalemTest } from "./utils/regularExpressions";
@@ -176,6 +176,10 @@ export class Word extends Node<Word> {
     return hasDivineName(this.text);
   }
 
+  hasVowelName(name: keyof SyllablVowelNameToCharMap): boolean {
+    return this.syllables.some((cluster) => cluster.hasVowelName(name));
+  }
+
   /**
    * Checks if the text is a form of the Divine Name (i.e the tetragrammaton)
    *
@@ -276,5 +280,35 @@ export class Word extends Node<Word> {
    */
   get text(): string {
     return this.#text.trim();
+  }
+
+  /**
+   * Gets all the vowel names in the Word
+   *
+   * @returns an array of all the vowel names in the Word
+   *
+   * ```ts
+   * const text = new Text("אֵיפֹה־אַתָּה מֹשֶה");
+   * text.words[0].vowelNames;
+   * // ["HOLAM", "SEGOL"];
+   * ```
+   */
+  get vowelNames() {
+    return this.syllables.map((syl) => syl.vowelNames).flat();
+  }
+
+  /**
+   * Gets all the vowel characters in the Word
+   *
+   * @returns an array of all the vowel characters in the Word
+   *
+   * ```ts
+   * const text = new Text("אֵיפֹה־אַתָּה מֹשֶה");
+   * text.words[0].vowels;
+   * // ["\u{5B9}", "\u{5B6}"];
+   * ```
+   */
+  get vowels() {
+    return this.syllables.map((syl) => syl.vowels).flat();
   }
 }
