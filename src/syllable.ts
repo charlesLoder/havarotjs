@@ -529,6 +529,22 @@ export class Syllable extends Node<Syllable> {
   }
 
   /**
+   * Gets all the taamim names in the Syllable
+   *
+   * @returns a one dimensional array of taamim names in the syllable
+   *
+   * @example
+   * ```ts
+   * const text = new Text("הָאָ֖רֶץ");
+   * text.syllables[1].taamimNames;
+   * // ["TIPEHA"]
+   * ```
+   */
+  get taamimNames() {
+    return this.clusters.map((c) => c.taamimNames).flat();
+  }
+
+  /**
    * The text of the syllable
    *
    * @returns the sequenced and normalized text of the syllable
