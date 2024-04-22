@@ -685,16 +685,16 @@ export class Syllable extends Node<Syllable> {
     const nucleus = this.nucleus;
     const noTaamim = removeTaamim(nucleus)[0];
     const shureq = sylVowelNameToCharMap["SHUREQ"];
-    const PRIVATE_CHAR = "\uE000"; // a private use character
+    const shureqPresentation = "\u{FB35}"; // a private use character
     return noTaamim
-      .replace(shureq, PRIVATE_CHAR)
+      .replace(shureq, shureqPresentation)
       .split("")
       .reduce(
         (a, v) => {
           if (this.isCharKeyOfSyllableVowelCharToNameMap(v)) {
             a.push(v);
           }
-          if (v === PRIVATE_CHAR) {
+          if (v === shureqPresentation) {
             a.push(shureq);
           }
           return a;
