@@ -285,7 +285,7 @@ describe.each`
   ${"multiple characters"} | ${"מִתָּ֑͏ַ֜חַת"}    | ${1}       | ${["ETNAHTA", "GERESH"]}
 `("taamimNames:", ({ description, hebrew, clusterNum, taamimNames }) => {
   describe(description, () => {
-    test(`taam to equal ${taamimNames}`, () => {
+    test(`taamimNames to equal ${taamimNames}`, () => {
       const text = new Text(hebrew);
       expect(text.clusters[clusterNum].taamimNames).toEqual(taamimNames);
     });
