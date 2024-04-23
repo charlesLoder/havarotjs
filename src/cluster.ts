@@ -707,7 +707,7 @@ export class Cluster extends Node<Cluster> {
       return this.#taamimCache;
     }
 
-    const taamim = this.chars.reduce((a, char) => {
+    const taamimChars = this.chars.reduce((a, char) => {
       if (char.isTaamim && this.isCharKeyOfTaamimNameToCharMap(char.text)) {
         a.push(char.text);
       }
@@ -715,7 +715,7 @@ export class Cluster extends Node<Cluster> {
       return a;
     }, [] as Taam[]);
 
-    return (this.#taamimCache = taamim);
+    return (this.#taamimCache = taamimChars);
   }
 
   /**
