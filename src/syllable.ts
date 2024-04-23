@@ -12,6 +12,7 @@ import { Word } from "./word";
 
 const sylVowelCharToNameMap = {
   ...vowelCharToNameMap,
+  /* eslint-disable  @typescript-eslint/naming-convention */
   "\u{05B0}": "SHEVA",
   "\u{05D5}\u{05BC}": "SHUREQ"
 } as const;
