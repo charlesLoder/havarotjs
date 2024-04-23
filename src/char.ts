@@ -1,6 +1,6 @@
 import { Cluster } from "./cluster";
-import { consonants, dagesh, ligatures, vowels, rafe, sheva, taamim } from "./utils/regularExpressions";
-import { CharToNameMap, charToNameMap, NameToCharMap, nameToCharMap } from "./utils/charMap";
+import { CharToNameMap, NameToCharMap, charToNameMap, isCharKeyOfCharToNameMap, nameToCharMap } from "./utils/charMap";
+import { consonants, dagesh, ligatures, meteg, rafe, sheva, taamim, vowels } from "./utils/regularExpressions";
 
 /**
  * A Hebrew character and its positioning number for being sequenced correctly.
@@ -39,13 +39,14 @@ export class Char {
     if (Char.taamim.test(char)) {
       return 4;
     }
+    if (Char.meteg.test(char)) {
+      return 4;
+    }
     // i.e. any non-hebrew char
     return 10;
   }
 
-  private isCharKeyOfCharToNameMap(char: string): char is keyof CharToNameMap {
-    return char in charToNameMap;
-  }
+  private isCharKeyOfCharToNameMap = isCharKeyOfCharToNameMap;
 
   private static get consonants() {
     return consonants;
@@ -57,6 +58,10 @@ export class Char {
 
   private static get ligatures() {
     return ligatures;
+  }
+
+  private static get meteg() {
+    return meteg;
   }
 
   private static get rafe() {

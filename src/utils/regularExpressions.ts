@@ -39,13 +39,22 @@ export const dagesh = /[\u{05BC}]/u;
 export const hebChars = /[\u{0590}-\u{05FF}\u{FB1D}-\u{FB4F}]/u;
 
 /**
- * a regular expression for the Hebrew ligatures (i.e. Shin and Sin dots)
+ * A regular expression for the Hebrew ligatures (i.e. Shin and Sin dots)
  *
  * ```js
  * /[\u{05C1}-\u{05C2}]/u;
  * ```
  */
 export const ligatures = /[\u{05C1}-\u{05C2}]/u;
+
+/**
+ * A regular expression for the Meteg character
+ *
+ * ```js
+ * /\u{05BD}]u;
+ * ```
+ */
+export const meteg = /\u{05BD}/u;
 
 /**
  * A regular expression containing all the Hebrew characters of the category PUNCTUATION:

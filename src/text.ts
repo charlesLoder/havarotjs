@@ -1,11 +1,11 @@
-import { Word } from "./word";
-import { convertsQametsQatan } from "./utils/qametsQatan";
-import { sequence } from "./utils/sequence";
-import { holemWaw } from "./utils/holemWaw";
-import { Syllable } from "./syllable";
-import { Cluster } from "./cluster";
 import { Char } from "./char";
+import { Cluster } from "./cluster";
+import { Syllable } from "./syllable";
+import { holemWaw } from "./utils/holemWaw";
+import { convertsQametsQatan } from "./utils/qametsQatan";
 import { splitGroup } from "./utils/regularExpressions";
+import { sequence } from "./utils/sequence";
+import { Word } from "./word";
 
 /**
  * options for determining syllabification that may differ according to reading traditions

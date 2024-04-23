@@ -3,6 +3,63 @@ import { Text } from "../src/index";
 import { Syllable } from "../src/syllable";
 
 describe.each`
+  description              | hebrew             | syllableNum | consonants
+  ${"one consonant"}       | ${"מַדּ֥וּעַ"}     | ${0}        | ${["מ"]}
+  ${"two consonants"}      | ${"לֹ֥א"}          | ${0}        | ${["ל", "א"]}
+  ${"three consonants"}    | ${"רְ֭שָׁעִים"}    | ${2}        | ${["ע", "י", "ם"]}
+  ${"consonant character"} | ${"וּ֝לְאֻמִּ֗ים"} | ${0}        | ${["ו"]}
+`("consonants:", ({ description, hebrew, syllableNum, consonants }) => {
+  const heb = new Text(hebrew);
+  const syllable = heb.syllables[syllableNum];
+  const syllableconsonants = syllable.consonants;
+  describe(description, () => {
+    test(`consonants to equal ${consonants}`, () => {
+      expect(syllableconsonants).toEqual(consonants);
+    });
+  });
+});
+
+describe.each`
+  description              | hebrew             | syllableNum | consonantNames
+  ${"one consonant"}       | ${"מַדּ֥וּעַ"}     | ${0}        | ${["MEM"]}
+  ${"two consonants"}      | ${"לֹ֥א"}          | ${0}        | ${["LAMED", "ALEF"]}
+  ${"three consonants"}    | ${"רְ֭שָׁעִים"}    | ${2}        | ${["AYIN", "YOD", "FINAL_MEM"]}
+  ${"consonant character"} | ${"וּ֝לְאֻמִּ֗ים"} | ${0}        | ${["VAV"]}
+`("consonantNames:", ({ description, hebrew, syllableNum, consonantNames }) => {
+  const heb = new Text(hebrew);
+  const syllable = heb.syllables[syllableNum];
+  const syllableconsonantNames = syllable.consonantNames;
+  describe(description, () => {
+    test(`syllableconsonantNames to equal ${consonantNames}`, () => {
+      expect(syllableconsonantNames).toEqual(consonantNames);
+    });
+  });
+});
+
+describe.each`
+  description        | hebrew        | syllableNum | consonantName | hasConsonant
+  ${"has consonant"} | ${"מַדּוּעַ"} | ${0}        | ${"MEM"}      | ${true}
+  ${"not consonant"} | ${"לֹ֥א"}     | ${0}        | ${"MEM"}      | ${false}
+`("hasConsonantName:", ({ description, hebrew, syllableNum, consonantName, hasConsonant }) => {
+  const heb = new Text(hebrew);
+  const syllable = heb.syllables[syllableNum];
+  const syllablehasConsonant = syllable.hasConsonantName(consonantName);
+  describe(description, () => {
+    test(`syllablehasConsonant to equal ${hasConsonant}`, () => {
+      expect(syllablehasConsonant).toEqual(hasConsonant);
+    });
+  });
+});
+
+describe("hasConsonantName (error)", () => {
+  test("throws error", () => {
+    const text = new Text("הָאָ֖רֶץ");
+    // @ts-expect-error: testing an invalid parameter
+    expect(() => text.syllables[0].hasConsonantName("BOB")).toThrow();
+  });
+});
+
+describe.each`
   description                                          | hebrew         | syllableNum | codaWithGemination
   ${"open syllable followed by gemination"}            | ${"מַדּוּעַ"}  | ${0}        | ${"דּ"}
   ${"open syllable followed by no gemination"}         | ${"מֶלֶךְ"}    | ${0}        | ${""}
@@ -49,7 +106,7 @@ describe.each`
   const heb = new Text(hebrew);
   const syllable = heb.syllables[syllableNum];
   test(`vowelName${vowelName} should throw error`, () => {
-    expect(() => syllable.hasVowelName(vowelName)).toThrowError();
+    expect(() => syllable.hasVowelName(vowelName)).toThrow();
   });
 });
 
@@ -125,6 +182,34 @@ describe("structure cache", () => {
 });
 
 describe.each`
+  description              | hebrew              | sylNum | taamim
+  ${"one character"}       | ${"הָאָ֖רֶץ"}       | ${1}   | ${["\u{596}"]}
+  ${"no characters"}       | ${"וַֽיְהִי־כֵֽן׃"} | ${1}   | ${[]}
+  ${"multiple characters"} | ${"מִתָּ֑͏ַ֜חַת"}    | ${1}   | ${["\u{591}", "\u{59C}"]}
+`("taamim:", ({ description, hebrew, sylNum, taamim }) => {
+  describe(description, () => {
+    test(`taamim to equal ${taamim}`, () => {
+      const text = new Text(hebrew);
+      expect(text.syllables[sylNum].taamim).toEqual(taamim);
+    });
+  });
+});
+
+describe.each`
+  description              | hebrew              | sylNum | taamimNames
+  ${"one character"}       | ${"הָאָ֖רֶץ"}       | ${1}   | ${["TIPEHA"]}
+  ${"no characters"}       | ${"וַֽיְהִי־כֵֽן׃"} | ${1}   | ${[]}
+  ${"multiple characters"} | ${"מִתָּ֑͏ַ֜חַת"}    | ${1}   | ${["ETNAHTA", "GERESH"]}
+`("taamimNames:", ({ description, hebrew, sylNum, taamimNames }) => {
+  describe(description, () => {
+    test(`taamimNames to equal ${taamimNames}`, () => {
+      const text = new Text(hebrew);
+      expect(text.syllables[sylNum].taamimNames).toEqual(taamimNames);
+    });
+  });
+});
+
+describe.each`
   description                     | hebrew              | syllableNum | vowel                 | allowNoNiqqud
   ${"syllable with patah"}        | ${"הַֽ֭יְחָבְרְךָ"} | ${0}        | ${"\u{05B7}"}         | ${false}
   ${"syllable with sheva"}        | ${"הַֽ֭יְחָבְרְךָ"} | ${1}        | ${"\u{05B0}"}         | ${false}
@@ -166,6 +251,36 @@ describe.each`
   describe(description, () => {
     test(`vowelName to equal ${vowelName}`, () => {
       expect(syllableVowelName).toEqual(vowelName);
+    });
+  });
+});
+
+describe.each`
+  description             | hebrew              | syllableNum | vowelNames
+  ${"with one character"} | ${"הָאָ֖רֶץ"}       | ${1}        | ${["QAMATS"]}
+  ${"with sheva"}         | ${"וַֽיְהִי־כֵֽן׃"} | ${1}        | ${["SHEVA"]}
+  ${"with shureq"}        | ${"מַדּ֥וּעַ"}      | ${1}        | ${["SHUREQ"]}
+  ${"multiple vowels"}    | ${"מִתָּ֑͏ַ֜חַת"}    | ${1}        | ${["QAMATS", "PATAH"]}
+`("vowelNames:", ({ description, hebrew, syllableNum, vowelNames }) => {
+  describe(description, () => {
+    test(`vowelNames to equal ${vowelNames}`, () => {
+      const text = new Text(hebrew);
+      expect(text.syllables[syllableNum].vowelNames).toEqual(vowelNames);
+    });
+  });
+});
+
+describe.each`
+  description             | hebrew              | syllableNum | vowels
+  ${"with one character"} | ${"הָאָ֖רֶץ"}       | ${1}        | ${["\u{05B8}"]}
+  ${"with sheva"}         | ${"וַֽיְהִי־כֵֽן׃"} | ${1}        | ${["\u{05B0}"]}
+  ${"with shureq"}        | ${"מַדּ֥וּעַ"}      | ${1}        | ${["\u{05D5}\u{05BC}"]}
+  ${"multiple vowels"}    | ${"מִתָּ֑͏ַ֜חַת"}    | ${1}        | ${["\u{05B8}", "\u{05B7}"]}
+`("vowels:", ({ description, hebrew, syllableNum, vowels }) => {
+  describe(description, () => {
+    test(`vowelNames to equal ${vowels}`, () => {
+      const text = new Text(hebrew);
+      expect(text.syllables[syllableNum].vowels).toEqual(vowels);
     });
   });
 });
