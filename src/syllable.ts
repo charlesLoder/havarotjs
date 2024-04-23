@@ -678,7 +678,7 @@ export class Syllable extends Node<Syllable> {
     // the nucleus returns as many vowels characters as there are in the syllable
     const nucleus = this.nucleus;
     const noTaamim = removeTaamim(nucleus)[0];
-    const shureq = sylVowelNameToCharMap["SHUREQ"];
+    const shureq = sylVowelNameToCharMap.SHUREQ;
     const shureqPresentation = "\u{FB35}";
     const vowels = noTaamim
       .replace(shureq, shureqPresentation)
