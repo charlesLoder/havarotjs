@@ -89,6 +89,20 @@ describe.each`
 });
 
 describe.each`
+  description              | hebrew              | taamimNames
+  ${"one character"}       | ${"הָאָ֖רֶץ"}       | ${["TIPEHA"]}
+  ${"no characters"}       | ${"וַֽיְהִי־כֵֽן׃"} | ${[]}
+  ${"multiple characters"} | ${"רְשָׁ֫עִ֥ים"}    | ${["OLE", "MERKHA"]}
+`("taamimNames:", ({ description, hebrew, taamimNames }) => {
+  describe(description, () => {
+    test(`taamimNames to equal ${taamimNames}`, () => {
+      const text = new Text(hebrew);
+      expect(text.words[0].taamimNames).toEqual(taamimNames);
+    });
+  });
+});
+
+describe.each`
   description                     | hebrew              | vowelNames
   ${"regular characters"}         | ${"הָאָ֖רֶץ"}       | ${["QAMATS", "QAMATS", "SEGOL"]}
   ${"with sheva"}                 | ${"וַֽיְהִי־כֵֽן׃"} | ${["PATAH", "SHEVA", "HIRIQ"]}
@@ -141,17 +155,3 @@ describe.each`
     });
   });
 });
-
-// describe.each`
-//   description              | hebrew           | taamim
-//   ${"one character"}       | ${"הָאָ֖רֶץ"}    | ${["\u{596}"]}
-//   ${"no characters"}       | ${"וַיְהִי"}     | ${[]}
-//   ${"multiple characters"} | ${"רְשָׁ֫עִ֥ים"} | ${["\u{5AB}", "\u{5A5}"]}
-// `("taamim:", ({ description, hebrew, clusterNum, taamim }) => {
-//   describe(description, () => {
-//     test(`taam to equal ${taamim}`, () => {
-//       const text = new Text(hebrew);
-//       expect(text.words[0].taamim).toEqual(taamim);
-//     });
-//   });
-// });
