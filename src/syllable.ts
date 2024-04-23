@@ -12,8 +12,8 @@ import { Word } from "./word";
 
 const sylVowelCharToNameMap = {
   ...vowelCharToNameMap,
-  "\u{05D5}\u{05BC}": "SHUREQ",
-  "\u{05B0}": "SHEVA"
+  "\u{05B0}": "SHEVA",
+  "\u{05D5}\u{05BC}": "SHUREQ"
 } as const;
 
 type SyllableVowelCharToNameMap = typeof sylVowelCharToNameMap;
@@ -22,8 +22,8 @@ type Vowel = keyof SyllableVowelCharToNameMap;
 const sylVowelNameToCharMap = {
   ...vowelNameToCharMap,
   /* eslint-disable  @typescript-eslint/naming-convention */
-  SHUREQ: "\u{05D5}\u{05BC}",
-  SHEVA: "\u{05B0}"
+  SHEVA: "\u{05B0}",
+  SHUREQ: "\u{05D5}\u{05BC}"
 } as const;
 
 export type SyllablVowelNameToCharMap = typeof sylVowelNameToCharMap;
