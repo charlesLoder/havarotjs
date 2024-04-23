@@ -111,7 +111,7 @@ describe.each`
   ${"multiple vowels on one syl"} | ${"מִתָּ֑͏ַ֜חַת"}    | ${["\u{05B4}", "\u{05B8}", "\u{05B7}", "\u{05B7}"]}
 `("vowels:", ({ description, hebrew, vowels }) => {
   describe(description, () => {
-    test(`vowelNames to equal ${vowels}`, () => {
+    test(`vowels to equal ${vowels}`, () => {
       const text = new Text(hebrew);
       expect(text.words[0].vowels).toEqual(vowels);
     });
