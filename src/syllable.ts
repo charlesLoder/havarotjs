@@ -1,12 +1,8 @@
 import { Char } from "./char";
 import { Cluster } from "./cluster";
+import type { ConsonantName } from "./cluster";
 import { Node } from "./node";
-import {
-  ConsonantNameToCharMap,
-  consonantNameToCharMap,
-  vowelCharToNameMap,
-  vowelNameToCharMap
-} from "./utils/charMap";
+import { consonantNameToCharMap, vowelCharToNameMap, vowelNameToCharMap } from "./utils/charMap";
 import { removeTaamim } from "./utils/removeTaamim";
 import { Word } from "./word";
 
@@ -211,7 +207,7 @@ export class Syllable extends Node<Syllable> {
    * @description
    * This checks if the syllable contains the given consonant name, even if the character is not a phonemic consonant.
    */
-  hasConsonantName(name: keyof ConsonantNameToCharMap): boolean {
+  hasConsonantName(name: ConsonantName): boolean {
     if (!consonantNameToCharMap[name]) {
       throw new Error(`${name} is not a valid value`);
     }
@@ -246,7 +242,7 @@ export class Syllable extends Node<Syllable> {
    * Unlike `Cluster`, a `Syllable` is concerned with linguistics, so a sheva **is** a vowel character.
    * It returns `true` for "SHEVA" only when the sheva is the vowel (i.e. a vocal sheva or sheva na').
    */
-  hasVowelName(name: keyof SyllablVowelNameToCharMap): boolean {
+  hasVowelName(name: VowelName): boolean {
     if (!sylVowelNameToCharMap[name]) {
       throw new Error(`${name} is not a valid value`);
     }

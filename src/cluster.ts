@@ -14,12 +14,12 @@ import {
 } from "./utils/charMap";
 import { hebChars, meteg, punctuation, taamim } from "./utils/regularExpressions";
 
-type Consonant = keyof ConsonantCharToNameMap;
-type ConsonantName = ConsonantCharToNameMap[keyof ConsonantCharToNameMap];
-type Taam = keyof TaamimCharToNameMap;
-type TaamimName = TaamimCharToNameMap[keyof TaamimCharToNameMap];
-type Vowel = keyof VowelCharToNameMap;
-type VowelName = VowelCharToNameMap[keyof VowelCharToNameMap];
+export type Consonant = keyof ConsonantCharToNameMap;
+export type ConsonantName = ConsonantCharToNameMap[keyof ConsonantCharToNameMap];
+export type Taam = keyof TaamimCharToNameMap;
+export type TaamimName = TaamimCharToNameMap[keyof TaamimCharToNameMap];
+export type Vowel = keyof VowelCharToNameMap;
+export type VowelName = VowelCharToNameMap[keyof VowelCharToNameMap];
 
 /**
  * A cluster is group of Hebrew character constituted by:
