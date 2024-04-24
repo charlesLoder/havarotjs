@@ -221,9 +221,7 @@ export class Cluster extends Node<Cluster> {
       throw new Error(`${name} is not a valid value`);
     }
 
-    const char = this.chars.find((c) => c.isCharacterName(name));
-
-    return !!char;
+    return this.consonantNames.includes(name);
   }
 
   /**
@@ -495,9 +493,7 @@ export class Cluster extends Node<Cluster> {
       throw new Error(`${name} is not a valid value`);
     }
 
-    const char = this.chars.find((c) => c.isCharacterName(name));
-
-    return !!char;
+    return this.vowelNames.includes(name);
   }
 
   /**

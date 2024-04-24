@@ -247,13 +247,7 @@ export class Syllable extends Node<Syllable> {
       throw new Error(`${name} is not a valid value`);
     }
 
-    if (name === "SHUREQ") {
-      // if any cluster has a shureq, then that should be the defacto vowel
-      return this.clusters.filter((c) => c.isShureq).length ? true : false;
-    }
-
-    const isShevaSilent = name === "SHEVA" && this.clusters.filter((c) => c.hasVowel).length ? true : false;
-    return !isShevaSilent && this.text.indexOf(sylVowelNameToCharMap[name]) !== -1 ? true : false;
+    return this.vowelNames.includes(name);
   }
 
   /**
