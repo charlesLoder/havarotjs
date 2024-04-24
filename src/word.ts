@@ -176,6 +176,32 @@ export class Word extends Node<Word> {
     return hasDivineName(this.text);
   }
 
+  /**
+   * Checks if the word contains the vowel character of the name passed in
+   *
+   * @returns a boolean indicating if the word contains the vowel character of the name passed in
+   *
+   * @example
+   * ```ts
+   * const text = new Text("הַיְחָבְרְךָ")'
+   * text.word[0].hasVowelName("PATAH");
+   * // true
+   *
+   * // test for vocal sheva
+   * text.word[0].hasVowelName("SHEVA");
+   * // true
+   *
+   * // test for silent sheva
+   * text.word[0].hasVowelName("SHUREQ");
+   * // false
+   * ```
+   *
+   * @description
+   * This returns a boolean if the vowel character is present, even for most mater lectionis (e.g. in a holam vav construction, "HOLAM" would return true)
+   * The only exception is a shureq, because there is no vowel character for a shureq.
+   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
+   * It returns `true` for "SHEVA" only when the sheva is the vowel (i.e. a vocal sheva or sheva na').
+   */
   hasVowelName(name: keyof SyllablVowelNameToCharMap): boolean {
     return this.syllables.some((cluster) => cluster.hasVowelName(name));
   }

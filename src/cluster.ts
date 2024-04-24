@@ -505,7 +505,7 @@ export class Cluster extends Node<Cluster> {
    *
    * @returns a boolean indicating if the cluster is a _mater_ letter
    *
-   *@example
+   * @example
    * ```ts
    * const text = new Text("סוּסָה");
    * text.clusters[1].isMater; // the shureq

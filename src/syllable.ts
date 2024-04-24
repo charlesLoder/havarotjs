@@ -220,7 +220,7 @@ export class Syllable extends Node<Syllable> {
    *
    * @returns a boolean indicating if the syllable contains the vowel character of the name passed in
    *
-   *@example
+   * @example
    * ```ts
    * const text = new Text("הַיְחָבְרְךָ");
    * text.syllables[0].hasVowelName("PATAH");
