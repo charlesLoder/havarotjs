@@ -10,6 +10,7 @@ import {
   isCharKeyOfConsonantNameToCharMap,
   isCharKeyOfTaamimNameToCharMap,
   isCharKeyOfVowelNameToCharMap,
+  taamimNameToCharMap,
   vowelNameToCharMap
 } from "./utils/charMap";
 import { hebChars, meteg, punctuation, taamim } from "./utils/regularExpressions";
@@ -424,6 +425,29 @@ export class Cluster extends Node<Cluster> {
       return true;
     }
     return false;
+  }
+
+  /**
+   * Checks if the cluster contains a taamim character
+   *
+   * @returns a boolean indicating if the cluster contains a taamim character
+   *
+   * @example
+   * ```ts
+   * const text = new Text("הָאָ֖רֶץ");
+   * text.clusters[0].hasTaamName("TIPEHA");
+   * // true
+   * ```
+   *
+   * @description
+   * Note: it only checks according to the character name, not its semantic meaning.
+   * E.g. "כֵֽן׃" would be `true` when checking for `"METEG"`, not silluq
+   */
+  hasTaamName(name: TaamimName): boolean {
+    if (!taamimNameToCharMap[name]) {
+      throw new Error(`${name} is not a valid value`);
+    }
+    return this.taamimNames.includes(name);
   }
 
   /**
