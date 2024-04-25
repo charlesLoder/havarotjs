@@ -153,6 +153,14 @@ describe.each`
   });
 });
 
+describe("hasVowelName (error)", () => {
+  test("throws error", () => {
+    const text = new Text("הָאָ֖רֶץ");
+    // @ts-expect-error: testing an invalid parameter
+    expect(() => text.clusters[0].hasVowelName("BOB")).toThrow();
+  });
+});
+
 describe.each`
   description                                                     | original           | sylArr                               | isMaterArr
   ${"hiriq-yod, one syllable"}                                    | ${"פִּי"}          | ${["פִּי"]}                          | ${[false, true]}
