@@ -203,7 +203,7 @@ export class Word extends Node<Word> {
    * It returns `true` for "SHEVA" only when the sheva is the vowel (i.e. a vocal sheva or sheva na').
    */
   hasVowelName(name: keyof SyllablVowelNameToCharMap): boolean {
-    return this.syllables.some((cluster) => cluster.hasVowelName(name));
+    return this.syllables.some((syllable) => syllable.hasVowelName(name));
   }
 
   /**
