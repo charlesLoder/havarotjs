@@ -113,6 +113,31 @@ describe.each`
 });
 
 describe.each`
+  description                  | hebrew              | clusterNum | taamName    | result
+  ${"has character"}           | ${"הָאָ֖רֶץ"}       | ${1}       | ${"TIPEHA"} | ${true}
+  ${"no character"}            | ${"וַֽיְהִי־כֵֽן׃"} | ${1}       | ${"TIPEHA"} | ${false}
+  ${"has wrong character"}     | ${"הָאָ֖רֶץ"}       | ${1}       | ${"ZINOR"}  | ${false}
+  ${"has multiple characters"} | ${"מִתָּ֑͏ַ֜חַת"}    | ${1}       | ${"GERESH"} | ${true}
+`("hasTaamName:", ({ description, hebrew, clusterNum, taamName, result }) => {
+  const heb = new Text(hebrew);
+  const cluster = heb.clusters[clusterNum];
+  const clusterHasVowelName = cluster.hasTaamName(taamName);
+  describe(description, () => {
+    test(`Should cluster have ${taamName}? ${result}`, () => {
+      expect(clusterHasVowelName).toEqual(result);
+    });
+  });
+});
+
+describe("hasTaamName (error)", () => {
+  test("throws error", () => {
+    const text = new Text("הָאָ֖רֶץ");
+    // @ts-expect-error: testing an invalid parameter
+    expect(() => text.clusters[0].hasTaamName("BOB")).toThrow();
+  });
+});
+
+describe.each`
   description                | hebrew              | clusterNum | vowelName   | result
   ${"cluster with patah"}    | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${"PATAH"}  | ${true}
   ${"cluster with qamets"}   | ${"הַֽ֭יְחָבְרְךָ"} | ${0}       | ${"QAMATS"} | ${false}
