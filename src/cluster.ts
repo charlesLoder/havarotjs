@@ -106,25 +106,6 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
-   * Gets the first consonant character in the cluster
-   *
-   * @returns the first consonant character in the cluster
-   *
-   * @example
-   * ```ts
-   * const text = new Text("הֲבָרֹות");
-   * text.clusters[0].consonant;
-   * // "ה"
-   * ```
-   *
-   * @description
-   * A Cluster only ever has one consonant.
-   */
-  get consonant(): Consonant | null {
-    return this.consonants[0] || null;
-  }
-
-  /**
    * Gets all the consonant characters in the cluster
    *
    * @returns an array of the consonant characters in the cluster
@@ -154,21 +135,6 @@ export class Cluster extends Node<Cluster> {
     }, [] as Consonant[]);
 
     return (this.#consonantsCache = consonants);
-  }
-
-  /**
-   * Gets the name of the first consonant character in the cluster
-   *
-   * @returns the name of the first consonant character in the cluster
-   *
-   * ```ts
-   * const text = new Text("הֲבָרֹות");
-   * text.clusters[0].consonantName;
-   * // "HE"
-   * ```
-   */
-  get consonantName(): ConsonantName | null {
-    return this.consonantNames[0] ?? null;
   }
 
   /**
@@ -696,22 +662,6 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
-   * Gets the first taamim character of the cluster
-   *
-   * @returns the first taamim character in the cluster
-   *
-   * @example
-   * ```ts
-   * const text: Text = new Text("בֺ֨");
-   * text.clusters[0].taam;
-   * // "֨" (i.e. \u{05A8})
-   * ```
-   */
-  get taam(): Taam | null {
-    return this.taamim[0] ?? null;
-  }
-
-  /**
    * Gets all the taamim characters in the cluster
    *
    * @returns an array of taamim characters in the cluster
@@ -736,21 +686,6 @@ export class Cluster extends Node<Cluster> {
     }, [] as Taam[]);
 
     return (this.#taamimCache = taamimChars);
-  }
-
-  /**
-   * Gets the name of the first taamim character in the cluster
-   *
-   * @returns the name of the first taamim character in the cluster
-   *
-   * ```ts
-   * const text = new Text("בֺ֨");
-   * text.clusters[0].taam;
-   * // "QADMA"
-   * ```
-   */
-  get taamName(): TaamimName | null {
-    return this.taamimNames[0] ?? null;
   }
 
   /**
@@ -804,50 +739,6 @@ export class Cluster extends Node<Cluster> {
    */
   get text(): string {
     return this.chars.reduce((init, char) => init + char.text, "");
-  }
-
-  /**
-   * Gets the first vowel character of the cluster
-   *
-   * @returns the first vowel character in the cluster
-   *
-   * @example
-   * ```ts
-   * const text = new Text("הַֽ֭יְחָבְרְךָ");
-   * text.clusters[0].vowel;
-   * // "\u{05B7}"
-   * text.clusters[3].vowel;
-   * // null
-   * ```
-   *
-   * @description
-   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
-   * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character
-   */
-  get vowel(): keyof VowelCharToNameMap | null {
-    return this.vowels[0] ?? null;
-  }
-
-  /**
-   * Gets the name of the first vowel character in the cluster
-   *
-   * @returns the name of the first vowel character in the cluster
-   *
-   * @example
-   * ```ts
-   * const text = new Text("הַֽ֭יְחָבְרְךָ");
-   * text.clusters[0].vowelName;
-   * // "PATAH"
-   * text.clusters[3].vowelName;
-   * // null
-   * ```
-   *
-   * @description
-   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
-   * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character
-   */
-  get vowelName(): VowelCharToNameMap[keyof VowelCharToNameMap] | null {
-    return this.vowelNames[0] ?? null;
   }
 
   /**
