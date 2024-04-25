@@ -1,7 +1,8 @@
 import { Char } from "./char";
 import { Cluster } from "./cluster";
 import { Node } from "./node";
-import { Syllable, SyllablVowelNameToCharMap } from "./syllable";
+import { Syllable } from "./syllable";
+import type { VowelName } from "./syllable";
 import { SylOpts } from "./text";
 import { hasDivineName, isDivineName } from "./utils/divineName";
 import { clusterSplitGroup, jerusalemTest } from "./utils/regularExpressions";
@@ -202,7 +203,7 @@ export class Word extends Node<Word> {
    * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
    * It returns `true` for "SHEVA" only when the sheva is the vowel (i.e. a vocal sheva or sheva na').
    */
-  hasVowelName(name: keyof SyllablVowelNameToCharMap): boolean {
+  hasVowelName(name: VowelName): boolean {
     return this.syllables.some((syllable) => syllable.hasVowelName(name));
   }
 
