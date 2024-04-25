@@ -562,53 +562,6 @@ export class Syllable extends Node<Syllable> {
   }
 
   /**
-   * Gets the vowel character of the syllable
-   *
-   * @returns the first vowel character of the syllable
-   *
-   * ```ts
-   * const text = new Text("הַֽ֭יְחָבְרְךָ");
-   * text.syllables[0].vowel;
-   * // "\u{05B7}"
-   * text.syllables[1].vowel;
-   * // "\u{05B0}"
-   * ```
-   *
-   * @description
-   * This returns a single vowel character, even for most mater lectionis (e.g. a holam vav would return the holam, not the vav).
-   * The only exception is a shureq, which returns the vav and the dagesh because there is no vowel character for a shureq.
-   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
-   * Unlike `Cluster`, a `Syllable` is concerned with linguistics, so a sheva **is** a vowel character.
-   */
-  get vowel(): Vowel | null {
-    return this.vowels[0] ?? null;
-  }
-
-  /**
-   * Gets the vowel character name of the syllable
-   *
-   * @returns the name of thefirst vowel character of the syllable
-   *
-   * ```ts
-   * const text = new Text("הַֽ֭יְחָבְרְךָ");
-   * text.syllables[0].vowelName;
-   * // "PATAH"
-   * text.syllables[1].vowelName;
-   * // "SHEVA"
-   * ```
-   *
-   * @description
-   * This returns the vowel name, but not for mater lectionis (e.g. a holam vav would return the HOLAM, not the vav).
-   * The only exception is a shureq, which returns "SHUREQ" because there is no vowel character for a shureq.
-   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
-   * Unlike `Cluster`, a `Syllable` is concerned with linguistics, so a sheva **is** a vowel character.
-   * ```
-   */
-  get vowelName(): VowelName | null {
-    return this.vowelNames[0] ?? null;
-  }
-
-  /**
    * Gets the names of the vowel characters in the syllable
    *
    * @returns an array of names of vowel characters in the syllable
