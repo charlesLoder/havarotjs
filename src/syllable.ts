@@ -1,6 +1,6 @@
 import { Char } from "./char";
-import { Cluster } from "./cluster";
 import type { ConsonantName } from "./cluster";
+import { Cluster } from "./cluster";
 import { Node } from "./node";
 import { consonantNameToCharMap, vowelCharToNameMap, vowelNameToCharMap } from "./utils/charMap";
 import { removeTaamim } from "./utils/removeTaamim";
@@ -14,7 +14,6 @@ const sylVowelCharToNameMap = {
 } as const;
 
 type SyllableVowelCharToNameMap = typeof sylVowelCharToNameMap;
-type Vowel = keyof SyllableVowelCharToNameMap;
 
 const sylVowelNameToCharMap = {
   ...vowelNameToCharMap,
@@ -31,7 +30,8 @@ type SyllableParams = {
   isFinal?: boolean;
 };
 
-type VowelName = SyllableVowelCharToNameMap[keyof SyllableVowelCharToNameMap];
+export type Vowel = keyof SyllableVowelCharToNameMap;
+export type VowelName = SyllableVowelCharToNameMap[keyof SyllableVowelCharToNameMap];
 
 /**
  * A subunit of a {@link Word} consisting of consonants, vowels, and other linguistic and ortographic features.
