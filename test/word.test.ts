@@ -28,6 +28,47 @@ describe.each`
 });
 
 describe.each`
+  description               | hebrew        | wordNum | consonants
+  ${"consonant characters"} | ${"הָאָ֖רֶץ"} | ${0}    | ${["ה", "א", "ר", "ץ"]}
+`("consonants:", ({ description, hebrew, wordNum, consonants }) => {
+  const heb = new Text(hebrew);
+  const word = heb.words[wordNum];
+  const syllableconsonants = word.consonants;
+  describe(description, () => {
+    test(`consonants to equal ${consonants}`, () => {
+      expect(syllableconsonants).toEqual(consonants);
+    });
+  });
+});
+
+describe.each`
+  description               | hebrew        | wordNum | consonantNames
+  ${"consonant characters"} | ${"הָאָ֖רֶץ"} | ${0}    | ${["HE", "ALEF", "RESH", "FINAL_TSADI"]}
+`("consonantNames:", ({ description, hebrew, wordNum, consonantNames }) => {
+  const heb = new Text(hebrew);
+  const word = heb.words[wordNum];
+  describe(description, () => {
+    test(`consonants to equal ${consonantNames}`, () => {
+      expect(word.consonantNames).toEqual(consonantNames);
+    });
+  });
+});
+
+describe.each`
+  description        | hebrew        | consonantName | hasConsonant
+  ${"has consonant"} | ${"מַדּוּעַ"} | ${"MEM"}      | ${true}
+  ${"not consonant"} | ${"לֹ֥א"}     | ${"MEM"}      | ${false}
+`("hasConsonantName:", ({ description, hebrew, consonantName, hasConsonant }) => {
+  const heb = new Text(hebrew);
+  const word = heb.words[0];
+  describe(description, () => {
+    test(`hasConsonant for ${consonantName} to equal ${hasConsonant}`, () => {
+      expect(word.hasConsonantName(consonantName)).toEqual(hasConsonant);
+    });
+  });
+});
+
+describe.each`
   description                      | hebrew              | vowelName   | result
   ${"with patah"}                  | ${"הַֽ֭יְחָבְרְךָ"} | ${"PATAH"}  | ${true}
   ${"sheva"}                       | ${"הַֽ֭יְחָבְרְךָ"} | ${"SHEVA"}  | ${true}
