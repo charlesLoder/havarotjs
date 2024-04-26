@@ -1,6 +1,22 @@
 # Changelog
 
-## 2024-03-089 0.22.4
+## 2024-04-25 0.23.0
+
+- `Word`, `Syllable`, and `Cluster`
+  - `.consonants` gets all the consonant characters
+  - `.consonantNames` gets all the names of the consonant characters
+  - `.hasConsonantName()` checks if a consonant character matching the name is present
+  - `.taamim` gets all the taamim characters
+  - `.taamimNames` gets all the names of the taamim characters
+  - `.hasTaamName()` checks if a taam character matching the name is present
+  - `.vowels` gets all the vowel characters
+  - `.vowelNames` gets all the names of the vowel characters
+  - `.hasVowelName()` checks if a vowel character matching the name is present
+- `Char`
+  - `.characterName` returns the name of the character
+  - `.isCharacterName` checks if the character matches the name given
+
+## 2024-03-09 0.22.4
 
 - Fix when an ole is by itself (PR #162)
 
