@@ -210,52 +210,6 @@ describe.each`
 });
 
 describe.each`
-  description                     | hebrew              | syllableNum | vowel                 | allowNoNiqqud
-  ${"syllable with patah"}        | ${"הַֽ֭יְחָבְרְךָ"} | ${0}        | ${"\u{05B7}"}         | ${false}
-  ${"syllable with sheva"}        | ${"הַֽ֭יְחָבְרְךָ"} | ${1}        | ${"\u{05B0}"}         | ${false}
-  ${"syllable with silent sheva"} | ${"הַֽ֭יְחָבְרְךָ"} | ${2}        | ${"\u{05B8}"}         | ${false}
-  ${"syllable with none"}         | ${"test"}           | ${0}        | ${null}               | ${true}
-  ${"syllable with shureq"}       | ${"תִגְּע֖וּ"}      | ${2}        | ${"\u{05D5}\u{05BC}"} | ${false}
-  ${"syllable with tsere-yod"}    | ${"קָדְשֵׁ֧י"}      | ${1}        | ${"\u{05B5}"}         | ${false}
-  ${"syllable with holam-vav"}    | ${"בַּיּ֣וֹם"}      | ${1}        | ${"\u{05B9}"}         | ${false}
-  ${"syllable with hiriq-yod"}    | ${"אָנֹֽכִי"}       | ${2}        | ${"\u{05B4}"}         | ${false}
-  ${"syllable with mixed chars"}  | ${"rˁִː֣"}          | ${0}        | ${"\u{05B4}"}         | ${false}
-`("vowel:", ({ description, hebrew, syllableNum, vowel, allowNoNiqqud }) => {
-  // normally don't use `allowNoNiqqud` in testing, but needed to get `null`
-  const heb = new Text(hebrew, { allowNoNiqqud });
-  const syllable = heb.syllables[syllableNum];
-  const syllableVowel = syllable.vowel;
-  describe(description, () => {
-    test(`vowel to equal ${vowel}`, () => {
-      expect(syllableVowel).toEqual(vowel);
-    });
-  });
-});
-
-describe.each`
-  description                     | hebrew              | syllableNum | vowelName   | allowNoNiqqud
-  ${"syllable with patah"}        | ${"הַֽ֭יְחָבְרְךָ"} | ${0}        | ${"PATAH"}  | ${false}
-  ${"syllable with sheva"}        | ${"הַֽ֭יְחָבְרְךָ"} | ${1}        | ${"SHEVA"}  | ${false}
-  ${"syllable with silent sheva"} | ${"הַֽ֭יְחָבְרְךָ"} | ${2}        | ${"QAMATS"} | ${false}
-  ${"syllable with none"}         | ${"test"}           | ${0}        | ${null}     | ${true}
-  ${"syllable with shureq"}       | ${"תִגְּע֖וּ"}      | ${2}        | ${"SHUREQ"} | ${false}
-  ${"syllable with tsere-yod"}    | ${"קָדְשֵׁ֧י"}      | ${1}        | ${"TSERE"}  | ${false}
-  ${"syllable with holam-vav"}    | ${"בַּיּ֣וֹם"}      | ${1}        | ${"HOLAM"}  | ${false}
-  ${"syllable with hiriq-yod"}    | ${"אָנֹֽכִי"}       | ${2}        | ${"HIRIQ"}  | ${false}
-  ${"syllable with mixed chars"}  | ${"rˁִː֣"}          | ${0}        | ${"HIRIQ"}  | ${true}
-`("vowelName:", ({ description, hebrew, syllableNum, vowelName, allowNoNiqqud }) => {
-  // normally don't use `allowNoNiqqud` in testing, but needed to get `null`
-  const heb = new Text(hebrew, { allowNoNiqqud });
-  const syllable = heb.syllables[syllableNum];
-  const syllableVowelName = syllable.vowelName;
-  describe(description, () => {
-    test(`vowelName to equal ${vowelName}`, () => {
-      expect(syllableVowelName).toEqual(vowelName);
-    });
-  });
-});
-
-describe.each`
   description             | hebrew              | syllableNum | vowelNames
   ${"with one character"} | ${"הָאָ֖רֶץ"}       | ${1}        | ${["QAMATS"]}
   ${"with sheva"}         | ${"וַֽיְהִי־כֵֽן׃"} | ${1}        | ${["SHEVA"]}

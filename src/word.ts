@@ -1,7 +1,9 @@
 import { Char } from "./char";
 import { Cluster } from "./cluster";
 import { Node } from "./node";
-import { Syllable, SyllablVowelNameToCharMap } from "./syllable";
+import { Syllable } from "./syllable";
+import type { VowelName } from "./syllable";
+import type { ConsonantName } from "./cluster";
 import { SylOpts } from "./text";
 import { hasDivineName, isDivineName } from "./utils/divineName";
 import { clusterSplitGroup, jerusalemTest } from "./utils/regularExpressions";
@@ -161,6 +163,59 @@ export class Word extends Node<Word> {
   }
 
   /**
+   * Gets all the consonant characters in the Word
+   *
+   * @returns a one dimensional array of all the consonant characters in the Word
+   *
+   * @example
+   * ```ts
+   * const text = new Text("הָאָ֖רֶץ");
+   * text.words[0].consonants;
+   * // ["ה", "א", "ר", "ץ"]
+   * ```
+   */
+  get consonants() {
+    return this.clusters.map((cluster) => cluster.consonants).flat();
+  }
+
+  /**
+   * Gets all the consonant character names in the Word
+   *
+   * @returns a one dimensional array of all the consonant character names in the Word
+   *
+   * @example
+   * ```ts
+   * const text = new Text("הָאָ֖רֶץ");
+   * text.words[0].consonantNames;
+   * // ["HE", "ALEF", "RESH", "FINAL_TSADI"]
+   * ```
+   */
+  get consonantNames() {
+    return this.clusters.map((cluster) => cluster.consonantNames).flat();
+  }
+
+  /**
+   * Checks if the word contains the consonant character of the name passed in
+   *
+   * @returns a boolean indicating if the word contains the consonant character of the name passed in
+   *
+   * @example
+   * ```ts
+   * const text = new Text("הָאָ֖רֶץ");
+   * text.words[0].hasConsonantName("HE");
+   * // true
+   * text.words[0].hasConsonantName("MEM");
+   * // false
+   * ```
+   *
+   * @description
+   * This checks if the syllable contains the given consonant name, even if the character is not a phonemic consonant (i.e a mater).
+   */
+  hasConsonantName(name: ConsonantName): boolean {
+    return this.clusters.some((cluster) => cluster.hasConsonantName(name));
+  }
+
+  /**
    * Checks if the word has a form of the Divine Name (i.e the tetragrammaton)
    *
    * @returns a boolean indicating if the word has a form of the Divine Name
@@ -176,8 +231,34 @@ export class Word extends Node<Word> {
     return hasDivineName(this.text);
   }
 
-  hasVowelName(name: keyof SyllablVowelNameToCharMap): boolean {
-    return this.syllables.some((cluster) => cluster.hasVowelName(name));
+  /**
+   * Checks if the word contains the vowel character of the name passed in
+   *
+   * @returns a boolean indicating if the word contains the vowel character of the name passed in
+   *
+   * @example
+   * ```ts
+   * const text = new Text("הַיְחָבְרְךָ")'
+   * text.word[0].hasVowelName("PATAH");
+   * // true
+   *
+   * // test for vocal sheva
+   * text.word[0].hasVowelName("SHEVA");
+   * // true
+   *
+   * // test for silent sheva
+   * text.word[0].hasVowelName("SHUREQ");
+   * // false
+   * ```
+   *
+   * @description
+   * This returns a boolean if the vowel character is present, even for most mater lectionis (e.g. in a holam vav construction, "HOLAM" would return true)
+   * The only exception is a shureq, because there is no vowel character for a shureq.
+   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
+   * It returns `true` for "SHEVA" only when the sheva is the vowel (i.e. a vocal sheva or sheva na').
+   */
+  hasVowelName(name: VowelName): boolean {
+    return this.syllables.some((syllable) => syllable.hasVowelName(name));
   }
 
   /**

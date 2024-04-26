@@ -1,12 +1,8 @@
 import { Char } from "./char";
+import type { ConsonantName } from "./cluster";
 import { Cluster } from "./cluster";
 import { Node } from "./node";
-import {
-  ConsonantNameToCharMap,
-  consonantNameToCharMap,
-  vowelCharToNameMap,
-  vowelNameToCharMap
-} from "./utils/charMap";
+import { consonantNameToCharMap, vowelCharToNameMap, vowelNameToCharMap } from "./utils/charMap";
 import { removeTaamim } from "./utils/removeTaamim";
 import { Word } from "./word";
 
@@ -18,7 +14,6 @@ const sylVowelCharToNameMap = {
 } as const;
 
 type SyllableVowelCharToNameMap = typeof sylVowelCharToNameMap;
-type Vowel = keyof SyllableVowelCharToNameMap;
 
 const sylVowelNameToCharMap = {
   ...vowelNameToCharMap,
@@ -35,7 +30,8 @@ type SyllableParams = {
   isFinal?: boolean;
 };
 
-type VowelName = SyllableVowelCharToNameMap[keyof SyllableVowelCharToNameMap];
+export type Vowel = keyof SyllableVowelCharToNameMap;
+export type VowelName = SyllableVowelCharToNameMap[keyof SyllableVowelCharToNameMap];
 
 /**
  * A subunit of a {@link Word} consisting of consonants, vowels, and other linguistic and ortographic features.
@@ -211,7 +207,7 @@ export class Syllable extends Node<Syllable> {
    * @description
    * This checks if the syllable contains the given consonant name, even if the character is not a phonemic consonant.
    */
-  hasConsonantName(name: keyof ConsonantNameToCharMap): boolean {
+  hasConsonantName(name: ConsonantName): boolean {
     if (!consonantNameToCharMap[name]) {
       throw new Error(`${name} is not a valid value`);
     }
@@ -224,7 +220,7 @@ export class Syllable extends Node<Syllable> {
    *
    * @returns a boolean indicating if the syllable contains the vowel character of the name passed in
    *
-   *@example
+   * @example
    * ```ts
    * const text = new Text("הַיְחָבְרְךָ");
    * text.syllables[0].hasVowelName("PATAH");
@@ -246,18 +242,12 @@ export class Syllable extends Node<Syllable> {
    * Unlike `Cluster`, a `Syllable` is concerned with linguistics, so a sheva **is** a vowel character.
    * It returns `true` for "SHEVA" only when the sheva is the vowel (i.e. a vocal sheva or sheva na').
    */
-  hasVowelName(name: keyof SyllablVowelNameToCharMap): boolean {
+  hasVowelName(name: VowelName): boolean {
     if (!sylVowelNameToCharMap[name]) {
       throw new Error(`${name} is not a valid value`);
     }
 
-    if (name === "SHUREQ") {
-      // if any cluster has a shureq, then that should be the defacto vowel
-      return this.clusters.filter((c) => c.isShureq).length ? true : false;
-    }
-
-    const isShevaSilent = name === "SHEVA" && this.clusters.filter((c) => c.hasVowel).length ? true : false;
-    return !isShevaSilent && this.text.indexOf(sylVowelNameToCharMap[name]) !== -1 ? true : false;
+    return this.vowelNames.includes(name);
   }
 
   /**
@@ -569,53 +559,6 @@ export class Syllable extends Node<Syllable> {
    */
   get text(): string {
     return this.clusters.map((c) => c.text).join("");
-  }
-
-  /**
-   * Gets the vowel character of the syllable
-   *
-   * @returns the first vowel character of the syllable
-   *
-   * ```ts
-   * const text = new Text("הַֽ֭יְחָבְרְךָ");
-   * text.syllables[0].vowel;
-   * // "\u{05B7}"
-   * text.syllables[1].vowel;
-   * // "\u{05B0}"
-   * ```
-   *
-   * @description
-   * This returns a single vowel character, even for most mater lectionis (e.g. a holam vav would return the holam, not the vav).
-   * The only exception is a shureq, which returns the vav and the dagesh because there is no vowel character for a shureq.
-   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
-   * Unlike `Cluster`, a `Syllable` is concerned with linguistics, so a sheva **is** a vowel character.
-   */
-  get vowel(): Vowel | null {
-    return this.vowels[0] ?? null;
-  }
-
-  /**
-   * Gets the vowel character name of the syllable
-   *
-   * @returns the name of thefirst vowel character of the syllable
-   *
-   * ```ts
-   * const text = new Text("הַֽ֭יְחָבְרְךָ");
-   * text.syllables[0].vowelName;
-   * // "PATAH"
-   * text.syllables[1].vowelName;
-   * // "SHEVA"
-   * ```
-   *
-   * @description
-   * This returns the vowel name, but not for mater lectionis (e.g. a holam vav would return the HOLAM, not the vav).
-   * The only exception is a shureq, which returns "SHUREQ" because there is no vowel character for a shureq.
-   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
-   * Unlike `Cluster`, a `Syllable` is concerned with linguistics, so a sheva **is** a vowel character.
-   * ```
-   */
-  get vowelName(): VowelName | null {
-    return this.vowelNames[0] ?? null;
   }
 
   /**
