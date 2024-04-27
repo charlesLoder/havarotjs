@@ -1,8 +1,12 @@
 # Changelog
 
+## 2024-04-26 0.23.1
+
+- Added in forgotten props and methods to the `Word` and `Syllable` objects (PR #168)
+
 ## 2024-04-25 0.23.0
 
-- `Word`, `Syllable`, and `Cluster`
+- `Word`, `Syllable`, and `Cluster` (PR #167)
   - `.consonants` gets all the consonant characters
   - `.consonantNames` gets all the names of the consonant characters
   - `.hasConsonantName()` checks if a consonant character matching the name is present
