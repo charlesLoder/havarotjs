@@ -1,9 +1,9 @@
 import { Char } from "./char";
+import type { ConsonantName, TaamimName } from "./cluster";
 import { Cluster } from "./cluster";
 import { Node } from "./node";
-import { Syllable } from "./syllable";
 import type { VowelName } from "./syllable";
-import type { ConsonantName } from "./cluster";
+import { Syllable } from "./syllable";
 import { SylOpts } from "./text";
 import { hasDivineName, isDivineName } from "./utils/divineName";
 import { clusterSplitGroup, jerusalemTest } from "./utils/regularExpressions";
@@ -229,6 +229,26 @@ export class Word extends Node<Word> {
    */
   get hasDivineName(): boolean {
     return hasDivineName(this.text);
+  }
+
+  /**
+   * Checks if the word contains the taamim character of the name passed in
+   *
+   * @returns a boolean indicating if the word contains the taamim character of the name passed in
+   *
+   * @example
+   * ```ts
+   * const text = new Text("הָאָ֖רֶץ");
+   * text.word[0].hasTaamName("TIPEHA");
+   * // true
+   * ```
+   *
+   * @description
+   * Note: it only checks according to the character name, not its semantic meaning.
+   * E.g. "כֵֽן׃" would be `true` when checking for `"METEG"`, not silluq
+   */
+  hasTaamName(name: TaamimName): boolean {
+    return this.syllables.some((syllable) => syllable.hasTaamName(name));
   }
 
   /**

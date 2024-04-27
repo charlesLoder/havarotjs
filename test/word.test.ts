@@ -69,6 +69,31 @@ describe.each`
 });
 
 describe.each`
+  description                  | hebrew              | taamName    | result
+  ${"has character"}           | ${"הָאָ֖רֶץ"}       | ${"TIPEHA"} | ${true}
+  ${"no character"}            | ${"וַֽיְהִי־כֵֽן׃"} | ${"TIPEHA"} | ${false}
+  ${"has wrong character"}     | ${"הָאָ֖רֶץ"}       | ${"ZINOR"}  | ${false}
+  ${"has multiple characters"} | ${"מִתָּ֑͏ַ֜חַת"}    | ${"GERESH"} | ${true}
+`("hasTaamName:", ({ description, hebrew, taamName, result }) => {
+  const heb = new Text(hebrew);
+  const word = heb.words[0];
+  const hasTaamName = word.hasTaamName(taamName);
+  describe(description, () => {
+    test(`Should word have ${taamName}? ${result}`, () => {
+      expect(hasTaamName).toEqual(result);
+    });
+  });
+});
+
+describe("hasTaamName (error)", () => {
+  test("throws error", () => {
+    const text = new Text("הָאָ֖רֶץ");
+    // @ts-expect-error: testing an invalid parameter
+    expect(() => text.words[0].hasTaamName("BOB")).toThrow();
+  });
+});
+
+describe.each`
   description                      | hebrew              | vowelName   | result
   ${"with patah"}                  | ${"הַֽ֭יְחָבְרְךָ"} | ${"PATAH"}  | ${true}
   ${"sheva"}                       | ${"הַֽ֭יְחָבְרְךָ"} | ${"SHEVA"}  | ${true}

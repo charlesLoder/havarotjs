@@ -1,8 +1,8 @@
 import { Char } from "./char";
-import type { ConsonantName } from "./cluster";
+import type { ConsonantName, TaamimName } from "./cluster";
 import { Cluster } from "./cluster";
 import { Node } from "./node";
-import { consonantNameToCharMap, vowelCharToNameMap, vowelNameToCharMap } from "./utils/charMap";
+import { consonantNameToCharMap, taamimNameToCharMap, vowelCharToNameMap, vowelNameToCharMap } from "./utils/charMap";
 import { removeTaamim } from "./utils/removeTaamim";
 import { Word } from "./word";
 
@@ -248,6 +248,29 @@ export class Syllable extends Node<Syllable> {
     }
 
     return this.vowelNames.includes(name);
+  }
+
+  /**
+   * Checks if the syllable contains the taamim character of the name passed in
+   *
+   * @returns a boolean indicating if the syllable contains the taamim character of the name passed in
+   *
+   * @example
+   * ```ts
+   * const text = new Text("הָאָ֖רֶץ");
+   * text.syllables[1].hasTaamName("TIPEHA");
+   * // true
+   * ```
+   *
+   * @description
+   * Note: it only checks according to the character name, not its semantic meaning.
+   * E.g. "כֵֽן׃" would be `true` when checking for `"METEG"`, not silluq
+   */
+  hasTaamName(name: TaamimName): boolean {
+    if (!taamimNameToCharMap[name]) {
+      throw new Error(`${name} is not a valid value`);
+    }
+    return this.taamimNames.includes(name);
   }
 
   /**
