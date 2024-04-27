@@ -3,6 +3,23 @@ import { Text } from "../src/index";
 import { Syllable } from "../src/syllable";
 
 describe.each`
+  description                                          | hebrew         | syllableNum | codaWithGemination
+  ${"open syllable followed by gemination"}            | ${"מַדּוּעַ"}  | ${0}        | ${"דּ"}
+  ${"open syllable followed by no gemination"}         | ${"מֶלֶךְ"}    | ${0}        | ${""}
+  ${"closed syllable followed by dagesh qal"}          | ${"מַסְגֵּר"}  | ${0}        | ${"סְ"}
+  ${"open syllable with sheva followed by dagesh qal"} | ${"שְׁתַּיִם"} | ${0}        | ${""}
+`("codaWithGemination:", ({ description, hebrew, syllableNum, codaWithGemination }) => {
+  const heb = new Text(hebrew);
+  const syllable = heb.syllables[syllableNum];
+  const syllableCodaWithGemination = syllable.codaWithGemination;
+  describe(description, () => {
+    test(`codaWithGemination to equal ${codaWithGemination}`, () => {
+      expect(syllableCodaWithGemination).toEqual(codaWithGemination);
+    });
+  });
+});
+
+describe.each`
   description              | hebrew             | syllableNum | consonants
   ${"one consonant"}       | ${"מַדּ֥וּעַ"}     | ${0}        | ${["מ"]}
   ${"two consonants"}      | ${"לֹ֥א"}          | ${0}        | ${["ל", "א"]}
@@ -60,19 +77,27 @@ describe("hasConsonantName (error)", () => {
 });
 
 describe.each`
-  description                                          | hebrew         | syllableNum | codaWithGemination
-  ${"open syllable followed by gemination"}            | ${"מַדּוּעַ"}  | ${0}        | ${"דּ"}
-  ${"open syllable followed by no gemination"}         | ${"מֶלֶךְ"}    | ${0}        | ${""}
-  ${"closed syllable followed by dagesh qal"}          | ${"מַסְגֵּר"}  | ${0}        | ${"סְ"}
-  ${"open syllable with sheva followed by dagesh qal"} | ${"שְׁתַּיִם"} | ${0}        | ${""}
-`("codaWithGemination:", ({ description, hebrew, syllableNum, codaWithGemination }) => {
+  description                  | hebrew              | syllableNum | taamName    | result
+  ${"has character"}           | ${"הָאָ֖רֶץ"}       | ${1}        | ${"TIPEHA"} | ${true}
+  ${"no character"}            | ${"וַֽיְהִי־כֵֽן׃"} | ${1}        | ${"TIPEHA"} | ${false}
+  ${"has wrong character"}     | ${"הָאָ֖רֶץ"}       | ${1}        | ${"ZINOR"}  | ${false}
+  ${"has multiple characters"} | ${"מִתָּ֑͏ַ֜חַת"}    | ${1}        | ${"GERESH"} | ${true}
+`("hasTaamName:", ({ description, hebrew, syllableNum, taamName, result }) => {
   const heb = new Text(hebrew);
   const syllable = heb.syllables[syllableNum];
-  const syllableCodaWithGemination = syllable.codaWithGemination;
+  const hasTaamName = syllable.hasTaamName(taamName);
   describe(description, () => {
-    test(`codaWithGemination to equal ${codaWithGemination}`, () => {
-      expect(syllableCodaWithGemination).toEqual(codaWithGemination);
+    test(`Should cluster have ${taamName}? ${result}`, () => {
+      expect(hasTaamName).toEqual(result);
     });
+  });
+});
+
+describe("hasTaamName (error)", () => {
+  test("throws error", () => {
+    const text = new Text("הָאָ֖רֶץ");
+    // @ts-expect-error: testing an invalid parameter
+    expect(() => text.syllables[0].hasTaamName("BOB")).toThrow();
   });
 });
 
@@ -107,31 +132,6 @@ describe.each`
   const syllable = heb.syllables[syllableNum];
   test(`vowelName${vowelName} should throw error`, () => {
     expect(() => syllable.hasVowelName(vowelName)).toThrow();
-  });
-});
-
-describe.each`
-  description                  | hebrew              | syllableNum | taamName    | result
-  ${"has character"}           | ${"הָאָ֖רֶץ"}       | ${1}        | ${"TIPEHA"} | ${true}
-  ${"no character"}            | ${"וַֽיְהִי־כֵֽן׃"} | ${1}        | ${"TIPEHA"} | ${false}
-  ${"has wrong character"}     | ${"הָאָ֖רֶץ"}       | ${1}        | ${"ZINOR"}  | ${false}
-  ${"has multiple characters"} | ${"מִתָּ֑͏ַ֜חַת"}    | ${1}        | ${"GERESH"} | ${true}
-`("hasTaamName:", ({ description, hebrew, syllableNum, taamName, result }) => {
-  const heb = new Text(hebrew);
-  const syllable = heb.syllables[syllableNum];
-  const hasTaamName = syllable.hasTaamName(taamName);
-  describe(description, () => {
-    test(`Should cluster have ${taamName}? ${result}`, () => {
-      expect(hasTaamName).toEqual(result);
-    });
-  });
-});
-
-describe("hasTaamName (error)", () => {
-  test("throws error", () => {
-    const text = new Text("הָאָ֖רֶץ");
-    // @ts-expect-error: testing an invalid parameter
-    expect(() => text.syllables[0].hasTaamName("BOB")).toThrow();
   });
 });
 
