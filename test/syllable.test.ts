@@ -118,11 +118,11 @@ describe.each`
   ${"has multiple characters"} | ${"מִתָּ֑͏ַ֜חַת"}    | ${1}        | ${"GERESH"} | ${true}
 `("hasTaamName:", ({ description, hebrew, syllableNum, taamName, result }) => {
   const heb = new Text(hebrew);
-  const cluster = heb.clusters[syllableNum];
-  const clusterHasVowelName = cluster.hasTaamName(taamName);
+  const syllable = heb.syllables[syllableNum];
+  const hasTaamName = syllable.hasTaamName(taamName);
   describe(description, () => {
     test(`Should cluster have ${taamName}? ${result}`, () => {
-      expect(clusterHasVowelName).toEqual(result);
+      expect(hasTaamName).toEqual(result);
     });
   });
 });
@@ -131,7 +131,7 @@ describe("hasTaamName (error)", () => {
   test("throws error", () => {
     const text = new Text("הָאָ֖רֶץ");
     // @ts-expect-error: testing an invalid parameter
-    expect(() => text.clusters[0].hasTaamName("BOB")).toThrow();
+    expect(() => text.syllables[0].hasTaamName("BOB")).toThrow();
   });
 });
 
