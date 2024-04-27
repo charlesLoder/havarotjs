@@ -111,6 +111,31 @@ describe.each`
 });
 
 describe.each`
+  description                  | hebrew              | syllableNum | taamName    | result
+  ${"has character"}           | ${"הָאָ֖רֶץ"}       | ${1}        | ${"TIPEHA"} | ${true}
+  ${"no character"}            | ${"וַֽיְהִי־כֵֽן׃"} | ${1}        | ${"TIPEHA"} | ${false}
+  ${"has wrong character"}     | ${"הָאָ֖רֶץ"}       | ${1}        | ${"ZINOR"}  | ${false}
+  ${"has multiple characters"} | ${"מִתָּ֑͏ַ֜חַת"}    | ${1}        | ${"GERESH"} | ${true}
+`("hasTaamName:", ({ description, hebrew, syllableNum, taamName, result }) => {
+  const heb = new Text(hebrew);
+  const cluster = heb.clusters[syllableNum];
+  const clusterHasVowelName = cluster.hasTaamName(taamName);
+  describe(description, () => {
+    test(`Should cluster have ${taamName}? ${result}`, () => {
+      expect(clusterHasVowelName).toEqual(result);
+    });
+  });
+});
+
+describe("hasTaamName (error)", () => {
+  test("throws error", () => {
+    const text = new Text("הָאָ֖רֶץ");
+    // @ts-expect-error: testing an invalid parameter
+    expect(() => text.clusters[0].hasTaamName("BOB")).toThrow();
+  });
+});
+
+describe.each`
   description               | hebrew                 | syllableNum | nextExists | nextText
   ${"has next"}             | ${"הַֽ֭יְחָבְרְךָ"}    | ${0}        | ${true}    | ${"יְ"}
   ${"does not have next"}   | ${"כִּסֵּ֣א"}          | ${1}        | ${false}   | ${null}
