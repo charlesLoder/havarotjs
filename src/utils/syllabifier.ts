@@ -121,6 +121,15 @@ const groupShevas = (arr: Mixed, options: SylOpts): Mixed => {
 
     const clusterHasSheva = cluster.hasSheva;
 
+    // if a sheva is already present and the current cluster has a sheva
+    // then there are two shevas in a row, meaning the first cluster is it's own syllable
+    if (shevaPresent && clusterHasSheva) {
+      syl = shevaNewSyllable(syl);
+      syl.unshift(cluster);
+      continue;
+    }
+
+    // in here, add a check for in the prev cluster (i.e. syl) or use shevaPresent
     if (clusterHasSheva && cluster.hasMeteg && options.shevaWithMeteg) {
       syl.unshift(cluster);
       syl = shevaNewSyllable(syl);
