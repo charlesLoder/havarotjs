@@ -1,5 +1,9 @@
 # Changelog
 
+## 2024-05-07 0.23.2
+
+- Fix issue with two shevas where the first has a meteg (PR #171)
+
 ## 2024-04-26 0.23.1
 
 - Added in forgotten props and methods to the `Word` and `Syllable` objects (PR #168)
