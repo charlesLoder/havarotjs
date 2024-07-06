@@ -29,10 +29,10 @@ export type VowelName = VowelCharToNameMap[keyof VowelCharToNameMap];
  * - an optional vowel
  * - an optional taam
  *
- * A [[`Syllable`]] is a linguistic unit, whereas a `Cluster` is an orthgraphic one.
+ * A {@link Syallble | `Syllable`} is a linguistic unit, whereas a {@link Cluster | `Cluster`}` is an orthgraphic one.
  * The word `יֹו֑ם` is only one syllable, but it has three clusters—`יֹ`, `ו֑`, `ם`.
  * Because Hebrew orthography is both sub and supra linear, clusters can be encoded in various ways.
- * Every [[`Char`]] is sequenced first for normalization, see the [SBL Hebrew Font Manual](https://www.sbl-site.org/Fonts/SBLHebrewUserManual1.5x.pdf), p.8.
+ * Every {@link Char | `Char`} is sequenced first for normalization, see the [SBL Hebrew Font Manual](https://www.sbl-site.org/Fonts/SBLHebrewUserManual1.5x.pdf), p.8.
  */
 export class Cluster extends Node<Cluster> {
   #consonantsCache: Consonant[] | null = null;
@@ -269,7 +269,7 @@ export class Cluster extends Node<Cluster> {
    * ```ts
    * const text = new Text("נַפְשִֽׁי׃");
    * text.clusters[2].hasMetheg;
-   * // truw
+   * // true
    * ```
    *
    * @description

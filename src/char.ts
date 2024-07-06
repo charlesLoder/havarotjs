@@ -4,7 +4,7 @@ import { consonants, dagesh, ligatures, meteg, rafe, sheva, taamim, vowels } fro
 
 /**
  * A Hebrew character and its positioning number for being sequenced correctly.
- * See [[`Cluster`]] for correct normalization.
+ * See {@link Cluster | `Cluster`} for correct normalization.
  */
 export class Char {
   #text: string;
