@@ -28,8 +28,7 @@ const snippets = [
   "חָלְיֽוֹ",
   "חָלְיֹו",
   "חָפְנ",
-  "חָפְשִׁי",
-  "חָפְשִׁית",
+  "חָפְשׁ",
   "חָרְב",
   "חָרְנֶפֶר",
   "חָרְפּ",
@@ -61,6 +60,7 @@ const snippets = [
 
 const wholeWords = [
   // nouns
+  "חׇפְרַע", // personal name, see Jer 44:30
   "חָק־",
   "(מִ)?כָּל־", // kol w/ maqqef optionally preceded by mem
   "(וּבְ|וְ|בְּ|לְ)?כָל־", // kol w/ maqqef optionally preceded by shureq + bet, waw, bet, or lamed
