@@ -1,5 +1,9 @@
 # Changelog
 
+## 2024-08-02 0.23.3
+
+- Fix issue with incorrect qamets qatan (PR #174)
+
 ## 2024-05-07 0.23.2
 
 - Fix issue with two shevas where the first has a meteg (PR #171)
