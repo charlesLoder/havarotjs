@@ -120,7 +120,7 @@
     "prettier": "^3.2.5",
     "ts-jest": "^29.1.2",
     "tsc-alias": "^1.8.8",
-    "typedoc": "^0.25.10",
+    "typedoc": "^0.26.5",
     "typescript": "^5.3.3"
   }
 }
