@@ -109,7 +109,6 @@
   "license": "MIT",
   "devDependencies": {
     "@alcalzone/esm2cjs": "^1.1.2",
-    "@droppedcode/typedoc-plugin-copy-assets": "^1.0.11",
     "@types/jest": "^29.5.12",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "eslint": "^8.57.0",
