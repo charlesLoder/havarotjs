@@ -88,6 +88,7 @@
     "preversion": "./changelog.sh && npm run format && npm run lint && npm test",
     "postversion": "git push && git push --tags",
     "docs": "typedoc && cp havarot-2400.png ./docs",
+    "docs:dev": "astro dev --config ./docs/astro.config.mjs",
     "update": " npm-check-updates '/^(?!typedoc).*$/' -u"
   },
   "files": [
@@ -124,7 +125,7 @@
     "ts-jest": "^29.1.2",
     "tsc-alias": "^1.8.8",
     "typedoc": "^0.26.5",
-    "typedoc-plugin-markdown": "^4.2.3",
+    "typedoc-plugin-markdown": "^4.1.0",
     "typescript": "^5.3.3"
   }
 }
