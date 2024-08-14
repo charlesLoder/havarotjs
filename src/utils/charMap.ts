@@ -3,6 +3,13 @@
 // it is better to have they keys sorted by unicode position rather then name
 
 // ------
+// UTILITY
+// ------
+export type Flip<T extends Record<string, PropertyKey>> = {
+  [K in keyof T as T[K]]: K;
+};
+
+// ------
 // TAAMIM
 // ------
 export const taamimCharToNameMap = {
@@ -39,12 +46,14 @@ export const taamimCharToNameMap = {
 } as const;
 
 export type TaamimCharToNameMap = typeof taamimCharToNameMap;
+export type Taam = keyof TaamimCharToNameMap;
 
-export const isCharKeyOfTaamimNameToCharMap = (char: string): char is keyof TaamimCharToNameMap => {
+export type TaamimNameToCharMap = Flip<TaamimCharToNameMap>;
+export type TaamimName = keyof TaamimNameToCharMap;
+
+export const isCharTaam = (char: string): char is Taam => {
   return char in taamimCharToNameMap;
 };
-
-export type TaamimNameToCharMap = { [K in keyof TaamimCharToNameMap as TaamimCharToNameMap[K]]: K };
 
 export const taamimNameToCharMap: TaamimNameToCharMap = {
   ETNAHTA: "\u{0591}",
@@ -98,12 +107,14 @@ export const vowelCharToNameMap = {
 } as const;
 
 export type VowelCharToNameMap = typeof vowelCharToNameMap;
+export type Vowel = keyof VowelCharToNameMap;
 
-export const isCharKeyOfVowelNameToCharMap = (char: string): char is keyof VowelCharToNameMap => {
+export type VowelNameToCharMap = Flip<VowelCharToNameMap>;
+export type VowelName = keyof VowelNameToCharMap;
+
+export const isCharVowel = (char: string): char is Vowel => {
   return char in vowelCharToNameMap;
 };
-
-export type VowelNameToCharMap = { [K in keyof VowelCharToNameMap as VowelCharToNameMap[K]]: K };
 
 export const vowelNameToCharMap: VowelNameToCharMap = {
   HATAF_SEGOL: "\u{05B1}",
@@ -154,12 +165,14 @@ export const consonantCharToNameMap = {
 } as const;
 
 export type ConsonantCharToNameMap = typeof consonantCharToNameMap;
+export type Consonant = keyof ConsonantCharToNameMap;
 
-export const isCharKeyOfConsonantNameToCharMap = (char: string): char is keyof ConsonantCharToNameMap => {
+export type ConsonantNameToCharMap = Flip<ConsonantCharToNameMap>;
+export type ConsonantName = keyof ConsonantNameToCharMap;
+
+export const isCharConsonant = (char: string): char is Consonant => {
   return char in consonantCharToNameMap;
 };
-
-export type ConsonantNameToCharMap = { [K in keyof ConsonantCharToNameMap as ConsonantCharToNameMap[K]]: K };
 
 export const consonantNameToCharMap: ConsonantNameToCharMap = {
   ALEF: "\u{05D0}",
@@ -257,18 +270,20 @@ export const charToNameMap = {
 } as const;
 
 export type CharToNameMap = typeof charToNameMap;
+export type HebrewCharacter = keyof CharToNameMap;
 
 /**
- * A type guard to check that the character is a key of the `CharToNameMap` type
+ * A type guard to check that the character is a valid Hebrew character
  *
  * @param char a character
- * @returns true if the character is a key in the `CharToNameMap`
+ * @returns `true` if the character is a valid Hebrew character
  */
-export const isCharKeyOfCharToNameMap = (char: string): char is keyof CharToNameMap => {
+export const isHebrewCharacter = (char: string): char is HebrewCharacter => {
   return char in charToNameMap;
 };
 
-export type NameToCharMap = { [K in keyof CharToNameMap as CharToNameMap[K]]: K };
+export type NameToCharMap = Flip<CharToNameMap>;
+export type HebrewCharacterName = keyof NameToCharMap;
 
 /**
  * an object where the key is a character's partial Unicode name and the value is the character
@@ -326,6 +341,11 @@ export const nameToCharMap: NameToCharMap = {
   DOUBLE_YOD: "\u{05F2}"
 };
 
-export const isNameKeyOfNameToCharMap = (name: string): name is keyof NameToCharMap => {
+/**
+ * A type guard to check that the character name is for a valid Hebrew character
+ *
+ * @param name a character name
+ */
+export const isHebrewCharacterName = (name: string): name is HebrewCharacterName => {
   return name in nameToCharMap;
 };

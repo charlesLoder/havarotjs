@@ -1,26 +1,17 @@
 import { Char } from "./char";
 import { Node } from "./node";
 import { Syllable } from "./syllable";
+import type { Consonant, ConsonantName, Taam, TaamimName, Vowel, VowelName } from "./utils/charMap";
 import {
-  ConsonantCharToNameMap,
-  TaamimCharToNameMap,
-  VowelCharToNameMap,
   charToNameMap,
   consonantNameToCharMap,
-  isCharKeyOfConsonantNameToCharMap,
-  isCharKeyOfTaamimNameToCharMap,
-  isCharKeyOfVowelNameToCharMap,
+  isCharConsonant,
+  isCharTaam,
+  isCharVowel,
   taamimNameToCharMap,
   vowelNameToCharMap
 } from "./utils/charMap";
 import { hebChars, meteg, punctuation, taamim } from "./utils/regularExpressions";
-
-export type Consonant = keyof ConsonantCharToNameMap;
-export type ConsonantName = ConsonantCharToNameMap[keyof ConsonantCharToNameMap];
-export type Taam = keyof TaamimCharToNameMap;
-export type TaamimName = TaamimCharToNameMap[keyof TaamimCharToNameMap];
-export type Vowel = keyof VowelCharToNameMap;
-export type VowelName = VowelCharToNameMap[keyof VowelCharToNameMap];
 
 /**
  * A cluster is group of Hebrew character constituted by:
@@ -29,10 +20,11 @@ export type VowelName = VowelCharToNameMap[keyof VowelCharToNameMap];
  * - an optional vowel
  * - an optional taam
  *
- * A {@link Syallble | `Syllable`} is a linguistic unit, whereas a {@link Cluster | `Cluster`}` is an orthgraphic one.
+ * @remarks
+ * A {@link Syallble } is a linguistic unit, whereas a {@link Cluster } is an orthgraphic one.
  * The word `יֹו֑ם` is only one syllable, but it has three clusters—`יֹ`, `ו֑`, `ם`.
  * Because Hebrew orthography is both sub and supra linear, clusters can be encoded in various ways.
- * Every {@link Char | `Char`} is sequenced first for normalization, see the [SBL Hebrew Font Manual](https://www.sbl-site.org/Fonts/SBLHebrewUserManual1.5x.pdf), p.8.
+ * Every {@link Char | character} is sequenced first for normalization, see the [SBL Hebrew Font Manual](https://www.sbl-site.org/Fonts/SBLHebrewUserManual1.5x.pdf), p.8.
  */
 export class Cluster extends Node<Cluster> {
   #consonantsCache: Consonant[] | null = null;
@@ -72,11 +64,11 @@ export class Cluster extends Node<Cluster> {
     return noSequence ? chars : chars.sort((a, b) => a.sequencePosition - b.sequencePosition);
   }
 
-  private isCharKeyOfConsonantNameToCharMap = isCharKeyOfConsonantNameToCharMap;
+  private isCharConsonant = isCharConsonant;
 
-  private isCharKeyOfTaamimNameToCharMap = isCharKeyOfTaamimNameToCharMap;
+  private isCharTaam = isCharTaam;
 
-  private isCharKeyOfVowelNameToCharMap = isCharKeyOfVowelNameToCharMap;
+  private isCharVowel = isCharVowel;
 
   private get hasMetegCharacter(): boolean {
     return Cluster.meteg.test(this.text);
@@ -87,7 +79,7 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
-   * Gets all the {@link Char | characters} in the Cluster
+   * Gets all the {@link Char | characters} in the cluster
    *
    * @returns an array of sequenced Char objects
    *
@@ -128,7 +120,7 @@ export class Cluster extends Node<Cluster> {
 
     const consonants = this.chars.reduce((a, char) => {
       const text = char.text;
-      if (char.isConsonant && this.isCharKeyOfConsonantNameToCharMap(text)) {
+      if (char.isConsonant && this.isCharConsonant(text)) {
         a.push(text);
       }
       return a;
@@ -160,7 +152,7 @@ export class Cluster extends Node<Cluster> {
 
     const consonantNames = this.chars.reduce((a, char) => {
       const text = char.text;
-      if (char.isConsonant && this.isCharKeyOfConsonantNameToCharMap(text)) {
+      if (char.isConsonant && this.isCharConsonant(text)) {
         a.push(charToNameMap[text]);
       }
       return a;
@@ -247,8 +239,9 @@ export class Cluster extends Node<Cluster> {
    *
    * @deprecated use `hasMeteg`
    *
-   * ```typescript
-   * const text: Text = new Text("נַפְשִֽׁי׃");
+   * @example
+   * ```ts
+   * const text = new Text("נַפְשִֽׁי׃");
    * text.clusters[2].hasMetheg;
    * // true
    * ```
@@ -326,6 +319,7 @@ export class Cluster extends Node<Cluster> {
    *
    * @deprecated now use `hasSheva`
    *
+   * @example
    * ```ts
    * const text = new Text("מַלְכָּה");
    * text.clusters[0].hasSheva;
@@ -453,7 +447,7 @@ export class Cluster extends Node<Cluster> {
    * ```
    *
    * @description
-   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
+   * According to [Syllabification](/guides/syllabification), a sheva is a vowel and serves as the nucleus of a syllable.
    * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character.
    */
   get hasVowel(): boolean {
@@ -475,7 +469,7 @@ export class Cluster extends Node<Cluster> {
    * ```
    *
    * @description
-   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
+   * According to [Syllabification](/guides/syllabification), a sheva is a vowel and serves as the nucleus of a syllable.
    * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character.
    */
   hasVowelName(name: VowelName): boolean {
@@ -678,7 +672,7 @@ export class Cluster extends Node<Cluster> {
     }
 
     const taamimChars = this.chars.reduce((a, char) => {
-      if (char.isTaamim && this.isCharKeyOfTaamimNameToCharMap(char.text)) {
+      if (char.isTaamim && this.isCharTaam(char.text)) {
         a.push(char.text);
       }
 
@@ -706,7 +700,7 @@ export class Cluster extends Node<Cluster> {
 
     const taaminNames = this.chars.reduce((a, char) => {
       const text = char.text;
-      if (char.isTaamim && this.isCharKeyOfTaamimNameToCharMap(text)) {
+      if (char.isTaamim && this.isCharTaam(text)) {
         a.push(charToNameMap[text]);
       }
 
@@ -755,7 +749,7 @@ export class Cluster extends Node<Cluster> {
    *
    * @description
    * It is exceedingly rare to find more than one vowel character in a cluster.
-   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
+   * According to [Syllabification](/guides/syllabification), a sheva is a vowel and serves as the nucleus of a syllable.
    * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character
    */
   get vowelNames(): VowelName[] {
@@ -764,7 +758,7 @@ export class Cluster extends Node<Cluster> {
     }
 
     const vowelNames = this.chars.reduce((a, char) => {
-      if (char.isVowel && this.isCharKeyOfVowelNameToCharMap(char.text)) {
+      if (char.isVowel && this.isCharVowel(char.text)) {
         a.push(charToNameMap[char.text]);
       }
 
@@ -790,7 +784,7 @@ export class Cluster extends Node<Cluster> {
    *
    * @description
    * It is exceedingly rare to find more than one vowel character in a cluster.
-   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
+   * According to [Syllabification](/guides/syllabification), a sheva is a vowel and serves as the nucleus of a syllable.
    * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character
    */
   get vowels(): Vowel[] {
@@ -800,7 +794,7 @@ export class Cluster extends Node<Cluster> {
 
     const vowels = this.chars.reduce((a, char) => {
       const text = char.text;
-      if (char.isVowel && this.isCharKeyOfVowelNameToCharMap(text)) {
+      if (char.isVowel && this.isCharVowel(text)) {
         a.push(text);
       }
       return a;

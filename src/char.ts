@@ -1,10 +1,10 @@
 import { Cluster } from "./cluster";
-import { CharToNameMap, NameToCharMap, charToNameMap, isCharKeyOfCharToNameMap, nameToCharMap } from "./utils/charMap";
+import { CharToNameMap, NameToCharMap, charToNameMap, isHebrewCharacter, nameToCharMap } from "./utils/charMap";
 import { consonants, dagesh, ligatures, meteg, rafe, sheva, taamim, vowels } from "./utils/regularExpressions";
 
 /**
  * A Hebrew character and its positioning number for being sequenced correctly.
- * See {@link Cluster | `Cluster`} for correct normalization.
+ * See {@link Cluster } for correct normalization.
  */
 export class Char {
   #text: string;
@@ -46,7 +46,7 @@ export class Char {
     return 10;
   }
 
-  private isCharKeyOfCharToNameMap = isCharKeyOfCharToNameMap;
+  private isCharKeyOfCharToNameMap = isHebrewCharacter;
 
   private static get consonants() {
     return consonants;
@@ -81,10 +81,11 @@ export class Char {
   }
 
   /**
-   * The parent `Cluster` of the `Char`, if any.
+   * The parent `Cluster` of the character, if any.
    *
-   * ```typescript
-   * const text: Text = new Text("דָּבָר");
+   * @example
+   * ```ts
+   * const text = new Text("דָּבָר");
    * const firstChar = text.chars[0];
    * firstChar.text;
    * // "ד"
@@ -100,6 +101,11 @@ export class Char {
     this.#cluster = cluster;
   }
 
+  /**
+   * Returns `true` if the character is a character name
+   *
+   * @param name a character name
+   */
   isCharacterName(name: keyof NameToCharMap): boolean {
     if (!nameToCharMap[name]) {
       throw new Error(`${name} is not a valid value`);
@@ -111,10 +117,11 @@ export class Char {
   }
 
   /**
-   * Returns `true` if the `Char` is a consonant
+   * Returns `true` if the character is a consonant
    *
-   * ```typescript
-   * const text: Text = new Text("אֱלֹהִ֑ים");
+   * @example
+   * ```ts
+   * const text = new Text("אֱלֹהִ֑ים");
    * text.chars[0].isConsonant;
    * // true
    * ```
@@ -124,10 +131,11 @@ export class Char {
   }
 
   /**
-   * Returns `true` if the `Char` is a ligature
+   * Returns `true` if the character is a ligature
    *
-   * ```typescript
-   * const text: Text = new Text("שָׁלֽוֹם");
+   * @example
+   * ```ts
+   * const text = new Text("שָׁלֽוֹם");
    * text.chars[1].isLigature;
    * // true
    * ```
@@ -137,22 +145,25 @@ export class Char {
   }
 
   /**
-   * Returns `true` if the `Char` is a dagesh
+   * Returns `true` if the character is a dagesh
    *
-   * ```typescript
-   * const text: Text = new Text("בּ");
+   * @example
+   * ```ts
+   * const text = new Text("בּ");
    * text.chars[1].isDagesh;
    * // true
+   * ```
    */
   get isDagesh(): boolean {
     return Char.dagesh.test(this.#text);
   }
 
   /**
-   * Returns `true` if the `Char` is a rafe
+   * Returns `true` if the character is a rafe
    *
-   * ```typescript
-   * const text: Text = new Text("בֿ");
+   * @example
+   * ```ts
+   * const text = new Text("בֿ");
    * text.chars[1].isRafe;
    * // true
    * ```
@@ -162,9 +173,11 @@ export class Char {
   }
 
   /**
-   * Returns `true` if the `Char` is a sheva
-   * ```typescript
-   * const text: Text = new Text("בְ");
+   * Returns `true` if the character is a sheva
+   *
+   * @example
+   * ```ts
+   * const text = new Text("בְ");
    * text.chars[1].isSheva;
    * // true
    * ```
@@ -174,11 +187,11 @@ export class Char {
   }
 
   /**
-   * Returns `true` if the `Char` is a sheva
+   * Returns `true` if the character is a sheva
    *
-   *
-   * ```typescript
-   * const text: Text = new Text("בֺ");
+   * @example
+   * ```ts
+   * const text = new Text("בֺ");
    * text.chars[1].isVowel;
    * // true
    * ```
@@ -188,10 +201,11 @@ export class Char {
   }
 
   /**
-   * Returns `true` if the `Char` is a taamim
+   * Returns `true` if the character is a taamim
    *
-   * ```typescript
-   * const text: Text = new Text("בֺ֨");
+   * @example
+   * ```ts
+   * const text = new Text("בֺ֨");
    * text.chars[2].isTaamim;
    * // true
    * ```
@@ -201,10 +215,11 @@ export class Char {
   }
 
   /**
-   * Returns `true` if the `Char` is not a Hebrew character
+   * Returns `true` if the character is not a Hebrew character
    *
-   * ```typescript
-   * const text: Text = new Text("a");
+   * @example
+   * ```ts
+   * const text = new Text("a");
    * text.chars[0].isNotHebrew;
    * // true
    * ```
@@ -216,8 +231,9 @@ export class Char {
   /**
    * Returns the name of the character
    *
-   * ```typescript
-   * const text: Text = new Text("אֱלֹהִ֑ים");
+   * @example
+   * ```ts
+   * const text = new Text("אֱלֹהִ֑ים");
    * text.chars[0].characterName;
    * // "ALEF"
    * ```
@@ -231,16 +247,18 @@ export class Char {
   }
 
   /**
-   * @returns a number used for sequencing
+   * Gets the sequence position of the character
    *
+   * @returns a number used for sequencing
    * - consonants = 0
    * - ligatures = 1
    * - dagesh or rafe = 2
    * - niqqud (i.e vowels) = 3
    * - taamim (i.e. accents) = 4
    *
-   * ```typescript
-   * const text: Text = new Text("אֱלֹהִ֑ים");
+   * @example
+   * ```ts
+   * const text = new Text("אֱלֹהִ֑ים");
    * text.chars[0].sequencePosition; // the aleph
    * // 0
    * text.chars[1].sequencePosition; // the segol
@@ -252,10 +270,13 @@ export class Char {
   }
 
   /**
+   * The text of the character
+   *
    * @returns the text of the Char
    *
-   * ```typescript
-   * const text: Text = new Text("אֱלֹהִ֑ים");
+   * @example
+   * ```ts
+   * const text = new Text("אֱלֹהִ֑ים");
    * text.chars[0].text;
    * // "א"
    * ```

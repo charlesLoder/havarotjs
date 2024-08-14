@@ -244,7 +244,7 @@ export class Text {
   /**
    * `Text` requires an input string,
    * and has optional arguments for syllabification,
-   * which can be read about in the {@page Syllabification} page
+   * which can be read about in the [Syllabification](/guides/syllabification) page
    *
    * @param text input string
    * @param options syllabification options
@@ -389,7 +389,7 @@ export class Text {
   }
 
   /**
-   * Gets text of the cluster
+   * Gets the text
    *
    * @returns a string that has been decomposed, sequenced, qamets qatan patterns converted to the appropriate unicode character (U+05C7), and holem-waw sequences corrected
    *
@@ -406,7 +406,7 @@ export class Text {
   }
 
   /**
-   * Gets all the {@link Word | words} in the Text
+   * Gets all the {@link Word | Words} in the Text
    *
    * @returns a one dimensional array of Words
    *
