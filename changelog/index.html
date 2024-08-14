@@ -1,0 +1,370 @@
+<!DOCTYPE html><html lang="en" dir="ltr" data-has-toc data-has-sidebar data-theme="dark" class="astro-bguv2lll"> <head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Changelog | havarotjs v0.23.3</title><link rel="canonical" href="https://charlesloder.github.io/havarotjs/changelog/"/><link rel="sitemap" href="/havarotjs/sitemap-index.xml"/><link rel="shortcut icon" href="/havarotjs/favicon.svg" type="image/svg+xml"/><meta name="generator" content="Astro v4.13.3"/><meta name="generator" content="Starlight v0.25.4"/><meta property="og:title" content="Changelog"/><meta property="og:type" content="article"/><meta property="og:url" content="https://charlesloder.github.io/havarotjs/changelog/"/><meta property="og:locale" content="en"/><meta property="og:description"/><meta property="og:site_name" content="havarotjs v0.23.3"/><meta name="twitter:card" content="summary_large_image"/><script>
+	window.StarlightThemeProvider = (() => {
+		const storedTheme =
+			typeof localStorage !== 'undefined' && localStorage.getItem('starlight-theme');
+		const theme =
+			storedTheme ||
+			(window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+		document.documentElement.dataset.theme = theme === 'light' ? 'light' : 'dark';
+		return {
+			updatePickers(theme = storedTheme || 'auto') {
+				document.querySelectorAll('starlight-theme-select').forEach((picker) => {
+					const select = picker.querySelector('select');
+					if (select) select.value = theme;
+					/** @type {HTMLTemplateElement | null} */
+					const tmpl = document.querySelector(`#theme-icons`);
+					const newIcon = tmpl && tmpl.content.querySelector('.' + theme);
+					if (newIcon) {
+						const oldIcon = picker.querySelector('svg.label-icon');
+						if (oldIcon) {
+							oldIcon.replaceChildren(...newIcon.cloneNode(true).childNodes);
+						}
+					}
+				});
+			},
+		};
+	})();
+</script><template id="theme-icons"><svg aria-hidden="true" class="light astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M5 12a1 1 0 0 0-1-1H3a1 1 0 0 0 0 2h1a1 1 0 0 0 1-1Zm.64 5-.71.71a1 1 0 0 0 0 1.41 1 1 0 0 0 1.41 0l.71-.71A1 1 0 0 0 5.64 17ZM12 5a1 1 0 0 0 1-1V3a1 1 0 0 0-2 0v1a1 1 0 0 0 1 1Zm5.66 2.34a1 1 0 0 0 .7-.29l.71-.71a1 1 0 1 0-1.41-1.41l-.66.71a1 1 0 0 0 0 1.41 1 1 0 0 0 .66.29Zm-12-.29a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.71-.71a1.004 1.004 0 1 0-1.43 1.41l.73.71ZM21 11h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2Zm-2.64 6A1 1 0 0 0 17 18.36l.71.71a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.76-.66ZM12 6.5a5.5 5.5 0 1 0 5.5 5.5A5.51 5.51 0 0 0 12 6.5Zm0 9a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Zm0 3.5a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1Z"/></svg> <svg aria-hidden="true" class="dark astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.64 13a1 1 0 0 0-1.05-.14 8.049 8.049 0 0 1-3.37.73 8.15 8.15 0 0 1-8.14-8.1 8.59 8.59 0 0 1 .25-2A1 1 0 0 0 8 2.36a10.14 10.14 0 1 0 14 11.69 1 1 0 0 0-.36-1.05Zm-9.5 6.69A8.14 8.14 0 0 1 7.08 5.22v.27a10.15 10.15 0 0 0 10.14 10.14 9.784 9.784 0 0 0 2.1-.22 8.11 8.11 0 0 1-7.18 4.32v-.04Z"/></svg> <svg aria-hidden="true" class="auto astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg> </template><link rel="stylesheet" href="/havarotjs/assets/index.DCJUupES.css">
+<style>:root{--sl-badge-default-border: var(--sl-color-accent);--sl-badge-default-bg: var(--sl-color-accent-low);--sl-badge-default-text: #fff;--sl-badge-note-border: var(--sl-color-blue);--sl-badge-note-bg: var(--sl-color-blue-low);--sl-badge-note-text: #fff;--sl-badge-danger-border: var(--sl-color-red);--sl-badge-danger-bg: var(--sl-color-red-low);--sl-badge-danger-text: #fff;--sl-badge-success-border: var(--sl-color-green);--sl-badge-success-bg: var(--sl-color-green-low);--sl-badge-success-text: #fff;--sl-badge-caution-border: var(--sl-color-orange);--sl-badge-caution-bg: var(--sl-color-orange-low);--sl-badge-caution-text: #fff;--sl-badge-tip-border: var(--sl-color-purple);--sl-badge-tip-bg: var(--sl-color-purple-low);--sl-badge-tip-text: #fff}[data-theme=light]:root{--sl-badge-default-bg: var(--sl-color-accent-high);--sl-badge-note-bg: var(--sl-color-blue-high);--sl-badge-danger-bg: var(--sl-color-red-high);--sl-badge-success-bg: var(--sl-color-green-high);--sl-badge-caution-bg: var(--sl-color-orange-high);--sl-badge-tip-bg: var(--sl-color-purple-high)}.sl-badge:where(.astro-avdet4wd){display:inline-block;border:1px solid var(--sl-color-border-badge);border-radius:.25rem;font-family:var(--sl-font-system-mono);line-height:normal;color:var(--sl-color-text-badge);background-color:var(--sl-color-bg-badge);overflow-wrap:anywhere}.sidebar-content .sl-badge:where(.astro-avdet4wd){line-height:1;font-size:var(--sl-text-xs);padding:.125rem .375rem}.sidebar-content a[aria-current=page]>.sl-badge:where(.astro-avdet4wd){--sl-color-bg-badge: transparent;--sl-color-border-badge: currentColor;color:inherit}.default:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-default-bg);--sl-color-border-badge: var(--sl-badge-default-border);--sl-color-text-badge: var(--sl-badge-default-text)}.note:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-note-bg);--sl-color-border-badge: var(--sl-badge-note-border);--sl-color-text-badge: var(--sl-badge-note-text)}.danger:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-danger-bg);--sl-color-border-badge: var(--sl-badge-danger-border);--sl-color-text-badge: var(--sl-badge-danger-text)}.success:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-success-bg);--sl-color-border-badge: var(--sl-badge-success-border);--sl-color-text-badge: var(--sl-badge-success-text)}.tip:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-tip-bg);--sl-color-border-badge: var(--sl-badge-tip-border);--sl-color-text-badge: var(--sl-badge-tip-text)}.caution:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-caution-bg);--sl-color-border-badge: var(--sl-badge-caution-border);--sl-color-text-badge: var(--sl-badge-caution-text)}.small:where(.astro-avdet4wd){font-size:var(--sl-text-xs);padding:.125rem .25rem}.medium:where(.astro-avdet4wd){font-size:var(--sl-text-sm);padding:.175rem .35rem}.large:where(.astro-avdet4wd){font-size:var(--sl-text-base);padding:.225rem .45rem}.sl-markdown-content :is(h1,h2,h3,h4,h5,h6) .sl-badge:where(.astro-avdet4wd){vertical-align:middle}
+svg:where(.astro-c6vsoqas){color:var(--sl-icon-color);font-size:var(--sl-icon-size, 1em);width:1em;height:1em}
+starlight-tabs:where(.astro-esqgolmp){display:block}.tablist-wrapper:where(.astro-esqgolmp){overflow-x:auto}:where(.astro-esqgolmp)[role=tablist]{display:flex;list-style:none;border-bottom:2px solid var(--sl-color-gray-5);padding:0}.tab:where(.astro-esqgolmp){margin-bottom:-2px}.tab:where(.astro-esqgolmp)>:where(.astro-esqgolmp)[role=tab]{display:flex;align-items:center;gap:.5rem;padding:0 1.25rem;text-decoration:none;border-bottom:2px solid var(--sl-color-gray-5);color:var(--sl-color-gray-3);outline-offset:var(--sl-outline-offset-inside);overflow-wrap:initial}.tab:where(.astro-esqgolmp) :where(.astro-esqgolmp)[role=tab][aria-selected=true]{color:var(--sl-color-white);border-color:var(--sl-color-text-accent);font-weight:600}.tablist-wrapper:where(.astro-esqgolmp)~[role=tabpanel]{margin-top:1rem}
+.sl-steps{--bullet-size: calc(var(--sl-line-height) * 1rem);--bullet-margin: .375rem;list-style:none;counter-reset:steps-counter var(--sl-steps-start, 0);padding-inline-start:0}.sl-steps>li{counter-increment:steps-counter;position:relative;padding-inline-start:calc(var(--bullet-size) + 1rem);padding-bottom:1px;min-height:calc(var(--bullet-size) + var(--bullet-margin))}.sl-steps>li+li{margin-top:0}.sl-steps>li:before{content:counter(steps-counter);position:absolute;top:0;inset-inline-start:0;width:var(--bullet-size);height:var(--bullet-size);line-height:var(--bullet-size);font-size:var(--sl-text-xs);font-weight:600;text-align:center;color:var(--sl-color-white);background-color:var(--sl-color-gray-6);border-radius:99rem;box-shadow:inset 0 0 0 1px var(--sl-color-gray-5)}.sl-steps>li:not(:last-of-type):after{--guide-width: 1px;content:"";position:absolute;top:calc(var(--bullet-size) + var(--bullet-margin));bottom:var(--bullet-margin);inset-inline-start:calc((var(--bullet-size) - var(--guide-width)) / 2);width:var(--guide-width);background-color:var(--sl-color-hairline-light)}.sl-steps>li>:first-child{--lh: calc(1em * var(--sl-line-height));--shift-y: calc(.5 * (var(--bullet-size) - var(--lh)));transform:translateY(var(--shift-y));margin-bottom:var(--shift-y)}.sl-steps>li>:first-child:where(h1,h2,h3,h4,h5,h6){--lh: calc(1em * var(--sl-line-height-headings))}@supports (--prop: 1lh){.sl-steps>li>:first-child{--lh: 1lh}}
+</style><script type="module" src="/havarotjs/assets/hoisted.C4rUHZQH.js"></script>
+<script type="module" src="/havarotjs/assets/page.LS5KDvwX.js"></script></head> <body class="astro-bguv2lll"> <a href="#_top" class="astro-7q3lir66">Skip to content</a>  <div class="page sl-flex astro-vrdttmbt"> <header class="header astro-vrdttmbt"><div class="header sl-flex astro-kmkmnagf"> <div class="title-wrapper sl-flex astro-kmkmnagf"> <a href="/havarotjs/" class="site-title sl-flex astro-m46x6ez3">  <span class="astro-m46x6ez3"> havarotjs v0.23.3 </span> </a>  </div> <div class="sl-flex astro-kmkmnagf"> <site-search data-translations="{&#34;placeholder&#34;:&#34;Search&#34;}" class="astro-v37mnknz"> <button data-open-modal disabled aria-label="Search" aria-keyshortcuts="Control+K" class="astro-v37mnknz"> <svg aria-hidden="true" class="astro-v37mnknz astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.71 20.29 18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14Z"/></svg>  <span class="sl-hidden md:sl-block astro-v37mnknz" aria-hidden="true">Search</span> <kbd class="sl-hidden md:sl-flex astro-v37mnknz" style="display: none;"> <kbd class="astro-v37mnknz">Ctrl</kbd><kbd class="astro-v37mnknz">K</kbd> </kbd> </button> <dialog style="padding:0" aria-label="Search" class="astro-v37mnknz"> <div class="dialog-frame sl-flex astro-v37mnknz">  <button data-close-modal class="sl-flex md:sl-hidden astro-v37mnknz"> Cancel </button> <div class="search-container astro-v37mnknz"> <div id="starlight__search" class="astro-v37mnknz"></div> </div> </div> </dialog> </site-search>  <script>
+	(() => {
+		const openBtn = document.querySelector('button[data-open-modal]');
+		const shortcut = openBtn?.querySelector('kbd');
+		if (!openBtn || !(shortcut instanceof HTMLElement)) return;
+		const platformKey = shortcut.querySelector('kbd');
+		if (platformKey && /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)) {
+			platformKey.textContent = '⌘';
+			openBtn.setAttribute('aria-keyshortcuts', 'Meta+K');
+		}
+		shortcut.style.display = '';
+	})();
+</script>    </div> <div class="sl-hidden md:sl-flex right-group astro-kmkmnagf"> <div class="sl-flex social-icons astro-kmkmnagf"> <a href="https://github.com/charlesLoder/havarotjs" rel="me" class="sl-flex astro-wy4te6ga"><span class="sr-only astro-wy4te6ga">GitHub</span><svg aria-hidden="true" class="astro-wy4te6ga astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg> </a> </div> <starlight-theme-select>  <label style="--sl-select-width: 6.25em" class="astro-4yphtoen"> <span class="sr-only astro-4yphtoen">Select theme</span> <svg aria-hidden="true" class="icon label-icon astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg>  <select value="auto" class="astro-4yphtoen"> <option value="dark" class="astro-4yphtoen">Dark</option><option value="light" class="astro-4yphtoen">Light</option><option value="auto" selected="true" class="astro-4yphtoen">Auto</option> </select> <svg aria-hidden="true" class="icon caret astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg>  </label>  </starlight-theme-select>  <script>
+	StarlightThemeProvider.updatePickers();
+</script>   </div> </div> </header> <nav class="sidebar astro-vrdttmbt" aria-label="Main"> <starlight-menu-button class="astro-jif73yzw"> <button aria-expanded="false" aria-label="Menu" aria-controls="starlight__sidebar" class="sl-flex md:sl-hidden astro-jif73yzw"> <svg aria-hidden="true" class="astro-jif73yzw astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M3 8h18a1 1 0 1 0 0-2H3a1 1 0 0 0 0 2Zm18 8H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Zm0-5H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Z"/></svg>  </button> </starlight-menu-button>    <div id="starlight__sidebar" class="sidebar-pane astro-vrdttmbt"> <div class="sidebar-content sl-flex astro-vrdttmbt"> <ul class="top-level astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/havarotjs/" class="large astro-3ii7xxms"> <span class="astro-3ii7xxms">Getting started</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/havarotjs/changelog" aria-current="page" class="large astro-3ii7xxms"> <span class="astro-3ii7xxms">Changelog</span>  </a> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">API</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg>  </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <details class="astro-3ii7xxms"> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Classes</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg>  </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/havarotjs/api/classes/char/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Char</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/havarotjs/api/classes/cluster/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Cluster</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/havarotjs/api/classes/node/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Node</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/havarotjs/api/classes/syllable/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Syllable</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/havarotjs/api/classes/text/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Text</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/havarotjs/api/classes/word/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Word</span>  </a> </li> </ul>  </details> </li><li class="astro-3ii7xxms"> <details class="astro-3ii7xxms"> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Interfaces</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg>  </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/havarotjs/api/interfaces/sylopts/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">SylOpts</span>  </a> </li> </ul>  </details> </li><li class="astro-3ii7xxms"> <details class="astro-3ii7xxms"> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Type Aliases</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg>  </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/havarotjs/api/type-aliases/syllableparams/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">SyllableParams</span>  </a> </li> </ul>  </details> </li> </ul>  </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Guides</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg>  </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/havarotjs/guides/syllabification/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Syllabification</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/havarotjs/guides/terms/" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Terms</span>  </a> </li> </ul>  </details> </li> </ul>  <div class="md:sl-hidden"> <div class="mobile-preferences sl-flex astro-wu23bvmt"> <div class="sl-flex social-icons astro-wu23bvmt"> <a href="https://github.com/charlesLoder/havarotjs" rel="me" class="sl-flex astro-wy4te6ga"><span class="sr-only astro-wy4te6ga">GitHub</span><svg aria-hidden="true" class="astro-wy4te6ga astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg> </a> </div> <starlight-theme-select>  <label style="--sl-select-width: 6.25em" class="astro-4yphtoen"> <span class="sr-only astro-4yphtoen">Select theme</span> <svg aria-hidden="true" class="icon label-icon astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg>  <select value="auto" class="astro-4yphtoen"> <option value="dark" class="astro-4yphtoen">Dark</option><option value="light" class="astro-4yphtoen">Light</option><option value="auto" selected="true" class="astro-4yphtoen">Auto</option> </select> <svg aria-hidden="true" class="icon caret astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg>  </label>  </starlight-theme-select>  <script>
+	StarlightThemeProvider.updatePickers();
+</script>   </div>  </div> </div> </div> </nav> <div class="main-frame astro-vrdttmbt">  <div class="lg:sl-flex astro-67yu43on"> <aside class="right-sidebar-container astro-67yu43on"> <div class="right-sidebar astro-67yu43on"> <div class="lg:sl-hidden astro-pb3aqygn"><mobile-starlight-toc data-min-h="2" data-max-h="3" class="astro-doynk5tl"><nav aria-labelledby="starlight__on-this-page--mobile" class="astro-doynk5tl"><details id="starlight__mobile-toc" class="astro-doynk5tl"><summary id="starlight__on-this-page--mobile" class="sl-flex astro-doynk5tl"><div class="toggle sl-flex astro-doynk5tl">On this page<svg aria-hidden="true" class="caret astro-doynk5tl astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </div><span class="display-current astro-doynk5tl"></span></summary><div class="dropdown astro-doynk5tl"><ul class="isMobile astro-g2bywc46" style="--depth: 0;"> <li class="astro-g2bywc46" style="--depth: 0;"> <a href="#_top" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Overview</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2024-08-02-0233" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2024-08-02 0.23.3</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2024-05-07-0232" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2024-05-07 0.23.2</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2024-04-26-0231" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2024-04-26 0.23.1</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2024-04-25-0230" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2024-04-25 0.23.0</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2024-03-09-0224" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2024-03-09 0.22.4</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2024-03-089-0223" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2024-03-089 0.22.3</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2024-03-08-0222" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2024-03-08 0.22.2</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2024-02-28-0221" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2024-02-28 0.22.1</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2024-02-20-0220" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2024-02-20 0.22.0</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2024-02-15-0212" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2024-02-15 0.21.2</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2024-01-19-0211" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2024-01-19 0.21.1</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2024-01-17-0210" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2024-01-17 0.21.0</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-12-30-0201" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-12-30 0.20.1</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-12-29-0200" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-12-29 0.20.0</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-12-29-0195" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-12-29 0.19.5</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-10-31-0194" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-10-31 0.19.4</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-10-31-0193" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-10-31 0.19.3</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-10-30-0192" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-10-30 0.19.2</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-10-29-0191" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-10-29 0.19.1</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-07-07-0190" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-07-07 0.19.0</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-07-02-0183" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-07-02 0.18.3</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-07-02-0182" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-07-02 0.18.2</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-07-01-0181" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-07-01 0.18.1</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-06-30-0180" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-06-30 0.18.0</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-06-17-0171" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-06-17 0.17.1</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-06-17-0170" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-06-17 0.17.0</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-04-27-0162" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-04-27 0.16.2</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-04-24-0161" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-04-24 0.16.1</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-04-23-0160" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-04-23 0.16.0</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-04-20-0150" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-04-20 0.15.0</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-03-02-0140" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-03-02 0.14.0</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-01-24-0131" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-01-24 0.13.1</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-01-22-0130" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-01-22 0.13.0</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2022-12-17-0120" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2022-12-17 0.12.0</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2022-11-14-0113" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2022-11-14 0.11.3</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2022-11-09-0112" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2022-11-09 0.11.2</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2022-11-04-0111" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2022-11-04 0.11.1</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2022-11-03-0110" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2022-11-03 0.11.0</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2022-10-20-0101" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2022-10-20 0.10.1</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2022-10-20-0100" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2022-10-20 0.10.0</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2022-09-24-092" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2022-09-24 0.9.2</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2022-09-24-091" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2022-09-24 0.9.1</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2022-09-03-090" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2022-09-03 0.9.0</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#change" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Change</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2022-08-27-081" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2022-08-27 0.8.1</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#change-1" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Change</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2022-07-04-080" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2022-07-04 0.8.0</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#change-2" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Change</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#add" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Add</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2022-04-11-074" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2022-04-11 0.7.4</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#change-3" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Change</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2022-03-04-073" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2022-03-04 0.7.3</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#change-4" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Change</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2022-01-02-072" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2022-01-02 0.7.2</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#change-5" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Change</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2022-01-01-071" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2022-01-01 0.7.1</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#change-6" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Change</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#change-7" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Change</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2021-12-23-070" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2021-12-23 0.7.0</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#change-8" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Change</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2021-12-06-062" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2021-12-06 0.6.2</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#change-9" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Change</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2021-12-06-061" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2021-12-06 0.6.1</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#change-10" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Change</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2021-09-14-060" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2021-09-14 0.6.0</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#add-1" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Add</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#change-11" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Change</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#removed" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Removed</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2021-09-04-053" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2021-09-04 0.5.3</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#change-12" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Change</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2021-08-28-052" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2021-08-28 0.5.2</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#change-13" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Change</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2021-08-23-051" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2021-08-23 0.5.1</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#add-2" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Add</span> </a>  </li> </ul>  </li> </ul> </div></details></nav></mobile-starlight-toc></div><div class="right-sidebar-panel sl-hidden lg:sl-block astro-pb3aqygn"><div class="sl-container astro-pb3aqygn"><starlight-toc data-min-h="2" data-max-h="3"><nav aria-labelledby="starlight__on-this-page"><h2 id="starlight__on-this-page">On this page</h2><ul class="astro-g2bywc46" style="--depth: 0;"> <li class="astro-g2bywc46" style="--depth: 0;"> <a href="#_top" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Overview</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2024-08-02-0233" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2024-08-02 0.23.3</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2024-05-07-0232" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2024-05-07 0.23.2</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2024-04-26-0231" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2024-04-26 0.23.1</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2024-04-25-0230" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2024-04-25 0.23.0</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2024-03-09-0224" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2024-03-09 0.22.4</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2024-03-089-0223" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2024-03-089 0.22.3</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2024-03-08-0222" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2024-03-08 0.22.2</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2024-02-28-0221" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2024-02-28 0.22.1</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2024-02-20-0220" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2024-02-20 0.22.0</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2024-02-15-0212" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2024-02-15 0.21.2</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2024-01-19-0211" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2024-01-19 0.21.1</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2024-01-17-0210" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2024-01-17 0.21.0</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-12-30-0201" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-12-30 0.20.1</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-12-29-0200" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-12-29 0.20.0</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-12-29-0195" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-12-29 0.19.5</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-10-31-0194" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-10-31 0.19.4</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-10-31-0193" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-10-31 0.19.3</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-10-30-0192" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-10-30 0.19.2</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-10-29-0191" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-10-29 0.19.1</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-07-07-0190" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-07-07 0.19.0</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-07-02-0183" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-07-02 0.18.3</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-07-02-0182" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-07-02 0.18.2</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-07-01-0181" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-07-01 0.18.1</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-06-30-0180" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-06-30 0.18.0</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-06-17-0171" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-06-17 0.17.1</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-06-17-0170" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-06-17 0.17.0</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-04-27-0162" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-04-27 0.16.2</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-04-24-0161" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-04-24 0.16.1</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-04-23-0160" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-04-23 0.16.0</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-04-20-0150" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-04-20 0.15.0</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-03-02-0140" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-03-02 0.14.0</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-01-24-0131" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-01-24 0.13.1</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2023-01-22-0130" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2023-01-22 0.13.0</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2022-12-17-0120" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2022-12-17 0.12.0</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2022-11-14-0113" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2022-11-14 0.11.3</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2022-11-09-0112" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2022-11-09 0.11.2</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2022-11-04-0111" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2022-11-04 0.11.1</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2022-11-03-0110" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2022-11-03 0.11.0</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2022-10-20-0101" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2022-10-20 0.10.1</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2022-10-20-0100" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2022-10-20 0.10.0</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2022-09-24-092" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2022-09-24 0.9.2</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2022-09-24-091" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2022-09-24 0.9.1</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2022-09-03-090" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2022-09-03 0.9.0</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#change" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Change</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2022-08-27-081" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2022-08-27 0.8.1</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#change-1" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Change</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2022-07-04-080" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2022-07-04 0.8.0</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#change-2" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Change</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#add" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Add</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2022-04-11-074" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2022-04-11 0.7.4</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#change-3" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Change</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2022-03-04-073" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2022-03-04 0.7.3</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#change-4" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Change</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2022-01-02-072" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2022-01-02 0.7.2</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#change-5" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Change</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2022-01-01-071" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2022-01-01 0.7.1</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#change-6" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Change</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#change-7" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Change</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2021-12-23-070" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2021-12-23 0.7.0</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#change-8" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Change</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2021-12-06-062" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2021-12-06 0.6.2</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#change-9" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Change</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2021-12-06-061" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2021-12-06 0.6.1</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#change-10" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Change</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2021-09-14-060" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2021-09-14 0.6.0</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#add-1" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Add</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#change-11" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Change</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#removed" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Removed</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2021-09-04-053" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2021-09-04 0.5.3</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#change-12" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Change</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2021-08-28-052" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2021-08-28 0.5.2</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#change-13" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Change</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2021-08-23-051" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2021-08-23 0.5.1</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#add-2" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Add</span> </a>  </li> </ul>  </li> </ul> </nav></starlight-toc></div></div> </div> </aside> <div class="main-pane astro-67yu43on">  <main data-pagefind-body lang="en" dir="ltr" class="astro-bguv2lll">    <div class="content-panel astro-7nkwcw3z"> <div class="sl-container astro-7nkwcw3z"> <h1 id="_top" class="astro-j6tvhyss">Changelog</h1>  </div> </div>  <div class="content-panel astro-7nkwcw3z"> <div class="sl-container astro-7nkwcw3z"> <div class="sl-markdown-content"> <h2 id="2024-08-02-0233">2024-08-02 0.23.3</h2>
+<ul>
+<li>Fix issue with incorrect qamets qatan (PR #174)</li>
+</ul>
+<h2 id="2024-05-07-0232">2024-05-07 0.23.2</h2>
+<ul>
+<li>Fix issue with two shevas where the first has a meteg (PR #171)</li>
+</ul>
+<h2 id="2024-04-26-0231">2024-04-26 0.23.1</h2>
+<ul>
+<li>Added in forgotten props and methods to the <code dir="auto">Word</code> and <code dir="auto">Syllable</code> objects (PR #168)</li>
+</ul>
+<h2 id="2024-04-25-0230">2024-04-25 0.23.0</h2>
+<ul>
+<li><code dir="auto">Word</code>, <code dir="auto">Syllable</code>, and <code dir="auto">Cluster</code> (PR #167)
+<ul>
+<li><code dir="auto">.consonants</code> gets all the consonant characters</li>
+<li><code dir="auto">.consonantNames</code> gets all the names of the consonant characters</li>
+<li><code dir="auto">.hasConsonantName()</code> checks if a consonant character matching the name is present</li>
+<li><code dir="auto">.taamim</code> gets all the taamim characters</li>
+<li><code dir="auto">.taamimNames</code> gets all the names of the taamim characters</li>
+<li><code dir="auto">.hasTaamName()</code> checks if a taam character matching the name is present</li>
+<li><code dir="auto">.vowels</code> gets all the vowel characters</li>
+<li><code dir="auto">.vowelNames</code> gets all the names of the vowel characters</li>
+<li><code dir="auto">.hasVowelName()</code> checks if a vowel character matching the name is present</li>
+</ul>
+</li>
+<li><code dir="auto">Char</code>
+<ul>
+<li><code dir="auto">.characterName</code> returns the name of the character</li>
+<li><code dir="auto">.isCharacterName</code> checks if the character matches the name given</li>
+</ul>
+</li>
+</ul>
+<h2 id="2024-03-09-0224">2024-03-09 0.22.4</h2>
+<ul>
+<li>Fix when an ole is by itself (PR #162)</li>
+</ul>
+<h2 id="2024-03-089-0223">2024-03-089 0.22.3</h2>
+<ul>
+<li>Fix how utils are exported (PR #161)</li>
+</ul>
+<h2 id="2024-03-08-0222">2024-03-08 0.22.2</h2>
+<ul>
+<li>Fix geresh muqdam (PR #159)</li>
+<li>Output cjs and esm build (PR #160)</li>
+</ul>
+<h2 id="2024-02-28-0221">2024-02-28 0.22.1</h2>
+<ul>
+<li>Improve how poetic accents are handled (PR #157)</li>
+</ul>
+<h2 id="2024-02-20-0220">2024-02-20 0.22.0</h2>
+<ul>
+<li>Add option for <code dir="auto">shevaWithMeteg</code> (PR #156)</li>
+</ul>
+<h2 id="2024-02-15-0212">2024-02-15 0.21.2</h2>
+<ul>
+<li>Fix issue with תְִּירָא֑וּם being syllabified (PR #154, PR #153)</li>
+</ul>
+<h2 id="2024-01-19-0211">2024-01-19 0.21.1</h2>
+<ul>
+<li>Ensures when a sheva is under a pair of identical consonants it is vocal, unless the vowel is short (PR #152)</li>
+</ul>
+<h2 id="2024-01-17-0210">2024-01-17 0.21.0</h2>
+<ul>
+<li>Have <code dir="auto">Word</code> extend <code dir="auto">Node</code> class (PR #151)</li>
+</ul>
+<h2 id="2023-12-30-0201">2023-12-30 0.20.1</h2>
+<ul>
+<li>Removes stress from final syllable when the Word is in construct. (PR #150)</li>
+</ul>
+<h2 id="2023-12-29-0200">2023-12-29 0.20.0</h2>
+<ul>
+<li>Add <code dir="auto">Word.isInConstruct</code> (PR #149)</li>
+</ul>
+<h2 id="2023-12-29-0195">2023-12-29 0.19.5</h2>
+<ul>
+<li>Improve how accents are handled (PR #148)</li>
+</ul>
+<h2 id="2023-10-31-0194">2023-10-31 0.19.4</h2>
+<ul>
+<li>Fix telisha qetana being incorrectly marked as accented (PR #146)</li>
+<li>Fix vowel character being extracted in mixed script syllables (PR #145)</li>
+</ul>
+<h2 id="2023-10-31-0193">2023-10-31 0.19.3</h2>
+<ul>
+<li>Fix issues with caching for <code dir="auto">Syllable.structure</code> (PR #144)</li>
+</ul>
+<h2 id="2023-10-30-0192">2023-10-30 0.19.2</h2>
+<ul>
+<li>Fix <code dir="auto">vowel</code>, <code dir="auto">vowelName</code>, and <code dir="auto">hasVowelName</code> props on the <code dir="auto">Syllable</code> that were broken in v0.19.1 (PR #143)</li>
+</ul>
+<h2 id="2023-10-29-0191">2023-10-29 0.19.1</h2>
+<ul>
+<li>Fix how shureq is handled for Syllable props vowel, vowelName, and hasVowelName (Issue #141)</li>
+</ul>
+<h2 id="2023-07-07-0190">2023-07-07 0.19.0</h2>
+<ul>
+<li>Add parent property on children (PR #135)</li>
+</ul>
+<h2 id="2023-07-02-0183">2023-07-02 0.18.3</h2>
+<ul>
+<li>Fix syllable with pashta not checking for a qadma (Issue #133)</li>
+</ul>
+<h2 id="2023-07-02-0182">2023-07-02 0.18.2</h2>
+<ul>
+<li>Fix incorrect accent with pashta and qadma (Issue #133)</li>
+</ul>
+<h2 id="2023-07-01-0181">2023-07-01 0.18.1</h2>
+<ul>
+<li>Fix quiesced aleph preceded by sheva not being marked as closed (Issue #131)</li>
+</ul>
+<h2 id="2023-06-30-0180">2023-06-30 0.18.0</h2>
+<ul>
+<li>Add a new syllabification option for sheva preceded by meteg (Issue #129)</li>
+</ul>
+<h2 id="2023-06-17-0171">2023-06-17 0.17.1</h2>
+<ul>
+<li>Fix single syllable not being closed with a final-he (Issue #128)</li>
+</ul>
+<h2 id="2023-06-17-0170">2023-06-17 0.17.0</h2>
+<ul>
+<li>Fix incorrect syllabification with holem make (Issue #121)</li>
+<li>Fix type from <code dir="auto">clusterSlitGroup</code> to <code dir="auto">clusterSplitGroup</code> (Issue #122)</li>
+<li>Improve devops (Issue #123)</li>
+</ul>
+<h2 id="2023-04-27-0162">2023-04-27 0.16.2</h2>
+<ul>
+<li>Update <code dir="auto">Cluster</code> so that maqqef is it’s own Cluster, keeping with the logic of <code dir="auto">Cluster.isPunctuation</code> (PR #120)</li>
+</ul>
+<h2 id="2023-04-24-0161">2023-04-24 0.16.1</h2>
+<ul>
+<li>Fix <code dir="auto">Syllable.structure()</code> incorrect with a furtive patach followed by a sof pasuq
+(Issue #115)</li>
+<li>Fix <code dir="auto">Syllable.structure()</code> incorrect when a meteg precedes a shureq (Issue #118)</li>
+</ul>
+<h2 id="2023-04-23-0160">2023-04-23 0.16.0</h2>
+<ul>
+<li>Add linguistic properties on Syllable (Issue #2) — <code dir="auto">Syllable.onset</code>, <code dir="auto">Syllable.nucleus</code>, and <code dir="auto">Syllable.coda</code> (PR #114)</li>
+<li>Update <code dir="auto">Cluster.isShureq</code> property (PR #113)</li>
+<li>Much thanks to @m-yac for these addditions</li>
+</ul>
+<h2 id="2023-04-20-0150">2023-04-20 0.15.0</h2>
+<ul>
+<li>Fix final aleph closing syllable (Issue #107)</li>
+<li>Fix how segolate nouns are accented (Issue #108)</li>
+<li>Add <code dir="auto">Cluster.hasSilluq</code> prop (PR #110)</li>
+<li>Add <code dir="auto">Cluster.isTaam</code> and alias <code dir="auto">Cluster.isPunctuation</code> which returns <code dir="auto">true</code> for maqqaf, sof passuq, and paseq.</li>
+</ul>
+<h2 id="2023-03-02-0140">2023-03-02 0.14.0</h2>
+<ul>
+<li>Removes יָמִים from qamets qatan list (Issue #103)</li>
+<li>Adds <code dir="auto">value</code> property to <code dir="auto">Node</code> object for better type safety for <code dir="auto">Syllable</code> and <code dir="auto">Cluster</code> (Issue #101)</li>
+</ul>
+<h2 id="2023-01-24-0131">2023-01-24 0.13.1</h2>
+<ul>
+<li>Fix issue w/ taamim giving incorrect <code dir="auto">holemHaser</code> output (Issue #96)</li>
+</ul>
+<h2 id="2023-01-22-0130">2023-01-22 0.13.0</h2>
+<ul>
+<li>fix syllabification w/ the spelling of Jerusalem (Issue #83)</li>
+<li>standardize Hebrew character name (Issue #76)</li>
+<li><code dir="auto">Syllable</code> extends <code dir="auto">Node</code></li>
+<li>Add <code dir="auto">hasVowelName</code> to <code dir="auto">Syllable</code> (Issue #80)</li>
+<li>Add <code dir="auto">vowelName</code> property to <code dir="auto">Syllable</code> (Issue #81)</li>
+<li>Add <code dir="auto">vowel</code> property to <code dir="auto">Syllable</code> (Issue #82)</li>
+<li>Add <code dir="auto">hasVowelName</code> property to <code dir="auto">Cluster</code> (Issue #77)</li>
+<li>Add <code dir="auto">vowelName</code> property to <code dir="auto">Cluster</code> (Issue #75)</li>
+<li>Add <code dir="auto">vowel</code> property to <code dir="auto">Cluster</code> (Issue #74)</li>
+<li>Fix two holems dropping one (Issue #74)</li>
+</ul>
+<h2 id="2022-12-17-0120">2022-12-17 0.12.0</h2>
+<ul>
+<li>Add support for holem haser (Issue #72)</li>
+</ul>
+<h2 id="2022-11-14-0113">2022-11-14 0.11.3</h2>
+<ul>
+<li>Fix medial shureqs incorrect when strict is false (Issue #70)</li>
+</ul>
+<h2 id="2022-11-09-0112">2022-11-09 0.11.2</h2>
+<ul>
+<li>Fix medial maters incorrect when strict is false (Issue #68)</li>
+</ul>
+<h2 id="2022-11-04-0111">2022-11-04 0.11.1</h2>
+<ul>
+<li>Add documentation for <code dir="auto">strict</code> 🤦‍♂️</li>
+</ul>
+<h2 id="2022-11-03-0110">2022-11-03 0.11.0</h2>
+<ul>
+<li>Add syllabification option for <code dir="auto">strict</code>
+<ul>
+<li>if true, then text must be correctly pointed</li>
+</ul>
+</li>
+</ul>
+<h2 id="2022-10-20-0101">2022-10-20 0.10.1</h2>
+<ul>
+<li>Fix broken exports</li>
+</ul>
+<h2 id="2022-10-20-0100">2022-10-20 0.10.0</h2>
+<ul>
+<li>Update how schemas are created (Issue #63)</li>
+<li>Fix failing doc builds (Issue #47)</li>
+</ul>
+<h2 id="2022-09-24-092">2022-09-24 0.9.2</h2>
+<ul>
+<li>Fix Divine Name w/ Latin Chars</li>
+<li>Fix holem waw and proceding word</li>
+<li>the above two were inter-related</li>
+</ul>
+<h2 id="2022-09-24-091">2022-09-24 0.9.1</h2>
+<ul>
+<li>Add CI testing checks</li>
+<li>Add a q.q. check (Issue #50)</li>
+<li>Fix single syllable holem-waw error (Issue #58)</li>
+</ul>
+<h2 id="2022-09-03-090">2022-09-03 0.9.0</h2>
+<h3 id="change">Change</h3>
+<ul>
+<li>fix Issue #38 by allowing Hebrew without niqqud
+<ul>
+<li>introduces the <code dir="auto">allowNoNiqqud</code> option for syllabification</li>
+</ul>
+</li>
+<li>fix Issue #44 by fixing Divine Name w/ Latin characters</li>
+</ul>
+<h2 id="2022-08-27-081">2022-08-27 0.8.1</h2>
+<h3 id="change-1">Change</h3>
+<ul>
+<li>fix Issue #24 by updating the regex for kol</li>
+<li>fix Issue #35 by improving how hyphens are handled</li>
+<li>fix Issue #36 of single shureq failing</li>
+</ul>
+<h2 id="2022-07-04-080">2022-07-04 0.8.0</h2>
+<h3 id="change-2">Change</h3>
+<ul>
+<li>fix Issue #31 by adding check for Othniel</li>
+<li>fix Issue #32 by adding check non-Hebrew chars</li>
+</ul>
+<h3 id="add">Add</h3>
+<ul>
+<li>add <code dir="auto">isNotHebrew</code> property on <code dir="auto">Word</code></li>
+</ul>
+<h2 id="2022-04-11-074">2022-04-11 0.7.4</h2>
+<h3 id="change-3">Change</h3>
+<ul>
+<li>fix Issue #26 Jerusalem failing for some texts</li>
+<li>fix Issue #29 with aleph with a shureq being treated like a mater</li>
+</ul>
+<h2 id="2022-03-04-073">2022-03-04 0.7.3</h2>
+<h3 id="change-4">Change</h3>
+<ul>
+<li>fix Issue #20 — when an aleph had a shureq as a vowel and was preceded by a shewa it would throw and error</li>
+</ul>
+<h2 id="2022-01-02-072">2022-01-02 0.7.2</h2>
+<h3 id="change-5">Change</h3>
+<ul>
+<li>fix false <code dir="auto">Cluster.isMater</code> when a he was preceded by qamets, but had a shureq as vowel</li>
+</ul>
+<h2 id="2022-01-01-071">2022-01-01 0.7.1</h2>
+<h3 id="change-6">Change</h3>
+<ul>
+<li>improve syllabification of words with two holem waws</li>
+</ul>
+<h3 id="change-7">Change</h3>
+<h2 id="2021-12-23-070">2021-12-23 0.7.0</h2>
+<h3 id="change-8">Change</h3>
+<ul>
+<li>improve syllabification for quiesced aleph</li>
+<li>improve syllabification for consonants w/o a vowel</li>
+<li>correct syllabification for omitted <em>dagesh chazaq</em> (<a href="https://github.com/charlesLoder/hebrew-transliteration/issues/14">Issue #14</a>)
+<ul>
+<li>added <code dir="auto">article</code> to <code dir="auto">SylOpts</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="2021-12-06-062">2021-12-06 0.6.2</h2>
+<h3 id="change-9">Change</h3>
+<ul>
+<li>fixed holem-waw followed by silent aleph not included in 0.6.1</li>
+</ul>
+<h2 id="2021-12-06-061">2021-12-06 0.6.1</h2>
+<h3 id="change-10">Change</h3>
+<ul>
+<li>fixed syllabification for word holem-waw and and waw with a holem</li>
+</ul>
+<h2 id="2021-09-14-060">2021-09-14 0.6.0</h2>
+<h3 id="add-1">Add</h3>
+<ul>
+<li><code dir="auto">hasDivineName</code> property to <code dir="auto">Word</code></li>
+</ul>
+<h3 id="change-11">Change</h3>
+<ul>
+<li>updated packages</li>
+</ul>
+<h3 id="removed">Removed</h3>
+<ul>
+<li><code dir="auto">hebrew-transliteration</code> package used in testing</li>
+</ul>
+<h2 id="2021-09-04-053">2021-09-04 0.5.3</h2>
+<h3 id="change-12">Change</h3>
+<ul>
+<li>improve qamets qatan checking for כל without a maqqef</li>
+</ul>
+<h2 id="2021-08-28-052">2021-08-28 0.5.2</h2>
+<h3 id="change-13">Change</h3>
+<ul>
+<li>latin char in <code dir="auto">0.5.1</code> was not robust enough:
+<ul>
+<li>wrong regex in Char sequencing caused incorrect syl data</li>
+<li>latin chars are there own cluster</li>
+</ul>
+</li>
+</ul>
+<h2 id="2021-08-23-051">2021-08-23 0.5.1</h2>
+<h3 id="add-2">Add</h3>
+<ul>
+<li>a changelog!!!</li>
+<li>documentation tooling</li>
+<li>gh action for publishing: UNTESTED!</li>
+<li>improved handling of latin chars mixed with heb; latin chars are now own cluster</li>
+</ul> </div> <footer class="sl-flex astro-3yyafb3n"> <div class="meta sl-flex astro-3yyafb3n">   </div> <div class="pagination-links astro-u2l5gyhi" dir="ltr"> <a href="/havarotjs/" rel="prev" class="astro-u2l5gyhi"> <svg aria-hidden="true" class="astro-u2l5gyhi astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17 11H9.41l3.3-3.29a1.004 1.004 0 1 0-1.42-1.42l-5 5a1 1 0 0 0-.21.33 1 1 0 0 0 0 .76 1 1 0 0 0 .21.33l5 5a1.002 1.002 0 0 0 1.639-.325 1 1 0 0 0-.219-1.095L9.41 13H17a1 1 0 0 0 0-2Z"/></svg>  <span class="astro-u2l5gyhi"> Previous <br class="astro-u2l5gyhi"> <span class="link-title astro-u2l5gyhi">Getting started</span> </span> </a> <a href="/havarotjs/api/classes/char/" rel="next" class="astro-u2l5gyhi"> <svg aria-hidden="true" class="astro-u2l5gyhi astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17.92 11.62a1.001 1.001 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z"/></svg>  <span class="astro-u2l5gyhi"> Next <br class="astro-u2l5gyhi"> <span class="link-title astro-u2l5gyhi">Char</span> </span> </a> </div>   </footer>  </div> </div>   </main> </div> </div>  </div> </div>  </body></html>
