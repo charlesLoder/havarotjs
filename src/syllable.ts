@@ -1,7 +1,7 @@
 import { Char } from "./char";
 import { Cluster } from "./cluster";
 import { Node } from "./node";
-import type { ConsonantName, TaamimName } from "./utils/charMap";
+import type { ConsonantName, Flip, TaamimName } from "./utils/charMap";
 import { consonantNameToCharMap, taamimNameToCharMap, vowelCharToNameMap, vowelNameToCharMap } from "./utils/charMap";
 import { removeTaamim } from "./utils/removeTaamim";
 import { Word } from "./word";
@@ -14,6 +14,10 @@ const sylVowelCharToNameMap = {
 } as const;
 
 export type SyllableVowelCharToNameMap = typeof sylVowelCharToNameMap;
+export type SyllableVowel = keyof SyllableVowelCharToNameMap;
+
+export type SyllableVowelNameToCharMap = Flip<SyllableVowelCharToNameMap>;
+export type SyllableVowelName = keyof SyllableVowelNameToCharMap;
 
 const sylVowelNameToCharMap = {
   ...vowelNameToCharMap,
@@ -22,16 +26,11 @@ const sylVowelNameToCharMap = {
   SHUREQ: "\u{05D5}\u{05BC}"
 } as const;
 
-export type SyllablVowelNameToCharMap = typeof sylVowelNameToCharMap;
-
-type SyllableParams = {
+export type SyllableParams = {
   isClosed?: boolean;
   isAccented?: boolean;
   isFinal?: boolean;
 };
-
-export type SyllableVowel = keyof SyllableVowelCharToNameMap;
-export type SyllableVowelName = SyllableVowelCharToNameMap[keyof SyllableVowelCharToNameMap];
 
 /**
  * A subunit of a {@link Word} consisting of consonants, vowels, and other linguistic and ortographic features.
