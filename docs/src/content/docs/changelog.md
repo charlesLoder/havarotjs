@@ -1,4 +1,6 @@
-# Changelog
+---
+title: Changelog
+---
 
 ## 2024-08-02 0.23.3
 

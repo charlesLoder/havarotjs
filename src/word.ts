@@ -1,10 +1,10 @@
 import { Char } from "./char";
-import type { ConsonantName, TaamimName } from "./cluster";
 import { Cluster } from "./cluster";
 import { Node } from "./node";
-import type { VowelName } from "./syllable";
+import type { SyllableVowelName } from "./syllable";
 import { Syllable } from "./syllable";
 import { SylOpts } from "./text";
+import type { ConsonantName, TaamimName } from "./utils/charMap";
 import { hasDivineName, isDivineName } from "./utils/divineName";
 import { clusterSplitGroup, jerusalemTest } from "./utils/regularExpressions";
 import { syllabify } from "./utils/syllabifier";
@@ -79,8 +79,9 @@ export class Word extends Node<Word> {
   /**
    *
    * @param word the word to be split into Cluster
-   * @description splits a word at each consonant or the punctuation character
-   * Sof Pasuq and Nun Hafukha
+   *
+   * @remarks
+   * Splits a word at each consonant or the punctuation character, Sof Pasuq and Nun Hafukha
    */
   private makeClusters = (word: string): Cluster[] => {
     const match = word.match(jerusalemTest);
@@ -115,7 +116,7 @@ export class Word extends Node<Word> {
   }
 
   /**
-   * Gets all the {@link Char | characters} in the Word
+   * Gets all the {@link Char | Characters} in the Word
    *
    * @returns a one dimensional array of Chars
    *
@@ -138,7 +139,7 @@ export class Word extends Node<Word> {
   }
 
   /**
-   * Gets all the {@link Cluster | clusters} in the Word
+   * Gets all the {@link Cluster | Clusters} in the Word
    *
    * @returns a one dimensional array of Clusters
    *
@@ -208,7 +209,7 @@ export class Word extends Node<Word> {
    * // false
    * ```
    *
-   * @description
+   * @remarks
    * This checks if the syllable contains the given consonant name, even if the character is not a phonemic consonant (i.e a mater).
    */
   hasConsonantName(name: ConsonantName): boolean {
@@ -243,7 +244,7 @@ export class Word extends Node<Word> {
    * // true
    * ```
    *
-   * @description
+   * @remarks
    * Note: it only checks according to the character name, not its semantic meaning.
    * E.g. "כֵֽן׃" would be `true` when checking for `"METEG"`, not silluq
    */
@@ -271,13 +272,13 @@ export class Word extends Node<Word> {
    * // false
    * ```
    *
-   * @description
-   * This returns a boolean if the vowel character is present, even for most mater lectionis (e.g. in a holam vav construction, "HOLAM" would return true)
+   * @remarks
+   * This returns a boolean if the vowel character is present, even for most mater lectionis (e.g. in a holam vav construction, "HOLAM" would return true).
    * The only exception is a shureq, because there is no vowel character for a shureq.
-   * According to {@page Syllabification}, a sheva is a vowel and serves as the nucleus of a syllable.
+   * According to [Syllabification](/guides/syllabification), a sheva is a vowel and serves as the nucleus of a syllable.
    * It returns `true` for "SHEVA" only when the sheva is the vowel (i.e. a vocal sheva or sheva na').
    */
-  hasVowelName(name: VowelName): boolean {
+  hasVowelName(name: SyllableVowelName): boolean {
     return this.syllables.some((syllable) => syllable.hasVowelName(name));
   }
 
@@ -309,7 +310,7 @@ export class Word extends Node<Word> {
    * // true
    * ```
    *
-   * @description
+   * @remarks
    * If the word contains non-Hebrew characters, it is not considered Hebrew because syllabification is likely not correct.
    */
   get isNotHebrew(): boolean {
@@ -328,7 +329,7 @@ export class Word extends Node<Word> {
    * // true
    * ```
    *
-   * @description
+   * @remarks
    * The construct state is indicated by the presence of a maqqef (U+05BE) character
    */
   get isInConstruct(): boolean {
@@ -337,10 +338,11 @@ export class Word extends Node<Word> {
   }
 
   /**
-   * Gets all the {@link Syllable | syllables} in the Word
+   * Gets all the {@link Syllable | Syllables} in the Word
    *
    * @returns a one dimensional array of Syllables
    *
+   * @example
    * ```ts
    * const text = new Text("אֵיפֹה־אַתָּה מֹשֶה");
    * text.words[0].syllables;
@@ -368,6 +370,7 @@ export class Word extends Node<Word> {
    *
    * @returns a one dimensional array of all the taamim characters in the Word
    *
+   * @example
    * ```ts
    * const text = new Text("הָאָ֖רֶץ");
    * text.words[0].taamim;
@@ -383,6 +386,7 @@ export class Word extends Node<Word> {
    *
    * @returns a one dimensional array of all the taamim names in the Word
    *
+   * @example
    * ```ts
    * const text = new Text("הָאָ֖רֶץ");
    * text.words[0].taamimNames;
@@ -398,6 +402,7 @@ export class Word extends Node<Word> {
    *
    * @returns the word's text trimmed of any whitespace characters
    *
+   * @example
    * ```ts
    * const text = new Text("אֵיפֹה־אַתָּה מֹשֶה");
    * const words = text.words.map((word) => word.text);
@@ -418,6 +423,7 @@ export class Word extends Node<Word> {
    *
    * @returns an array of all the vowel names in the Word
    *
+   * @example
    * ```ts
    * const text = new Text("אֵיפֹה־אַתָּה מֹשֶה");
    * text.words[0].vowelNames;
@@ -433,6 +439,7 @@ export class Word extends Node<Word> {
    *
    * @returns an array of all the vowel characters in the Word
    *
+   * @example
    * ```ts
    * const text = new Text("אֵיפֹה־אַתָּה מֹשֶה");
    * text.words[0].vowels;

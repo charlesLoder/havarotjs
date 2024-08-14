@@ -8,13 +8,14 @@ import { sequence } from "./utils/sequence";
 import { Word } from "./word";
 
 /**
- * options for determining syllabification that may differ according to reading traditions
+ * Options for determining syllabification that may differ according to reading traditions
  */
 export interface SylOpts {
   /**
-   * allows text with no niqqud to be passed; words with no niqqud or incomplete pointing will not be syllabified
+   * Allows text with no niqqud to be passed; words with no niqqud or incomplete pointing will not be syllabified
    *
-   * @defaultValue false
+   * @defaultValue `false`
+   *
    * @example
    * ```ts
    * const text = new Text("בְּרֵאשִׁ֖ית בָּרָ֣א אֱלֹהִ֑ים", { allowNoNiqqud: true })
@@ -22,15 +23,16 @@ export interface SylOpts {
    * // [ 'בְּ', 'רֵא', 'שִׁ֖ית', 'בָּרא', 'אלהים' ]
    * // note 2nd word has incomplete pointing, and 3rd has none
    * ```
-   * @remarks
    *
-   * results in example displayed in reverse order to mimic Hebrew writing; the rightmost value is the 0 item
+   * @remarks
+   * Results in example displayed in reverse order to mimic Hebrew writing; the rightmost value is the 0 item
    */
   allowNoNiqqud?: boolean;
   /**
-   * determines whether to regard the sheva under the letters ילמ when preceded by the article and with a missing dagesh chazaq as as a _sheva na'_.
+   * Determines whether to regard the sheva under the letters ילמ when preceded by the article and with a missing dagesh chazaq as as a _sheva na'_.
    *
-   * @defaultValue true
+   * @defaultValue `true`
+   *
    * @example
    * ```ts
    * const usingDefault = new Text("הַיְאֹ֗ר");
@@ -43,19 +45,18 @@ export interface SylOpts {
    * ```
    *
    * @remarks
-   *
-   * results in example displayed in reverse order to mimic Hebrew writing; the rightmost value is the 0 item
+   * Results in example displayed in reverse order to mimic Hebrew writing; the rightmost value is the 0 item
    */
   article?: boolean;
   /**
-   * how to handle the code point \u{05BA} HOLAM HASER FOR VAV
+   * How to handle the code point \u{05BA} HOLAM HASER FOR VAV
    *
    * @options
    * * "update" - converts all holems in a vav + holem sequence where vav is a consonant to HOLAM HASER FOR VAV
    * * "preserve" - leaves the text as is — does not remove HOLAM HASER FOR VAV, but does not update
    * * "remove" - converts all HOLAM HASER FOR VAV to regular holem
    *
-   * @defaultValue preserve
+   * @defaultValue `"preserve"`
    *
    * @example update
    * ```ts
@@ -66,6 +67,7 @@ export interface SylOpts {
    * holemHaser.test(newStr); // true
    *
    * ```
+   *
    * @example preserve
    * ```ts
    * const holemHaser = /\u{05BA}/u;
@@ -73,7 +75,6 @@ export interface SylOpts {
    * holemHaser.test(str); // false
    * const newStr = new Text(updated, { holemHaser: "preserve" }).text;
    * holemHaser.test(newStr); // false
-   *
    * ```
    *
    * @example remove
@@ -84,13 +85,13 @@ export interface SylOpts {
    * const newStr = new Text(updated, { holemHaser: "remove" }).text;
    * holemHaser.test(newStr); // false
    * ```
-   *
    */
   holemHaser?: "update" | "preserve" | "remove";
   /**
-   * determines whether to regard a sheva after a long vowel (excluding waw-shureq, see {@link wawShureq}) as a _sheva na'_, unless preceded by a meteg (see {@link shevaAfterMeteg}).
+   * Determines whether to regard a sheva after a long vowel (excluding waw-shureq, see {@link wawShureq}) as a _sheva na'_, unless preceded by a meteg (see {@link shevaAfterMeteg}).
    *
-   * @defaultValue true
+   * @defaultValue `true`
+   *
    * @example
    * ```ts
    * const usingDefault = new Text("יָדְךָ");
@@ -103,14 +104,14 @@ export interface SylOpts {
    * ```
    *
    * @remarks
-   *
-   * results in example displayed in reverse order to mimic Hebrew writing; the rightmost value is the 0 item
+   * Results in example displayed in reverse order to mimic Hebrew writing; the rightmost value is the 0 item
    */
   longVowels?: boolean;
   /**
-   * converts regular qamets characters to qamets qatan characters where appropriate. The former is a "long-vowel" whereas the latter is a "short-vowel."
+   * Converts regular qamets characters to qamets qatan characters where appropriate. The former is a "long-vowel" whereas the latter is a "short-vowel."
    *
-   * @defaultValue true
+   * @defaultValue `true`
+   *
    * @example
    * ```ts
    * const qQRegx = /\u{05C7}/u;
@@ -125,9 +126,10 @@ export interface SylOpts {
    */
   qametsQatan?: boolean;
   /**
-   * determines whether to regard the sheva after a meteg as a _sheva na'_.
+   * Determines whether to regard the sheva after a meteg as a _sheva na'_.
    *
-   * @defaultValue true
+   * @defaultValue `true`
+   *
    * @example
    * ```ts
    * const usingDefault = new Text("יְדַֽעְיָה");
@@ -150,9 +152,10 @@ export interface SylOpts {
    */
   shevaAfterMeteg?: boolean;
   /**
-   * determines whether to regard a sheva with a meteg as a _sheva na'_. This is also called a sheva ga'ya.
+   * Determines whether to regard a sheva with a meteg as a _sheva na'_. This is also called a sheva ga'ya.
    *
-   * @defaultValue true
+   * @defaultValue `true`
+   *
    * @example
    * ```ts
    * const usingDefault = new Text("אַ֥שְֽׁרֵי");
@@ -173,9 +176,10 @@ export interface SylOpts {
    */
   shevaWithMeteg?: boolean;
   /**
-   * determines whether to regard the sheva under the letters שׁשׂסצנמלוי when preceded by a waw-consecutive with a missing dagesh chazaq as a _sheva na'_, unless preceded by a meteg (see {@link shevaAfterMeteg}).
+   * Determines whether to regard the sheva under the letters שׁשׂסצנמלוי when preceded by a waw-consecutive with a missing dagesh chazaq as a _sheva na'_, unless preceded by a meteg (see {@link shevaAfterMeteg}).
    *
-   * @defaultValue true
+   * @defaultValue `true`
+   *
    * @example
    * ```ts
    * const usingDefault = new Text("וַיְצַחֵק֙");
@@ -189,9 +193,10 @@ export interface SylOpts {
    */
   sqnmlvy?: boolean;
   /**
-   * whether to syllabify incorrectly pointed text
+   * Determines whether to syllabify incorrectly pointed text
    *
-   * @defaultValue true
+   * @defaultValue `true`
+   *
    * @example
    * ```ts
    * const text1 = new Text("לְוּדְרְדַּיְל", { strict: true });
@@ -203,15 +208,14 @@ export interface SylOpts {
    *```
    *
    * @remarks
-   *
-   * when false results in syllabification can vary
-   *
+   * When `false` results in syllabification can vary.
    */
   strict?: boolean;
   /**
-   * determines whether to regard a sheva after a vav-shureq as vocal, unless preceded by a meteg (see {@link shevaAfterMeteg}).
+   * Determines whether to regard a sheva after a vav-shureq as vocal, unless preceded by a meteg (see {@link shevaAfterMeteg}).
    *
-   * @defaultValue true
+   * @defaultValue `true`
+   *
    * @example
    * ```ts
    * const usingDefault = new Text("וּלְמַזֵּר");
@@ -224,15 +228,14 @@ export interface SylOpts {
    * ```
    *
    * @remarks
-   *
-   * results in example displayed in reverse order to mimic Hebrew writing; the rightmost value is the 0 item
+   * Results in example displayed in reverse order to mimic Hebrew writing; the rightmost value is the 0 item
    */
   wawShureq?: boolean;
 }
 
 /**
- * `Text` is the main exported class.
- *
+ * Processes and analyzes Hebrew text with niqqud, offering syllabification
+ * and breakdown into linguistic components (words, syllables, clusters, chars).
  */
 export class Text {
   #original: string;
@@ -241,7 +244,7 @@ export class Text {
   /**
    * `Text` requires an input string,
    * and has optional arguments for syllabification,
-   * which can be read about in the {@page Syllabification} page
+   * which can be read about in the [Syllabification](/guides/syllabification) page
    *
    * @param text input string
    * @param options syllabification options
@@ -318,52 +321,57 @@ export class Text {
   }
 
   /**
-   * @returns the original string passed
+   * Gets all the {@link Char | Chars} in the Text
+   *
+   * @returns a one dimensional array of Chars
    *
    * ```typescript
-   * const text: Text = new Text("הֲבָרֹות");
-   * text.original;
-   * // "הֲבָרֹות"
+   * const text: Text = new Text("יָד");
+   * text.chars;
+   * //  [
+   * //    Char { original: "י" },
+   * //    Char { original: "ָ" },
+   * //    Char { original: "ד" }
+   * //  ]
    * ```
+   */
+  get chars(): Char[] {
+    return this.clusters.map((cluster) => cluster.chars).flat();
+  }
+
+  /**
+   * Gets all the {@link Cluster | Clusters} in the Text
+   *
+   * @returns a one dimensional array of Clusters
+   *
+   * ```typescript
+   * const text: Text = new Text("יָד");
+   * text.clusters;
+   * // [
+   * //    Cluster { original: "יָ" },
+   * //    Cluster { original: "ד" }
+   * //  ]
+   * ```
+   */
+  get clusters(): Cluster[] {
+    return this.syllables.map((syllable) => syllable.clusters).flat();
+  }
+
+  /**
+   * The original string passed
+   *
+   * @returns the original string passed
+   *
+   * @remarks
+   * The original string passed to the constructor that has not been normalized or sequenced. See {@link text}
    */
   get original(): string {
     return this.#original;
   }
 
   /**
-   * @returns a string that has been decomposed, sequenced, qamets qatan patterns converted to the appropriate unicode character (U+05C7), and holem-waw sequences corrected
+   * Gets all the {@link Syllable | Syllables} in the Text
    *
-   * ```typescript
-   * import { Text } from "havarotjs";
-   * const text: Text = new Text("וַתָּשָׁב");
-   * text.text;
-   * // וַתָּשׇׁב
-   * ```
-   */
-  get text(): string {
-    return this.words.reduce((a, c) => `${a}${c.text}${c.whiteSpaceAfter ?? ""}`, "");
-  }
-
-  /**
-   * @returns a one dimensional array of Words
-   *
-   * ```typescript
-   * const text: Text = new Text("הֲבָרֹות");
-   * text.words;
-   * // [Word { original: "הֲבָרֹות" }]
-   * ```
-   */
-  get words(): Word[] {
-    const split = this.sanitized.split(splitGroup);
-    const groups = split.filter((group) => group);
-    const words = groups.map((word) => new Word(word, this.options));
-    const [first, ...rest] = words;
-    first.siblings = rest;
-
-    return words;
-  }
-
-  /**
    * @returns a one dimensional array of Syllables
    *
    * ```typescript
@@ -381,35 +389,41 @@ export class Text {
   }
 
   /**
-   * @returns a one dimensional array of Clusters
+   * Gets the text
    *
-   * ```typescript
-   * const text: Text = new Text("יָד");
-   * text.clusters;
-   * // [
-   * //    Cluster { original: "יָ" },
-   * //    Cluster { original: "ד" }
-   * //  ]
+   * @returns a string that has been decomposed, sequenced, qamets qatan patterns converted to the appropriate unicode character (U+05C7), and holem-waw sequences corrected
+   *
+   * @example
+   * ```ts
+   * import { Text } from "havarotjs";
+   * const text = new Text("וַתָּשָׁב");
+   * text.text;
+   * // וַתָּשׇׁב
    * ```
    */
-  get clusters(): Cluster[] {
-    return this.syllables.map((syllable) => syllable.clusters).flat();
+  get text(): string {
+    return this.words.reduce((a, c) => `${a}${c.text}${c.whiteSpaceAfter ?? ""}`, "");
   }
 
   /**
-   * @returns a one dimensional array of Chars
+   * Gets all the {@link Word | Words} in the Text
    *
-   * ```typescript
-   * const text: Text = new Text("יָד");
-   * text.chars;
-   * //  [
-   * //    Char { original: "י" },
-   * //    Char { original: "ָ" },
-   * //    Char { original: "ד" }
-   * //  ]
+   * @returns a one dimensional array of Words
+   *
+   * @example
+   * ```ts
+   * const text = new Text("הֲבָרֹות");
+   * text.words;
+   * // [ Word { original: "הֲבָרֹות" } ]
    * ```
    */
-  get chars(): Char[] {
-    return this.clusters.map((cluster) => cluster.chars).flat();
+  get words(): Word[] {
+    const split = this.sanitized.split(splitGroup);
+    const groups = split.filter((group) => group);
+    const words = groups.map((word) => new Word(word, this.options));
+    const [first, ...rest] = words;
+    first.siblings = rest;
+
+    return words;
   }
 }

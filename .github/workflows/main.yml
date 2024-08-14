@@ -26,11 +26,11 @@ jobs:
       - name: Install and Build
         # use force because typedoc doesn't support current version of TS, but it still build
         run: |
-          npm install --force
+          npm install
           npm run docs
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
           branch: gh-pages # The branch the action should deploy to.
-          folder: docs # The folder the action should deploy.
+          folder: docs-dist # The folder the action should deploy.

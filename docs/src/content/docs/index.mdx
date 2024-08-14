@@ -1,0 +1,55 @@
+---
+title: Getting Started
+next: { link: /api/classes/text, label: "Text" }
+---
+
+import { Code, TabItem, Tabs } from "@astrojs/starlight/components";
+
+Syllabify Hebrew text
+
+## Installation
+
+<Tabs syncKey="runtime">
+  <TabItem label="node" icon="node">
+    <Code code={"npm i havarotjs"} lang="bash" frame="code" />
+  </TabItem>
+  <TabItem label="deno" icon="deno">
+    <Code code={`import { Text } from "npm:havarotjs";`} lang="ts" frame="code" />
+  </TabItem>
+  <TabItem label="browser" icon="laptop">
+    <Code code={`import { Text } from "https://esm.sh/havarotjs";`} lang="js" frame="code" />
+  </TabItem>
+</Tabs>
+
+## Usage
+
+<Tabs syncKey="runtime">
+  <TabItem label="ESM" icon="seti:javascript">
+    <Code
+      code={`import { Text } from "havarotjs";\nconst text = new Text("הֲבָרֹות");\nconsole.log(text.words);\n// [ Word { original: "הֲבָרֹות" } ]`}
+      lang="js"
+      frame="code"
+    />
+  </TabItem>
+  <TabItem label="CommonJS" icon="node">
+    <Code
+      code={`const Text = require("havarotjs").Text;\nconst text = new Text("הֲבָרֹות");\nconsole.log(text.words);\n// [ Word { original: "הֲבָרֹות" } ]`}
+      lang="js"
+      frame="code"
+    />
+  </TabItem>
+  <TabItem label="deno" icon="deno">
+    <Code
+      code={`import { transliterate } from "npm:havarotjs";\nconst text = new Text("הֲבָרֹות");\nconsole.log(text.words);\n// [ Word { original: "הֲבָרֹות" } ]`}
+      lang="ts"
+      frame="code"
+    />
+  </TabItem>
+  <TabItem label="browser" icon="laptop">
+    <Code
+      code={`import { transliterate } from "https://esm.sh/havarotjs";\nconst text = new Text("הֲבָרֹות");\nconsole.log(text.words);\n// [ Word { original: "הֲבָרֹות" } ]`}
+      lang="ts"
+      frame="code"
+    />
+  </TabItem>
+</Tabs>

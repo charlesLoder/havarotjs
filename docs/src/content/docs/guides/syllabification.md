@@ -1,6 +1,10 @@
-# Syllabification
+---
+title: Syllabification
+---
 
-⚠️ This section is still a work in progress ⚠️
+:::caution
+This is still a work in progrss
+:::
 
 There are two types of schemas for syllabification:
 

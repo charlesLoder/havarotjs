@@ -16,4 +16,5 @@ node_modules
 *.foo.js
 *.foo.ts
 /dist
-/docs
+/docs/src/content/docs/api
+/docs-dist
