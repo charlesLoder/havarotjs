@@ -87,7 +87,7 @@
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "./changelog.sh && npm run format && npm run lint && npm test",
     "postversion": "git push && git push --tags",
-    "docs": "typedoc && cp havarot-2400.png ./docs",
+    "docs": "NODE_ENV=production astro build --config ./docs/astro.config.mjs",
     "docs:dev": "astro dev --config ./docs/astro.config.mjs",
     "update": " npm-check-updates '/^(?!typedoc).*$/' -u"
   },
