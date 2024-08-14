@@ -1,4 +1,6 @@
-# Terms
+---
+title: Terms
+---
 
 Because multiple terms exist to describe the same forms in Hebrew grammar, this list is lays out the terminology used in this projects and acts as a naming standard.
 Preference is to use Hebrew names with simplified spellings for particular variables and properties, but not for classes.
@@ -14,4 +16,4 @@ Preference is to use Hebrew names with simplified spellings for particular varia
 
 \*the `Syllable` object has a property `isAccented` which is a linguistic property (i.e. stress), but the `Cluster` object has the property `hasTaamim` since this references the characters.
 
-\*\*non-critical spellings are "qamats" for "qamets" and "qamets qata" to align with the Unicode names.
+\*\*non-critical spellings are "qamats" for "qamets" and "qamets qatan" to align with the Unicode names.
