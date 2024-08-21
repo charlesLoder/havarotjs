@@ -6,25 +6,25 @@ describe("validate options", () => {
     // "Object literal may only specify known properties, and 'foo' does not exist in type 'SylOpts'.ts(2345)"
     // but we ignore in order to test validation
     // @ts-ignore
-    expect(() => new Text("וּלְמַזֵּר", { foo: true })).toThrowError();
+    expect(() => new Text("וּלְמַזֵּר", { foo: true })).toThrow();
   });
 
   describe("throw error when passed incorrect prop value", () => {
     test.each(["qametsQatan", "sqnmlvy", "wawShureq", "longVowels", "article", "strict", "holemHaser"])("%s", (key) => {
-      expect(() => new Text("וּלְמַזֵּר", { [key]: "foo" })).toThrowError();
+      expect(() => new Text("וּלְמַזֵּר", { [key]: "foo" })).toThrow();
     });
   });
 
   describe("no error when passed bool", () => {
     test.each(["qametsQatan", "sqnmlvy", "wawShureq", "longVowels", "article", "strict"])("%s", (key) => {
-      expect(() => new Text("וּלְמַזֵּר", { [key]: true })).not.toThrowError();
+      expect(() => new Text("וּלְמַזֵּר", { [key]: true })).not.toThrow();
     });
   });
 
   describe("no error when holemHaser passed valid option", () => {
     test.each(["update", "preserve", "remove"])("%s", (key) => {
       //@ts-ignore
-      expect(() => new Text("וּלְמַזֵּר", { holemHaser: key })).not.toThrowError();
+      expect(() => new Text("וּלְמַזֵּר", { holemHaser: key })).not.toThrow();
     });
   });
 });
@@ -303,11 +303,11 @@ describe.each`
   describe(description, () => {
     if (strict) {
       test(`${word}`, () => {
-        expect(() => new Text(word, { strict: strict }).syllables).toThrowError();
+        expect(() => new Text(word, { strict: strict }).syllables).toThrow();
       });
     } else {
       test(`${word}`, () => {
-        expect(() => new Text(word, { strict: strict }).syllables).not.toThrowError();
+        expect(() => new Text(word, { strict: strict }).syllables).not.toThrow();
       });
     }
   });
