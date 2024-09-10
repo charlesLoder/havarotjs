@@ -6,25 +6,51 @@ describe("validate options", () => {
     // "Object literal may only specify known properties, and 'foo' does not exist in type 'SylOpts'.ts(2345)"
     // but we ignore in order to test validation
     // @ts-ignore
-    expect(() => new Text("וּלְמַזֵּר", { foo: true })).toThrowError();
+    expect(() => new Text("וּלְמַזֵּר", { foo: true })).toThrow();
   });
 
   describe("throw error when passed incorrect prop value", () => {
     test.each(["qametsQatan", "sqnmlvy", "wawShureq", "longVowels", "article", "strict", "holemHaser"])("%s", (key) => {
-      expect(() => new Text("וּלְמַזֵּר", { [key]: "foo" })).toThrowError();
+      expect(() => new Text("וּלְמַזֵּר", { [key]: "foo" })).toThrow();
     });
   });
 
   describe("no error when passed bool", () => {
     test.each(["qametsQatan", "sqnmlvy", "wawShureq", "longVowels", "article", "strict"])("%s", (key) => {
-      expect(() => new Text("וּלְמַזֵּר", { [key]: true })).not.toThrowError();
+      expect(() => new Text("וּלְמַזֵּר", { [key]: true })).not.toThrow();
     });
   });
 
   describe("no error when holemHaser passed valid option", () => {
     test.each(["update", "preserve", "remove"])("%s", (key) => {
       //@ts-ignore
-      expect(() => new Text("וּלְמַזֵּר", { holemHaser: key })).not.toThrowError();
+      expect(() => new Text("וּלְמַזֵּר", { holemHaser: key })).not.toThrow();
+    });
+  });
+
+  describe("validate ketivQeres", () => {
+    test("error when passed incorrect input", () => {
+      // @ts-ignore
+      expect(() => new Text("וּלְמַזֵּר", { ketivQeres: [{ input: false, output: "bar" }] })).toThrow();
+    });
+
+    test("error when passed incorrect outpout", () => {
+      // @ts-ignore
+      expect(() => new Text("וּלְמַזֵּר", { ketivQeres: [{ input: "foo", output: false }] })).toThrow();
+    });
+
+    test("error when passed incorrect ignoreTaamim", () => {
+      expect(
+        // @ts-ignore
+        () => new Text("וּלְמַזֵּר", { ketivQeres: [{ input: "foo", output: "bar", ignoreTaamim: "bob" }] })
+      ).toThrow();
+    });
+
+    test("error when passed incorrect captureTaamim", () => {
+      expect(
+        // @ts-ignore
+        () => new Text("וּלְמַזֵּר", { ketivQeres: [{ input: "foo", output: "bar", captureTaamim: "bob" }] })
+      ).toThrow();
     });
   });
 });
@@ -77,6 +103,25 @@ describe.each`
       expect(holemHaserRegx.test(text)).toEqual(shouldHaveholemHaser);
       expect(text).toEqual(resultString);
     });
+  });
+});
+
+describe.each`
+  description                                                                | input             | options                                                                               | original          | output
+  ${"3fs qere perpetuum (default)"}                                          | ${"הִ֑וא"}        | ${{ input: "הִוא", output: "הִיא" }}                                                  | ${"הִ֑וא"}        | ${"הִיא"}
+  ${"3fs qere perpetuum (ignoreTaamim false, no match)"}                     | ${"הִ֑וא"}        | ${{ input: "הִוא", output: "הִיא", ignoreTaamim: false }}                             | ${"הִ֑וא"}        | ${"הִ֑וא"}
+  ${"3fs qere perpetuum (ignoreTaamim false, match)"}                        | ${"הִ֑וא"}        | ${{ input: "הִ֑וא", output: "הִיא", ignoreTaamim: false }}                            | ${"הִ֑וא"}        | ${"הִיא"}
+  ${"3fs qere perpetuum (captureTaamim true)"}                               | ${"הִ֑וא"}        | ${{ input: "הִוא", output: "הִיא", captureTaamim: true }}                             | ${"הִ֑וא"}        | ${"הִ֑יא"}
+  ${"3fs qere perpetuum (captureTaamim true, no taamim)"}                    | ${"הִוא"}         | ${{ input: "הִוא", output: "הִיא", captureTaamim: true }}                             | ${"הִוא"}         | ${"הִיא"}
+  ${"3fs qere perpetuum (captureTaamim true, ignoreTaamim false, no match)"} | ${"הִוא"}         | ${{ input: "הִ֑וא", output: "הִיא", captureTaamim: true, ignoreTaamim: false }}       | ${"הִוא"}         | ${"הִוא"}
+  ${"3fs qere perpetuum (captureTaamim true, ignoreTaamim false, match)"}    | ${"הִ֑וא"}        | ${{ input: "הִ֑וא", output: "הִיא", captureTaamim: true, ignoreTaamim: false }}       | ${"הִ֑וא"}        | ${"הִ֑יא"}
+  ${"quiesced alef using input as regex and output as callback"}             | ${"וַיָּבִיאּוּ"} | ${{ input: /אּ/, output: (word: string, input: RegExp) => word.replace(input, "א") }} | ${"וַיָּבִיאּוּ"} | ${"וַיָּבִיאוּ"}
+`("ketivQeres", ({ description, input, options, original, output }) => {
+  test(description, () => {
+    const text = new Text(input, { ketivQeres: [options] });
+    const word = text.words[0];
+    expect(word.original).toEqual(original);
+    expect(word.text).toEqual(output);
   });
 });
 
@@ -303,11 +348,11 @@ describe.each`
   describe(description, () => {
     if (strict) {
       test(`${word}`, () => {
-        expect(() => new Text(word, { strict: strict }).syllables).toThrowError();
+        expect(() => new Text(word, { strict: strict }).syllables).toThrow();
       });
     } else {
       test(`${word}`, () => {
-        expect(() => new Text(word, { strict: strict }).syllables).not.toThrowError();
+        expect(() => new Text(word, { strict: strict }).syllables).not.toThrow();
       });
     }
   });

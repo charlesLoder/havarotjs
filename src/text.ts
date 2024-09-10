@@ -3,9 +3,41 @@ import { Cluster } from "./cluster";
 import { Syllable } from "./syllable";
 import { holemWaw } from "./utils/holemWaw";
 import { convertsQametsQatan } from "./utils/qametsQatan";
-import { splitGroup } from "./utils/regularExpressions";
+import { splitGroup, taamim, taamimCaptureGroup } from "./utils/regularExpressions";
 import { sequence } from "./utils/sequence";
 import { Word } from "./word";
+
+export interface KetivQere {
+  /**
+   * The word or regex to match on
+   */
+  input: string | RegExp;
+  /**
+   * The output of the ketiv qere
+   *
+   * @remarks
+   * When using a callback, the paramerter `text` is the whole text of the word, and `input` is the input of the ketiv qere
+   */
+  output:
+    | string
+    /**
+     * @param text the whole text of the word
+     * @param input the input of the ketiv qere
+     */
+    | ((text: string, input: KetivQere["input"]) => string);
+  /**
+   * Whether to ignore taamin in the target string
+   *
+   * @defaultValue true
+   */
+  ignoreTaamim?: boolean;
+  /**
+   * Whether to capture taamin from the input and add it to the output
+   *
+   * @defaultValue false
+   */
+  captureTaamim?: boolean;
+}
 
 /**
  * Options for determining syllabification that may differ according to reading traditions
@@ -58,7 +90,8 @@ export interface SylOpts {
    *
    * @defaultValue `"preserve"`
    *
-   * @example update
+   * @example
+   * update
    * ```ts
    * const holemHaser = /\u{05BA}/u;
    * const str = "עָוֹן" // vav + holem
@@ -68,7 +101,8 @@ export interface SylOpts {
    *
    * ```
    *
-   * @example preserve
+   * @example
+   * preserve
    * ```ts
    * const holemHaser = /\u{05BA}/u;
    * const str = "עָוֹן" // vav + holem
@@ -77,7 +111,8 @@ export interface SylOpts {
    * holemHaser.test(newStr); // false
    * ```
    *
-   * @example remove
+   * @example
+   * remove
    * ```ts
    * const holemHaser = /\u{05BA}/u;
    * const str = "עָוֺן" // vav + holem haser
@@ -87,6 +122,78 @@ export interface SylOpts {
    * ```
    */
   holemHaser?: "update" | "preserve" | "remove";
+  /**
+   * An array of KetivQere objects
+   *
+   * @defaultValue `undefined`
+   *
+   * @example
+   * default
+   * ```ts
+   * const text = new Text("הִ֑וא", {
+   *  ketivQeres: [
+   *     {
+   *       input: "הִוא",
+   *       output: "הִיא"
+   *     }
+   *   ]
+   * });
+   * console.log(text.words[0].text);
+   * // הִיא
+   * ```
+   *
+   * @example
+   * `captureTaamim` set to `true`
+   * ```ts
+   * const text = new Text("הִ֑וא", {
+   *  ketivQeres: [
+   *    {
+   *      input: "הִוא",
+   *      output: "הִיא",
+   *      captureTaamim: true
+   *    }
+   *  ]
+   * });
+   * console.log(text.words[0].text);
+   * // הִ֑יא
+   * ```
+   *
+   * @example
+   * `ignoreTaamim` set to `false`
+   * ```ts
+   * const text = new Text("הִ֑וא", {
+   *  ketivQeres: [
+   *    {
+   *      input: "הִ֯וא",
+   *      output: "הִיא",
+   *      ignoreTaamim: false
+   *    }
+   *  ]
+   * });
+   * console.log(text.words[0].text);
+   * // הִ֯וא
+   * // does not match because the input taam is not the same as the Text taam
+   * ```
+   *
+   * @example
+   * `input` as a regular expression, and `output` as a callback
+   * ```ts
+   * const text = new Text("וַיָּבִיאּוּ", {
+   *  ketivQeres: [
+   *    {
+   *      input: /אּ/,
+   *      output: (word, input) => word.replace(input, "א")
+   *    }
+   *  ]
+   * });
+   * console.log(text.words[0].text);
+   * // וַיָּבִיאוּ
+   * ```
+   *
+   * @remarks
+   * KetivQere objects allow for flexible handling of words, mimicking how ketiv/qeres are used in biblical manuscripts
+   */
+  ketivQeres?: KetivQere[];
   /**
    * Determines whether to regard a sheva after a long vowel (excluding waw-shureq, see {@link wawShureq}) as a _sheva na'_, unless preceded by a meteg (see {@link shevaAfterMeteg}).
    *
@@ -240,6 +347,23 @@ export interface SylOpts {
 export class Text {
   #original: string;
   private options: SylOpts;
+  /**
+   * Cache for {@link SylOpts.ketivQeres}
+   *
+   * @privateRemarks
+   * This cache can be improved. Currently, it can only check for exact matches.
+   * So for example, if you have ketivQere options like this:
+   * ```js
+   * new Text("לֹא־נִפְלֵ֥את הִוא֙ מִמְּךָ֔ וְלֹ֥א רְחֹקָ֖ה הִֽוא׃", {
+   *  ketivQeres: [
+   *    { input: "הִוא", output: "הִוא" },
+   *  ]
+   * })
+   * ```
+   *
+   * The cache will miss because `הִוא֙` and `הִֽוא׃` are not exact matches, even though `ignoreTaamim` is `true`.
+   */
+  private ketivQereCache: { [k: string]: string } = {};
 
   /**
    * `Text` requires an input string,
@@ -254,6 +378,57 @@ export class Text {
     this.#original = this.options.allowNoNiqqud ? text : this.validateInput(text);
   }
 
+  private applyKetivQere = (text: string, kq: KetivQere) => {
+    if (kq.input instanceof RegExp) {
+      const match = text.match(kq.input);
+      if (match) {
+        return typeof kq.output === "string" ? kq.output : kq.output(text, kq.input);
+      }
+    }
+
+    if (kq.input === text) {
+      return typeof kq.output === "string" ? kq.output : kq.output(text, kq.input);
+    }
+
+    return null;
+  };
+
+  private captureTaamim = (text: string) => {
+    return text.matchAll(Text.taamimCaptureGroup);
+  };
+
+  private processKetivQeres = (text: string) => {
+    if (this.ketivQereCache[text]) {
+      return this.ketivQereCache[text];
+    }
+
+    const ketivQeres = this.options.ketivQeres;
+
+    if (!ketivQeres?.length) {
+      return text;
+    }
+
+    for (const ketivQere of ketivQeres) {
+      const textWithoutTaamim = ketivQere.ignoreTaamim ? this.removeTaamim(text) : text;
+
+      const appliedKetivQere = this.applyKetivQere(textWithoutTaamim, ketivQere);
+
+      if (!appliedKetivQere) {
+        return text;
+      }
+
+      const taamimChars = ketivQere.captureTaamim ? this.captureTaamim(text) : null;
+
+      const newText = taamimChars ? this.setTaamim(appliedKetivQere, taamimChars) : appliedKetivQere;
+
+      this.ketivQereCache[text] = newText;
+
+      return newText;
+    }
+
+    return text;
+  };
+
   private validateInput(text: string): string {
     const niqqud = /[\u{05B0}-\u{05BC}\u{05C7}]/u;
     if (!niqqud.test(text)) {
@@ -262,11 +437,55 @@ export class Text {
     return text;
   }
 
+  private validateKetivQeres(ketivQeres: SylOpts["ketivQeres"]) {
+    // if it's undefined, it's fine
+    if (!ketivQeres) {
+      return true;
+    }
+
+    // if there's no ketivQeres, it's fine
+    if (!ketivQeres.length) {
+      return true;
+    }
+
+    // validate the shape of the ketivQeres
+    for (const [index, ketivQere] of ketivQeres.entries()) {
+      const { input, output, ignoreTaamim, captureTaamim } = ketivQere;
+
+      if (input === undefined) {
+        throw new Error(`The ketivQere at index ${index} must have an input`);
+      }
+
+      if (!(input instanceof RegExp) && typeof input !== "string") {
+        throw new Error(`The input property of the ketivQere at index ${index} must be a string or RegExp`);
+      }
+
+      if (output === undefined) {
+        throw new Error(`The ketivQere at index ${index} must have an output`);
+      }
+
+      if (typeof output !== "string" && typeof output !== "function") {
+        throw new Error(`The output property of the ketivQere at index ${index} must be a string or function`);
+      }
+
+      if (ignoreTaamim && typeof ignoreTaamim !== "boolean") {
+        throw new Error(`The ignoreTaamim property of the ketivQere at index ${index} must be a boolean`);
+      }
+
+      if (captureTaamim && typeof captureTaamim !== "boolean") {
+        throw new Error(`The captureTaamim property of the ketivQere at index ${index} must be a boolean`);
+      }
+    }
+
+    return true;
+  }
+
   private validateOptions(options: SylOpts): SylOpts {
     const validOpts = [
       "allowNoNiqqud",
       "article",
       "holemHaser",
+      "ketivQeres",
       "longVowels",
       "qametsQatan",
       "shevaAfterMeteg",
@@ -279,6 +498,10 @@ export class Text {
       if (!validOpts.includes(k)) {
         throw new Error(`${k} is not a valid option`);
       }
+      if (k === "ketivQeres") {
+        this.validateKetivQeres(v as SylOpts["ketivQeres"]);
+        continue;
+      }
       if (k === "holemHaser" && !["update", "preserve", "remove"].includes(String(v))) {
         throw new Error(`The value ${String(v)} is not a valid option for ${k}`);
       }
@@ -289,12 +512,22 @@ export class Text {
     return options;
   }
 
+  private removeTaamim = (text: string) => {
+    return text.replace(taamim, "");
+  };
+
   private setOptions(options: SylOpts): SylOpts {
     const validOpts = this.validateOptions(options);
     return {
       allowNoNiqqud: validOpts.allowNoNiqqud ?? false,
       article: validOpts.article ?? true,
       holemHaser: validOpts.holemHaser ?? "preserve",
+      ketivQeres:
+        validOpts.ketivQeres?.map((kq) => ({
+          ...kq,
+          captureTaamim: kq.captureTaamim ?? false,
+          ignoreTaamim: kq.ignoreTaamim ?? true
+        })) ?? [],
       longVowels: validOpts.longVowels ?? true,
       qametsQatan: validOpts.qametsQatan ?? true,
       shevaAfterMeteg: validOpts.shevaAfterMeteg ?? true,
@@ -303,6 +536,16 @@ export class Text {
       strict: validOpts.strict ?? true,
       wawShureq: validOpts.wawShureq ?? true
     };
+  }
+
+  private setTaamim(newText: string, taamimCapture: ReturnType<Text["captureTaamim"]>) {
+    return [...taamimCapture].reduce((text, group) => {
+      return text.slice(0, group.index) + group[1] + text.slice(group.index);
+    }, newText);
+  }
+
+  private static get taamimCaptureGroup() {
+    return taamimCaptureGroup;
   }
 
   private get normalized(): string {
@@ -420,7 +663,10 @@ export class Text {
   get words(): Word[] {
     const split = this.sanitized.split(splitGroup);
     const groups = split.filter((group) => group);
-    const words = groups.map((word) => new Word(word, this.options));
+    const words = groups.map((original) => {
+      const word = this.processKetivQeres(original);
+      return new Word(word, this.options, word !== original ? original : undefined);
+    });
     const [first, ...rest] = words;
     first.siblings = rest;
 

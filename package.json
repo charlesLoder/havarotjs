@@ -78,6 +78,9 @@
   },
   "scripts": {
     "build": "tsc --project tsconfig.esm.json && tsc-alias --project tsconfig.esm.json",
+    "watch": "concurrently \"tsc --watch --project tsconfig.esm.json\" \"npm run watch:tsc-alias\" \"npm run watch:esm2cjs\"",
+    "watch:tsc-alias": "chokidar \"dist/esm/**/*.js\" -c \"tsc-alias --project tsconfig.esm.json\"",
+    "watch:esm2cjs": "chokidar \"dist/esm/**/*.js\" -c \"esm2cjs --in dist/esm --out dist/cjs -l error\"",
     "postbuild": "esm2cjs --in dist/esm --out dist/cjs -l error",
     "test": "jest",
     "format": "prettier --write 'src/**/*.ts' 'test/**/*.ts'",
@@ -114,6 +117,8 @@
     "@types/jest": "^29.5.12",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "astro": "^4.13.3",
+    "chokidar-cli": "^3.0.0",
+    "concurrently": "^8.2.2",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-jsdoc": "^48.2.0",
