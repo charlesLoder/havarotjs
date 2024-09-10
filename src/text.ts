@@ -499,7 +499,7 @@ export class Text {
         throw new Error(`${k} is not a valid option`);
       }
       if (k === "ketivQeres") {
-        this.validateKetivQeres(v);
+        this.validateKetivQeres(v as SylOpts["ketivQeres"]);
         continue;
       }
       if (k === "holemHaser" && !["update", "preserve", "remove"].includes(String(v))) {
@@ -525,8 +525,8 @@ export class Text {
       ketivQeres:
         validOpts.ketivQeres?.map((kq) => ({
           ...kq,
-          ignoreTaamim: kq.ignoreTaamim ?? true,
-          captureTaamim: kq.captureTaamim ?? false
+          captureTaamim: kq.captureTaamim ?? false,
+          ignoreTaamim: kq.ignoreTaamim ?? true
         })) ?? [],
       longVowels: validOpts.longVowels ?? true,
       qametsQatan: validOpts.qametsQatan ?? true,
@@ -539,8 +539,8 @@ export class Text {
   }
 
   private setTaamim(newText: string, taamimCapture: ReturnType<Text["captureTaamim"]>) {
-    return [...taamimCapture].reduce((text, taamim) => {
-      return text.slice(0, taamim.index) + taamim[1] + text.slice(taamim.index);
+    return [...taamimCapture].reduce((text, group) => {
+      return text.slice(0, group.index) + group[1] + text.slice(group.index);
     }, newText);
   }
 
