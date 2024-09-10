@@ -127,6 +127,15 @@ export const sheva = /\u{05B0}/u;
 export const taamim = /[\u{0591}-\u{05AE}]/u;
 
 /**
+ * A regular expression containing all the Hebrew characters of the category ACCENT in a global capture group
+ *
+ * ```js
+ * /([\u{0591}-\u{05AE}])/gu;
+ * ```
+ */
+export const taamimCaptureGroup = /([\u{0591}-\u{05AE}])/gu;
+
+/**
  * a regular expression containing all the Hebrew point characters (excluding sheva and rafe)
  *
  * ```js

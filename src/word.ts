@@ -14,6 +14,7 @@ import { syllabify } from "./utils/syllabifier";
  */
 export class Word extends Node<Word> {
   #text: string;
+  #original: string;
   /**
    * The white space that appears before the word
    *
@@ -104,10 +105,11 @@ export class Word extends Node<Word> {
     return word.split(clusterSplitGroup).map((group) => new Cluster(group));
   };
 
-  constructor(text: string, sylOpts: SylOpts) {
+  constructor(text: string, sylOpts: SylOpts, original?: string) {
     super();
     this.value = this;
     this.#text = text;
+    this.#original = original ?? text;
     const startMatch = text.match(/^\s*/g);
     const endMatch = text.match(/\s*$/g);
     this.whiteSpaceBefore = startMatch ? startMatch[0] : null;
@@ -335,6 +337,21 @@ export class Word extends Node<Word> {
   get isInConstruct(): boolean {
     // if word has a maqqef, it is in construct
     return this.text.includes("\u05BE");
+  }
+
+  /**
+   * The original string passed
+   *
+   * @returns the original string passed
+   *
+   * @description
+   * The original string passed to the constructor that has not been checked against any KetivQeres.
+   *
+   * @remarks
+   * The original string passed to the constructor still undergoes the normalization and sequence process, just not checked against any KetivQeres.
+   */
+  get original() {
+    return this.#original;
   }
 
   /**
