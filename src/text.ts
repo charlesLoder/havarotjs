@@ -191,7 +191,7 @@ export interface SylOpts {
    * ```
    *
    * @remarks
-   * KetivQere objects allow for flexible handling of words, mimicing how ketiv/qeres are used in biblical manuscripts
+   * KetivQere objects allow for flexible handling of words, mimicking how ketiv/qeres are used in biblical manuscripts
    */
   ketivQeres?: KetivQere[];
   /**
