@@ -10,73 +10,72 @@ export class Char {
   #text: string;
   #cluster: Cluster | null = null;
   #sequencePosition: number;
+  #isCharKeyOfCharToNameMap = isHebrewCharacter;
 
   constructor(char: string) {
     this.#text = char;
-    this.#sequencePosition = this.findPos();
+    this.#sequencePosition = this.#findPos();
   }
 
-  private findPos(): number {
+  #findPos(): number {
     const char = this.text;
-    if (Char.consonants.test(char)) {
+    if (Char.#consonants.test(char)) {
       return 0;
     }
-    if (Char.ligatures.test(char)) {
+    if (Char.#ligatures.test(char)) {
       return 1;
     }
-    if (Char.dagesh.test(char)) {
+    if (Char.#dagesh.test(char)) {
       return 2;
     }
-    if (Char.rafe.test(char)) {
+    if (Char.#rafe.test(char)) {
       return 2;
     }
-    if (Char.vowels.test(char)) {
+    if (Char.#vowels.test(char)) {
       return 3;
     }
-    if (Char.sheva.test(char)) {
+    if (Char.#sheva.test(char)) {
       return 3;
     }
-    if (Char.taamim.test(char)) {
+    if (Char.#taamim.test(char)) {
       return 4;
     }
-    if (Char.meteg.test(char)) {
+    if (Char.#meteg.test(char)) {
       return 4;
     }
     // i.e. any non-hebrew char
     return 10;
   }
 
-  private isCharKeyOfCharToNameMap = isHebrewCharacter;
-
-  private static get consonants() {
+  static get #consonants() {
     return consonants;
   }
 
-  private static get dagesh() {
+  static get #dagesh() {
     return dagesh;
   }
 
-  private static get ligatures() {
+  static get #ligatures() {
     return ligatures;
   }
 
-  private static get meteg() {
+  static get #meteg() {
     return meteg;
   }
 
-  private static get rafe() {
+  static get #rafe() {
     return rafe;
   }
 
-  private static get sheva() {
+  static get #sheva() {
     return sheva;
   }
 
-  private static get taamim() {
+  static get #taamim() {
     return taamim;
   }
 
-  private static get vowels() {
+  static get #vowels() {
     return vowels;
   }
 
@@ -127,7 +126,7 @@ export class Char {
    * ```
    */
   get isConsonant(): boolean {
-    return Char.consonants.test(this.#text);
+    return Char.#consonants.test(this.#text);
   }
 
   /**
@@ -141,7 +140,7 @@ export class Char {
    * ```
    */
   get isLigature(): boolean {
-    return Char.ligatures.test(this.#text);
+    return Char.#ligatures.test(this.#text);
   }
 
   /**
@@ -155,7 +154,7 @@ export class Char {
    * ```
    */
   get isDagesh(): boolean {
-    return Char.dagesh.test(this.#text);
+    return Char.#dagesh.test(this.#text);
   }
 
   /**
@@ -169,7 +168,7 @@ export class Char {
    * ```
    */
   get isRafe(): boolean {
-    return Char.rafe.test(this.#text);
+    return Char.#rafe.test(this.#text);
   }
 
   /**
@@ -183,7 +182,7 @@ export class Char {
    * ```
    */
   get isSheva(): boolean {
-    return Char.sheva.test(this.#text);
+    return Char.#sheva.test(this.#text);
   }
 
   /**
@@ -197,7 +196,7 @@ export class Char {
    * ```
    */
   get isVowel(): boolean {
-    return Char.vowels.test(this.#text);
+    return Char.#vowels.test(this.#text);
   }
 
   /**
@@ -211,7 +210,7 @@ export class Char {
    * ```
    */
   get isTaamim(): boolean {
-    return Char.taamim.test(this.#text);
+    return Char.#taamim.test(this.#text);
   }
 
   /**
@@ -240,7 +239,7 @@ export class Char {
    */
   get characterName(): CharToNameMap[keyof CharToNameMap] | null {
     const text = this.#text;
-    if (this.isCharKeyOfCharToNameMap(text)) {
+    if (this.#isCharKeyOfCharToNameMap(text)) {
       return charToNameMap[text];
     }
     return null;

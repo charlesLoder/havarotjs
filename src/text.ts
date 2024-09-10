@@ -346,7 +346,7 @@ export interface SylOpts {
  */
 export class Text {
   #original: string;
-  private options: SylOpts;
+  #options: SylOpts;
   /**
    * Cache for {@link SylOpts.ketivQeres}
    *
@@ -363,7 +363,7 @@ export class Text {
    *
    * The cache will miss because `הִוא֙` and `הִֽוא׃` are not exact matches, even though `ignoreTaamim` is `true`.
    */
-  private ketivQereCache: { [k: string]: string } = {};
+  #ketivQereCache: { [k: string]: string } = {};
 
   /**
    * `Text` requires an input string,
@@ -374,11 +374,11 @@ export class Text {
    * @param options syllabification options
    */
   constructor(text: string, options: SylOpts = {}) {
-    this.options = this.setOptions(options);
-    this.#original = this.options.allowNoNiqqud ? text : this.validateInput(text);
+    this.#options = this.#setOptions(options);
+    this.#original = this.#options.allowNoNiqqud ? text : this.#validateInput(text);
   }
 
-  private applyKetivQere = (text: string, kq: KetivQere) => {
+  #applyKetivQere = (text: string, kq: KetivQere) => {
     if (kq.input instanceof RegExp) {
       const match = text.match(kq.input);
       if (match) {
@@ -393,35 +393,35 @@ export class Text {
     return null;
   };
 
-  private captureTaamim = (text: string) => {
-    return text.matchAll(Text.taamimCaptureGroup);
+  #captureTaamim = (text: string): IterableIterator<RegExpMatchArray> => {
+    return text.matchAll(Text.#taamimCaptureGroup);
   };
 
-  private processKetivQeres = (text: string) => {
-    if (this.ketivQereCache[text]) {
-      return this.ketivQereCache[text];
+  #processKetivQeres = (text: string) => {
+    if (this.#ketivQereCache[text]) {
+      return this.#ketivQereCache[text];
     }
 
-    const ketivQeres = this.options.ketivQeres;
+    const ketivQeres = this.#options.ketivQeres;
 
     if (!ketivQeres?.length) {
       return text;
     }
 
     for (const ketivQere of ketivQeres) {
-      const textWithoutTaamim = ketivQere.ignoreTaamim ? this.removeTaamim(text) : text;
+      const textWithoutTaamim = ketivQere.ignoreTaamim ? this.#removeTaamim(text) : text;
 
-      const appliedKetivQere = this.applyKetivQere(textWithoutTaamim, ketivQere);
+      const appliedKetivQere = this.#applyKetivQere(textWithoutTaamim, ketivQere);
 
       if (!appliedKetivQere) {
         return text;
       }
 
-      const taamimChars = ketivQere.captureTaamim ? this.captureTaamim(text) : null;
+      const taamimChars = ketivQere.captureTaamim ? this.#captureTaamim(text) : null;
 
-      const newText = taamimChars ? this.setTaamim(appliedKetivQere, taamimChars) : appliedKetivQere;
+      const newText = taamimChars ? this.#setTaamim(appliedKetivQere, taamimChars) : appliedKetivQere;
 
-      this.ketivQereCache[text] = newText;
+      this.#ketivQereCache[text] = newText;
 
       return newText;
     }
@@ -429,7 +429,7 @@ export class Text {
     return text;
   };
 
-  private validateInput(text: string): string {
+  #validateInput(text: string): string {
     const niqqud = /[\u{05B0}-\u{05BC}\u{05C7}]/u;
     if (!niqqud.test(text)) {
       throw new Error("Text must contain niqqud");
@@ -437,7 +437,7 @@ export class Text {
     return text;
   }
 
-  private validateKetivQeres(ketivQeres: SylOpts["ketivQeres"]) {
+  #validateKetivQeres(ketivQeres: SylOpts["ketivQeres"]) {
     // if it's undefined, it's fine
     if (!ketivQeres) {
       return true;
@@ -480,7 +480,7 @@ export class Text {
     return true;
   }
 
-  private validateOptions(options: SylOpts): SylOpts {
+  #validateOptions(options: SylOpts): SylOpts {
     const validOpts = [
       "allowNoNiqqud",
       "article",
@@ -499,7 +499,7 @@ export class Text {
         throw new Error(`${k} is not a valid option`);
       }
       if (k === "ketivQeres") {
-        this.validateKetivQeres(v as SylOpts["ketivQeres"]);
+        this.#validateKetivQeres(v as SylOpts["ketivQeres"]);
         continue;
       }
       if (k === "holemHaser" && !["update", "preserve", "remove"].includes(String(v))) {
@@ -512,12 +512,12 @@ export class Text {
     return options;
   }
 
-  private removeTaamim = (text: string) => {
+  #removeTaamim = (text: string) => {
     return text.replace(taamim, "");
   };
 
-  private setOptions(options: SylOpts): SylOpts {
-    const validOpts = this.validateOptions(options);
+  #setOptions(options: SylOpts): SylOpts {
+    const validOpts = this.#validateOptions(options);
     return {
       allowNoNiqqud: validOpts.allowNoNiqqud ?? false,
       article: validOpts.article ?? true,
@@ -538,28 +538,28 @@ export class Text {
     };
   }
 
-  private setTaamim(newText: string, taamimCapture: ReturnType<Text["captureTaamim"]>) {
+  #setTaamim(newText: string, taamimCapture: IterableIterator<RegExpMatchArray>) {
     return [...taamimCapture].reduce((text, group) => {
       return text.slice(0, group.index) + group[1] + text.slice(group.index);
     }, newText);
   }
 
-  private static get taamimCaptureGroup() {
+  static get #taamimCaptureGroup() {
     return taamimCaptureGroup;
   }
 
-  private get normalized(): string {
+  get #normalized(): string {
     return this.original.normalize("NFKD");
   }
 
-  private get sanitized(): string {
-    const text = this.normalized.trim();
+  get #sanitized(): string {
+    const text = this.#normalized.trim();
     const sequencedChar = sequence(text).flat();
     const sequencedText = sequencedChar.reduce((a, c) => a + c.text, "");
     // split text at spaces and maqqef, spaces are added to the array as separate entries
     const textArr = sequencedText.split(splitGroup).filter((group) => group);
-    const mapQQatan = this.options.qametsQatan ? textArr.map(convertsQametsQatan) : textArr;
-    const mapHolemWaw = mapQQatan.map((w) => holemWaw(w, this.options));
+    const mapQQatan = this.#options.qametsQatan ? textArr.map(convertsQametsQatan) : textArr;
+    const mapHolemWaw = mapQQatan.map((w) => holemWaw(w, this.#options));
     return mapHolemWaw.join("");
   }
 
@@ -661,11 +661,11 @@ export class Text {
    * ```
    */
   get words(): Word[] {
-    const split = this.sanitized.split(splitGroup);
+    const split = this.#sanitized.split(splitGroup);
     const groups = split.filter((group) => group);
     const words = groups.map((original) => {
-      const word = this.processKetivQeres(original);
-      return new Word(word, this.options, word !== original ? original : undefined);
+      const word = this.#processKetivQeres(original);
+      return new Word(word, this.#options, word !== original ? original : undefined);
     });
     const [first, ...rest] = words;
     first.siblings = rest;

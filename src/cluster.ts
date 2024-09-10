@@ -36,6 +36,9 @@ export class Cluster extends Node<Cluster> {
   #vowelsCache: Vowel[] | null = null;
   #vowelNamesCache: VowelName[] | null = null;
   #taamimNamesCache: TaamimName[] | null = null;
+  #isCharConsonant = isCharConsonant;
+  #isCharTaam = isCharTaam;
+  #isCharVowel = isCharVowel;
 
   /**
    * Creates a new cluster
@@ -55,26 +58,20 @@ export class Cluster extends Node<Cluster> {
     super();
     this.value = this;
     this.#original = cluster;
-    this.#sequenced = this.sequence(noSequence);
+    this.#sequenced = this.#sequence(noSequence);
     this.#sequenced.forEach((char) => (char.cluster = this));
   }
 
-  private sequence(noSequence: boolean = false): Char[] {
+  #sequence(noSequence: boolean = false): Char[] {
     const chars = [...this.original].map((char) => new Char(char));
     return noSequence ? chars : chars.sort((a, b) => a.sequencePosition - b.sequencePosition);
   }
 
-  private isCharConsonant = isCharConsonant;
-
-  private isCharTaam = isCharTaam;
-
-  private isCharVowel = isCharVowel;
-
-  private get hasMetegCharacter(): boolean {
-    return Cluster.meteg.test(this.text);
+  get #hasMetegCharacter(): boolean {
+    return Cluster.#meteg.test(this.text);
   }
 
-  private static get meteg() {
+  static get #meteg() {
     return meteg;
   }
 
@@ -120,7 +117,7 @@ export class Cluster extends Node<Cluster> {
 
     const consonants = this.chars.reduce((a, char) => {
       const text = char.text;
-      if (char.isConsonant && this.isCharConsonant(text)) {
+      if (char.isConsonant && this.#isCharConsonant(text)) {
         a.push(text);
       }
       return a;
@@ -152,7 +149,7 @@ export class Cluster extends Node<Cluster> {
 
     const consonantNames = this.chars.reduce((a, char) => {
       const text = char.text;
-      if (char.isConsonant && this.isCharConsonant(text)) {
+      if (char.isConsonant && this.#isCharConsonant(text)) {
         a.push(charToNameMap[text]);
       }
       return a;
@@ -270,7 +267,7 @@ export class Cluster extends Node<Cluster> {
    * - \u{05BD} METEG
    */
   get hasMeteg(): boolean {
-    if (!this.hasMetegCharacter) {
+    if (!this.#hasMetegCharacter) {
       return false;
     }
     let next = this.next;
@@ -278,7 +275,7 @@ export class Cluster extends Node<Cluster> {
       if (next instanceof Cluster) {
         const nextText = next.text;
         const sofPassuq = /\u{05C3}/u;
-        if (Cluster.meteg.test(nextText)) {
+        if (Cluster.#meteg.test(nextText)) {
           return true;
         }
         if (sofPassuq.test(nextText)) {
@@ -379,7 +376,7 @@ export class Cluster extends Node<Cluster> {
    * - \u{05BD} METEG
    */
   get hasSilluq(): boolean {
-    if (this.hasMetegCharacter && !this.hasMeteg) {
+    if (this.#hasMetegCharacter && !this.hasMeteg) {
       // if it has a meteg character, but the character is not a meteg
       // then infer it is silluq
       return true;
@@ -672,7 +669,7 @@ export class Cluster extends Node<Cluster> {
     }
 
     const taamimChars = this.chars.reduce((a, char) => {
-      if (char.isTaamim && this.isCharTaam(char.text)) {
+      if (char.isTaamim && this.#isCharTaam(char.text)) {
         a.push(char.text);
       }
 
@@ -700,7 +697,7 @@ export class Cluster extends Node<Cluster> {
 
     const taaminNames = this.chars.reduce((a, char) => {
       const text = char.text;
-      if (char.isTaamim && this.isCharTaam(text)) {
+      if (char.isTaamim && this.#isCharTaam(text)) {
         a.push(charToNameMap[text]);
       }
 
@@ -758,7 +755,7 @@ export class Cluster extends Node<Cluster> {
     }
 
     const vowelNames = this.chars.reduce((a, char) => {
-      if (char.isVowel && this.isCharVowel(char.text)) {
+      if (char.isVowel && this.#isCharVowel(char.text)) {
         a.push(charToNameMap[char.text]);
       }
 
@@ -794,7 +791,7 @@ export class Cluster extends Node<Cluster> {
 
     const vowels = this.chars.reduce((a, char) => {
       const text = char.text;
-      if (char.isVowel && this.isCharVowel(text)) {
+      if (char.isVowel && this.#isCharVowel(text)) {
         a.push(text);
       }
       return a;

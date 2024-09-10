@@ -97,7 +97,7 @@ export class Word extends Node<Word> {
    * @remarks
    * Splits a word at each consonant or the punctuation character, Sof Pasuq and Nun Hafukha
    */
-  private makeClusters = (word: string): Cluster[] => {
+  #makeClusters = (word: string): Cluster[] => {
     const match = word.match(jerusalemTest);
     /**
      * The Masoretic spelling of Jerusalem contains some idiosyncrasies,
@@ -159,7 +159,7 @@ export class Word extends Node<Word> {
    * ```
    */
   get clusters(): Cluster[] {
-    const clusters = this.makeClusters(this.text);
+    const clusters = this.#makeClusters(this.text);
     const firstCluster = clusters[0];
     const remainder = clusters.slice(1);
     firstCluster.siblings = remainder;

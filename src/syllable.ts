@@ -70,7 +70,7 @@ export class Syllable extends Node<Syllable> {
     this.#isFinal = isFinal;
   }
 
-  private isCharKeyOfSyllableVowelCharToNameMap(char: string): char is keyof SyllableVowelCharToNameMap {
+  #isCharKeyOfSyllableVowelCharToNameMap(char: string): char is keyof SyllableVowelCharToNameMap {
     return char in sylVowelCharToNameMap;
   }
 
@@ -653,7 +653,7 @@ export class Syllable extends Node<Syllable> {
       .replace(shureq, shureqPresentation)
       .split("")
       .reduce((a, v) => {
-        if (this.isCharKeyOfSyllableVowelCharToNameMap(v)) {
+        if (this.#isCharKeyOfSyllableVowelCharToNameMap(v)) {
           a.push(v);
         }
         if (v === shureqPresentation) {
