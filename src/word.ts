@@ -77,6 +77,18 @@ export class Word extends Node<Word> {
   whiteSpaceAfter: string | null;
   private sylOpts: SylOpts;
 
+  constructor(text: string, sylOpts: SylOpts, original?: string) {
+    super();
+    this.value = this;
+    this.#text = text;
+    this.#original = original ?? text;
+    const startMatch = text.match(/^\s*/g);
+    const endMatch = text.match(/\s*$/g);
+    this.whiteSpaceBefore = startMatch ? startMatch[0] : null;
+    this.whiteSpaceAfter = endMatch ? endMatch[0] : null;
+    this.sylOpts = sylOpts;
+  }
+
   /**
    *
    * @param word the word to be split into Cluster
@@ -104,18 +116,6 @@ export class Word extends Node<Word> {
     }
     return word.split(clusterSplitGroup).map((group) => new Cluster(group));
   };
-
-  constructor(text: string, sylOpts: SylOpts, original?: string) {
-    super();
-    this.value = this;
-    this.#text = text;
-    this.#original = original ?? text;
-    const startMatch = text.match(/^\s*/g);
-    const endMatch = text.match(/\s*$/g);
-    this.whiteSpaceBefore = startMatch ? startMatch[0] : null;
-    this.whiteSpaceAfter = endMatch ? endMatch[0] : null;
-    this.sylOpts = sylOpts;
-  }
 
   /**
    * Gets all the {@link Char | Characters} in the Word
