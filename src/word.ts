@@ -5,7 +5,6 @@ import type { SyllableVowelName } from "./syllable";
 import { Syllable } from "./syllable";
 import { SylOpts } from "./text";
 import type { ConsonantName, TaamimName } from "./utils/charMap";
-import { hasDivineName, isDivineName } from "./utils/divineName";
 import { clusterSplitGroup, jerusalemTest } from "./utils/regularExpressions";
 import { syllabify } from "./utils/syllabifier";
 
@@ -13,6 +12,8 @@ import { syllabify } from "./utils/syllabifier";
  * A subunit of a {@link Text} consisting of words, which are strings are text separated by spaces or maqqefs.
  */
 export class Word extends Node<Word> {
+  /** A regex for removing anything that is not a character */
+  #nonCharacters = /[^\u{05D0}-\u{05F4}]/gu;
   #text: string;
   #original: string;
   /**
@@ -231,7 +232,7 @@ export class Word extends Node<Word> {
    * ```
    */
   get hasDivineName(): boolean {
-    return hasDivineName(this.text);
+    return /יהוה/.test(this.text.replace(this.#nonCharacters, ""));
   }
 
   /**
@@ -297,7 +298,7 @@ export class Word extends Node<Word> {
    * ```
    */
   get isDivineName(): boolean {
-    return isDivineName(this.text);
+    return this.text.replace(this.#nonCharacters, "") === "יהוה";
   }
 
   /**
