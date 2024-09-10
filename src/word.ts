@@ -75,7 +75,7 @@ export class Word extends Node<Word> {
    * ```
    */
   whiteSpaceAfter: string | null;
-  private sylOpts: SylOpts;
+  #sylOpts: SylOpts;
 
   constructor(text: string, sylOpts: SylOpts, original?: string) {
     super();
@@ -86,7 +86,7 @@ export class Word extends Node<Word> {
     const endMatch = text.match(/\s*$/g);
     this.whiteSpaceBefore = startMatch ? startMatch[0] : null;
     this.whiteSpaceAfter = endMatch ? endMatch[0] : null;
-    this.sylOpts = sylOpts;
+    this.#sylOpts = sylOpts;
   }
 
   /**
@@ -376,7 +376,7 @@ export class Word extends Node<Word> {
       return [syl];
     }
 
-    const syllables = syllabify(this.clusters, this.sylOpts, this.isInConstruct);
+    const syllables = syllabify(this.clusters, this.#sylOpts, this.isInConstruct);
     syllables.forEach((syl) => (syl.word = this));
 
     return syllables;
