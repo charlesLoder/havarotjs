@@ -187,6 +187,13 @@ declare module 'astro:content' {
   collection: "docs";
   data: InferEntrySchema<"docs">
 } & { render(): Render[".md"] };
+"api/interfaces/KetivQere.md": {
+	id: "api/interfaces/KetivQere.md";
+  slug: "api/interfaces/ketivqere";
+  body: string;
+  collection: "docs";
+  data: InferEntrySchema<"docs">
+} & { render(): Render[".md"] };
 "api/interfaces/SylOpts.md": {
 	id: "api/interfaces/SylOpts.md";
   slug: "api/interfaces/sylopts";
