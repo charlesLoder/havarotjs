@@ -137,7 +137,7 @@ export class Word extends Node<Word> {
    * //  ]
    * ```
    */
-  get chars(): Char[] {
+  get chars() {
     return this.clusters.map((cluster) => cluster.chars).flat();
   }
 
@@ -158,7 +158,7 @@ export class Word extends Node<Word> {
    * //  ]
    * ```
    */
-  get clusters(): Cluster[] {
+  get clusters() {
     const clusters = this.#makeClusters(this.text);
     const firstCluster = clusters[0];
     const remainder = clusters.slice(1);
@@ -231,7 +231,7 @@ export class Word extends Node<Word> {
    * // true
    * ```
    */
-  get hasDivineName(): boolean {
+  get hasDivineName() {
     return /יהוה/.test(this.text.replace(this.#nonCharacters, ""));
   }
 
@@ -251,7 +251,7 @@ export class Word extends Node<Word> {
    * Note: it only checks according to the character name, not its semantic meaning.
    * E.g. "כֵֽן׃" would be `true` when checking for `"METEG"`, not silluq
    */
-  hasTaamName(name: TaamimName): boolean {
+  hasTaamName(name: TaamimName) {
     return this.syllables.some((syllable) => syllable.hasTaamName(name));
   }
 
@@ -281,7 +281,7 @@ export class Word extends Node<Word> {
    * According to [Syllabification](/guides/syllabification), a sheva is a vowel and serves as the nucleus of a syllable.
    * It returns `true` for "SHEVA" only when the sheva is the vowel (i.e. a vocal sheva or sheva na').
    */
-  hasVowelName(name: SyllableVowelName): boolean {
+  hasVowelName(name: SyllableVowelName) {
     return this.syllables.some((syllable) => syllable.hasVowelName(name));
   }
 
@@ -297,7 +297,7 @@ export class Word extends Node<Word> {
    * // true
    * ```
    */
-  get isDivineName(): boolean {
+  get isDivineName() {
     return this.text.replace(this.#nonCharacters, "") === "יהוה";
   }
 
@@ -316,7 +316,7 @@ export class Word extends Node<Word> {
    * @remarks
    * If the word contains non-Hebrew characters, it is not considered Hebrew because syllabification is likely not correct.
    */
-  get isNotHebrew(): boolean {
+  get isNotHebrew() {
     return !this.clusters.map((c) => c.isNotHebrew).includes(false);
   }
 
@@ -335,7 +335,7 @@ export class Word extends Node<Word> {
    * @remarks
    * The construct state is indicated by the presence of a maqqef (U+05BE) character
    */
-  get isInConstruct(): boolean {
+  get isInConstruct() {
     // if word has a maqqef, it is in construct
     return this.text.includes("\u05BE");
   }
@@ -370,7 +370,7 @@ export class Word extends Node<Word> {
    * //  ]
    * ```
    */
-  get syllables(): Syllable[] {
+  get syllables() {
     if (/\w/.test(this.text) || this.isDivineName || this.isNotHebrew) {
       const syl = new Syllable(this.clusters);
       syl.word = this;
@@ -432,7 +432,7 @@ export class Word extends Node<Word> {
    * //  ]
    * ```
    */
-  get text(): string {
+  get text() {
     return this.#text.trim();
   }
 

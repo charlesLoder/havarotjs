@@ -429,7 +429,7 @@ export class Text {
     return text;
   };
 
-  #validateInput(text: string): string {
+  #validateInput(text: string) {
     const niqqud = /[\u{05B0}-\u{05BC}\u{05C7}]/u;
     if (!niqqud.test(text)) {
       throw new Error("Text must contain niqqud");
@@ -480,7 +480,7 @@ export class Text {
     return true;
   }
 
-  #validateOptions(options: SylOpts): SylOpts {
+  #validateOptions(options: SylOpts) {
     const validOpts = [
       "allowNoNiqqud",
       "article",
@@ -516,7 +516,7 @@ export class Text {
     return text.replace(taamim, "");
   };
 
-  #setOptions(options: SylOpts): SylOpts {
+  #setOptions(options: SylOpts) {
     const validOpts = this.#validateOptions(options);
     return {
       allowNoNiqqud: validOpts.allowNoNiqqud ?? false,
@@ -548,11 +548,11 @@ export class Text {
     return taamimCaptureGroup;
   }
 
-  get #normalized(): string {
+  get #normalized() {
     return this.original.normalize("NFKD");
   }
 
-  get #sanitized(): string {
+  get #sanitized() {
     const text = this.#normalized.trim();
     const sequencedChar = sequence(text).flat();
     const sequencedText = sequencedChar.reduce((a, c) => a + c.text, "");
@@ -578,7 +578,7 @@ export class Text {
    * //  ]
    * ```
    */
-  get chars(): Char[] {
+  get chars() {
     return this.clusters.map((cluster) => cluster.chars).flat();
   }
 
@@ -596,7 +596,7 @@ export class Text {
    * //  ]
    * ```
    */
-  get clusters(): Cluster[] {
+  get clusters() {
     return this.syllables.map((syllable) => syllable.clusters).flat();
   }
 
@@ -608,7 +608,7 @@ export class Text {
    * @remarks
    * The original string passed to the constructor that has not been normalized or sequenced. See {@link text}
    */
-  get original(): string {
+  get original() {
     return this.#original;
   }
 
@@ -627,7 +627,7 @@ export class Text {
    * //  ]
    * ```
    */
-  get syllables(): Syllable[] {
+  get syllables() {
     return this.words.map((word) => word.syllables).flat();
   }
 
@@ -644,7 +644,7 @@ export class Text {
    * // וַתָּשׇׁב
    * ```
    */
-  get text(): string {
+  get text() {
     return this.words.reduce((a, c) => `${a}${c.text}${c.whiteSpaceAfter ?? ""}`, "");
   }
 
@@ -660,7 +660,7 @@ export class Text {
    * // [ Word { original: "הֲבָרֹות" } ]
    * ```
    */
-  get words(): Word[] {
+  get words() {
     const split = this.#sanitized.split(splitGroup);
     const groups = split.filter((group) => group);
     const words = groups.map((original) => {

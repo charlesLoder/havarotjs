@@ -17,7 +17,7 @@ export class Char {
     this.#sequencePosition = this.#findPos();
   }
 
-  #findPos(): number {
+  #findPos() {
     const char = this.text;
     if (Char.#consonants.test(char)) {
       return 0;
@@ -92,7 +92,7 @@ export class Char {
    * // "דָּ"
    * ```
    */
-  get cluster(): Cluster | null {
+  get cluster() {
     return this.#cluster;
   }
 
@@ -105,7 +105,7 @@ export class Char {
    *
    * @param name a character name
    */
-  isCharacterName(name: keyof NameToCharMap): boolean {
+  isCharacterName(name: keyof NameToCharMap) {
     if (!nameToCharMap[name]) {
       throw new Error(`${name} is not a valid value`);
     }
@@ -125,7 +125,7 @@ export class Char {
    * // true
    * ```
    */
-  get isConsonant(): boolean {
+  get isConsonant() {
     return Char.#consonants.test(this.#text);
   }
 
@@ -139,7 +139,7 @@ export class Char {
    * // true
    * ```
    */
-  get isLigature(): boolean {
+  get isLigature() {
     return Char.#ligatures.test(this.#text);
   }
 
@@ -153,7 +153,7 @@ export class Char {
    * // true
    * ```
    */
-  get isDagesh(): boolean {
+  get isDagesh() {
     return Char.#dagesh.test(this.#text);
   }
 
@@ -167,7 +167,7 @@ export class Char {
    * // true
    * ```
    */
-  get isRafe(): boolean {
+  get isRafe() {
     return Char.#rafe.test(this.#text);
   }
 
@@ -181,7 +181,7 @@ export class Char {
    * // true
    * ```
    */
-  get isSheva(): boolean {
+  get isSheva() {
     return Char.#sheva.test(this.#text);
   }
 
@@ -195,7 +195,7 @@ export class Char {
    * // true
    * ```
    */
-  get isVowel(): boolean {
+  get isVowel() {
     return Char.#vowels.test(this.#text);
   }
 
@@ -209,7 +209,7 @@ export class Char {
    * // true
    * ```
    */
-  get isTaamim(): boolean {
+  get isTaamim() {
     return Char.#taamim.test(this.#text);
   }
 
@@ -223,7 +223,7 @@ export class Char {
    * // true
    * ```
    */
-  get isNotHebrew(): boolean {
+  get isNotHebrew() {
     return this.sequencePosition === 10;
   }
 
@@ -264,7 +264,7 @@ export class Char {
    * // 3
    * ```
    */
-  get sequencePosition(): number {
+  get sequencePosition() {
     return this.#sequencePosition;
   }
 
@@ -280,7 +280,7 @@ export class Char {
    * // "א"
    * ```
    */
-  get text(): string {
+  get text() {
     return this.#text;
   }
 }
