@@ -2,6 +2,10 @@
 title: Changelog
 ---
 
+## 2024-11-11 0.24.0
+
+- Add `ketivQere` feature (PR #178)
+
 ## 2024-08-02 0.23.3
 
 - Fix issue with incorrect qamets qatan (PR #174)
