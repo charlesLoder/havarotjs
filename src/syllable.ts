@@ -1,4 +1,3 @@
-import { Char } from "./char";
 import { Cluster } from "./cluster";
 import { Node } from "./node";
 import type { ConsonantName, Flip, TaamimName } from "./utils/charMap";

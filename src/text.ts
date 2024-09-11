@@ -1,6 +1,3 @@
-import { Char } from "./char";
-import { Cluster } from "./cluster";
-import { Syllable } from "./syllable";
 import { holemWaw } from "./utils/holemWaw";
 import { convertsQametsQatan } from "./utils/qametsQatan";
 import { splitGroup, taamim, taamimCaptureGroup } from "./utils/regularExpressions";
