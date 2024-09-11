@@ -1,11 +1,9 @@
-import { Char } from "./char";
 import { Cluster } from "./cluster";
 import { Node } from "./node";
 import type { SyllableVowelName } from "./syllable";
 import { Syllable } from "./syllable";
 import { SylOpts } from "./text";
 import type { ConsonantName, TaamimName } from "./utils/charMap";
-import { hasDivineName, isDivineName } from "./utils/divineName";
 import { clusterSplitGroup, jerusalemTest } from "./utils/regularExpressions";
 import { syllabify } from "./utils/syllabifier";
 
@@ -13,6 +11,8 @@ import { syllabify } from "./utils/syllabifier";
  * A subunit of a {@link Text} consisting of words, which are strings are text separated by spaces or maqqefs.
  */
 export class Word extends Node<Word> {
+  /** A regex for removing anything that is not a character */
+  #nonCharacters = /[^\u{05D0}-\u{05F4}]/gu;
   #text: string;
   #original: string;
   /**
@@ -75,7 +75,19 @@ export class Word extends Node<Word> {
    * ```
    */
   whiteSpaceAfter: string | null;
-  private sylOpts: SylOpts;
+  #sylOpts: SylOpts;
+
+  constructor(text: string, sylOpts: SylOpts, original?: string) {
+    super();
+    this.value = this;
+    this.#text = text;
+    this.#original = original ?? text;
+    const startMatch = text.match(/^\s*/g);
+    const endMatch = text.match(/\s*$/g);
+    this.whiteSpaceBefore = startMatch ? startMatch[0] : null;
+    this.whiteSpaceAfter = endMatch ? endMatch[0] : null;
+    this.#sylOpts = sylOpts;
+  }
 
   /**
    *
@@ -84,7 +96,7 @@ export class Word extends Node<Word> {
    * @remarks
    * Splits a word at each consonant or the punctuation character, Sof Pasuq and Nun Hafukha
    */
-  private makeClusters = (word: string): Cluster[] => {
+  #makeClusters(word: string) {
     const match = word.match(jerusalemTest);
     /**
      * The Masoretic spelling of Jerusalem contains some idiosyncrasies,
@@ -103,18 +115,6 @@ export class Word extends Node<Word> {
       });
     }
     return word.split(clusterSplitGroup).map((group) => new Cluster(group));
-  };
-
-  constructor(text: string, sylOpts: SylOpts, original?: string) {
-    super();
-    this.value = this;
-    this.#text = text;
-    this.#original = original ?? text;
-    const startMatch = text.match(/^\s*/g);
-    const endMatch = text.match(/\s*$/g);
-    this.whiteSpaceBefore = startMatch ? startMatch[0] : null;
-    this.whiteSpaceAfter = endMatch ? endMatch[0] : null;
-    this.sylOpts = sylOpts;
   }
 
   /**
@@ -136,7 +136,7 @@ export class Word extends Node<Word> {
    * //  ]
    * ```
    */
-  get chars(): Char[] {
+  get chars() {
     return this.clusters.map((cluster) => cluster.chars).flat();
   }
 
@@ -157,8 +157,8 @@ export class Word extends Node<Word> {
    * //  ]
    * ```
    */
-  get clusters(): Cluster[] {
-    const clusters = this.makeClusters(this.text);
+  get clusters() {
+    const clusters = this.#makeClusters(this.text);
     const firstCluster = clusters[0];
     const remainder = clusters.slice(1);
     firstCluster.siblings = remainder;
@@ -230,8 +230,8 @@ export class Word extends Node<Word> {
    * // true
    * ```
    */
-  get hasDivineName(): boolean {
-    return hasDivineName(this.text);
+  get hasDivineName() {
+    return /יהוה/.test(this.text.replace(this.#nonCharacters, ""));
   }
 
   /**
@@ -250,7 +250,7 @@ export class Word extends Node<Word> {
    * Note: it only checks according to the character name, not its semantic meaning.
    * E.g. "כֵֽן׃" would be `true` when checking for `"METEG"`, not silluq
    */
-  hasTaamName(name: TaamimName): boolean {
+  hasTaamName(name: TaamimName) {
     return this.syllables.some((syllable) => syllable.hasTaamName(name));
   }
 
@@ -280,7 +280,7 @@ export class Word extends Node<Word> {
    * According to [Syllabification](/guides/syllabification), a sheva is a vowel and serves as the nucleus of a syllable.
    * It returns `true` for "SHEVA" only when the sheva is the vowel (i.e. a vocal sheva or sheva na').
    */
-  hasVowelName(name: SyllableVowelName): boolean {
+  hasVowelName(name: SyllableVowelName) {
     return this.syllables.some((syllable) => syllable.hasVowelName(name));
   }
 
@@ -296,8 +296,8 @@ export class Word extends Node<Word> {
    * // true
    * ```
    */
-  get isDivineName(): boolean {
-    return isDivineName(this.text);
+  get isDivineName() {
+    return this.text.replace(this.#nonCharacters, "") === "יהוה";
   }
 
   /**
@@ -315,7 +315,7 @@ export class Word extends Node<Word> {
    * @remarks
    * If the word contains non-Hebrew characters, it is not considered Hebrew because syllabification is likely not correct.
    */
-  get isNotHebrew(): boolean {
+  get isNotHebrew() {
     return !this.clusters.map((c) => c.isNotHebrew).includes(false);
   }
 
@@ -334,7 +334,7 @@ export class Word extends Node<Word> {
    * @remarks
    * The construct state is indicated by the presence of a maqqef (U+05BE) character
    */
-  get isInConstruct(): boolean {
+  get isInConstruct() {
     // if word has a maqqef, it is in construct
     return this.text.includes("\u05BE");
   }
@@ -369,14 +369,14 @@ export class Word extends Node<Word> {
    * //  ]
    * ```
    */
-  get syllables(): Syllable[] {
+  get syllables() {
     if (/\w/.test(this.text) || this.isDivineName || this.isNotHebrew) {
       const syl = new Syllable(this.clusters);
       syl.word = this;
       return [syl];
     }
 
-    const syllables = syllabify(this.clusters, this.sylOpts, this.isInConstruct);
+    const syllables = syllabify(this.clusters, this.#sylOpts, this.isInConstruct);
     syllables.forEach((syl) => (syl.word = this));
 
     return syllables;
@@ -431,7 +431,7 @@ export class Word extends Node<Word> {
    * //  ]
    * ```
    */
-  get text(): string {
+  get text() {
     return this.#text.trim();
   }
 

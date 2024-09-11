@@ -1,4 +1,3 @@
-import { Char } from "./char";
 import { Cluster } from "./cluster";
 import { Node } from "./node";
 import type { ConsonantName, Flip, TaamimName } from "./utils/charMap";
@@ -70,7 +69,7 @@ export class Syllable extends Node<Syllable> {
     this.#isFinal = isFinal;
   }
 
-  private isCharKeyOfSyllableVowelCharToNameMap(char: string): char is keyof SyllableVowelCharToNameMap {
+  #isCharKeyOfSyllableVowelCharToNameMap(char: string): char is keyof SyllableVowelCharToNameMap {
     return char in sylVowelCharToNameMap;
   }
 
@@ -91,7 +90,7 @@ export class Syllable extends Node<Syllable> {
    * //  ]
    * ```
    */
-  get chars(): Char[] {
+  get chars() {
     return this.clusters.map((cluster) => cluster.chars).flat();
   }
 
@@ -110,7 +109,7 @@ export class Syllable extends Node<Syllable> {
    * //  ]
    * ```
    */
-  get clusters(): Cluster[] {
+  get clusters() {
     return this.#clusters;
   }
 
@@ -126,7 +125,7 @@ export class Syllable extends Node<Syllable> {
    * // "ם"
    * ```
    */
-  get coda(): string {
+  get coda() {
     return this.structure()[2];
   }
 
@@ -144,7 +143,7 @@ export class Syllable extends Node<Syllable> {
    * // ""
    * ```
    */
-  get codaWithGemination(): string {
+  get codaWithGemination() {
     return this.structure(true)[2];
   }
 
@@ -207,7 +206,7 @@ export class Syllable extends Node<Syllable> {
    * @remarks
    * This checks if the syllable contains the given consonant name, even if the character is not a phonemic consonant.
    */
-  hasConsonantName(name: ConsonantName): boolean {
+  hasConsonantName(name: ConsonantName) {
     if (!consonantNameToCharMap[name]) {
       throw new Error(`${name} is not a valid value`);
     }
@@ -242,7 +241,7 @@ export class Syllable extends Node<Syllable> {
    * Unlike `Cluster`, a `Syllable` is concerned with linguistics, so a sheva **is** a vowel character.
    * It returns `true` for "SHEVA" only when the sheva is the vowel (i.e. a vocal sheva or sheva na').
    */
-  hasVowelName(name: SyllableVowelName): boolean {
+  hasVowelName(name: SyllableVowelName) {
     if (!sylVowelNameToCharMap[name]) {
       throw new Error(`${name} is not a valid value`);
     }
@@ -266,7 +265,7 @@ export class Syllable extends Node<Syllable> {
    * Note: it only checks according to the character name, not its semantic meaning.
    * E.g. "כֵֽן׃" would be `true` when checking for `"METEG"`, not silluq
    */
-  hasTaamName(name: TaamimName): boolean {
+  hasTaamName(name: TaamimName) {
     if (!taamimNameToCharMap[name]) {
       throw new Error(`${name} is not a valid value`);
     }
@@ -290,7 +289,7 @@ export class Syllable extends Node<Syllable> {
    * @remarks
    * An accented syllable receives stress, and is typically indicated by the presence of a taam character
    */
-  get isAccented(): boolean {
+  get isAccented() {
     return this.#isAccented;
   }
 
@@ -321,7 +320,7 @@ export class Syllable extends Node<Syllable> {
    * @remarks
    * A closed syllable in Hebrew is a CVC or CVCC type, a mater letter does not close a syllable
    */
-  get isClosed(): boolean {
+  get isClosed() {
     return this.#isClosed;
   }
 
@@ -349,7 +348,7 @@ export class Syllable extends Node<Syllable> {
    * // true
    * ```
    */
-  get isFinal(): boolean {
+  get isFinal() {
     return this.#isFinal;
   }
 
@@ -376,7 +375,7 @@ export class Syllable extends Node<Syllable> {
    * @remarks
    * The nucleus is the vowel of the syllable - present in every syllable and containing its {@link vowel} (with any materes lecticonis) or a shureq.
    */
-  get nucleus(): string {
+  get nucleus() {
     return this.structure()[1];
   }
 
@@ -394,7 +393,7 @@ export class Syllable extends Node<Syllable> {
    * @remarks
    * The onset is any initial consonant of the syllable - present in every syllable except those containing a except word-initial shureq or a furtive patah.
    */
-  get onset(): string {
+  get onset() {
     return this.structure()[0];
   }
 
@@ -581,7 +580,7 @@ export class Syllable extends Node<Syllable> {
    * @remarks
    * This returns a string that has been built up from the .text of its constituent Clusters.
    */
-  get text(): string {
+  get text() {
     return this.clusters.map((c) => c.text).join("");
   }
 
@@ -604,7 +603,7 @@ export class Syllable extends Node<Syllable> {
    * According to [Syllabification](/guides/syllabification), a sheva is a vowel and serves as the nucleus of a syllable.
    * Unlike `Cluster`, a `Syllable` is concerned with linguistics, so a sheva **is** a vowel character.
    */
-  get vowelNames(): SyllableVowelName[] {
+  get vowelNames() {
     if (this.#vowelNamesCache) {
       return this.#vowelNamesCache;
     }
@@ -640,7 +639,7 @@ export class Syllable extends Node<Syllable> {
    * According to [Syllabification](/guides/syllabification), a sheva is a vowel and serves as the nucleus of a syllable.
    * Unlike `Cluster`, a `Syllable` is concerned with linguistics, so a sheva **is** a vowel character
    */
-  get vowels(): SyllableVowel[] {
+  get vowels() {
     if (this.#vowelsCache) {
       return this.#vowelsCache;
     }
@@ -653,7 +652,7 @@ export class Syllable extends Node<Syllable> {
       .replace(shureq, shureqPresentation)
       .split("")
       .reduce((a, v) => {
-        if (this.isCharKeyOfSyllableVowelCharToNameMap(v)) {
+        if (this.#isCharKeyOfSyllableVowelCharToNameMap(v)) {
           a.push(v);
         }
         if (v === shureqPresentation) {
@@ -679,7 +678,7 @@ export class Syllable extends Node<Syllable> {
    * // }
    * ```
    */
-  get word(): Word | null {
+  get word() {
     return this.#word;
   }
 
