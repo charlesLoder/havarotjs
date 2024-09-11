@@ -378,7 +378,7 @@ export class Text {
     this.#original = this.#options.allowNoNiqqud ? text : this.#validateInput(text);
   }
 
-  #applyKetivQere = (text: string, kq: KetivQere) => {
+  #applyKetivQere(text: string, kq: KetivQere) {
     if (kq.input instanceof RegExp) {
       const match = text.match(kq.input);
       if (match) {
@@ -391,13 +391,13 @@ export class Text {
     }
 
     return null;
-  };
+  }
 
-  #captureTaamim = (text: string): IterableIterator<RegExpMatchArray> => {
+  #captureTaamim(text: string): IterableIterator<RegExpMatchArray> {
     return text.matchAll(Text.#taamimCaptureGroup);
-  };
+  }
 
-  #processKetivQeres = (text: string) => {
+  #processKetivQeres(text: string) {
     if (this.#ketivQereCache[text]) {
       return this.#ketivQereCache[text];
     }
@@ -427,7 +427,7 @@ export class Text {
     }
 
     return text;
-  };
+  }
 
   #validateInput(text: string) {
     const niqqud = /[\u{05B0}-\u{05BC}\u{05C7}]/u;
@@ -512,9 +512,9 @@ export class Text {
     return options;
   }
 
-  #removeTaamim = (text: string) => {
+  #removeTaamim(text: string) {
     return text.replace(taamim, "");
-  };
+  }
 
   #setOptions(options: SylOpts) {
     const validOpts = this.#validateOptions(options);
