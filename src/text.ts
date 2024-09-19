@@ -406,12 +406,18 @@ export class Text {
     }
 
     for (const ketivQere of ketivQeres) {
-      const textWithoutTaamim = ketivQere.ignoreTaamim ? this.#removeTaamim(text) : text;
+      // capture white space because it is removed in textWithoutTaamim for easier checking
+      const startMatch = text.match(/^\s*/g) ?? "";
+      const endMatch = text.match(/\s*$/g);
+      const whiteSpaceBefore = startMatch ? startMatch[0] : null;
+      const whiteSpaceAfter = endMatch ? endMatch[0] : null;
+
+      const textWithoutTaamim = (ketivQere.ignoreTaamim ? this.#removeTaamim(text) : text).trim();
 
       const appliedKetivQere = this.#applyKetivQere(textWithoutTaamim, ketivQere);
 
       if (!appliedKetivQere) {
-        return text;
+        return whiteSpaceBefore + text + whiteSpaceAfter;
       }
 
       const taamimChars = ketivQere.captureTaamim ? this.#captureTaamim(text) : null;
@@ -420,7 +426,7 @@ export class Text {
 
       this.#ketivQereCache[text] = newText;
 
-      return newText;
+      return whiteSpaceBefore + newText + whiteSpaceAfter;
     }
 
     return text;
