@@ -34,6 +34,14 @@ export interface KetivQere {
    * @defaultValue false
    */
   captureTaamim?: boolean;
+  /**
+   * Optional syntax for the {@link input}
+   */
+  ketiv?: KetivQere["input"];
+  /**
+   * Optional syntax for the {@link output}
+   */
+  qere?: KetivQere["output"];
 }
 
 /**
@@ -120,7 +128,7 @@ export interface SylOpts {
    */
   holemHaser?: "update" | "preserve" | "remove";
   /**
-   * An array of KetivQere objects
+   * An array of KetivQere objects for mimicing the Ketiv and Qere system found in manuscripts and texts
    *
    * @defaultValue `undefined`
    *
@@ -132,6 +140,21 @@ export interface SylOpts {
    *     {
    *       input: "הִוא",
    *       output: "הִיא"
+   *     }
+   *   ]
+   * });
+   * console.log(text.words[0].text);
+   * // הִיא
+   * ```
+   *
+   * @example
+   * Using optional syntax
+   * ```ts
+   * const text = new Text("הִ֑וא", {
+   *  ketivQeres: [
+   *     {
+   *       ketiv: "הִוא",
+   *       qere: "הִיא"
    *     }
    *   ]
    * });
@@ -376,15 +399,17 @@ export class Text {
   }
 
   #applyKetivQere(text: string, kq: KetivQere) {
-    if (kq.input instanceof RegExp) {
+    const input = kq.input ?? kq.ketiv;
+    const output = kq.output ?? kq.qere;
+    if (input instanceof RegExp) {
       const match = text.match(kq.input);
       if (match) {
-        return typeof kq.output === "string" ? kq.output : kq.output(text, kq.input);
+        return typeof output === "string" ? output : output(text, input);
       }
     }
 
-    if (kq.input === text) {
-      return typeof kq.output === "string" ? kq.output : kq.output(text, kq.input);
+    if (input === text) {
+      return typeof output === "string" ? output : output(text, input);
     }
 
     return null;
@@ -453,7 +478,12 @@ export class Text {
 
     // validate the shape of the ketivQeres
     for (const [index, ketivQere] of ketivQeres.entries()) {
-      const { input, output, ignoreTaamim, captureTaamim } = ketivQere;
+      let { input, output } = ketivQere;
+      const { ketiv, qere, ignoreTaamim, captureTaamim } = ketivQere;
+
+      if (!input && ketiv) {
+        input = ketiv;
+      }
 
       if (input === undefined) {
         throw new Error(`The ketivQere at index ${index} must have an input`);
@@ -461,6 +491,10 @@ export class Text {
 
       if (!(input instanceof RegExp) && typeof input !== "string") {
         throw new Error(`The input property of the ketivQere at index ${index} must be a string or RegExp`);
+      }
+
+      if (!output && qere) {
+        output = qere;
       }
 
       if (output === undefined) {

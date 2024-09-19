@@ -116,6 +116,7 @@ describe.each`
   ${"3fs qere perpetuum (captureTaamim true, ignoreTaamim false, no match)"} | ${"הִוא"}         | ${{ input: "הִ֑וא", output: "הִיא", captureTaamim: true, ignoreTaamim: false }}       | ${"הִוא"}         | ${"הִוא"}
   ${"3fs qere perpetuum (captureTaamim true, ignoreTaamim false, match)"}    | ${"הִ֑וא"}        | ${{ input: "הִ֑וא", output: "הִיא", captureTaamim: true, ignoreTaamim: false }}       | ${"הִ֑וא"}        | ${"הִ֑יא"}
   ${"quiesced alef using input as regex and output as callback"}             | ${"וַיָּבִיאּוּ"} | ${{ input: /אּ/, output: (word: string, input: RegExp) => word.replace(input, "א") }} | ${"וַיָּבִיאּוּ"} | ${"וַיָּבִיאוּ"}
+  ${"3fs qere perpetuum (using optional syntax)"}                            | ${"הִ֑וא"}        | ${{ ketiv: "הִוא", qere: "הִיא" }}                                                    | ${"הִ֑וא"}        | ${"הִיא"}
 `("ketivQeres", ({ description, input, options, original, output }) => {
   test(description, () => {
     const text = new Text(input, { ketivQeres: [options] });
