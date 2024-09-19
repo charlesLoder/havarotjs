@@ -125,6 +125,15 @@ describe.each`
   });
 });
 
+test("ketivQeres: whitespace preserved", () => {
+  const text = new Text("הִ֛וא נָֽתְנָה־לִּ֥י׃", { ketivQeres: [{ input: "הִוא", output: "הִיא" }] });
+  const word = text.words[0];
+  expect(word.original).toEqual("הִ֛וא");
+  expect(word.text).toEqual("הִיא");
+  expect(word.whiteSpaceAfter).toEqual(" ");
+  expect(word.whiteSpaceBefore).toEqual("");
+});
+
 describe.each`
   description                                                       | word           | syllables                | isClosedArr              | longVowelsOpt | qametsQatanOpt
   ${"regular qamets"}                                               | ${"יָדְךָ"}    | ${["יָ", "דְ", "ךָ"]}    | ${[false, false, false]} | ${true}       | ${true}
