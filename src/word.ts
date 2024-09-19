@@ -351,7 +351,7 @@ export class Word extends Node<Word> {
    * The original string passed to the constructor still undergoes the normalization and sequence process, just not checked against any KetivQeres.
    */
   get original() {
-    return this.#original;
+    return this.#original.trim();
   }
 
   /**
