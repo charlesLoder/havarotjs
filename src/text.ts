@@ -478,7 +478,8 @@ export class Text {
 
     // validate the shape of the ketivQeres
     for (const [index, ketivQere] of ketivQeres.entries()) {
-      let { input, ketiv, output, qere, ignoreTaamim, captureTaamim } = ketivQere;
+      let { input, output } = ketivQere;
+      const { ketiv, qere, ignoreTaamim, captureTaamim } = ketivQere;
 
       if (!input && ketiv) {
         input = ketiv;
