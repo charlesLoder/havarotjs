@@ -2,7 +2,12 @@
 title: Changelog
 ---
 
-## 2024-11-11 0.24.0
+## 2024-09-19 0.24.1
+
+- Fix whitespace issues around `ketivQere` feature (PR #182)
+- Adds optional syntac for `ketivQere` feature (PR #183)
+
+## 2024-09-11 0.24.0
 
 - Add `ketivQere` feature (PR #178)
 
