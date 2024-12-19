@@ -1,6 +1,9 @@
 import starlight from "@astrojs/starlight";
 import { defineConfig } from "astro/config";
 import starlightTypeDoc, { typeDocSidebarGroup } from "starlight-typedoc";
+import { remarkBasePath } from "./prepend_base_path.js";
+
+const basePath = process.env.NODE_ENV === "production" ? "/havarotjs" : "";
 
 // https://astro.build/config
 export default defineConfig({
@@ -10,7 +13,10 @@ export default defineConfig({
   build: {
     assets: "assets"
   },
-  base: process.env.NODE_ENV === "production" ? "havarotjs" : "",
+  base: basePath,
+  markdown: {
+    remarkPlugins: [[remarkBasePath, { base: basePath }]]
+  },
   integrations: [
     starlight({
       title: `havarotjs v${process.env.npm_package_version || ""}`,
@@ -30,11 +36,11 @@ export default defineConfig({
       sidebar: [
         {
           label: "Getting started",
-          link: "/"
+          link: `/`
         },
         {
           label: "Changelog",
-          link: "/changelog"
+          link: `/changelog`
         },
         // Add the generated sidebar group to the sidebar.
         typeDocSidebarGroup,
