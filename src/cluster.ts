@@ -494,7 +494,7 @@ export class Cluster extends Node<Cluster> {
    * @description
    *
    * Returns `true` if `Cluster.hasVowel`, `Cluster.hasSheva`, `Cluster.isShureq`, and `Cluster.next.isShureq` are all `false` and `Cluster.text` contains a:
-   * - `ה` preceded by a qamets, tsere, or segol
+   * - `ה` preceded by a qamets
    * - `ו` preceded by a holem
    * - `י` preceded by a hiriq, tsere, or segol
    *
@@ -510,7 +510,7 @@ export class Cluster extends Node<Cluster> {
       if (!maters.test(text)) {
         return false;
       }
-      if (/ה/.test(text) && /\u{05B8}|\u{05B6}|\u{05B5}/u.test(prevText)) {
+      if (/ה/.test(text) && /\u{05B8}/u.test(prevText)) {
         return true;
       }
       if (/ו/.test(text) && /\u{05B9}/u.test(prevText)) {

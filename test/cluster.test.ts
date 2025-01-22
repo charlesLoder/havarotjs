@@ -1,5 +1,6 @@
-import { Text } from "../src/index";
+import { describe, expect, test } from "vitest";
 import { Cluster } from "../src/cluster";
+import { Text } from "../src/index";
 
 describe.each`
   description       | hebrew              | clusterNum | consonant
@@ -155,7 +156,6 @@ describe.each`
   ${"qamets-he, one syllable"}                                    | ${"בָּה"}          | ${["בָּה"]}                          | ${[false, true]}
   ${"qamets-he, two syllables"}                                   | ${"יָפָה"}         | ${["יָ", "פָה"]}                     | ${[false, false, true]}
   ${"qamets-he follwed by shureq (not mater)"}                    | ${"אֵלִיָּ֨הוּ"}   | ${["אֵ", "לִ", "יָּ֨", "הוּ"]}       | ${[false, false, false, false, false]}
-  ${"segol-he, two syllables"}                                    | ${"יָפֶה"}         | ${["יָ", "פֶה"]}                     | ${[false, false, true]}
   ${"3fs suffix, one syllable"}                                   | ${"בָּהּ"}         | ${["בָּהּ"]}                         | ${[false, false]}
   ${"3ms plural suffix, three syllable"}                          | ${"תֹּורֹתָיו"}    | ${["תֹּו", "רֹ", "תָיו"]}            | ${[false, true, false, false, false, false]}
   ${"quiesced aleph, two syllables"}                              | ${"רִאשׁ֔וֹן"}     | ${["רִא", "שֹׁ֔ון"]}                 | ${[false, false, false, true, false]}

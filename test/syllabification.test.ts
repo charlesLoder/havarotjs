@@ -1,3 +1,4 @@
+import { describe, expect, test } from "vitest";
 import { Text } from "../src/index";
 
 const tests = (description: string, original: string, sylArr: string[], closedArr: boolean[], accentArr: boolean[]) => {

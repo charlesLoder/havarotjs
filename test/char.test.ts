@@ -1,10 +1,11 @@
-import { Text } from "../src/text";
-import { Cluster } from "../src/cluster";
+import { describe, expect, test } from "vitest";
 import { Char } from "../src/char";
+import { Cluster } from "../src/cluster";
+import { Text } from "../src/text";
 
 describe("Char", () => {
   describe("constructor", () => {
-    it("should create a Char instance with the correct text and sequencePosition", () => {
+    test("should create a Char instance with the correct text and sequencePosition", () => {
       const char = new Char("א");
       expect(char.text).toBe("א");
       expect(char.sequencePosition).toBe(0);
@@ -20,7 +21,7 @@ describe("Char", () => {
   });
 
   describe("isCharacterName", () => {
-    it("should return true if the Char instance matches the given character name", () => {
+    test("should return true if the Char instance matches the given character name", () => {
       const aleph = new Char("א");
       expect(aleph.isCharacterName("ALEF")).toBe(true);
       expect(aleph.isCharacterName("BET")).toBe(false);
@@ -46,7 +47,7 @@ describe("Char", () => {
       expect(sofPasuq.isCharacterName("ALEF")).toBe(false);
     });
 
-    it("should throw an error if the given character name is invalid", () => {
+    test("should throw an error if the given character name is invalid", () => {
       const char = new Char("א");
       // @ts-ignore: need to pass an invalid name
       expect(() => char.isCharacterName("INVALID_NAME")).toThrow("INVALID_NAME is not a valid value");
@@ -54,7 +55,7 @@ describe("Char", () => {
   });
 
   describe("characterName", () => {
-    it("should return the correct character name for Hebrew characters", () => {
+    test("should return the correct character name for Hebrew characters", () => {
       const aleph = new Char("א");
       expect(aleph.characterName).toBe("ALEF");
 
@@ -77,14 +78,14 @@ describe("Char", () => {
       expect(sofPasuq.characterName).toBe("SOF_PASUQ");
     });
 
-    it("should return null for non-Hebrew characters", () => {
+    test("should return null for non-Hebrew characters", () => {
       const nonHebrew = new Char("a");
       expect(nonHebrew.characterName).toBeNull();
     });
   });
 
   describe("cluster", () => {
-    it("should allow setting and getting the cluster property", () => {
+    test("should allow setting and getting the cluster property", () => {
       const char = new Char("א");
       const cluster = new Cluster("אָ");
 
@@ -96,7 +97,7 @@ describe("Char", () => {
   });
 
   describe("is* properties", () => {
-    it("should correctly identify character types", () => {
+    test("should correctly identify character types", () => {
       const consonant = new Char("א");
       expect(consonant.isConsonant).toBe(true);
       expect(consonant.isLigature).toBe(false);
@@ -170,14 +171,14 @@ describe("Char", () => {
   });
 
   describe("text", () => {
-    it("should return the correct text", () => {
+    test("should return the correct text", () => {
       const char = new Char("א");
       expect(char.text).toBe("א");
     });
   });
 
   describe("with Hebrew words", () => {
-    it("should handle words from the Hebrew Bible correctly", () => {
+    test("should handle words from the Hebrew Bible correctly", () => {
       const word1 = "וְהָאָ֗רֶץ";
       const chars1 = new Text(word1).chars;
       expect(chars1.map((char) => char.sequencePosition)).toEqual([0, 3, 0, 3, 0, 3, 4, 0, 3, 0]);
