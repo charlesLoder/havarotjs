@@ -128,7 +128,7 @@
     "tsc-alias": "^1.8.8",
     "typedoc": "^0.27.6",
     "typedoc-plugin-markdown": "4.4.1",
-    "typescript": "^5.3.3",
+    "typescript": "^5.7.3",
     "vitest": "^3.0.3"
   }
 }
