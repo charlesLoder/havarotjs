@@ -2,6 +2,10 @@
 title: Changelog
 ---
 
+## 2025-01-21 0.25.0
+
+- Updates `cluster.isMater` so that segol-he and tsere-he are no longer identified as maters (PR #191)
+
 ## 2024-09-19 0.24.1
 
 - Fix whitespace issues around `ketivQere` feature (PR #182)
