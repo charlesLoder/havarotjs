@@ -1,3 +1,4 @@
+import { describe, expect, test } from "vitest";
 import { Cluster } from "../src/cluster";
 import { Text } from "../src/index";
 import { Syllable } from "../src/syllable";

@@ -1,3 +1,4 @@
+import { describe, expect, test } from "vitest";
 import { Text } from "../src/index";
 
 describe("validate options", () => {

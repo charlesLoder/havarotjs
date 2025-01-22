@@ -1,3 +1,4 @@
+import { describe, expect, test } from "vitest";
 import { Text } from "../src/index";
 
 function testIsAccented(hebrew: string, isAccentedArray: boolean[]) {
@@ -127,7 +128,7 @@ describe("Test if a syllable is accented", () => {
             testIsAccented("וַיֹּ֘אמֶר֮", [false, true, false]);
           });
 
-          xtest("zarqa on unaccented syllable", () => {
+          test.skip("zarqa on unaccented syllable", () => {
             // this will never pass
             testIsAccented("וַיֹּאמֶר֮", [false, true, false]);
           });
@@ -138,7 +139,7 @@ describe("Test if a syllable is accented", () => {
             testIsAccented("לָאוֹר֙", [false, true]);
           });
 
-          xtest("pashta on unaccented syllable", () => {
+          test.skip("pashta on unaccented syllable", () => {
             // I'm not sure if this is possible to have in a text
           });
 
@@ -158,7 +159,7 @@ describe("Test if a syllable is accented", () => {
             testIsAccented("אֱלֹהַי֮", [false, false, true]);
           });
 
-          xtest("sinor on unaccented syllable", () => {
+          test.skip("sinor on unaccented syllable", () => {
             // this will never pass
             testIsAccented("פָּנֶיךָ֮", [false, true, false]);
           });
@@ -171,11 +172,11 @@ describe("Test if a syllable is accented", () => {
             testIsAccented("יַ֚עַן ", [true, false]);
           });
 
-          xtest("two yethibs", () => {
+          test.skip("two yethibs", () => {
             // unable to find an example of this
           });
 
-          xtest("yethib on unaccented syllable", () => {
+          test.skip("yethib on unaccented syllable", () => {
             // unable to find an example of this
           });
         });
@@ -185,7 +186,7 @@ describe("Test if a syllable is accented", () => {
             testIsAccented("כִּ֠י", [true]);
           });
 
-          xtest("great telisha on unaccented syllable", () => {
+          test.skip("great telisha on unaccented syllable", () => {
             // this will never pass
             testIsAccented("הָ֠עָם", [false, true]);
           });
@@ -213,7 +214,7 @@ describe("Test if a syllable is accented", () => {
           });
 
           // this will incorrectly accent the final syllable
-          xtest("dechi on accented syllable", () => {
+          test.skip("dechi on accented syllable", () => {
             testIsAccented("לַ֭יְלָה", [false, true]);
           });
         });
@@ -234,7 +235,7 @@ describe("Test if a syllable is accented", () => {
             testIsAccented("וַיִּבְכּוּ֩", [false, false, true]);
           });
 
-          xtest("little telisha on unaccented syllable", () => {
+          test.skip("little telisha on unaccented syllable", () => {
             // this will never pass
             testIsAccented("לְמַעַן֩", [false, true, false]);
           });
