@@ -39,7 +39,7 @@ const snippets = [
   "מָתְנ",
   "סָלְתּ",
   "עָזּ",
-  "עָמְרִי",
+  "עָמְר",
   "עָנְי",
   "עָפְנִי",
   "עָפְר",
@@ -103,6 +103,7 @@ export const convertsQametsQatan = (word: string): string => {
   if (!qametsReg.test(word) || qametsQatReg.test(word)) {
     return word;
   }
+
   // check for hatef qamets followed by qamets pattern
   if (hatefQamRef.test(word)) {
     const hatefPos = word.indexOf("\u{05B3}");
@@ -111,8 +112,10 @@ export const convertsQametsQatan = (word: string): string => {
       return word.substring(0, qamPos) + "\u{05C7}" + word.substring(qamPos + 1);
     }
   }
+
   const [noTaamim, charPos] = removeTaamim(word);
-  // check if in verbal list (more frequent)
+
+  // whole words will be more frequent so check first
   for (const wholeWord of wholeWordsRegx) {
     const regEx = new RegExp(wholeWord);
     const match = noTaamim.match(regEx);
@@ -124,7 +127,7 @@ export const convertsQametsQatan = (word: string): string => {
       return word.substring(0, lastQam) + "\u{05C7}" + word.substring(lastQam + 1);
     }
   }
-  // check if in nominal list
+
   for (const snippet of snippetsRegx) {
     const regEx = new RegExp(snippet);
     const match = noTaamim.match(regEx);
