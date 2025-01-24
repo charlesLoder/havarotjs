@@ -1,6 +1,6 @@
 {
   "name": "havarotjs",
-  "version": "0.25.0",
+  "version": "0.25.1",
   "description": "A Typescript package for syllabic data about Hebrew text",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
