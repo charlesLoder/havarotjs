@@ -2,6 +2,10 @@
 title: Changelog
 ---
 
+## 2025-01-23 0.25.1
+
+- Fix עָמְרִֽי with a meteg/silluq failing (PR #193)
+
 ## 2025-01-21 0.25.0
 
 - Updates `cluster.isMater` so that segol-he and tsere-he are no longer identified as maters (PR #191)
