@@ -84,7 +84,7 @@
     "postbuild": "esm2cjs --in dist/esm --out dist/cjs -l error",
     "test": "vitest --watch=false",
     "format": "prettier --config .config/.prettierrc.json --write 'src/**/*.ts' 'test/**/*.ts'",
-    "format-check": "prettier --list-different 'src/**/*.ts' 'test/**/*.ts'",
+    "format-check": "prettier --config .config/.prettierrc.json --list-different 'src/**/*.ts' 'test/**/*.ts'",
     "lint": "eslint . --ext .ts",
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
