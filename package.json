@@ -83,7 +83,7 @@
     "watch:esm2cjs": "chokidar \"dist/esm/**/*.js\" -c \"esm2cjs --in dist/esm --out dist/cjs -l error\"",
     "postbuild": "esm2cjs --in dist/esm --out dist/cjs -l error",
     "test": "vitest --watch=false",
-    "format": "prettier --write 'src/**/*.ts' 'test/**/*.ts'",
+    "format": "prettier --config .config/.prettierrc.json --write 'src/**/*.ts' 'test/**/*.ts'",
     "format-check": "prettier --list-different 'src/**/*.ts' 'test/**/*.ts'",
     "lint": "eslint . --ext .ts",
     "prepare": "npm run build",
