@@ -7,7 +7,6 @@ import { Word } from "./word";
 
 const sylVowelCharToNameMap = {
   ...vowelCharToNameMap,
-  /* eslint-disable  @typescript-eslint/naming-convention */
   "\u{05B0}": "SHEVA",
   "\u{05D5}\u{05BC}": "SHUREQ"
 } as const;
@@ -20,7 +19,6 @@ export type SyllableVowelName = keyof SyllableVowelNameToCharMap;
 
 const sylVowelNameToCharMap = {
   ...vowelNameToCharMap,
-  /* eslint-disable  @typescript-eslint/naming-convention */
   SHEVA: "\u{05B0}",
   SHUREQ: "\u{05D5}\u{05BC}"
 } as const;
@@ -431,8 +429,6 @@ export class Syllable extends Node<Syllable> {
 
     const heClusters = this.clusters.filter((c) => !c.isNotHebrew);
     if (heClusters.length === 0) {
-      // eslint complains about shadowing, but I think it makes sense here
-      /* eslint-disable-next-line @typescript-eslint/no-shadow */
       const structure: [string, string, string] = ["", "", ""];
       this.#cachedStructure = structure;
       this.#cachedStructureWithGemination = structure;
@@ -443,8 +439,6 @@ export class Syllable extends Node<Syllable> {
     // onset, its nucleus is the shureq, and its coda is any remaining clusters
     const first = heClusters[0];
     if (first.isShureq) {
-      // eslint complains about shadowing, but I think it makes sense here
-      /* eslint-disable-next-line @typescript-eslint/no-shadow */
       const structure: [string, string, string] = [
         "",
         first.text,
@@ -464,8 +458,6 @@ export class Syllable extends Node<Syllable> {
     if (this.isFinal && !this.isClosed) {
       const matchFurtive = this.text.match(/(\u{05D7}|\u{05E2}|\u{05D4}\u{05BC})(\u{05B7})(\u{05C3})?$/mu);
       if (matchFurtive) {
-        // eslint complains about shadowing, but I think it makes sense here
-        /* eslint-disable-next-line @typescript-eslint/no-shadow */
         const structure: [string, string, string] = ["", matchFurtive[2], matchFurtive[1] + (matchFurtive[3] || "")];
         this.#cachedStructure = structure;
         this.#cachedStructureWithGemination = structure;

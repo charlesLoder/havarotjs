@@ -49,7 +49,7 @@ describe("Char", () => {
 
     test("should throw an error if the given character name is invalid", () => {
       const char = new Char("א");
-      // @ts-ignore: need to pass an invalid name
+      // @ts-expect-error: need to pass an invalid name
       expect(() => char.isCharacterName("INVALID_NAME")).toThrow("INVALID_NAME is not a valid value");
     });
   });

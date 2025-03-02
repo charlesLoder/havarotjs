@@ -1,7 +1,3 @@
-/* eslint-disable  sort-keys  */
-/* eslint-disable  @typescript-eslint/naming-convention */
-// it is better to have they keys sorted by unicode position rather then name
-
 // ------
 // UTILITY
 // ------

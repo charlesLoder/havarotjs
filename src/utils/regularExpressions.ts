@@ -2,7 +2,7 @@
  * A positive lookahead expression to split a word into clusters
  */
 export const clusterSplitGroup =
-  /(?=[\u{05BE}\u{05C3}\u{05C6}\u{05D0}-\u{05F2}\u{2000}-\u{206F}\u{2E00}-\u{2E7F}'!"#$%&()*+,-.\/:;<=>?@\[\]^_`\{|\}~])/u;
+  /(?=[\u{05BE}\u{05C3}\u{05C6}\u{05D0}-\u{05F2}\u{2000}-\u{206F}\u{2E00}-\u{2E7F}'!"#$%&()*+,-./:;<=>?@[\]^_`{|}~])/u;
 
 /**
  * A positive lookahead expression to split a word into clusters

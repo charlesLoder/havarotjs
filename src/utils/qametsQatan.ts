@@ -135,7 +135,7 @@ export const convertsQametsQatan = (word: string): string => {
     if (!match) {
       continue;
     } else {
-      const start = charPos[match.index!]; // eslint-disable-line
+      const start = charPos[match.index!];
       const end = charPos[match[0].length] + start;
       const matched = word.substring(start, end);
       const withQQatan = matched.split(qametsReg).join("\u{05C7}");
