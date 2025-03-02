@@ -85,7 +85,7 @@
     "test": "vitest --watch=false",
     "format": "prettier --config .config/.prettierrc.json --write 'src/**/*.ts' 'test/**/*.ts'",
     "format-check": "prettier --config .config/.prettierrc.json --list-different 'src/**/*.ts' 'test/**/*.ts'",
-    "lint": "eslint . --ext .ts",
+    "lint": "eslint .",
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "./changelog.sh && npm run format && npm run lint && npm test",
@@ -114,9 +114,12 @@
   "devDependencies": {
     "@alcalzone/esm2cjs": "^1.1.2",
     "@astrojs/starlight": "^0.31.1",
+    "@eslint/js": "^9.21.0",
     "astro": "^5.1.8",
     "chokidar-cli": "^3.0.0",
     "concurrently": "^8.2.2",
+    "eslint": "^9.21.0",
+    "globals": "^16.0.0",
     "npm-check-updates": "^16.14.15",
     "prettier": "^3.2.5",
     "starlight-typedoc": "^0.18.0",
@@ -124,6 +127,7 @@
     "typedoc": "^0.27.6",
     "typedoc-plugin-markdown": "4.4.1",
     "typescript": "^5.7.3",
+    "typescript-eslint": "^8.25.0",
     "vitest": "^3.0.3"
   }
 }
