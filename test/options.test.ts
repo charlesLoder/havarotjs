@@ -5,8 +5,7 @@ describe("validate options", () => {
   test("throw error when passed incorrect prop", () => {
     // TypeScript throws error:
     // "Object literal may only specify known properties, and 'foo' does not exist in type 'SylOpts'.ts(2345)"
-    // but we ignore in order to test validation
-    // @ts-ignore
+    // @ts-expect-error: ignore in order to test validation
     expect(() => new Text("וּלְמַזֵּר", { foo: true })).toThrow();
   });
 
@@ -24,32 +23,32 @@ describe("validate options", () => {
 
   describe("no error when holemHaser passed valid option", () => {
     test.each(["update", "preserve", "remove"])("%s", (key) => {
-      //@ts-ignore
+      //@ts-expect-error: the type of "string" is not assignable to the props union type
       expect(() => new Text("וּלְמַזֵּר", { holemHaser: key })).not.toThrow();
     });
   });
 
   describe("validate ketivQeres", () => {
     test("error when passed incorrect input", () => {
-      // @ts-ignore
+      // @ts-expect-error: ignore in order to test validation
       expect(() => new Text("וּלְמַזֵּר", { ketivQeres: [{ input: false, output: "bar" }] })).toThrow();
     });
 
     test("error when passed incorrect outpout", () => {
-      // @ts-ignore
+      // @ts-expect-error: ignore in order to test validation
       expect(() => new Text("וּלְמַזֵּר", { ketivQeres: [{ input: "foo", output: false }] })).toThrow();
     });
 
     test("error when passed incorrect ignoreTaamim", () => {
       expect(
-        // @ts-ignore
+        // @ts-expect-error: ignore in order to test validation
         () => new Text("וּלְמַזֵּר", { ketivQeres: [{ input: "foo", output: "bar", ignoreTaamim: "bob" }] })
       ).toThrow();
     });
 
     test("error when passed incorrect captureTaamim", () => {
       expect(
-        // @ts-ignore
+        // @ts-expect-error: ignore in order to test validation
         () => new Text("וּלְמַזֵּר", { ketivQeres: [{ input: "foo", output: "bar", captureTaamim: "bob" }] })
       ).toThrow();
     });

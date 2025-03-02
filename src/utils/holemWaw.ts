@@ -11,7 +11,7 @@ const findMatches = (word: string, regx: RegExp, cb: (w: string, s: number, e: n
   }
 
   for (const match of matches) {
-    const start = charPos[match.index!]; // eslint-disable-line
+    const start = charPos[match.index!];
     const end = charPos[match[0].length] + start;
     word = cb(word, start, end);
   }
