@@ -23,7 +23,7 @@ export default defineConfig({
       plugins: [
         starlightTypeDoc({
           entryPoints: ["./src/index.ts"],
-          tsconfig: "./tsconfig.json",
+          tsconfig: ".config/tsconfig.json",
           typeDoc: {
             expandObjects: true,
             parametersFormat: "table"
