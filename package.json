@@ -85,7 +85,7 @@
     "test": "vitest --watch=false",
     "format": "prettier --config .config/.prettierrc.json --write 'src/**/*.ts' 'test/**/*.ts'",
     "format-check": "prettier --config .config/.prettierrc.json --list-different 'src/**/*.ts' 'test/**/*.ts'",
-    "lint": "eslint .",
+    "lint": "eslint --config .config/eslint.config.mjs .",
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "./changelog.sh && npm run format && npm run lint && npm test",
