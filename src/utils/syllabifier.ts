@@ -7,7 +7,7 @@ type Syl = Cluster[];
 type Mixed = (Syllable | Cluster)[];
 
 /**
- * @description creates a new Syllable, pushes to results[], and resets syl[]
+ * Creates a new syllable from the `syl`, pushes it to `results` and returns an empty array
  */
 const createNewSyllable = (result: Mixed, syl: Syl, isClosed?: boolean): Syl => {
   isClosed = isClosed || false;
@@ -17,17 +17,18 @@ const createNewSyllable = (result: Mixed, syl: Syl, isClosed?: boolean): Syl => 
 };
 
 /**
- * @description determines the Cluster[] that will become the final Syllable
+ * Group clusters for the final syllable
  *
- * @param arr an array of Clusters to be grouped
- * @param strict where to implement strict mode
- * @param vowelsRgx a regex for the set of Hebrew vowels excluding sheva
+ * @remarks
+ *
+ * Grouping the final first helps to avoid issues with final kafs/tavs
  */
-const groupFinal = (arr: Cluster[], vowelsRgx: RegExp = vowels): Mixed => {
-  // grouping the final first helps to avoid issues with final kafs/tavs
+const groupFinal = (arr: Cluster[]): Mixed => {
   const len = arr.length;
   let i = 0;
-  const syl: Syl = [];
+  /** temporary array to collect clusters for the current syllable */
+  let syl: Syl = [];
+  /** collects the end result */
   let result: Mixed = [];
   let vowelPresent = false;
 
@@ -81,7 +82,7 @@ const groupFinal = (arr: Cluster[], vowelsRgx: RegExp = vowels): Mixed => {
   }
 
   const finalChar = finalCluster.chars.filter((c) => c.sequencePosition !== 4).at(-1)?.text || "";
-  const hasFinalVowel = vowelsRgx.test(finalChar);
+  const hasFinalVowel = vowels.test(finalChar);
   const isClosed =
     !finalCluster.isShureq &&
     !finalCluster.isMater &&
@@ -104,10 +105,14 @@ const groupFinal = (arr: Cluster[], vowelsRgx: RegExp = vowels): Mixed => {
  * @description groups shevas either by themselves or with preceding short vowel
  */
 const groupShevas = (arr: Mixed, options: SylOpts): Mixed => {
-  let shevaPresent = false;
-  let syl: Syl = [];
-  const result: Mixed = [];
   const len = arr.length;
+  /** temporary array to collect clusters for the current syllable */
+  let syl: Syl = [];
+  /** collects the end result */
+  const result: Mixed = [];
+  /** flag indicating if a sheva is present in the `syl` */
+  let shevaPresent = false;
+  /** creates a new syllable from the `syl`, pushes it to `results` and returns an empty array */
   const shevaNewSyllable = createNewSyllable.bind(groupShevas, result);
 
   for (let index = 0; index < len; index++) {
@@ -244,8 +249,11 @@ const groupShevas = (arr: Mixed, options: SylOpts): Mixed => {
  */
 const groupMaters = (arr: Mixed, strict: boolean = true): Mixed => {
   const len = arr.length;
+  /** temporary array to collect clusters for the current syllable */
   let syl: Syl = [];
+  /** collects the end result */
   const result: Mixed = [];
+  /** creates a new syllable from the `syl`, pushes it to `results` and returns an empty array */
   const materNewSyllable = createNewSyllable.bind(groupMaters, result);
 
   for (let index = 0; index < len; index++) {
@@ -312,8 +320,11 @@ const groupMaters = (arr: Mixed, strict: boolean = true): Mixed => {
  */
 const groupShureqs = (arr: Mixed, strict: boolean = true): Mixed => {
   const len = arr.length;
+  /** temporary array to collect clusters for the current syllable */
   let syl: Syl = [];
+  /** collects the end result */
   const result: Mixed = [];
+  /** creates a new syllable from the `syl`, pushes it to `results` and returns an empty array */
   const shureqNewSyllable = createNewSyllable.bind(groupShureqs, result);
 
   for (let index = 0; index < len; index++) {
