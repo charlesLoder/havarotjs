@@ -152,7 +152,9 @@ const groupShevas = (arr: Mixed, options: SylOpts): Mixed => {
       continue;
     }
 
-    if (shevaPresent && cluster.hasShortVowel) {
+    // the occurrence of a half-vowel is a non-standard spelling
+    // but it does occur in some texts
+    if (shevaPresent && (cluster.hasShortVowel || cluster.hasHalfVowel)) {
       if (options.shevaAfterMeteg && cluster.hasMeteg) {
         syl = shevaNewSyllable(syl);
         syl.unshift(cluster);
