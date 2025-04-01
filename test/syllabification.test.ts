@@ -47,6 +47,7 @@ describe.each`
   ${"single syllable, final he"}                                       | ${"פֹּ֖ה"}      | ${["פֹּ֖ה"]}              | ${[false]}        | ${[true]}
   ${"with single pashta"}                                              | ${"לָאוֹר֙"}    | ${["לָ", "אֹור֙"]}        | ${[false, true]}  | ${[false, true]}
   ${"with pashta and qadma"}                                           | ${"תֹ֨הוּ֙"}    | ${["תֹ֨", "הוּ֙"]}        | ${[false, false]} | ${[true, false]}
+  ${"non-standard hataf vowel as nuclues"}                             | ${"אֳמְנָ֫ם"}   | ${["אֳמְ", "נָ֫ם"]}       | ${[true, true]}   | ${[false, true]}
 `("2 Syllables:", ({ description, original, sylArr, closedArr, accentArr }) => {
   tests(description, original, sylArr, closedArr, accentArr);
 });
