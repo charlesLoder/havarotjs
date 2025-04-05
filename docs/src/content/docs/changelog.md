@@ -2,6 +2,10 @@
 title: Changelog
 ---
 
+## 2025-04-05 0.25.2
+
+- Fix #197 by treating the non-standard spelling of half-vowels before a sheva as full vowel (PR #200)
+
 ## 2025-01-23 0.25.1
 
 - Fix עָמְרִֽי with a meteg/silluq failing (PR #193)
