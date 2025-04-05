@@ -92,7 +92,7 @@
     "postversion": "git push && git push --tags",
     "docs": "NODE_ENV=production astro build --config ./docs/astro.config.mjs",
     "docs:dev": "astro dev --config ./docs/astro.config.mjs",
-    "update": " npm-check-updates '/^(?!typedoc).*$/' -u"
+    "update": " npm-check-updates -u"
   },
   "files": [
     "dist/**/*"
@@ -112,22 +112,22 @@
   "author": "Charles Loder",
   "license": "MIT",
   "devDependencies": {
-    "@alcalzone/esm2cjs": "^1.1.2",
-    "@astrojs/starlight": "^0.31.1",
-    "@eslint/js": "^9.21.0",
-    "astro": "^5.1.8",
+    "@alcalzone/esm2cjs": "^1.4.1",
+    "@astrojs/starlight": "^0.32.5",
+    "@eslint/js": "^9.24.0",
+    "astro": "^5.6.1",
     "chokidar-cli": "^3.0.0",
-    "concurrently": "^8.2.2",
-    "eslint": "^9.21.0",
+    "concurrently": "^9.1.2",
+    "eslint": "^9.24.0",
     "globals": "^16.0.0",
-    "npm-check-updates": "^16.14.15",
-    "prettier": "^3.2.5",
-    "starlight-typedoc": "^0.18.0",
-    "tsc-alias": "^1.8.8",
-    "typedoc": "^0.27.6",
-    "typedoc-plugin-markdown": "4.4.1",
-    "typescript": "^5.7.3",
-    "typescript-eslint": "^8.25.0",
-    "vitest": "^3.0.3"
+    "npm-check-updates": "^17.1.16",
+    "prettier": "^3.5.3",
+    "starlight-typedoc": "^0.21.0",
+    "tsc-alias": "^1.8.13",
+    "typedoc": "^0.28.1",
+    "typedoc-plugin-markdown": "4.6.1",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.29.0",
+    "vitest": "^3.1.1"
   }
 }
