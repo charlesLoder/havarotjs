@@ -27,7 +27,7 @@ const groupFinal = (arr: Cluster[]): Mixed => {
   const len = arr.length;
   let i = 0;
   /** temporary array to collect clusters for the current syllable */
-  let syl: Syl = [];
+  const syl: Syl = [];
   /** collects the end result */
   let result: Mixed = [];
   let vowelPresent = false;
