@@ -30,9 +30,7 @@ export default defineConfig({
           }
         })
       ],
-      social: {
-        github: "https://github.com/charlesLoder/havarotjs"
-      },
+      social: [{ icon: "github", label: "GitHub", href: "https://github.com/charlesLoder/havarotjs" }],
       sidebar: [
         {
           label: "Getting started",

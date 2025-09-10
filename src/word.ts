@@ -344,9 +344,6 @@ export class Word extends Node<Word> {
    *
    * @returns the original string passed
    *
-   * @description
-   * The original string passed to the constructor that has not been checked against any KetivQeres.
-   *
    * @remarks
    * The original string passed to the constructor still undergoes the normalization and sequence process, just not checked against any KetivQeres.
    */

@@ -98,7 +98,7 @@ export const rafe = /\u{05BF}/u;
 /**
  * A regular expression for splitting a word into groups
  *
- * @description
+ * @remarks
  * These groups must be in this order to work
  * - group 1: word w/ maqqef followed by word w/ maqqef;
  * - group 2: word w/ maqqef not followed by word w/ maqqef

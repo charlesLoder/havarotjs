@@ -102,7 +102,7 @@ const groupFinal = (arr: Cluster[]): Mixed => {
 };
 
 /**
- * @description groups shevas either by themselves or with preceding short vowel
+ * @remarks groups shevas either by themselves or with preceding short vowel
  */
 const groupShevas = (arr: Mixed, options: SylOpts): Mixed => {
   const len = arr.length;
@@ -245,7 +245,7 @@ const groupShevas = (arr: Mixed, options: SylOpts): Mixed => {
 };
 
 /**
- * @description groups non-final maters with preceding cluster
+ * @remarks groups non-final maters with preceding cluster
  */
 const groupMaters = (arr: Mixed, strict: boolean = true): Mixed => {
   const len = arr.length;
@@ -316,7 +316,7 @@ const groupMaters = (arr: Mixed, strict: boolean = true): Mixed => {
 };
 
 /**
- * @description groups non-final shureqs with preceding cluster
+ * @remarks groups non-final shureqs with preceding cluster
  */
 const groupShureqs = (arr: Mixed, strict: boolean = true): Mixed => {
   const len = arr.length;
@@ -359,7 +359,7 @@ const groupShureqs = (arr: Mixed, strict: boolean = true): Mixed => {
 };
 
 /**
- * @description a preprocessing step that groups clusters into intermediate syllables by vowels or shevas
+ * @remarks a preprocessing step that groups clusters into intermediate syllables by vowels or shevas
  */
 const groupClusters = (arr: Cluster[], options: SylOpts): Mixed => {
   const rev = arr.reverse();
@@ -562,7 +562,7 @@ const setIsAccented = (syllable: Syllable) => {
 
 /**
  *
- * @description a step to get a Cluster's original position before filtering out latin
+ * @remarks a step to get a Cluster's original position before filtering out latin
  */
 const clusterPos = (cluster: Cluster, i: number): { cluster: Cluster; pos: number } => {
   return { cluster, pos: i };

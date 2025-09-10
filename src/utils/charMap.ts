@@ -206,7 +206,7 @@ export const consonantNameToCharMap: ConsonantNameToCharMap = {
 /**
  * An object where the key is a character and the value is its partial Unicode name
  *
- * @description
+ * @remarks
  * Typically, the partial Unicode name is the same as the name of the character without any prefixes (e.g. HEBREW ACCENT).
  * The only exceptions that had to be changed were:
  * - \u{0592} from `"SEGOL"` to `"SEGOL_ACCENT"`

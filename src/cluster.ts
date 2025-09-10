@@ -106,7 +106,7 @@ export class Cluster extends Node<Cluster> {
    * // ["ה"]
    * ```
    *
-   * @warning
+   * @remarks
    * This can only every return one consonant, as a `Cluster` is defined by having only one consonant.
    * Though it is impossible to have two consonants in a cluster, this api is meant for consistency with `vowels` and `taamim`
    */
@@ -138,7 +138,7 @@ export class Cluster extends Node<Cluster> {
    * // ["HE"]
    * ```
    *
-   * @warning
+   * @remarks
    * This can only every return one consonant, as a `Cluster` is defined by having only one consonant.
    * Though it is impossible to have two consonants in a cluster, this api is meant for consistency with `vowelNames` and `taamimNames`
    */
@@ -194,7 +194,7 @@ export class Cluster extends Node<Cluster> {
    * // false
    * ```
    *
-   * @description
+   * @remarks
    * The following characters are considered half-vowels:
    * - \u{05B1} HATAF SEGOL
    * - \u{05B2} HATAF PATAH
@@ -218,7 +218,7 @@ export class Cluster extends Node<Cluster> {
    * // true
    * ```
    *
-   * @description
+   * @remarks
    * The following characters are considered long vowels:
    * - \u{05B5} TSERE
    * - \u{05B8} QAMATS
@@ -243,7 +243,7 @@ export class Cluster extends Node<Cluster> {
    * // true
    * ```
    *
-   * @description
+   * @remarks
    * Checks if the following character is present and a _sof pasuq_ does not follow it:
    * - \u{05BD} METEG
    */
@@ -262,7 +262,7 @@ export class Cluster extends Node<Cluster> {
    * // true
    * ```
    *
-   * @description
+   * @remarks
    * Checks if the following character is present and a _sof pasuq_ does not follow it:
    * - \u{05BD} METEG
    */
@@ -301,7 +301,7 @@ export class Cluster extends Node<Cluster> {
    * // true
    * ```
    *
-   * @description
+   * @remarks
    * Checks if the following character is present:
    * - \u{05B0} SHEVA
    */
@@ -325,7 +325,7 @@ export class Cluster extends Node<Cluster> {
    * // true
    * ```
    *
-   * @description
+   * @remarks
    * Checks if the following character is present:
    * - \u{05B0} SHEVA
    */
@@ -347,7 +347,7 @@ export class Cluster extends Node<Cluster> {
    * // false
    * ```
    *
-   * @description
+   * @remarks
    * The following characters are considered short vowels:
    * - \u{05B4} HIRIQ
    * - \u{05B6} SEGOL
@@ -371,7 +371,7 @@ export class Cluster extends Node<Cluster> {
    * // true
    * ```
    *
-   * @description
+   * @remarks
    * Checks if the following character is present and a _sof pasuq_ follows it:
    * - \u{05BD} METEG
    */
@@ -396,7 +396,7 @@ export class Cluster extends Node<Cluster> {
    * // true
    * ```
    *
-   * @description
+   * @remarks
    * Note: it only checks according to the character name, not its semantic meaning.
    * E.g. "כֵֽן׃" would be `true` when checking for `"METEG"`, not silluq
    */
@@ -421,7 +421,7 @@ export class Cluster extends Node<Cluster> {
    * // true
    * ```
    *
-   * @description
+   * @remarks
    * The following characters are considered taamim:
    * - \u{0591}-\u{05AF}\u{05BF}\u{05C0}\u{05C3}-\u{05C6}\u{05F3}\u{05F4}
    */
@@ -443,7 +443,7 @@ export class Cluster extends Node<Cluster> {
    * // false
    * ```
    *
-   * @description
+   * @remarks
    * According to [Syllabification](/guides/syllabification), a sheva is a vowel and serves as the nucleus of a syllable.
    * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character.
    */
@@ -465,7 +465,7 @@ export class Cluster extends Node<Cluster> {
    * // false
    * ```
    *
-   * @description
+   * @remarks
    * According to [Syllabification](/guides/syllabification), a sheva is a vowel and serves as the nucleus of a syllable.
    * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character.
    */
@@ -491,7 +491,7 @@ export class Cluster extends Node<Cluster> {
    * // true
    * ```
    *
-   * @description
+   * @remarks
    *
    * Returns `true` if `Cluster.hasVowel`, `Cluster.hasSheva`, `Cluster.isShureq`, and `Cluster.next.isShureq` are all `false` and `Cluster.text` contains a:
    * - `ה` preceded by a qamets
@@ -551,7 +551,7 @@ export class Cluster extends Node<Cluster> {
    * // true
    * ```
    *
-   * @description
+   * @remarks
    * These are all the Hebrew characters of the category PUNCTUATION
    * - \u{05BE} HEBREW PUNCTUATION MAQAF ־
    * - \u{05C0} HEBREW PUNCTUATION PASEQ ׀
@@ -577,7 +577,7 @@ export class Cluster extends Node<Cluster> {
    * // true
    * ```
    *
-   * @description
+   * @remarks
    * Returns `true` if `Cluster.hasVowel`, `Cluster.hasSheva`, and `Cluster.prev.hasVowel` are all `false` and `Cluster.text` is a vav followed by a dagesh (e.g. `וּ`)
    * A shureq is a vowel itself, but contains no vowel characters (hence why `hasVowel` cannot be `true`).
    * This allows for easier syllabification.
@@ -600,7 +600,7 @@ export class Cluster extends Node<Cluster> {
    * // true
    * ```
    *
-   * @description
+   * @remarks
    * This is an alias for `isPunctuation`.
    * Returns `true` is the Cluster is any of the following characters:
    * - \u{05BE} HEBREW PUNCTUATION MAQAF ־
@@ -618,7 +618,7 @@ export class Cluster extends Node<Cluster> {
    *
    * @returns the original string passed
    *
-   * @description
+   * @remarks
    * The original string passed to the constructor that has not been normalized or sequenced. See {@link text}
    */
   get original() {
@@ -637,7 +637,7 @@ export class Cluster extends Node<Cluster> {
    * // "בָר"
    * ```
    *
-   * @description
+   * @remarks
    * If created via the `Text` class, there should always be a syllable.
    */
   get syllable() {
@@ -725,7 +725,7 @@ export class Cluster extends Node<Cluster> {
    * // ]
    * ```
    *
-   * @description
+   * @remarks
    * The text has been normalized and sequenced — see {@link original} for text passed in the constructor.
    */
   get text() {
@@ -744,7 +744,7 @@ export class Cluster extends Node<Cluster> {
    * // ['PATAH']
    * ```
    *
-   * @description
+   * @remarks
    * It is exceedingly rare to find more than one vowel character in a cluster.
    * According to [Syllabification](/guides/syllabification), a sheva is a vowel and serves as the nucleus of a syllable.
    * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character
@@ -779,7 +779,7 @@ export class Cluster extends Node<Cluster> {
    * // null
    * ```
    *
-   * @description
+   * @remarks
    * It is exceedingly rare to find more than one vowel character in a cluster.
    * According to [Syllabification](/guides/syllabification), a sheva is a vowel and serves as the nucleus of a syllable.
    * Because `Cluster` is concerned with orthography, a sheva is **not** a vowel character
