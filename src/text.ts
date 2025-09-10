@@ -442,7 +442,7 @@ export class Text {
       const appliedKetivQere = this.#applyKetivQere(textWithoutTaamim, ketivQere);
 
       if (!appliedKetivQere) {
-        return whiteSpaceBefore + text + whiteSpaceAfter;
+        return whiteSpaceBefore + textWithoutTaamim + whiteSpaceAfter;
       }
 
       const taamimChars = ketivQere.captureTaamim ? this.#captureTaamim(text) : null;
