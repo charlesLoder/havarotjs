@@ -135,6 +135,15 @@ test("ketivQeres: whitespace preserved", () => {
   expect(word.whiteSpaceBefore).toEqual("");
 });
 
+test("ketivQeres: whitespace correct for non Hebrew text", () => {
+  const text = new Text("hello world", { allowNoNiqqud: true, ketivQeres: [{ input: "הִוא", output: "הִיא" }] });
+  const word = text.words[0];
+  expect(word.original).toEqual("hello");
+  expect(word.text).toEqual("hello");
+  expect(word.whiteSpaceAfter).toEqual(" ");
+  expect(word.whiteSpaceBefore).toEqual("");
+});
+
 describe.each`
   description                                                       | word           | syllables                | isClosedArr              | longVowelsOpt | qametsQatanOpt
   ${"regular qamets"}                                               | ${"יָדְךָ"}    | ${["יָ", "דְ", "ךָ"]}    | ${[false, false, false]} | ${true}       | ${true}

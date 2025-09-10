@@ -88,10 +88,11 @@ export interface SylOpts {
   /**
    * How to handle the code point \u{05BA} HOLAM HASER FOR VAV
    *
-   * @options
-   * * "update" - converts all holems in a vav + holem sequence where vav is a consonant to HOLAM HASER FOR VAV
-   * * "preserve" - leaves the text as is — does not remove HOLAM HASER FOR VAV, but does not update
-   * * "remove" - converts all HOLAM HASER FOR VAV to regular holem
+   * @remarks
+   * The following options are available:
+   * * `"update"` - converts all holems in a vav + holem sequence where vav is a consonant to HOLAM HASER FOR VAV
+   * * `"preserve"` - leaves the text as is — does not remove HOLAM HASER FOR VAV, but does not update
+   * * `"remove"` - converts all HOLAM HASER FOR VAV to regular holem
    *
    * @defaultValue `"preserve"`
    *
@@ -442,7 +443,7 @@ export class Text {
       const appliedKetivQere = this.#applyKetivQere(textWithoutTaamim, ketivQere);
 
       if (!appliedKetivQere) {
-        return whiteSpaceBefore + text + whiteSpaceAfter;
+        return whiteSpaceBefore + textWithoutTaamim + whiteSpaceAfter;
       }
 
       const taamimChars = ketivQere.captureTaamim ? this.#captureTaamim(text) : null;
