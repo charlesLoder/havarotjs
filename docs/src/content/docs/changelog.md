@@ -2,6 +2,10 @@
 title: Changelog
 ---
 
+## 2025-09-10 0.25.3
+
+- Fix #209 the `ketivQere` option adding extra whitespace to non-matching and non-Hebrew text (PR #210)
+
 ## 2025-04-05 0.25.2
 
 - Fix #197 by treating the non-standard spelling of half-vowels before a sheva as full vowel (PR #200)
