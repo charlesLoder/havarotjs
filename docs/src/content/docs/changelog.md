@@ -2,6 +2,10 @@
 title: Changelog
 ---
 
+## 2025-09-11 0.25.4
+
+- Fix #211 where taamim were being stripped from non-matching `ketivQere` (PR #212)
+
 ## 2025-09-10 0.25.3
 
 - Fix #209 the `ketivQere` option adding extra whitespace to non-matching and non-Hebrew text (PR #210)
