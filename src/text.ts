@@ -443,7 +443,8 @@ export class Text {
       const appliedKetivQere = this.#applyKetivQere(textWithoutTaamim, ketivQere);
 
       if (!appliedKetivQere) {
-        return whiteSpaceBefore + textWithoutTaamim + whiteSpaceAfter;
+        // if it doesn't match, trim the text and manually add the whitespace back
+        return whiteSpaceBefore + text.trim() + whiteSpaceAfter;
       }
 
       const taamimChars = ketivQere.captureTaamim ? this.#captureTaamim(text) : null;
