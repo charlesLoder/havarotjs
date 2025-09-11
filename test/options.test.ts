@@ -126,22 +126,18 @@ describe.each`
   });
 });
 
-test("ketivQeres: whitespace preserved", () => {
-  const text = new Text("הִ֛וא נָֽתְנָה־לִּ֥י׃", { ketivQeres: [{ input: "הִוא", output: "הִיא" }] });
-  const word = text.words[0];
-  expect(word.original).toEqual("הִ֛וא");
-  expect(word.text).toEqual("הִיא");
-  expect(word.whiteSpaceAfter).toEqual(" ");
-  expect(word.whiteSpaceBefore).toEqual("");
-});
-
-test("ketivQeres: whitespace correct for non Hebrew text", () => {
-  const text = new Text("hello world", { allowNoNiqqud: true, ketivQeres: [{ input: "הִוא", output: "הִיא" }] });
-  const word = text.words[0];
-  expect(word.original).toEqual("hello");
-  expect(word.text).toEqual("hello");
-  expect(word.whiteSpaceAfter).toEqual(" ");
-  expect(word.whiteSpaceBefore).toEqual("");
+describe.each`
+  description                                  | input                   | output
+  ${"preserve taamim for non-matching Hebrew"} | ${"אֶ֤בֶן מַֽעֲמָסָה֙"} | ${"אֶ֤בֶן"}
+  ${"preserve whitespace for non-Hebrew"}      | ${"hello world"}        | ${"hello"}
+`("ketivQeres: edge cases", ({ description, input, output }) => {
+  test(description, () => {
+    const text = new Text(input, { allowNoNiqqud: true, ketivQeres: [{ input: "הִוא", output: "הִיא" }] });
+    const word = text.words[0];
+    expect(word.text).toEqual(output);
+    expect(word.whiteSpaceAfter).toEqual(" ");
+    expect(word.whiteSpaceBefore).toEqual("");
+  });
 });
 
 describe.each`
