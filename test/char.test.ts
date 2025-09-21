@@ -57,30 +57,30 @@ describe("Char", () => {
   describe("characterName", () => {
     test("should return the correct character name for Hebrew characters", () => {
       const aleph = new Char("א");
-      expect(aleph.characterName).toBe("ALEF");
+      expect(aleph.name).toBe("ALEF");
 
       const bet = new Char("ב");
-      expect(bet.characterName).toBe("BET");
+      expect(bet.name).toBe("BET");
 
       const patach = new Char("ַ");
-      expect(patach.characterName).toBe("PATAH");
+      expect(patach.name).toBe("PATAH");
 
       const sheva = new Char("ְ");
-      expect(sheva.characterName).toBe("SHEVA");
+      expect(sheva.name).toBe("SHEVA");
 
       const rebia = new Char("֗");
-      expect(rebia.characterName).toBe("REVIA");
+      expect(rebia.name).toBe("REVIA");
 
       const maqqaf = new Char("־");
-      expect(maqqaf.characterName).toBe("MAQAF");
+      expect(maqqaf.name).toBe("MAQAF");
 
       const sofPasuq = new Char("׃");
-      expect(sofPasuq.characterName).toBe("SOF_PASUQ");
+      expect(sofPasuq.name).toBe("SOF_PASUQ");
     });
 
     test("should return null for non-Hebrew characters", () => {
       const nonHebrew = new Char("a");
-      expect(nonHebrew.characterName).toBeNull();
+      expect(nonHebrew.name).toBeNull();
     });
   });
 
