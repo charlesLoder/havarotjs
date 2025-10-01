@@ -19,3 +19,5 @@ node_modules
 /docs/src/content/docs/api
 /docs-dist
 .astro/
+dev.js
+dev.ts
