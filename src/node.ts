@@ -14,9 +14,6 @@ export class Node<T> {
   /** The value stored in this node. */
   value: T | null;
 
-  /** Reference to the first child node. */
-  protected child!: Node<T>;
-
   /**
    * Creates a new Node instance.
    * Initializes value, next, and prev properties to null.
@@ -25,18 +22,6 @@ export class Node<T> {
     this.value = null;
     this.next = null;
     this.prev = null;
-  }
-
-  /**
-   * Sets the children of this node.
-   * The first element becomes the child, and the rest become siblings of the child.
-   * @param arr - An array of Node<T> to set as children.
-   */
-  protected set children(arr: Node<T>[]) {
-    const head = arr[0];
-    const remainder = arr.slice(1);
-    this.child = head;
-    head.siblings = remainder;
   }
 
   /**
