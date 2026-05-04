@@ -21,17 +21,16 @@ import { hebChars, meteg, punctuation, taamim } from "./utils/regularExpressions
  * - an optional taam
  *
  * @remarks
- * A {@link Syallble } is a linguistic unit, whereas a {@link Cluster } is an orthgraphic one.
+ * A <code>{@link Syllable}</code> is a linguistic unit, whereas a `Cluster` is an orthgraphic one.
  * The word `יֹו֑ם` is only one syllable, but it has three clusters—`יֹ`, `ו֑`, `ם`.
  * Because Hebrew orthography is both sub and supra linear, clusters can be encoded in various ways.
- * Every {@link Char | character} is sequenced first for normalization, see the [SBL Hebrew Font Manual](https://www.sbl-site.org/Fonts/SBLHebrewUserManual1.5x.pdf), p.8.
+ * Every <code>{@link Char}</code> is sequenced first for normalization, see the [SBL Hebrew Font Manual](https://www.sbl-site.org/Fonts/SBLHebrewUserManual1.5x.pdf), p.8.
  */
-export class Cluster extends Node<Cluster> {
+export class Cluster extends Node<Cluster, Char, Syllable> {
   #consonantsCache: Consonant[] | null = null;
   #consonantNameCache: ConsonantName[] | null = null;
   #original: string;
   #sequenced: Char[];
-  #syllable: Syllable | null = null;
   #taamimCache: Taam[] | null = null;
   #vowelsCache: Vowel[] | null = null;
   #vowelNamesCache: VowelName[] | null = null;
@@ -59,12 +58,15 @@ export class Cluster extends Node<Cluster> {
     this.value = this;
     this.#original = cluster;
     this.#sequenced = this.#sequence(noSequence);
-    this.#sequenced.forEach((char) => (char.cluster = this));
+    this.#sequenced.forEach((char) => (char.parent = this));
   }
 
   #sequence(noSequence: boolean = false) {
     const chars = [...this.original].map((char) => new Char(char));
-    return noSequence ? chars : chars.sort((a, b) => a.sequencePosition - b.sequencePosition);
+    const sequenced = noSequence ? chars : chars.sort((a, b) => a.sequencePosition - b.sequencePosition);
+    const [first, ...rest] = sequenced;
+    first.siblings = rest;
+    return sequenced;
   }
 
   get #hasMetegCharacter() {
@@ -76,7 +78,7 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
-   * Gets all the {@link Char | characters} in the cluster
+   * Gets all the <code>{@link Char}</code>s in the cluster
    *
    * @returns an array of sequenced Char objects
    *
@@ -107,7 +109,7 @@ export class Cluster extends Node<Cluster> {
    * ```
    *
    * @remarks
-   * This can only every return one consonant, as a `Cluster` is defined by having only one consonant.
+   * This can only every return one consonant, as a `Cluster`` is defined by having only one consonant.
    * Though it is impossible to have two consonants in a cluster, this api is meant for consistency with `vowels` and `taamim`
    */
   get consonants() {
@@ -626,7 +628,7 @@ export class Cluster extends Node<Cluster> {
   }
 
   /**
-   * The parent `Syllable` of the cluster
+   * The parent <code>{@link Syllable}</code> of the cluster
    *
    * ```ts
    * const text = new Text("דָּבָר");
@@ -638,18 +640,10 @@ export class Cluster extends Node<Cluster> {
    * ```
    *
    * @remarks
-   * If created via the `Text` class, there should always be a syllable.
+   * If created via the <code>{@link Text}</code> class, there should always be a syllable.
    */
   get syllable() {
-    return this.#syllable;
-  }
-
-  /**
-   * Sets the parent `Syllable` of the cluster
-   *
-   */
-  set syllable(syllable: Syllable | null) {
-    this.#syllable = syllable;
+    return this.parent?.value ?? null;
   }
 
   /**

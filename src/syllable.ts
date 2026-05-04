@@ -32,7 +32,7 @@ export type SyllableParams = {
 /**
  * A subunit of a {@link Word} consisting of consonants, vowels, and other linguistic and ortographic features.
  */
-export class Syllable extends Node<Syllable> {
+export class Syllable extends Node<Syllable, Cluster, Word> {
   #cachedStructure: [string, string, string] | null = null;
   #cachedStructureWithGemination: [string, string, string] | null = null;
   #clusters: Cluster[];
@@ -41,7 +41,6 @@ export class Syllable extends Node<Syllable> {
   #isFinal: boolean;
   #vowelsCache: SyllableVowel[] | null = null;
   #vowelNamesCache: SyllableVowelName[] | null = null;
-  #word: Word | null = null;
 
   /**
    * Creates a new Syllable
@@ -671,15 +670,6 @@ export class Syllable extends Node<Syllable> {
    * ```
    */
   get word() {
-    return this.#word;
-  }
-
-  /**
-   * Sets the {@link Word} to which the syllable belongs
-   *
-   * @param word - the `Word` to which the syllable belongs
-   */
-  set word(word: Word | null) {
-    this.#word = word;
+    return this.parent?.value ?? null;
   }
 }

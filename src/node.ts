@@ -1,35 +1,32 @@
 /**
- * Represents a node in a bidirectional chain structure with optional child nodes.
- * This node can be used to create various linked data structures.
+ * A doubly-linked node within a hierarchical tree.
+ * Supports both lateral traversal (siblings) and vertical traversal (parent-child).
  *
- * @template T The type of value stored in the node.
+ * @template Self Type of the node's value.
+ * @template Child Type of the nodes stored in the children array.
+ * @template Parent Type of the parent node.
  */
-export class Node<T> {
-  /** Reference to the next node in the sequence. */
-  next: Node<T> | null;
+export class Node<Self, Child = null, Parent = null> {
+  /** Next sibling in the sequence. */
+  next: Node<Self> | null = null;
+  /** Previous sibling in the sequence. */
+  prev: Node<Self> | null = null;
+  /** Node data. */
+  value: Self | null = null;
+  /** Reference to the parent container. */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  parent: Node<Parent, any, any> | null = null;
+  /** Collection of child nodes. */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  children: Node<Child, any, any>[] | null = null;
 
-  /** Reference to the previous node in the sequence. */
-  prev: Node<T> | null;
-
-  /** The value stored in this node. */
-  value: T | null;
-
-  /**
-   * Creates a new Node instance.
-   * Initializes value, next, and prev properties to null.
-   */
-  constructor() {
-    this.value = null;
-    this.next = null;
-    this.prev = null;
-  }
+  constructor() {}
 
   /**
-   * Sets the siblings of this node.
-   * Establishes bidirectional links between adjacent nodes in the provided array.
-   * @param arr - An array of Node<T> to set as siblings.
+   * Connects an array of nodes as a doubly-linked sibling chain starting after this node.
    */
-  set siblings(arr: Node<T>[]) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  set siblings(arr: Node<Self, Child, any>[]) {
     const len = arr.length;
     for (let index = 0; index < len; index++) {
       const curr = arr[index];
@@ -42,10 +39,10 @@ export class Node<T> {
   }
 
   /**
-   * Gets the siblings of this node.
-   * @returns An array of Node<T> representing all subsequent nodes in the sequence.
+   * Retrieves all subsequent nodes in the current sibling chain.
    */
-  get siblings(): Node<T>[] {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  get siblings(): Node<Self, Child, any>[] {
     let curr = this.next;
     const res = [];
     while (curr) {
