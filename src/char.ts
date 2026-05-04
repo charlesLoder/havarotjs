@@ -233,11 +233,11 @@ export class Char {
    * @example
    * ```ts
    * const text = new Text("אֱלֹהִ֑ים");
-   * text.chars[0].characterName;
+   * text.chars[0].name;
    * // "ALEF"
    * ```
    */
-  get characterName(): CharToNameMap[keyof CharToNameMap] | null {
+  get name(): CharToNameMap[keyof CharToNameMap] | null {
     const text = this.#text;
     if (this.#isCharKeyOfCharToNameMap(text)) {
       return charToNameMap[text];
