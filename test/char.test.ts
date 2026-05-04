@@ -91,7 +91,7 @@ describe("Char", () => {
 
       expect(char.cluster).toBeNull();
 
-      char.cluster = cluster;
+      char.parent = cluster;
       expect(char.cluster).toBe(cluster);
     });
   });
