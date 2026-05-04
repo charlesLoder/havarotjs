@@ -418,7 +418,7 @@ const setIsAccented = (syllable: Syllable) => {
   const segolta = /\u{0592}/u;
   if (segolta.test(syllable.text)) {
     // see לָֽאָדָם֒ as an example of segolta on the final syllable
-    if (syllable.isFinal && prev) {
+    if (!syllable.next && prev) {
       // see יֹאשִׁיָּ֒הוּ֒ as an example of segolta on a previous syllable
       while (prev) {
         if (segolta.test(prev.text)) {
@@ -443,7 +443,7 @@ const setIsAccented = (syllable: Syllable) => {
     const zarqaHelper = /\u{0598}/u;
     // see לָֽאָדָם֒ as an example of zarqa on the final syllable
     // a zarqa should always be on the final syllable
-    if (syllable.isFinal && prev) {
+    if (!syllable.next && prev) {
       // see וַיֹּ֘אמֶר֮ as an example of zarqa helper on a previous syllable
       while (prev) {
         if (zarqaHelper.test(prev.text)) {
@@ -468,7 +468,7 @@ const setIsAccented = (syllable: Syllable) => {
   // check if any preceding syllable has a pashta or qadma character
   const pashta = /\u{0599}/u;
   const sylText = syllable.text;
-  if (syllable.isFinal && pashta.test(sylText)) {
+  if (!syllable.next && pashta.test(sylText)) {
     const qadma = /\u{05A8}/u;
     while (prev) {
       if (pashta.test(prev.text) || qadma.test(prev.text)) {
@@ -583,8 +583,7 @@ const reinsertLatin = (syls: Syllable[], latin: { cluster: Cluster; pos: number 
       const firstSyl = syls[0];
       syls[0] = new Syllable([...partial, ...firstSyl.clusters], {
         isAccented: firstSyl.isAccented,
-        isClosed: firstSyl.isClosed,
-        isFinal: firstSyl.isFinal
+        isClosed: firstSyl.isClosed
       });
     } else {
       const lastSyl = syls[numOfSyls - 1];
@@ -594,8 +593,7 @@ const reinsertLatin = (syls: Syllable[], latin: { cluster: Cluster; pos: number 
       }
       syls[numOfSyls - 1] = new Syllable([...lastSyl.clusters, ...partial], {
         isAccented: lastSyl.isAccented,
-        isClosed: lastSyl.isClosed,
-        isFinal: lastSyl.isFinal
+        isClosed: lastSyl.isClosed
       });
     }
   }
@@ -613,7 +611,6 @@ export const syllabify = (clusters: Cluster[], options: SylOpts, isWordInConstru
   first.siblings = rest;
 
   // set syllable properties
-  syllables[syllables.length - 1].isFinal = true;
   syllables.forEach(setIsClosed);
   syllables.forEach(setIsAccented);
 

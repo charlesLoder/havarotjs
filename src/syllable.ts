@@ -38,7 +38,6 @@ export class Syllable extends Node<Syllable, Cluster, Word> {
   #clusters: Cluster[];
   #isClosed: boolean;
   #isAccented: boolean;
-  #isFinal: boolean;
   #vowelsCache: SyllableVowel[] | null = null;
   #vowelNamesCache: SyllableVowelName[] | null = null;
 
@@ -57,13 +56,12 @@ export class Syllable extends Node<Syllable, Cluster, Word> {
    * See the [Syllabification](/guides/syllabification) page for how a syllable is determined.
    * Currently, the Divine Name (e.g. יהוה), non-Hebrew text, and Hebrew punctuation (e.g. _passeq_, _nun hafucha_) are treated as a _single syllable_ because these do not follow the rules of Hebrew syllabification.
    */
-  constructor(clusters: Cluster[], { isClosed = false, isAccented = false, isFinal = false }: SyllableParams = {}) {
+  constructor(clusters: Cluster[], { isClosed = false, isAccented = false }: SyllableParams = {}) {
     super();
     this.value = this;
     this.#clusters = clusters;
     this.#isClosed = isClosed;
     this.#isAccented = isAccented;
-    this.#isFinal = isFinal;
   }
 
   #isCharKeyOfSyllableVowelCharToNameMap(char: string): char is keyof SyllableVowelCharToNameMap {
@@ -332,33 +330,6 @@ export class Syllable extends Node<Syllable, Cluster, Word> {
   }
 
   /**
-   * Checks if the Syllable is the final syllable in a {@link Word}
-   *
-   * @returns true if Syllable is final
-   *
-   * @example
-   * ```ts
-   * const text = new Text("וַיִּקְרָ֨א");
-   * text.syllables[0].isFinal; // i.e. "וַ"
-   * // false
-   * text.syllables[2].isFinal; // i.e. "רָ֨א"
-   * // true
-   * ```
-   */
-  get isFinal() {
-    return this.#isFinal;
-  }
-
-  /**
-   * Sets whether the Syllable is the final syllable in a {@link Word}
-   *
-   * @param final a boolean for whether the Syllable is the final Syallble
-   */
-  set isFinal(final: boolean) {
-    this.#isFinal = final;
-  }
-
-  /**
    * Returns the nucleus of the syllable - see {@link structure}
    *
    * @returns the nucleus of the syllable as a string, including any taamim - see {@link structure}
@@ -454,7 +425,7 @@ export class Syllable extends Node<Syllable, Cluster, Word> {
     // Furtive patah: If the syllable is final and is either a het, ayin, or he
     // (with dagesh) followed by a patah, then it has no onset, its nucleus is
     // the patah and its coda is the consonant
-    if (this.isFinal && !this.isClosed) {
+    if (this.word?.isSyllableFinal(this) && !this.isClosed) {
       const matchFurtive = this.text.match(/(\u{05D7}|\u{05E2}|\u{05D4}\u{05BC})(\u{05B7})(\u{05C3})?$/mu);
       if (matchFurtive) {
         const structure: [string, string, string] = ["", matchFurtive[2], matchFurtive[1] + (matchFurtive[3] || "")];
