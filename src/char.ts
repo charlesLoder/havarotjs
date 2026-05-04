@@ -1,4 +1,5 @@
 import { Cluster } from "./cluster";
+import { Node } from "./node";
 import { CharToNameMap, NameToCharMap, charToNameMap, isHebrewCharacter, nameToCharMap } from "./utils/charMap";
 import { consonants, dagesh, ligatures, meteg, rafe, sheva, taamim, vowels } from "./utils/regularExpressions";
 
@@ -6,13 +7,13 @@ import { consonants, dagesh, ligatures, meteg, rafe, sheva, taamim, vowels } fro
  * A Hebrew character and its positioning number for being sequenced correctly.
  * See {@link Cluster } for correct normalization.
  */
-export class Char {
+export class Char extends Node<Char, null, Cluster> {
   #text: string;
-  #cluster: Cluster | null = null;
   #sequencePosition: number;
   #isCharKeyOfCharToNameMap = isHebrewCharacter;
 
   constructor(char: string) {
+    super();
     this.#text = char;
     this.#sequencePosition = this.#findPos();
   }
@@ -80,7 +81,7 @@ export class Char {
   }
 
   /**
-   * The parent `Cluster` of the character, if any.
+   * The parent <code>{@link Cluster}</code> of the character
    *
    * @example
    * ```ts
@@ -93,11 +94,7 @@ export class Char {
    * ```
    */
   get cluster() {
-    return this.#cluster;
-  }
-
-  set cluster(cluster: Cluster | null) {
-    this.#cluster = cluster;
+    return this.parent?.value;
   }
 
   /**

@@ -2,7 +2,7 @@ import { Cluster } from "./cluster";
 import { Node } from "./node";
 import type { SyllableVowelName } from "./syllable";
 import { Syllable } from "./syllable";
-import { SylOpts } from "./text";
+import { SylOpts, Text } from "./text";
 import type { ConsonantName, TaamimName } from "./utils/charMap";
 import { clusterSplitGroup, jerusalemTest } from "./utils/regularExpressions";
 import { syllabify } from "./utils/syllabifier";
@@ -10,7 +10,7 @@ import { syllabify } from "./utils/syllabifier";
 /**
  * A subunit of a {@link Text} consisting of words, which are strings are text separated by spaces or maqqefs.
  */
-export class Word extends Node<Word> {
+export class Word extends Node<Word, Text> {
   /** A regex for removing anything that is not a character */
   #nonCharacters = /[^\u{05D0}-\u{05F4}]/gu;
   #text: string;
@@ -369,12 +369,12 @@ export class Word extends Node<Word> {
   get syllables() {
     if (/\w/.test(this.text) || this.isDivineName || this.isNotHebrew) {
       const syl = new Syllable(this.clusters);
-      syl.word = this;
+      syl.parent = this;
       return [syl];
     }
 
     const syllables = syllabify(this.clusters, this.#sylOpts, this.isInConstruct);
-    syllables.forEach((syl) => (syl.word = this));
+    syllables.forEach((syl) => (syl.parent = this));
 
     return syllables;
   }

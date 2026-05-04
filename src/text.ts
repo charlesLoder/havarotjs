@@ -1,3 +1,4 @@
+import { Node } from "./node";
 import { holemWaw } from "./utils/holemWaw";
 import { convertsQametsQatan } from "./utils/qametsQatan";
 import { splitGroup, taamim, taamimCaptureGroup } from "./utils/regularExpressions";
@@ -365,7 +366,7 @@ export interface SylOpts {
  * Processes and analyzes Hebrew text with niqqud, offering syllabification
  * and breakdown into linguistic components (words, syllables, clusters, chars).
  */
-export class Text {
+export class Text extends Node<Text, Word> {
   #original: string;
   #options: SylOpts;
   /**
@@ -395,6 +396,7 @@ export class Text {
    * @param options syllabification options
    */
   constructor(text: string, options: SylOpts = {}) {
+    super();
     this.#options = this.#setOptions(options);
     this.#original = this.#options.allowNoNiqqud ? text : this.#validateInput(text);
   }

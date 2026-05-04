@@ -624,6 +624,6 @@ export const syllabify = (clusters: Cluster[], options: SylOpts, isWordInConstru
   }
 
   // for each cluster, set its syllable
-  syllables.forEach((s) => s.clusters.forEach((c) => (c.syllable = s)));
+  syllables.forEach((s) => s.clusters.forEach((c) => (c.parent = s)));
   return latinClusters.length ? reinsertLatin(syllables, latinClusters) : syllables;
 };
