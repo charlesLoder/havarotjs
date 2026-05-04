@@ -141,6 +141,50 @@ describe.each`
 });
 
 describe.each`
+  description               | hebrew        | syllableNum | isFinal  | isInitial
+  ${"initial syllable"}     | ${"הָאָ֖רֶץ"} | ${0}        | ${false} | ${true}
+  ${"middle syllable"}      | ${"הָאָ֖רֶץ"} | ${1}        | ${false} | ${false}
+  ${"final syllable"}       | ${"הָאָ֖רֶץ"} | ${2}        | ${true}  | ${false}
+  ${"single syllable word"} | ${"יָם"}      | ${0}        | ${true}  | ${true}
+`("isSyllableFinal/isSyllableInitial:", ({ description, hebrew, syllableNum, isFinal, isInitial }) => {
+  const text = new Text(hebrew);
+  const word = text.words[0];
+  const syllable = word.syllables[syllableNum];
+  describe(description, () => {
+    test(`isSyllableFinal to equal ${isFinal}`, () => {
+      expect(word.isSyllableFinal(syllable)).toEqual(isFinal);
+    });
+    test(`isSyllableInitial to equal ${isInitial}`, () => {
+      expect(word.isSyllableInitial(syllable)).toEqual(isInitial);
+    });
+  });
+});
+
+describe.each`
+  description          | hebrew        | syllableNum | expectedPosition
+  ${"first syllable"}  | ${"הָאָ֖רֶץ"} | ${0}        | ${0}
+  ${"middle syllable"} | ${"הָאָ֖רֶץ"} | ${1}        | ${1}
+  ${"last syllable"}   | ${"הָאָ֖רֶץ"} | ${2}        | ${2}
+`("syllablePosition:", ({ description, hebrew, syllableNum, expectedPosition }) => {
+  const text = new Text(hebrew);
+  const word = text.words[0];
+  const syllable = word.syllables[syllableNum];
+  describe(description, () => {
+    test(`position to equal ${expectedPosition}`, () => {
+      expect(word.syllablePosition(syllable)).toEqual(expectedPosition);
+    });
+  });
+});
+
+describe("syllablePosition (error)", () => {
+  test("throws error for syllable not in word", () => {
+    const text1 = new Text("הָאָ֖רֶץ");
+    const text2 = new Text("מָחֳר");
+    expect(() => text1.words[0].syllablePosition(text2.syllables[0])).toThrow("Syllable not found in word");
+  });
+});
+
+describe.each`
   description              | hebrew              | taamim
   ${"one character"}       | ${"הָאָ֖רֶץ"}       | ${["\u{596}"]}
   ${"no characters"}       | ${"וַֽיְהִי־כֵֽן׃"} | ${[]}

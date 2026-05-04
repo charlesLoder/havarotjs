@@ -76,6 +76,7 @@ export class Word extends Node<Word, Text> {
    */
   whiteSpaceAfter: string | null;
   #sylOpts: SylOpts;
+  #syllablesCache: Syllable[] | null = null;
 
   constructor(text: string, sylOpts: SylOpts, original?: string) {
     super();
@@ -340,6 +341,28 @@ export class Word extends Node<Word, Text> {
   }
 
   /**
+   * Checks if the syllable is the final syllable in the Word
+   *
+   * @param syllable
+   * @returns a boolean indicating if the syllable is the final syllable in the Word
+   */
+  isSyllableFinal(syllable: Syllable) {
+    const index = this.syllablePosition(syllable);
+    return index === this.syllables.length - 1;
+  }
+
+  /**
+   * Checks if the syllable is the initial syllable in the Word
+   *
+   * @param syllable
+   * @returns a boolean indicating if the syllable is the initial syllable in the Word
+   */
+  isSyllableInitial(syllable: Syllable) {
+    const index = this.syllablePosition(syllable);
+    return index === 0;
+  }
+
+  /**
    * The original string passed
    *
    * @returns the original string passed
@@ -367,16 +390,36 @@ export class Word extends Node<Word, Text> {
    * ```
    */
   get syllables() {
+    if (this.#syllablesCache) {
+      return this.#syllablesCache;
+    }
+
     if (/\w/.test(this.text) || this.isDivineName || this.isNotHebrew) {
       const syl = new Syllable(this.clusters);
       syl.parent = this;
+      this.#syllablesCache = [syl];
       return [syl];
     }
 
     const syllables = syllabify(this.clusters, this.#sylOpts, this.isInConstruct);
     syllables.forEach((syl) => (syl.parent = this));
 
+    this.#syllablesCache = syllables;
     return syllables;
+  }
+
+  /**
+   * Gets the position of a syllable within the Word
+   *
+   * @param syllable
+   * @returns the position of the syllable within the Word (0-based index)
+   */
+  syllablePosition(syllable: Syllable) {
+    const index = this.syllables.findIndex((syl) => syl === syllable);
+    if (index === -1) {
+      throw new Error("Syllable not found in word");
+    }
+    return index;
   }
 
   /**
