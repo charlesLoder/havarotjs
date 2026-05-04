@@ -94,7 +94,7 @@ export class Char extends Node<Char, null, Cluster> {
    * ```
    */
   get cluster() {
-    return this.parent?.value;
+    return this.parent?.value ?? null;
   }
 
   /**
