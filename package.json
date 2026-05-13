@@ -113,9 +113,9 @@
   "license": "MIT",
   "devDependencies": {
     "@alcalzone/esm2cjs": "^1.4.1",
-    "@astrojs/starlight": "^0.35.2",
+    "@astrojs/starlight": "^0.39.2",
     "@eslint/js": "^9.35.0",
-    "astro": "^5.13.7",
+    "astro": "^6.3.2",
     "chokidar-cli": "^3.0.0",
     "concurrently": "^9.2.1",
     "eslint": "^9.35.0",
