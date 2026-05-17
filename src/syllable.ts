@@ -330,6 +330,24 @@ export class Syllable extends Node<Syllable, Cluster, Word> {
   }
 
   /**
+   * Checks if the Syllable is the final syllable in a {@link Word}
+   *
+   * @returns true if Syllable is final
+   *
+   * @example
+   * ```ts
+   * const text = new Text("וַיִּקְרָ֨א");
+   * text.syllables[0].isFinal; // i.e. "וַ"
+   * // false
+   * text.syllables[2].isFinal; // i.e. "רָ֨א"
+   * // true
+   * ```
+   */
+  get isFinal() {
+    return this.word?.isSyllableFinal(this) ?? false;
+  }
+
+  /**
    * Returns the nucleus of the syllable - see {@link structure}
    *
    * @returns the nucleus of the syllable as a string, including any taamim - see {@link structure}
