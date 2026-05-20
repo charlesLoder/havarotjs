@@ -156,6 +156,73 @@ describe.each`
 });
 
 describe.each`
+  description             | hebrew           | syllableNum | expected
+  ${"final syllable"}     | ${"וַיִּקְרָ֨א"} | ${2}        | ${true}
+  ${"non-final syllable"} | ${"וַיִּקְרָ֨א"} | ${0}        | ${false}
+`("isFinal:", ({ description, hebrew, syllableNum, expected }) => {
+  const heb = new Text(hebrew);
+  const syllable = heb.syllables[syllableNum];
+  describe(description, () => {
+    test(`isFinal to equal ${expected}`, () => {
+      expect(syllable.isFinal).toEqual(expected);
+    });
+  });
+});
+
+describe("isFinal (orphan syllable)", () => {
+  test("returns false when syllable has no word", () => {
+    const clusters = [new Cluster("דָּ")];
+    const syllable = new Syllable(clusters);
+    expect(syllable.isFinal).toEqual(false);
+  });
+});
+
+describe.each`
+  description               | hebrew           | syllableNum | expected
+  ${"initial syllable"}     | ${"וַיִּקְרָ֨א"} | ${0}        | ${true}
+  ${"non-initial syllable"} | ${"וַיִּקְרָ֨א"} | ${2}        | ${false}
+`("isInitial:", ({ description, hebrew, syllableNum, expected }) => {
+  const heb = new Text(hebrew);
+  const syllable = heb.syllables[syllableNum];
+  describe(description, () => {
+    test(`isInitial to equal ${expected}`, () => {
+      expect(syllable.isInitial).toEqual(expected);
+    });
+  });
+});
+
+describe("isInitial (orphan syllable)", () => {
+  test("returns false when syllable has no word", () => {
+    const clusters = [new Cluster("דָּ")];
+    const syllable = new Syllable(clusters);
+    expect(syllable.isInitial).toEqual(false);
+  });
+});
+
+describe.each`
+  description                   | hebrew           | syllableNum | expected
+  ${"first syllable position"}  | ${"וַיִּקְרָ֨א"} | ${0}        | ${0}
+  ${"last syllable position"}   | ${"וַיִּקְרָ֨א"} | ${2}        | ${2}
+  ${"middle syllable position"} | ${"מַדּוּעַ"}    | ${1}        | ${1}
+`("position:", ({ description, hebrew, syllableNum, expected }) => {
+  const heb = new Text(hebrew);
+  const syllable = heb.syllables[syllableNum];
+  describe(description, () => {
+    test(`position to equal ${expected}`, () => {
+      expect(syllable.position).toEqual(expected);
+    });
+  });
+});
+
+describe("position (orphan syllable)", () => {
+  test("returns -1 when syllable has no word", () => {
+    const clusters = [new Cluster("דָּ")];
+    const syllable = new Syllable(clusters);
+    expect(syllable.position).toEqual(-1);
+  });
+});
+
+describe.each`
   description                                    | hebrew             | syllableNum | onset   | nucleus               | coda
   ${"closed syllable"}                           | ${"יָ֥ם"}          | ${0}        | ${"י"}  | ${"\u{05B8}\u{05A5}"} | ${"ם"}
   ${"open syllable"}                             | ${"מַדּוּעַ"}      | ${0}        | ${"מ"}  | ${"\u{05B7}"}         | ${""}
