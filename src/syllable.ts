@@ -348,6 +348,24 @@ export class Syllable extends Node<Syllable, Cluster, Word> {
   }
 
   /**
+   * Checks if the Syllable is the initial syllable in a {@link Word}
+   *
+   * @returns true if Syllable is initial
+   *
+   * @example
+   * ```ts
+   * const text = new Text("וַיִּקְרָ֨א");
+   * text.syllables[0].isInitial; // i.e. "וַ"
+   * // true
+   * text.syllables[2].isInitial; // i.e. "רָ֨א"
+   * // false
+   * ```
+   */
+  get isInitial() {
+    return this.word?.isSyllableInitial(this) ?? false;
+  }
+
+  /**
    * Returns the nucleus of the syllable - see {@link structure}
    *
    * @returns the nucleus of the syllable as a string, including any taamim - see {@link structure}
@@ -381,6 +399,24 @@ export class Syllable extends Node<Syllable, Cluster, Word> {
    */
   get onset() {
     return this.structure()[0];
+  }
+
+  /**
+   * Returns the position of the Syllable within its {@link Word}
+   *
+   * @returns the position of the Syllable, or `-1` if the Syllable is not part of a Word
+   *
+   * @example
+   * ```ts
+   * const text = new Text("וַיִּקְרָ֨א");
+   * text.syllables[0].position;
+   * // 0
+   * text.syllables[2].position;
+   * // 2
+   * ```
+   */
+  get position() {
+    return this.word?.syllablePosition(this) ?? -1;
   }
 
   /**
@@ -443,7 +479,7 @@ export class Syllable extends Node<Syllable, Cluster, Word> {
     // Furtive patah: If the syllable is final and is either a het, ayin, or he
     // (with dagesh) followed by a patah, then it has no onset, its nucleus is
     // the patah and its coda is the consonant
-    if (this.word?.isSyllableFinal(this) && !this.isClosed) {
+    if (this.isFinal && !this.isClosed) {
       const matchFurtive = this.text.match(/(\u{05D7}|\u{05E2}|\u{05D4}\u{05BC})(\u{05B7})(\u{05C3})?$/mu);
       if (matchFurtive) {
         const structure: [string, string, string] = ["", matchFurtive[2], matchFurtive[1] + (matchFurtive[3] || "")];
