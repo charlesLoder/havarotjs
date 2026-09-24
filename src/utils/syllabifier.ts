@@ -561,6 +561,52 @@ const setIsAccented = (syllable: Syllable) => {
 };
 
 /**
+ * Strip taamim / meteg / sof pasuq so furtive-pataḥ detection is orthography-based.
+ * Postpositive accents (e.g. lone Segolta in WLC) sit on the final letter without
+ * implying that the furtive host is stress-bearing.
+ */
+const TAAMIM_METEG_SOF = /[\u{0591}-\u{05AF}\u{05BD}\u{05C3}]/gu;
+const FURTIVE_END = /(?:\u{05D7}|\u{05E2}|\u{05D4}\u{05BC})\u{05B7}$/u;
+
+const plainHebrewForFurtive = (text: string): string => text.replace(TAAMIM_METEG_SOF, "");
+
+/**
+ * True if this syllable is the epenthetic furtive-pataḥ host (never stressed).
+ * Matches the same final ח/ע/הּ + pataḥ pattern used by {@link Syllable.structure}.
+ *
+ * Uses array position instead of {@link Syllable.isFinal}, which requires the
+ * syllable's parent Word (not yet set while {@link syllabify} is running).
+ */
+const isFurtiveSyllable = (syllable: Syllable, isWordFinal: boolean): boolean => {
+  if (!isWordFinal || syllable.isClosed) {
+    return false;
+  }
+  return FURTIVE_END.test(plainHebrewForFurtive(syllable.text));
+};
+
+/**
+ * Move primary stress off a furtive-pataḥ syllable onto the preceding one.
+ *
+ * Postpositive accents (lone Segolta, etc.) and the milraʿ fallback both land
+ * on the final letter; for רָקִיעַ / רוּחַ that letter hosts only furtive pataḥ,
+ * which is never stress-bearing (cf. same lemmas with zaqef/atnaḥ on קִ / וּ).
+ */
+const shiftAccentOffFurtive = (syllables: Syllable[]): void => {
+  const last = syllables.length - 1;
+  for (let i = 0; i < syllables.length; i++) {
+    const syl = syllables[i];
+    if (!syl.isAccented || !isFurtiveSyllable(syl, i === last)) {
+      continue;
+    }
+    syl.isAccented = false;
+    if (i > 0) {
+      syllables[i - 1].isAccented = true;
+    }
+    return;
+  }
+};
+
+/**
  *
  * @remarks a step to get a Cluster's original position before filtering out latin
  */
@@ -619,6 +665,9 @@ export const syllabify = (clusters: Cluster[], options: SylOpts, isWordInConstru
   if (!syllables.map((s) => s.isAccented).includes(true) && !isWordInConstruct) {
     syllables[syllables.length - 1].isAccented = true;
   }
+
+  // After taam rules + milraʿ fallback: furtive pataḥ never bears stress.
+  shiftAccentOffFurtive(syllables);
 
   // for each cluster, set its syllable
   syllables.forEach((s) => s.clusters.forEach((c) => (c.parent = s)));
