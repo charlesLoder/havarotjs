@@ -255,4 +255,34 @@ describe("Test if a syllable is accented", () => {
       });
     });
   });
+
+  describe("Furtive pataḥ never bears primary stress", () => {
+    // Epenthetic furtive pataḥ on final ח/ע/הּ is not a stress position.
+    // Postpositive accents and the milraʿ fallback often land on that letter
+    // (especially lone Segolta in WLC); stress belongs on the preceding syllable.
+
+    test("WLC lone Segolta on furtive (הָרָקִיעַ֒)", () => {
+      testIsAccented("הָרָקִיעַ֒", [false, false, true, false]);
+    });
+
+    test("MAM doubled Segolta still stresses pre-furtive", () => {
+      testIsAccented("הָרָקִ֒יעַ֒", [false, false, true, false]);
+    });
+
+    test("zaqef on קִ is unchanged", () => {
+      testIsAccented("לָרָקִ֔יעַ", [false, false, true, false]);
+    });
+
+    test("atnah on קִ is unchanged", () => {
+      testIsAccented("לָרָקִ֑יעַ", [false, false, true, false]);
+    });
+
+    test("unaccented רוּחַ stresses shureq, not furtive", () => {
+      testIsAccented("רוּחַ", [true, false]);
+    });
+
+    test("unaccented מַדּוּעַ stresses long vowel, not furtive", () => {
+      testIsAccented("מַדּוּעַ", [false, true, false]);
+    });
+  });
 });
