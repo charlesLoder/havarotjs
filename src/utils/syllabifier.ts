@@ -392,6 +392,15 @@ const setIsClosed = (syllable: Syllable, index: number, arr: Syllable[]) => {
 };
 
 const setIsAccented = (syllable: Syllable) => {
+  // if the syllable is final and has a furtive pataḥ, it should not be accented
+  if (!syllable.next && /(?:\u{05D7}|\u{05E2}|\u{05D4}\u{05BC}).?\u{05B7}/u.test(syllable.text)) {
+    syllable.isAccented = false;
+    if (syllable.prev?.value) {
+      syllable.prev.value.isAccented = true;
+      return;
+    }
+  }
+
   if (syllable.isAccented) {
     return;
   }
