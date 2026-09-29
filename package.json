@@ -79,7 +79,7 @@
     "docs:dev": "astro dev --config ./docs/astro.config.mjs",
     "format": "prettier --config .config/.prettierrc.json --write 'src/**/*.ts' 'test/**/*.ts'",
     "format-check": "prettier --config .config/.prettierrc.json --list-different 'src/**/*.ts' 'test/**/*.ts'",
-    "lint": "eslint --config .config/eslint.config.mjs .",
+    "lint": "oxlint --config .config/.oxlintrc.json src test",
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
     "test": "vitest --watch=false",
@@ -90,17 +90,14 @@
   },
   "devDependencies": {
     "@astrojs/starlight": "^0.42.4",
-    "@eslint/js": "^9.35.0",
     "astro": "^7.3.5",
-    "eslint": "^9.35.0",
-    "globals": "^17.12.0",
     "npm-check-updates": "^23.1.0",
+    "oxlint": "^1.86.0",
     "prettier": "^3.9.9",
     "starlight-typedoc": "^0.23.1",
     "typedoc": "^0.28.20",
     "typedoc-plugin-markdown": "4.13.1",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.43.0",
     "vitest": "^5.0.2"
   },
   "engines": {
