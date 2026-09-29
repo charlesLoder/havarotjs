@@ -2,6 +2,14 @@
 title: Changelog
 ---
 
+## 2026-09-29 0.25.5
+
+- Rename `Char.characterName` to `Char.name` (PR #225)
+- Improve node traversal and remove dead code (PR #226)
+- Update syllable position logic, moving final-syllable determination to `Word` (PR #227)
+- Add `Syllable.isFinal`, `Syllable.isInitial`, and `Syllable.position` helpers (PR #230)
+- Fix primary stress landing on furtive pataḥ syllables (e.g. רוּחַ, הָרָקִיעַ֒) (PR #265)
+
 ## 2025-09-11 0.25.4
 
 - Fix #211 where taamim were being stripped from non-matching `ketivQere` (PR #212)
