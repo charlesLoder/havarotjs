@@ -2,86 +2,66 @@
   "name": "havarotjs",
   "version": "0.25.5",
   "description": "A Typescript package for syllabic data about Hebrew text",
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
-  "types": "./dist/types/index.d.ts",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "engines": {
-    "node": ">=15.0.0"
+    "node": ">=20.19"
   },
   "exports": {
     "./package.json": "./package.json",
     ".": {
-      "types": "./dist/types/index.d.ts",
-      "require": "./dist/cjs/index.js",
-      "import": "./dist/esm/index.js"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
     },
     "./text": {
-      "types": "./dist/types/text.d.ts",
-      "require": "./dist/cjs/text.js",
-      "import": "./dist/esm/text.js"
+      "types": "./dist/text.d.ts",
+      "import": "./dist/text.js",
+      "require": "./dist/text.js",
+      "default": "./dist/text.js"
     },
     "./word": {
-      "types": "./dist/types/word.d.ts",
-      "require": "./dist/cjs/word.js",
-      "import": "./dist/esm/word.js"
+      "types": "./dist/word.d.ts",
+      "import": "./dist/word.js",
+      "require": "./dist/word.js",
+      "default": "./dist/word.js"
     },
     "./syllable": {
-      "types": "./dist/types/syllable.d.ts",
-      "require": "./dist/cjs/syllable.js",
-      "import": "./dist/esm/syllable.js"
+      "types": "./dist/syllable.d.ts",
+      "import": "./dist/syllable.js",
+      "require": "./dist/syllable.js",
+      "default": "./dist/syllable.js"
     },
     "./cluster": {
-      "types": "./dist/types/cluster.d.ts",
-      "require": "./dist/cjs/cluster.js",
-      "import": "./dist/esm/cluster.js"
+      "types": "./dist/cluster.d.ts",
+      "import": "./dist/cluster.js",
+      "require": "./dist/cluster.js",
+      "default": "./dist/cluster.js"
     },
     "./char": {
-      "types": "./dist/types/char.d.ts",
-      "require": "./dist/cjs/char.js",
-      "import": "./dist/esm/char.js"
+      "types": "./dist/char.d.ts",
+      "import": "./dist/char.js",
+      "require": "./dist/char.js",
+      "default": "./dist/char.js"
     },
     "./schemas": {
-      "types": "./dist/types/schemas.d.ts",
-      "require": "./dist/cjs/schemas.js",
-      "import": "./dist/esm/schemas.js"
+      "types": "./dist/schemas.d.ts",
+      "import": "./dist/schemas.js",
+      "require": "./dist/schemas.js",
+      "default": "./dist/schemas.js"
     },
     "./utils/*": {
-      "types": "./dist/types/utils/*.d.ts",
-      "require": "./dist/cjs/utils/*.js",
-      "import": "./dist/esm/utils/*.js"
-    }
-  },
-  "typesVersions": {
-    "*": {
-      "schemas": [
-        "./dist/types/schemas.d.ts"
-      ],
-      "text": [
-        "./dist/types/text.d.ts"
-      ],
-      "word": [
-        "./dist/types/word.d.ts"
-      ],
-      "syllable": [
-        "./dist/types/syllable.d.ts"
-      ],
-      "cluster": [
-        "./dist/types/cluster.d.ts"
-      ],
-      "char": [
-        "./dist/types/char.d.ts"
-      ],
-      "utils/*": [
-        "./dist/types/utils/*.d.ts"
-      ]
+      "types": "./dist/utils/*.d.ts",
+      "import": "./dist/utils/*.js",
+      "require": "./dist/utils/*.js",
+      "default": "./dist/utils/*.js"
     }
   },
   "scripts": {
-    "build": "tsc --project .config/tsconfig.esm.json && tsc-alias --project .config/tsconfig.esm.json",
-    "watch": "concurrently \"tsc --watch --project .config/tsconfig.esm.json\" \"npm run watch:tsc-alias\" \"npm run watch:esm2cjs\"",
-    "watch:tsc-alias": "chokidar \"dist/esm/**/*.js\" -c \"tsc-alias --project .config/tsconfig.esm.json\"",
-    "watch:esm2cjs": "chokidar \"dist/esm/**/*.js\" -c \"esm2cjs --in dist/esm --out dist/cjs -l error\"",
-    "postbuild": "esm2cjs --in dist/esm --out dist/cjs -l error",
+    "build": "tsc --project .config/tsconfig.json",
+    "watch": "tsc --watch --project .config/tsconfig.json",
     "test": "vitest --watch=false",
     "format": "prettier --config .config/.prettierrc.json --write 'src/**/*.ts' 'test/**/*.ts'",
     "format-check": "prettier --config .config/.prettierrc.json --list-different 'src/**/*.ts' 'test/**/*.ts'",
@@ -112,18 +92,14 @@
   "author": "Charles Loder",
   "license": "MIT",
   "devDependencies": {
-    "@alcalzone/esm2cjs": "^1.4.1",
     "@astrojs/starlight": "^0.35.2",
     "@eslint/js": "^9.35.0",
     "astro": "^5.13.7",
-    "chokidar-cli": "^3.0.0",
-    "concurrently": "^9.2.1",
     "eslint": "^9.35.0",
     "globals": "^16.4.0",
     "npm-check-updates": "^18.1.0",
     "prettier": "^3.6.2",
     "starlight-typedoc": "^0.21.3",
-    "tsc-alias": "^1.8.16",
     "typedoc": "^0.28.12",
     "typedoc-plugin-markdown": "4.8.1",
     "typescript": "^5.9.2",

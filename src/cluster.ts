@@ -1,7 +1,7 @@
-import { Char } from "./char";
-import { Node } from "./node";
-import { Syllable } from "./syllable";
-import type { Consonant, ConsonantName, Taam, TaamimName, Vowel, VowelName } from "./utils/charMap";
+import { Char } from "./char.js";
+import { Node } from "./node.js";
+import { Syllable } from "./syllable.js";
+import type { Consonant, ConsonantName, Taam, TaamimName, Vowel, VowelName } from "./utils/charMap.js";
 import {
   charToNameMap,
   consonantNameToCharMap,
@@ -10,8 +10,8 @@ import {
   isCharVowel,
   taamimNameToCharMap,
   vowelNameToCharMap
-} from "./utils/charMap";
-import { hebChars, meteg, punctuation, taamim } from "./utils/regularExpressions";
+} from "./utils/charMap.js";
+import { hebChars, meteg, punctuation, taamim } from "./utils/regularExpressions.js";
 
 /**
  * A cluster is group of Hebrew character constituted by:

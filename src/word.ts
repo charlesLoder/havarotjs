@@ -1,11 +1,11 @@
-import { Cluster } from "./cluster";
-import { Node } from "./node";
-import type { SyllableVowelName } from "./syllable";
-import { Syllable } from "./syllable";
-import { SylOpts, Text } from "./text";
-import type { ConsonantName, TaamimName } from "./utils/charMap";
-import { clusterSplitGroup, jerusalemTest } from "./utils/regularExpressions";
-import { syllabify } from "./utils/syllabifier";
+import { Cluster } from "./cluster.js";
+import { Node } from "./node.js";
+import type { SyllableVowelName } from "./syllable.js";
+import { Syllable } from "./syllable.js";
+import { SylOpts, Text } from "./text.js";
+import type { ConsonantName, TaamimName } from "./utils/charMap.js";
+import { clusterSplitGroup, jerusalemTest } from "./utils/regularExpressions.js";
+import { syllabify } from "./utils/syllabifier.js";
 
 /**
  * A subunit of a {@link Text} consisting of words, which are strings are text separated by spaces or maqqefs.

@@ -1,4 +1,4 @@
-import { SylOpts } from "./text";
+import { SylOpts } from "./text.js";
 export const tiberian: SylOpts = {
   longVowels: false,
   qametsQatan: false,

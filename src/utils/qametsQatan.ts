@@ -1,5 +1,5 @@
-import { removeTaamim } from "./removeTaamim";
-import { sequence } from "./sequence";
+import { removeTaamim } from "./removeTaamim.js";
+import { sequence } from "./sequence.js";
 
 const snippets = [
   "אָבְדַן",

@@ -1,7 +1,7 @@
-import { Cluster } from "./cluster";
-import { Node } from "./node";
-import { CharToNameMap, NameToCharMap, charToNameMap, isHebrewCharacter, nameToCharMap } from "./utils/charMap";
-import { consonants, dagesh, ligatures, meteg, rafe, sheva, taamim, vowels } from "./utils/regularExpressions";
+import { Cluster } from "./cluster.js";
+import { Node } from "./node.js";
+import { CharToNameMap, NameToCharMap, charToNameMap, isHebrewCharacter, nameToCharMap } from "./utils/charMap.js";
+import { consonants, dagesh, ligatures, meteg, rafe, sheva, taamim, vowels } from "./utils/regularExpressions.js";
 
 /**
  * A Hebrew character and its positioning number for being sequenced correctly.
