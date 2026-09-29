@@ -1,5 +1,5 @@
-import { Char } from "../char";
-import { Cluster } from "../cluster";
+import { Char } from "../char.js";
+import { Cluster } from "../cluster.js";
 
 /**
  * @returns a two dimensional array of sequenced Char objects

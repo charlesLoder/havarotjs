@@ -1,4 +1,4 @@
-import { taamim } from "./regularExpressions";
+import { taamim } from "./regularExpressions.js";
 
 export const removeTaamim = (word: string): [string, number[]] => {
   // https://stackoverflow.com/questions/4590298/how-to-ignore-whitespace-in-a-regular-expression-subject-string

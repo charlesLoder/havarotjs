@@ -1,7 +1,7 @@
-import { Cluster } from "../cluster";
-import { Syllable } from "../syllable";
-import { SylOpts } from "../text";
-import { vowels } from "./regularExpressions";
+import { Cluster } from "../cluster.js";
+import { Syllable } from "../syllable.js";
+import { SylOpts } from "../text.js";
+import { vowels } from "./regularExpressions.js";
 
 type Syl = Cluster[];
 type Mixed = (Syllable | Cluster)[];

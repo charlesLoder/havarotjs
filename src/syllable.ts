@@ -1,9 +1,14 @@
-import { Cluster } from "./cluster";
-import { Node } from "./node";
-import type { ConsonantName, Flip, TaamimName } from "./utils/charMap";
-import { consonantNameToCharMap, taamimNameToCharMap, vowelCharToNameMap, vowelNameToCharMap } from "./utils/charMap";
-import { removeTaamim } from "./utils/removeTaamim";
-import { Word } from "./word";
+import { Cluster } from "./cluster.js";
+import { Node } from "./node.js";
+import type { ConsonantName, Flip, TaamimName } from "./utils/charMap.js";
+import {
+  consonantNameToCharMap,
+  taamimNameToCharMap,
+  vowelCharToNameMap,
+  vowelNameToCharMap
+} from "./utils/charMap.js";
+import { removeTaamim } from "./utils/removeTaamim.js";
+import { Word } from "./word.js";
 
 const sylVowelCharToNameMap = {
   ...vowelCharToNameMap,

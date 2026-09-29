@@ -1,9 +1,9 @@
-import { Node } from "./node";
-import { holemWaw } from "./utils/holemWaw";
-import { convertsQametsQatan } from "./utils/qametsQatan";
-import { splitGroup, taamim, taamimCaptureGroup } from "./utils/regularExpressions";
-import { sequence } from "./utils/sequence";
-import { Word } from "./word";
+import { Node } from "./node.js";
+import { holemWaw } from "./utils/holemWaw.js";
+import { convertsQametsQatan } from "./utils/qametsQatan.js";
+import { splitGroup, taamim, taamimCaptureGroup } from "./utils/regularExpressions.js";
+import { sequence } from "./utils/sequence.js";
+import { Word } from "./word.js";
 
 export interface KetivQere {
   /**

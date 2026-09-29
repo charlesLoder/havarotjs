@@ -1,11 +1,11 @@
-import { Char } from "./char";
-import { Cluster } from "./cluster";
-import { Node } from "./node";
-import type { SyllableParams } from "./syllable";
-import { Syllable } from "./syllable";
-import type { KetivQere, SylOpts } from "./text";
-import { Text } from "./text";
-import { Word } from "./word";
+import { Char } from "./char.js";
+import { Cluster } from "./cluster.js";
+import { Node } from "./node.js";
+import type { SyllableParams } from "./syllable.js";
+import { Syllable } from "./syllable.js";
+import type { KetivQere, SylOpts } from "./text.js";
+import { Text } from "./text.js";
+import { Word } from "./word.js";
 
 export { Char, Cluster, Node, Syllable, Text, Word };
 export type { KetivQere, SyllableParams, SylOpts };
